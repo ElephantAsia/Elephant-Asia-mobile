@@ -7,17 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import fr.elefantasia.elefantasia.R;
 
 public class MainFragment extends Fragment {
 
-    private Button pushme;
-
     public MainFragment() {
         // Required empty public constructor
     }
 
+    private LinearLayout addLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,14 +25,7 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.main_fragment, container, false);
 
-        pushme = (Button) view.findViewById(R.id.main_button);
-
-        pushme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity)getActivity()).push();
-            }
-        });
+        addLayout = (LinearLayout) view.findViewById(R.id.addView);
 
         return (view);
     }
