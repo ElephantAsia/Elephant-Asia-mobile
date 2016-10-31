@@ -33,8 +33,7 @@ public class TestAsyncTask extends RequestAsyncTask {
     @Override
     @Nullable
     protected Void doInBackground(@Nullable Void... params) {
-        String httpUrl = null;
-        String httpBody = null;
+        String httpUrl, httpBody = "";
 
         httpUrl = SERVER + PATH;
         setURL(httpUrl);

@@ -20,7 +20,7 @@ import java.net.URL;
 
 public class RequestAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    protected static final String SERVER = "localhost";
+    protected static final String SERVER = "https://api.elefant.asia";
     private static final Integer CONNECTION_TIMEOUT = 5000;
     private static final Integer READ_TIMEOUT = 10000;
 
@@ -99,6 +99,9 @@ public class RequestAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onCancelled(@Nullable Void result) {
         // ...
+        if (_httpURLConnection != null) {
+            _httpURLConnection.disconnect();
+        }
         _running = false;
     }
 
@@ -158,11 +161,7 @@ public class RequestAsyncTask extends AsyncTask<Void, Void, Void> {
      */
     protected void setRequestMethod(String method) {
         try {
-            if (_httpURLConnection != null) {
-                _httpURLConnection.setRequestMethod(method);
-            } else {
-                Log.i("setRequestMethod", "httpURLConnection is null");
-            }
+            _httpURLConnection.setRequestMethod(method);
         } catch (ProtocolException e) {
             e.printStackTrace();
         }
@@ -174,9 +173,7 @@ public class RequestAsyncTask extends AsyncTask<Void, Void, Void> {
      * @param value TRUE ou FALSE
      */
     protected void setDoInput(boolean value) {
-        if (_httpURLConnection != null) {
-            _httpURLConnection.setDoInput(value);
-        }
+        _httpURLConnection.setDoInput(value);
     }
 
     /**
@@ -185,9 +182,7 @@ public class RequestAsyncTask extends AsyncTask<Void, Void, Void> {
      * @param value TRUE ou FALSE
      */
     protected void setDoOutput(boolean value) {
-        if (_httpURLConnection != null) {
-            _httpURLConnection.setDoOutput(value);
-        }
+        _httpURLConnection.setDoOutput(value);
     }
 
     /**
