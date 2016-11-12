@@ -49,8 +49,8 @@ public class MainFragment extends Fragment {
         Elefant elefant = createElefant("stephouuu");
         Elefant elefant1 = createElefant("robert");
 
-        //database.insertElefant(elefant);
-        //database.insertElefant(elefant1);
+        database.insertElefant(elefant);
+        database.insertElefant(elefant1);
 
         adapter.addData(database.getElefantWithName("robert"));
 
