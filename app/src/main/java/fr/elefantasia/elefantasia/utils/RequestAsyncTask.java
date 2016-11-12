@@ -16,6 +16,8 @@ import java.net.URL;
 
 /**
  * Created by Stephane on 31/10/2016.
+ *
+ * TODO: mettre la version débuggée
  */
 
 public class RequestAsyncTask extends AsyncTask<Void, Void, Void> {
