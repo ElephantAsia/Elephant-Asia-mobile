@@ -1,7 +1,6 @@
-package fr.elefantasia.elefantasia;
+package fr.elefantasia.elefantasia.utils;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,15 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import fr.elefantasia.elefantasia.R;
+import fr.elefantasia.elefantasia.utils.ElephantInfo;
+
 /**
  * Created by care_j on 15/11/16.
  */
 
-public class ElephantAdaptater extends ArrayAdapter<ElephantInfo> {
-    public ElephantAdaptater(Context context, List<ElephantInfo> elephants) {
+public class ElephantAdapter extends ArrayAdapter<ElephantInfo> {
+    public ElephantAdapter(Context context, List<ElephantInfo> elephants) {
         super(context, 0, elephants);
     }
 

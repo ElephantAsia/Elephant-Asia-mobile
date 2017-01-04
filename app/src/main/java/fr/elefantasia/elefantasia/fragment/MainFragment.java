@@ -40,7 +40,7 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.main_fragment, container, false);
 
 
-        listView = (ListView) view.findViewById(R.id.main_list);
+        /*listView = (ListView) view.findViewById(R.id.main_list);
         listView.setAdapter(adapter);
 
         database = new ElefantDatabase(getActivity());
@@ -52,7 +52,7 @@ public class MainFragment extends Fragment {
         database.insertElefant(elefant);
         database.insertElefant(elefant1);
 
-        adapter.addData(database.getElefantWithName("robert"));
+        adapter.addData(database.getElefantWithName("robert"));*/
 
         return (view);
     }

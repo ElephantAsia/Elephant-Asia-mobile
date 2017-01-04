@@ -1,4 +1,4 @@
-package fr.elefantasia.elefantasia;
+package fr.elefantasia.elefantasia.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,10 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.elefantasia.elefantasia.utils.ElephantAdapter;
+import fr.elefantasia.elefantasia.utils.ElephantInfo;
+import fr.elefantasia.elefantasia.R;
 
 /**
  * Created by care_j on 15/11/16.
@@ -23,7 +27,7 @@ public class SearchActivity extends AppCompatActivity {
             mListView = (ListView) findViewById(R.id.listViewSearch);
 
             List<ElephantInfo> elephants = generateElephants();
-            ElephantAdaptater adapter = new ElephantAdaptater(SearchActivity.this, elephants);
+            ElephantAdapter adapter = new ElephantAdapter(SearchActivity.this, elephants);
             mListView.setAdapter(adapter);
         }
 

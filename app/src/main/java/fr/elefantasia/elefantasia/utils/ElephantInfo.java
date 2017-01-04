@@ -1,4 +1,4 @@
-package fr.elefantasia.elefantasia;
+package fr.elefantasia.elefantasia.utils;
 
 /**
  * Created by care_j on 29/10/16.
