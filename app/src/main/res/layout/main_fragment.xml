@@ -10,7 +10,9 @@
         android:layout_height="match_parent"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:id="@+id/addView">
+        android:id="@+id/addView"
+        android:layout_weight="1"
+        >
 
         <TextView
             android:text="Name"
@@ -26,13 +28,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:inputType="textPersonName"
-            android:text="Name"
             android:ems="10"
             android:id="@+id/etName"
             android:gravity="center_horizontal" />
 
         <TextView
-            android:text="Sex"
+            android:text="@string/sex"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/tvSex"
@@ -45,10 +46,11 @@
             android:orientation="horizontal"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:id="@+id/rgSex"
             >
 
             <RadioButton
-                android:text="Male"
+                android:text="@string/male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -56,7 +58,7 @@
                 android:duplicateParentState="false" />
 
             <RadioButton
-                android:text="Female"
+                android:text="@string/female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -68,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/tvBirthDate"
-            android:text="Birth Date"
+            android:text="@string/birth_date"
             android:layout_gravity="center_vertical|center_horizontal"
             android:gravity="center_vertical|center_horizontal" />
 
@@ -79,7 +81,6 @@
             android:inputType="date"
             android:ems="10"
             android:id="@+id/etBirthDate"
-            android:text="00/00/0000"
             android:gravity="center_vertical|center_horizontal" />
 
         <TextView
@@ -87,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/tvDBNumber"
-            android:text="DB Number"
+            android:text="@string/db_number"
             android:gravity="center_vertical|center_horizontal" />
 
         <EditText
@@ -95,13 +96,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:id="@+id/etDBNumber"
+            android:id="@+id/etDBid"
             android:inputType="text"
-            android:text="MIXXX"
             android:gravity="center_vertical|center_horizontal" />
 
         <TextView
-            android:text="Legally Registered"
+            android:text="@string/legally_registered"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tvLegally"
@@ -114,10 +114,12 @@
             android:orientation="horizontal"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/rgLegality"
             >
 
+
             <RadioButton
-                android:text="Yes"
+                android:text="@string/yes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rbLegallyYes"
@@ -126,7 +128,7 @@
                 />
 
             <RadioButton
-                android:text="No"
+                android:text="@string/no"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rbLegallyNo"
@@ -134,7 +136,7 @@
         </RadioGroup>
 
         <TextView
-            android:text="Registration number"
+            android:text="@string/registration_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -146,9 +148,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:inputType="textPersonName"
-            android:text="Name"
             android:ems="10"
             android:id="@+id/etRegistrationNumber"
             android:gravity="center_vertical|center_horizontal" />
     </LinearLayout>
+
+    <Button
+        android:text="@string/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainButton"/>
 </LinearLayout>

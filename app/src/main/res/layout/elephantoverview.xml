@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@color/colorAccent"
+    >
+
+    <TextView
+        android:text="Name"
+        android:id="@+id/ovName"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textColor="#FFF"
+        android:background="#454"
+        />
+
+    <TextView
+        android:id="@+id/age"
+        android:text="Age"
+        android:gravity="center"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/ovName"
+        android:layout_alignStart="@id/ovName"
+        android:layout_below="@id/ovName"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="10dp"
+    />
+
+    <TextView
+        android:text="Registration Number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toRightOf="@+id/age"
+        android:layout_toEndOf="@id/age"
+        android:layout_below="@id/ovName"
+        android:gravity="center"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="10dp"
+        android:id="@+id/registration" />
+
+    <ImageView
+        android:id="@+id/legal"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:textColor="@android:color/black"
+        android:contentDescription="Legal"
+        tools:background="#505"
+        android:layout_above="@+id/registration"
+        android:layout_alignRight="@+id/registration"
+        android:layout_alignEnd="@+id/registration" />
+
+    <ImageView
+        android:id="@+id/sex"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:textStyle="bold"
+        tools:text="Pseudo"
+        tools:background="#AAA"
+        android:contentDescription="Sex"
+        android:layout_above="@+id/registration"
+        android:layout_toLeftOf="@+id/legal"
+        android:layout_toStartOf="@+id/legal"
+        android:layout_marginRight="11dp"
+        android:layout_marginEnd="11dp" />
+
+</RelativeLayout>
