@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="fr.elefantasia.elefantasia.activities.SplashScreenActivity"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <FrameLayout
-        android:id="@+id/splash_screen_fragment"
+    <ImageView
+        android:id="@+id/splashscreen"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:src="@mipmap/splash_screen_background"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="false"
+        android:contentDescription="@null"/>
 
-</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_transparant" />
+
+    <ImageView
+        android:adjustViewBounds="true"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_gravity="center"
+        android:contentDescription="@null"/>
+
+</FrameLayout>

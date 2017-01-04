@@ -1,33 +1,35 @@
 package fr.elefantasia.elefantasia.activities;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import fr.elefantasia.elefantasia.R;
-import fr.elefantasia.elefantasia.fragment.SplashScreenFragment;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private SplashScreenFragment fragment;
+    private final int SPLASH_DELAY = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen_activity);
 
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent mainIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                SplashScreenActivity.this.startActivity(mainIntent);
+                SplashScreenActivity.this.finish();
+            }
+        }, SPLASH_DELAY);
 
-        refreshFragment();
-    }
 
-    private void refreshFragment() {
-        if (fragment == null) {
-            fragment = new SplashScreenFragment();
-        }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.splash_screen_fragment, fragment);
     }
 }
