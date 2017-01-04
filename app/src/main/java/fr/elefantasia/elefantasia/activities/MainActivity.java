@@ -8,7 +8,7 @@ import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.fragment.MainFragment;
 
 
-public class MainActivity extends AppCompatActivity implements IPushMe {
+public class MainActivity extends AppCompatActivity {
 
     private MainFragment fragment;
 
@@ -19,11 +19,6 @@ public class MainActivity extends AppCompatActivity implements IPushMe {
 
         fragment = new MainFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fragment).commit();
-    }
-
-    @Override
-    public void push() {
-        Toast.makeText(this, "pushed", Toast.LENGTH_SHORT).show();
     }
 
 }
