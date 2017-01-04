@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.elefantasia.elefantasia.R;
+import fr.elefantasia.elefantasia.activities.MainActivity;
 import fr.elefantasia.elefantasia.database.Elefant;
 import fr.elefantasia.elefantasia.database.ElefantDatabase;
 
@@ -38,7 +40,6 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.main_fragment, container, false);
-
 
         /*listView = (ListView) view.findViewById(R.id.main_list);
         listView.setAdapter(adapter);
@@ -135,6 +136,7 @@ public class MainFragment extends Fragment {
                     }
                 }
             });
+
         }
 
         private void refreshContent(View view, boolean creation, Elefant elefant) {

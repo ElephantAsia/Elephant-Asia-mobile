@@ -16,4 +16,5 @@
     <string name="registration_number">Registration number</string>
     <string name="name">Name</string>
     <string name="sex">Sex</string>
+    <string name="title_activity_base_application">BaseApplication</string>
 </resources>

@@ -25,4 +25,5 @@ public class MainActivity extends AppCompatActivity implements IPushMe {
     public void push() {
         Toast.makeText(this, "pushed", Toast.LENGTH_SHORT).show();
     }
+
 }
