@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
+import fr.elefantasia.elefantasia.ElephantInfo;
 import fr.elefantasia.elefantasia.R;
 
 public class AddElephantFragment extends Fragment {

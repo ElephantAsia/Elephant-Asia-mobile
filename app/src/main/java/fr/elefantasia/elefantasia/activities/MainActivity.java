@@ -7,6 +7,7 @@ import android.widget.Toast;
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.fragment.MainFragment;
 
+
 public class MainActivity extends AppCompatActivity implements IPushMe {
 
     private MainFragment fragment;
