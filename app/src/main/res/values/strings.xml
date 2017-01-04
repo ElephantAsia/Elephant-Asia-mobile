@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Elephant Asia</string>
 
     <string name="button">Button</string>
@@ -14,4 +15,11 @@
     <string name="registration_number">Registration number</string>
     <string name="name">Name</string>
     <string name="sex">Sex</string>
+
+    <string name="elefant_asia">ELEFANTASIA</string>
+    <string name="login">Log-In</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="credential">Use your personal credentials</string>
+
 </resources>
