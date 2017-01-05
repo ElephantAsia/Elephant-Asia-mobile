@@ -6,6 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,14 +35,52 @@ public class LoginActivity extends AppCompatActivity {
         mUsernameEditText = (EditText)findViewById(R.id.login_id);
         mPasswordEditText = (EditText)findViewById(R.id.login_pwd);
 
+        mUsernameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    validUsername();
+                }
+            }
+        });
+
+        mPasswordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    validPassword();
+                }
+            }
+        });
+
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onLoginClick();
+                if (validUsername() && validPassword()) {
+                    onLoginClick();
+                }
             }
         });
 
         checkHasSignin();
+    }
+
+    private boolean validUsername() {
+        if (mUsernameEditText.getText().toString().trim().length() == 0) {
+            mUsernameEditText.setError(getResources().getString(R.string.empty_username));
+            return false;
+        }
+        mUsernameEditText.setError(null);
+        return true;
+    }
+
+    private boolean validPassword() {
+        if (mPasswordEditText.getText().toString().length() == 0) {
+            mPasswordEditText.setError(getResources().getString(R.string.empty_password));
+            return false;
+        }
+        mPasswordEditText.setError(null);
+        return true;
     }
 
     private void onLoginClick() {

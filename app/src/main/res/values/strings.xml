@@ -23,4 +23,7 @@
     <string name="password">password</string>
     <string name="credential">Use your personal credentials</string>
 
+    <string name="empty_username">Empty username</string>
+    <string name="empty_password">Empty password</string>
+
 </resources>
