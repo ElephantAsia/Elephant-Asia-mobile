@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:background="@color/colorAccent"
+    android:background="@color/black_transparant"
     >
 
     <TextView
@@ -26,7 +26,7 @@
         android:layout_alignLeft="@+id/ovName"
         android:layout_alignStart="@id/ovName"
         android:layout_below="@id/ovName"
-        android:background="@color/colorPrimary"
+        android:background="@color/black_transparant"
         android:layout_marginTop="10dp"
     />
 
@@ -40,7 +40,7 @@
         android:layout_toEndOf="@id/age"
         android:layout_below="@id/ovName"
         android:gravity="center"
-        android:background="@color/colorPrimary"
+        android:background="@color/black_transparant"
         android:layout_marginTop="10dp"
         android:id="@+id/registration" />
 

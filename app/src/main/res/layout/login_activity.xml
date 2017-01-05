@@ -39,12 +39,30 @@
                 android:src="@drawable/logo"
                 android:contentDescription="@null"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_marginTop="24dp"
-                android:textSize="14pt"
-                android:text="@string/elefant_asia"
+                android:orientation="horizontal"
+                android:weightSum="2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textSize="18pt"
+                    android:textColor="#FFFFFF"
+                    android:text="@string/elefant"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="18pt"
+                    android:textColor="@color/white_30"
+                    android:text="@string/asia"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -94,12 +112,10 @@
     </LinearLayout>
 
     <Button
-        android:background="@color/colorPrimary"
-        android:textColor="#FFFFFF"
+        android:id="@+id/login_button"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:id="@+id/login"
         android:textSize="8pt"
         android:text="@string/login"
         android:textAllCaps="true"

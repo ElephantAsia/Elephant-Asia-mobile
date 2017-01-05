@@ -16,7 +16,8 @@
     <string name="elephant_name">Elephant name</string>
     <string name="sex">Sex</string>
 
-    <string name="elefant_asia">ELEFANTASIA</string>
+    <string name="elefant">ELEFANT</string>
+    <string name="asia">ASIA</string>
     <string name="login">Log-In</string>
     <string name="username">username</string>
     <string name="password">password</string>
