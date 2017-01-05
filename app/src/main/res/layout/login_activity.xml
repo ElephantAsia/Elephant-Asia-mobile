@@ -6,7 +6,7 @@
     android:paddingBottom="18dp">
 
    <ImageView
-        android:id="@+id/splashscreen"
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@mipmap/splash_screen_background"

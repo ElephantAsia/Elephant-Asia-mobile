@@ -36,29 +36,34 @@ public class LoginActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (mUsernameEditText.getText().toString().equalsIgnoreCase("demo")
-                        && mPasswordEditText.getText().toString().equalsIgnoreCase("demo")) {
-
-                    Preferences.setUsername(getApplicationContext(), mUsernameEditText.getText().toString());
-                    Preferences.setPassword(getApplicationContext(), mPasswordEditText.getText().toString());
-
-                    Intent intent = new Intent(LoginActivity.this, AddElephant.class);
-                    LoginActivity.this.startActivity(intent);
-                    LoginActivity.this.finish();
-
-                } else {
-                    Toast.makeText(LoginActivity.this, "Bad username or password (use demo/demo)", Toast.LENGTH_SHORT).show();
-                }
+                onLoginClick();
             }
         });
 
+        checkHasSignin();
+    }
+
+    private void onLoginClick() {
+        if (mUsernameEditText.getText().toString().equalsIgnoreCase("demo")
+                && mPasswordEditText.getText().toString().equalsIgnoreCase("demo")) {
+
+            Preferences.setUsername(getApplicationContext(), mUsernameEditText.getText().toString());
+            Preferences.setPassword(getApplicationContext(), mPasswordEditText.getText().toString());
+
+            Intent intent = new Intent(LoginActivity.this, AddElephant.class);
+            LoginActivity.this.startActivity(intent);
+            LoginActivity.this.finish();
+
+        } else {
+            Toast.makeText(LoginActivity.this, "Bad username/password (use demo/demo)", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void checkHasSignin() {
         if (Preferences.hasSignin(getApplicationContext())) {
             mUsernameEditText.setText(Preferences.getUsername(getBaseContext()));
             mPasswordEditText.setText(Preferences.getPassword(getBaseContext()));
             mButton.performClick();
         }
-
     }
-
 }
