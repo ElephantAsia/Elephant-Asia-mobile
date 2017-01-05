@@ -1,42 +1,32 @@
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:orientation="vertical"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
-
-<ListView
-    android:id="@+id/main_list"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
-
-</LinearLayout>-->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    app:layout_collapseParallaxMultiplier="0.0">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:id="@+id/addView"
-        android:layout_weight="1"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
         >
 
         <TextView
-            android:text="Name"
-            android:layout_width="match_parent"
+            android:text="@string/elephant_name"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/tvName"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:gravity="center_horizontal" />
 
-        <EditText
-            android:layout_width="match_parent"
+        <fr.elefantasia.elefantasia.view.EA_EditText
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:inputType="textPersonName"
@@ -51,10 +41,11 @@ android:layout_height="match_parent">
             android:id="@+id/tvSex"
             android:gravity="center_vertical|center_horizontal"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:layout_width="match_parent" />
+            android:layout_width="fill_parent" />
 
         <RadioGroup
-            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_width="fill_parent"
             android:orientation="horizontal"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -78,7 +69,7 @@ android:layout_height="match_parent">
         </RadioGroup>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/tvBirthDate"
@@ -86,8 +77,8 @@ android:layout_height="match_parent">
             android:layout_gravity="center_vertical|center_horizontal"
             android:gravity="center_vertical|center_horizontal" />
 
-        <EditText
-            android:layout_width="match_parent"
+        <fr.elefantasia.elefantasia.view.EA_EditText
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:inputType="date"
@@ -96,15 +87,15 @@ android:layout_height="match_parent">
             android:gravity="center_vertical|center_horizontal" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/tvDBNumber"
             android:text="@string/db_number"
             android:gravity="center_vertical|center_horizontal" />
 
-        <EditText
-            android:layout_width="match_parent"
+        <fr.elefantasia.elefantasia.view.EA_EditText
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
@@ -114,7 +105,7 @@ android:layout_height="match_parent">
 
         <TextView
             android:text="@string/legally_registered"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tvLegally"
             android:gravity="center_vertical|center_horizontal"
@@ -122,7 +113,7 @@ android:layout_height="match_parent">
             />
 
         <RadioGroup
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:orientation="horizontal"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -149,25 +140,29 @@ android:layout_height="match_parent">
 
         <TextView
             android:text="@string/registration_number"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/RegistrationNumber"
             android:gravity="center_vertical|center_horizontal" />
 
-        <EditText
-            android:layout_width="match_parent"
+        <fr.elefantasia.elefantasia.view.EA_EditText
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/etRegistrationNumber"
             android:gravity="center_vertical|center_horizontal" />
+
+        <Button
+            android:layout_gravity="end"
+            android:text="@string/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainButton"
+            />
     </LinearLayout>
 
-    <Button
-        android:text="@string/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/mainButton"/>
-</LinearLayout>
+
+</ScrollView>

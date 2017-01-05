@@ -18,30 +18,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.elefantasia.elefantasia.R;
-import fr.elefantasia.elefantasia.activities.MainActivity;
 import fr.elefantasia.elefantasia.database.Elefant;
 import fr.elefantasia.elefantasia.database.ElefantDatabase;
 
 
-public class MainFragment extends Fragment {
+public class ElephantCivilStatus extends Fragment {
 
     private ListView listView;
     private Adapter adapter;
-    private ElefantDatabase database;
+//    private ElefantDatabase database;
+//    private LinearLayout addLayout;
 
-    public MainFragment() {
+
+    public ElephantCivilStatus() {
         adapter = new Adapter(getContext(), null);
     }
 
-    private LinearLayout addLayout;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.main_fragment, container, false);
+//     View view = inflater.inflate(R.layout.elephant_civil_status, container, false);
 
-        /*listView = (ListView) view.findViewById(R.id.main_list);
+        /*listView = (ListView) view.findViewById('R.id.main_list);
         listView.setAdapter(adapter);
 
         database = new ElefantDatabase(getActivity());
@@ -55,8 +60,9 @@ public class MainFragment extends Fragment {
 
         adapter.addData(database.getElefantWithName("robert"));*/
 
-        return (view);
+        return inflater.inflate(R.layout.elephant_civil_status, container, false);
     }
+
 
     private Elefant createElefant(String name) {
         Elefant elefant = new Elefant();
@@ -65,7 +71,7 @@ public class MainFragment extends Fragment {
         return (elefant);
     }
 
-    public static class Adapter extends BaseAdapter {
+    private static class Adapter extends BaseAdapter {
 
         private Context context;
         private Listener listener;
@@ -112,9 +118,9 @@ public class MainFragment extends Fragment {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             boolean creation = view == null;
 
-            if (creation) {
-                view = inflater.inflate(R.layout.elefant_list_fragment, parent, false);
-            }
+//            if (creation) {
+//                view = inflater.inflate(R.layout.elefant_list_fragment, parent, false);
+//            }
 
             Elefant elefant = getItem(index);
 
@@ -128,11 +134,12 @@ public class MainFragment extends Fragment {
             if (creation) {
                 view.setFocusable(true);
             }
+
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (listener != null) {
-                        // ...
+                       // ...
                     }
                 }
             });
@@ -140,8 +147,8 @@ public class MainFragment extends Fragment {
         }
 
         private void refreshContent(View view, boolean creation, Elefant elefant) {
-            TextView id = (TextView) view.findViewById(R.id.elefant_id);
-            TextView name = (TextView) view.findViewById(R.id.elefant_name);
+            TextView id = (TextView) view.findViewById(R.id.etRegistrationNumber);
+            TextView name = (TextView) view.findViewById(R.id.etName);
 
             id.setText(String.valueOf(elefant.id));
             name.setText(elefant.name);

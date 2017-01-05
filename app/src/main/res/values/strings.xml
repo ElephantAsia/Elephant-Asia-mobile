@@ -2,7 +2,7 @@
 
     <string name="app_name">Elephant Asia</string>
 
-    <string name="button">Button</string>
+    <string name="next">next</string>
     <string name="female">Female</string>
     <string name="male">Male</string>
     <string name="birth_date">Birth Date</string>
@@ -13,7 +13,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="registration_number">Registration number</string>
-    <string name="name">Name</string>
+    <string name="elephant_name">Elephant name</string>
     <string name="sex">Sex</string>
 
     <string name="elefant_asia">ELEFANTASIA</string>

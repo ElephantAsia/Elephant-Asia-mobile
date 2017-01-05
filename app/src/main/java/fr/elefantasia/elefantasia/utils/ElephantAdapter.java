@@ -11,7 +11,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import fr.elefantasia.elefantasia.R;
-import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
 /**
  * Created by care_j on 15/11/16.
@@ -26,7 +25,7 @@ public class ElephantAdapter extends ArrayAdapter<ElephantInfo> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if(convertView == null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.elephantoverview,parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.search_overview,parent, false);
         }
 
         TweetViewHolder viewHolder = (TweetViewHolder) convertView.getTag();
