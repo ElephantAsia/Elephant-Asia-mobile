@@ -17,7 +17,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#22000000" />
+        android:background="#66000000" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -75,7 +75,6 @@
 
             <EditText
                 android:layout_marginTop="40dp"
-                android:theme="@style/App_EditTextStyle"
                 android:id="@+id/login_id"
                 android:hint="@string/username"
                 android:inputType="text"
