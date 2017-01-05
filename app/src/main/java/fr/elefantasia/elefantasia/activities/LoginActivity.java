@@ -2,12 +2,7 @@ package fr.elefantasia.elefantasia.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -90,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             Preferences.setUsername(getApplicationContext(), mUsernameEditText.getText().toString());
             Preferences.setPassword(getApplicationContext(), mPasswordEditText.getText().toString());
 
-            Intent intent = new Intent(LoginActivity.this, AddElephant.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             LoginActivity.this.startActivity(intent);
             LoginActivity.this.finish();
 

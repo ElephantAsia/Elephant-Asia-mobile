@@ -6,6 +6,9 @@
 
     <color name="white_30">#4DFFFFFF</color>
 
+    <color name="background_100">#FFFAFAFA</color>
+    <color name="background_60">#99FAFAFA</color>
+
     <color name="primary_dark_100">#ef4136</color>
     <!--<color name="colorAccent">#66000000</color>-->
 

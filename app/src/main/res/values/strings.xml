@@ -26,4 +26,8 @@
     <string name="empty_username">Empty username</string>
     <string name="empty_password">Empty password</string>
 
+    <string name="home_page">Home Page</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 </resources>

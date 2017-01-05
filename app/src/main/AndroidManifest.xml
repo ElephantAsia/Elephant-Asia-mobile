@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.elefantasia.elefantasia">
 
     <application
@@ -14,20 +13,21 @@
             android:name=".activities.SplashScreenActivity"
             android:theme="@style/SplashTheme"
             android:windowSoftInputMode="stateHidden">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <activity
             android:name=".activities.AddElephant"
-            android:windowSoftInputMode="stateHidden"/>
-
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.LoginActivity"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".activities.MainActivity"
             android:windowSoftInputMode="stateHidden"/>
 
     </application>

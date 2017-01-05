@@ -2,12 +2,22 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
-        <item name="colorPrimary">@color/primary_100</item>
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="android:colorPrimary" tools:targetApi="21">@android:color/white</item>
+
+
         <item name="colorPrimaryDark">@color/primary_dark_100</item>
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <item name="android:colorPrimaryDark" tools:targetApi="21">@color/primary_dark_100</item>
+
+        <!--<item name="colorAccent">@color/primary_100</item>-->
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+
+        <item name="android:windowContentOverlay">@null</item>
+
+        <!-- Window background color -->
+        <item name="android:windowBackground">@color/background_100</item>
 
         <item name="android:editTextStyle">@style/App_EditTextStyle</item>
         <item name="android:buttonStyle">@style/App_ButtonStyle</item>

@@ -5,7 +5,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.fragment.ElephantCivilStatus;
@@ -13,7 +12,7 @@ import fr.elefantasia.elefantasia.fragment.ElephantPhysical;
 import fr.elefantasia.elefantasia.utils.ViewPagerAdapter;
 
 
-public class AddElephant extends AppCompatActivity implements IPushMe {
+public class AddElephant extends AppCompatActivity {
 
     private ElephantCivilStatus fragment;
 
@@ -45,11 +44,6 @@ public class AddElephant extends AppCompatActivity implements IPushMe {
         adapter.addFragment(new ElephantCivilStatus(), "Civil Status");
         adapter.addFragment(new ElephantPhysical(), "Physical");
         viewPager.setAdapter(adapter);
-    }
-
-    @Override
-    public void push() {
-        Toast.makeText(this, "pushed", Toast.LENGTH_SHORT).show();
     }
 
 }
