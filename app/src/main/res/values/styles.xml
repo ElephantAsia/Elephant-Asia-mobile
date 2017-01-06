@@ -19,8 +19,10 @@
         <!-- Window background color -->
         <item name="android:windowBackground">@color/background_100</item>
 
+        <!-- Widgets style -->
         <item name="android:editTextStyle">@style/App_EditTextStyle</item>
         <item name="android:buttonStyle">@style/App_ButtonStyle</item>
+        <item name="android:listViewStyle">@style/App_ListViewStyle</item>
 
         <item name="colorControlNormal">@color/grey_light_100</item>
         <item name="android:colorControlNormal" tools:targetApi="21">@color/grey_light_100</item>
@@ -50,6 +52,14 @@
     <style name="App_ButtonStyle" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/button_primary</item>
         <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="App_ListViewStyle" parent="android:style/Widget.ListView">
+        <item name="android:divider">@color/grey_light_50</item>
+        <item name="android:dividerHeight">1px</item>
+        <item name="android:drawSelectorOnTop">false</item>
+        <item name="android:listSelector">@color/listitem</item>
+        <item name="android:cacheColorHint">#00000000</item>
     </style>
 
 </resources>

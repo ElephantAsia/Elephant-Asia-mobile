@@ -4,28 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<android.support.v7.widget.Toolbar
-        android:id="@+id/main_toolbar"
-        android:background="@color/primary_100"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/home_page"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-
-    </android.support.v7.widget.Toolbar>-->
-
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/main_drawer"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
         <android.support.design.widget.AppBarLayout
+            android:background="@color/background_60"
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -54,12 +39,12 @@
         </android.support.design.widget.AppBarLayout>
 
         <RelativeLayout
-            android:layout_marginTop="10dp"
             android:layout_gravity="start"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <RelativeLayout
+                android:id="@+id/main_drawer_userinfo"
                 android:layout_width="match_parent"
                 android:layout_height="220dp">
 
@@ -81,11 +66,10 @@
                     android:layout_height="80dp" />
 
                 <TextView
-                    android:textStyle="bold"
                     android:layout_marginTop="62dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:id="@+id/main_drawer_username"
                     android:text="Finjin Dijang"
                     android:textColor="@android:color/white"
@@ -97,7 +81,7 @@
                 <TextView
                     android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:id="@+id/main_drawer_speciality"
                     android:text="Official Veterinarian"
                     android:textColor="@android:color/white"
@@ -108,18 +92,27 @@
                     android:layout_toEndOf="@id/main_drawer_pic_profil"/>
 
                 <TextView
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="18dp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignLeft="@id/main_drawer_pic_profil"
+                    android:layout_alignStart="@id/main_drawer_pic_profil"
                     android:textColor="@android:color/white"
                     android:text="finjin.dijang@atnt.com"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
+                    android:textSize="16sp"
                     android:id="@+id/main_drawer_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
             </RelativeLayout>
+
+            <ListView
+                android:background="@android:color/white"
+                android:layout_below="@id/main_drawer_userinfo"
+                android:id="@+id/main_drawer_list"
+                android:dividerHeight="0dp"
+                android:divider="@null"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </RelativeLayout>
 

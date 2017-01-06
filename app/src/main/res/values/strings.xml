@@ -30,4 +30,14 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
 
+    <string name="search">Search</string>
+    <string name="current_animal">Current Animal</string>
+    <string name="locations">Locations</string>
+    <string name="reports">Reports</string>
+    <string name="favorites">Favorites</string>
+    <string name="settings">Application Settings</string>
+    <string name="officials">Officials</string>
+    <string name="support">Support</string>
+    <string name="logout">Log out</string>
+
 </resources>
