@@ -1,4 +1,4 @@
-package fr.elefantasia.elefantasia.utils;
+package fr.elefantasia.elefantasia.request;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -20,6 +20,7 @@ import java.net.URL;
  * TODO: mettre la version débuggée
  */
 
+@Deprecated
 public class RequestAsyncTask extends AsyncTask<Void, Void, Void> {
 
     protected static final String SERVER = "https://api.elefant.asia";

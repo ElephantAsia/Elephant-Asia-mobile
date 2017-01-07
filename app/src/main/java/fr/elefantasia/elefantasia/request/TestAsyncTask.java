@@ -10,7 +10,6 @@ import org.json.JSONException;
 
 import java.io.InputStream;
 
-import fr.elefantasia.elefantasia.utils.RequestAsyncTask;
 import fr.elefantasia.elefantasia.utils.StaticTools;
 
 

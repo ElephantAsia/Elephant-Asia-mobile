@@ -9,34 +9,46 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <android.support.design.widget.AppBarLayout
-            android:background="@color/background_60"
-            android:id="@+id/appBarLayout"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/main_toolbar"
-                android:background="@color/primary_100"
+            <android.support.design.widget.AppBarLayout
+                android:background="@color/background_60"
+                android:id="@+id/appBarLayout"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/title"
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/main_toolbar"
+                    android:background="@color/primary_100"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_page"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp" />
+                    android:layout_height="?attr/actionBarSize">
 
-            </android.support.v7.widget.Toolbar>
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_page"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp" />
 
-            <View
+                </android.support.v7.widget.Toolbar>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#d8d8d8" />
+
+            </android.support.design.widget.AppBarLayout>
+
+            <FrameLayout
+                android:id="@+id/main_fragment"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#d8d8d8" />
+                android:layout_height="match_parent"/>
 
-        </android.support.design.widget.AppBarLayout>
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_gravity="start"

@@ -1,4 +1,4 @@
-package fr.elefantasia.elefantasia.utils;
+package fr.elefantasia.elefantasia.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

@@ -7,9 +7,9 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.elefantasia.elefantasia.utils.ElephantAdapter;
-import fr.elefantasia.elefantasia.utils.ElephantInfo;
 import fr.elefantasia.elefantasia.R;
+import fr.elefantasia.elefantasia.adapter.ElephantAdapter;
+import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
 /**
  * Created by care_j on 15/11/16.

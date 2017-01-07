@@ -7,7 +7,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -19,10 +18,12 @@ import java.util.TimerTask;
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.adapter.MainActivityDrawerListAdapter;
+import fr.elefantasia.elefantasia.fragment.HomePageFragment;
+import fr.elefantasia.elefantasia.interfaces.HomePageInterface;
 import fr.elefantasia.elefantasia.utils.Preferences;
 import jp.wasabeef.blurry.Blurry;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HomePageInterface {
 
     private static final String EXTRA_FRAGMENT = "main.fragment";
 
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView drawerList;
     private MainActivityDrawerListAdapter drawerListAdapter;
 
+    private HomePageFragment homePageFragment;
 
     public static int getFragment(Intent intent) {
         return intent.getIntExtra(EXTRA_FRAGMENT, FRAGMENT_HOME_PAGE);
@@ -94,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
                 drawerListAdapter.setSelection(position);
                 drawerListAdapter.notifyDataSetChanged();
 
+                drawer.closeDrawer(GravityCompat.START);
+
                 setFragment(getIntent(), position);
                 refreshFragment();
             }
@@ -101,12 +105,21 @@ public class MainActivity extends AppCompatActivity {
 
         drawerListAdapter = new MainActivityDrawerListAdapter(getApplicationContext());
         drawerList.setAdapter(drawerListAdapter);
+
+        refreshFragment();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         refreshProfilPicBlurred();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            int a = 0;
+        }
     }
 
     private void refreshProfilPicBlurred() {
@@ -130,20 +143,35 @@ public class MainActivity extends AppCompatActivity {
     private void refreshFragment() {
         switch (getFragment(getIntent()))
         {
-            // TODO: set fragment here
+            case FRAGMENT_HOME_PAGE:
+                setHomePageFragment();
+                break;
             case FRAGMENT_DISCONNECT:
-                disconnect();
+                setDisconnectFragment();
                 break;
             default:
         }
     }
 
-    private void disconnect() {
+    private void setHomePageFragment() {
+        HomePageFragment fragment = new HomePageFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fragment).commit();
+    }
+
+    private void setDisconnectFragment() {
         Preferences.setUsername(getApplicationContext(), null);
         Preferences.setPassword(getApplicationContext(), null);
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+
+    @Override
+    public void onItemClick(Intent intent) {
+        startActivity(intent);
     }
 }

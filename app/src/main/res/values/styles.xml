@@ -2,8 +2,8 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
-        <item name="colorPrimary">@android:color/white</item>
-        <item name="android:colorPrimary" tools:targetApi="21">@android:color/white</item>
+        <item name="colorPrimary">@color/primary_100</item>
+        <item name="android:colorPrimary" tools:targetApi="21">@color/primary_100</item>
 
 
         <item name="colorPrimaryDark">@color/primary_dark_100</item>

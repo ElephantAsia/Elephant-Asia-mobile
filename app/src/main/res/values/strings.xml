@@ -40,4 +40,6 @@
     <string name="support">Support</string>
     <string name="logout">Log out</string>
 
+    <string name="add_elephant">Add Elephant</string>
+
 </resources>

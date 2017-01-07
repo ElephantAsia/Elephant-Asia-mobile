@@ -1,6 +1,7 @@
-package fr.elefantasia.elefantasia.utils;
+package fr.elefantasia.elefantasia.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import fr.elefantasia.elefantasia.R;
+import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
 /**
  * Created by care_j on 15/11/16.
@@ -22,7 +24,8 @@ public class ElephantAdapter extends ArrayAdapter<ElephantInfo> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @NonNull
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.search_overview,parent, false);
