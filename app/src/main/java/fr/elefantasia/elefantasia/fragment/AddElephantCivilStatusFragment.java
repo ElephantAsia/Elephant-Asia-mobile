@@ -3,32 +3,33 @@ package fr.elefantasia.elefantasia.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.database.Elefant;
+import fr.elefantasia.elefantasia.interfaces.AddElephantInterface;
 
 
-public class ElephantCivilStatusFragment extends Fragment {
+public class AddElephantCivilStatusFragment extends Fragment {
 
-    private ListView listView;
-    private Adapter adapter;
+    //private ListView listView;
+    //private Adapter adapter;
 //    private ElefantDatabase database;
 //    private LinearLayout addLayout;
 
+    FloatingActionButton fabNext;
 
-    public ElephantCivilStatusFragment() {
-        adapter = new Adapter(getContext(), null);
+
+    public AddElephantCivilStatusFragment() {
+        //adapter = new Adapter(getContext());
     }
 
 
@@ -41,7 +42,7 @@ public class ElephantCivilStatusFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//     View view = inflater.inflate(R.layout.elephant_civil_status, container, false);
+        View view = inflater.inflate(R.layout.add_elephant_civil_status_fragment, container, false);
 
         /*listView = (ListView) view.findViewById('R.id.main_list);
         listView.setAdapter(adapter);
@@ -57,7 +58,15 @@ public class ElephantCivilStatusFragment extends Fragment {
 
         adapter.addData(database.getElefantWithName("robert"));*/
 
-        return inflater.inflate(R.layout.elephant_civil_status_fragment, container, false);
+        fabNext = (FloatingActionButton)view.findViewById(R.id.elephant_civil_status_fab);
+        fabNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((AddElephantInterface) getActivity()).next();
+            }
+        });
+
+        return (view);
     }
 
 
@@ -71,13 +80,11 @@ public class ElephantCivilStatusFragment extends Fragment {
     private static class Adapter extends BaseAdapter {
 
         private Context context;
-        private Listener listener;
 
         List<Elefant> data = new ArrayList<>();
 
-        public Adapter(@NonNull Context context, @Nullable Listener listener) {
+        public Adapter(@NonNull Context context) {
             this.context = context;
-            this.listener = listener;
         }
 
         public void addData(List<Elefant> list) {
@@ -135,24 +142,17 @@ public class ElephantCivilStatusFragment extends Fragment {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (listener != null) {
-                       // ...
-                    }
                 }
             });
 
         }
 
         private void refreshContent(View view, boolean creation, Elefant elefant) {
-            TextView id = (TextView) view.findViewById(R.id.etRegistrationNumber);
-            TextView name = (TextView) view.findViewById(R.id.etName);
+            //TextView id = (TextView) view.findViewById(R.id.etRegistrationNumber);
+            //TextView name = (TextView) view.findViewById(R.id.etName);
 
-            id.setText(String.valueOf(elefant.id));
-            name.setText(elefant.name);
-        }
-
-        public interface Listener {
-            /* some methods */
+            //id.setText(String.valueOf(elefant.id));
+            //name.setText(elefant.name);
         }
 
     }

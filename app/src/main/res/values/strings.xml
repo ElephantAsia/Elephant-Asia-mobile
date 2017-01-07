@@ -5,7 +5,6 @@
     <string name="next">next</string>
     <string name="female">Female</string>
     <string name="male">Male</string>
-    <string name="birth_date">Birth Date</string>
     <string name="_00_00_0000">00/00/0000</string>
     <string name="db_number">DB Number</string>
     <string name="mixxx">MIXXX</string>
@@ -13,7 +12,11 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="registration_number">Registration number</string>
-    <string name="elephant_name">Elephant name</string>
+    <string name="elephant_birthdate">Birthdate (ex: 2016/12/12)</string>
+    <string name="elephant_name">Name</string>
+    <string name="elephant_nickname">Nickname</string>
+    <string name="elephant_id_number">ID number</string>
+    <string name="elephant_chip">Chip number #1</string>
     <string name="sex">Sex</string>
 
     <string name="elefant">ELEPHANT</string>
@@ -41,5 +44,12 @@
     <string name="logout">Log out</string>
 
     <string name="add_elephant">Add Elephant</string>
+    <string name="civil_status">Civil Status</string>
+    <string name="physical">Physical</string>
+    <string name="heal">Heal</string>
+    <string name="genealogy">Genealogy</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

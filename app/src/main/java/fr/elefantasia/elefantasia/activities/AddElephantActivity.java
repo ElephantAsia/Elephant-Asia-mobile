@@ -8,14 +8,18 @@ import android.support.v7.widget.Toolbar;
 
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.adapter.ViewPagerAdapter;
-import fr.elefantasia.elefantasia.fragment.ElephantCivilStatusFragment;
-import fr.elefantasia.elefantasia.fragment.ElephantPhysicalFragment;
+import fr.elefantasia.elefantasia.fragment.AddElephantCivilStatusFragment;
+import fr.elefantasia.elefantasia.fragment.AddElephantGenealogyFragment;
+import fr.elefantasia.elefantasia.fragment.AddElephantHealFragment;
+import fr.elefantasia.elefantasia.fragment.AddElephantPhysicalFragment;
+import fr.elefantasia.elefantasia.interfaces.AddElephantInterface;
 
-public class AddElephantActivity extends AppCompatActivity {
+public class AddElephantActivity extends AppCompatActivity implements AddElephantInterface {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    //private FloatingActionButton fabNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,18 @@ public class AddElephantActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        /*fabNext = (FloatingActionButton)findViewById(R.id.add_elephant_activity_fab);
+        fabNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1) {
+                    viewPager.setCurrentItem(0);
+                } else {
+                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                }
+            }
+        });*/
     }
 
     @Override
@@ -43,10 +59,21 @@ public class AddElephantActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void next() {
+        if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1) {
+            viewPager.setCurrentItem(0);
+        } else {
+            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+        }
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ElephantCivilStatusFragment(), "Civil Status");
-        adapter.addFragment(new ElephantPhysicalFragment(), "Physical");
+        adapter.addFragment(new AddElephantCivilStatusFragment(), getString(R.string.civil_status));
+        adapter.addFragment(new AddElephantPhysicalFragment(), getString(R.string.physical));
+        adapter.addFragment(new AddElephantHealFragment(), getString(R.string.heal));
+        adapter.addFragment(new AddElephantGenealogyFragment(), getString(R.string.genealogy));
         viewPager.setAdapter(adapter);
     }
 

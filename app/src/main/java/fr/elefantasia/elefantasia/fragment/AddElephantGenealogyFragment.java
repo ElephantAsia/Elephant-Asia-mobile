@@ -9,20 +9,22 @@ import android.view.ViewGroup;
 
 import fr.elefantasia.elefantasia.R;
 
-public class ElephantPhysicalFragment extends Fragment{
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class AddElephantGenealogyFragment extends Fragment {
 
-    public ElephantPhysicalFragment() {
+
+    public AddElephantGenealogyFragment() {
+        // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.elephant_physical_fragment, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.add_elephant_genealogy_fragment, container, false);
     }
 
 }
