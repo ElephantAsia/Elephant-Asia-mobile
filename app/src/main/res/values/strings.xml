@@ -70,14 +70,15 @@
     <string name="sex_empty">Sex empty</string>
     <string name="birthdate_empty">Birthdate empty</string>
 
-    <string name="search_result">Result for \'%s\'</string>
+    <string name="search_result">Result(s): </string>
     <string name="no_item_found">No item found</string>
 
     <string name="elephant_name_sex_age">%1$s, %2$s, %3$s y/o</string>
     <string name="elephant_registration">#%s</string>
     <string name="elephant_location">%1$s, %2$s</string>
 
-    <string name="elephant_microship">Elephant microship (not available)</string>
+    <string name="elephant_microchip">Elephant microchip</string>
+    <string name="microchip_empty">Microchip empty</string>
     <string name="district">District (not available)</string>
     <string name="village">Village (not available)</string>
     <string name="camp_name">Camp name (not available)</string>

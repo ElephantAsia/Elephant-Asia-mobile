@@ -2,8 +2,12 @@ package fr.elefantasia.elefantasia.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -95,6 +99,7 @@ public class StaticTools {
         }
     }
 
+
     /**
      * Hide keyboard
      *
@@ -104,6 +109,18 @@ public class StaticTools {
     public static void hideKeyboard(Context ctx, View view) {
         InputMethodManager inputMethodManager = (InputMethodManager)ctx.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    /**
+     * Check if keyboard is display.
+     * We compare the root view height with the current height.
+     * If the difference is higher than 200 we assume the keyboard is up.
+     *
+     * @param v  Current view
+     */
+    public static boolean keyboardIsDisplay(View v) {
+        int heightDiff = v.getRootView().getHeight() - v.getHeight();
+        return heightDiff > StaticTools.dpToPx(v.getContext(), 200); // if more than 200 dp, keyboard is up
     }
 
     /**
@@ -119,4 +136,17 @@ public class StaticTools {
             view.setError(null);
         }
     }
+
+    /**
+     * Convert dp to pixel
+     *
+     * @param ctx   Current context
+     * @param valueInDp  the dp value in float
+     */
+    public static float dpToPx(Context ctx, float valueInDp) {
+        DisplayMetrics metrics = ctx.getResources().getDisplayMetrics();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
+    }
+
+
 }

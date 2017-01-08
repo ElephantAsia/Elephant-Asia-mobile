@@ -5,12 +5,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by Stephane on 31/10/2016.
@@ -182,6 +185,58 @@ public class ElefantDatabase {
         cursor.close();
 
         return (results);
+    }
+
+    //TODO: rename function
+    public List<ElephantInfo> getCustom(ElephantInfo info) {
+        String query = "SELECT * FROM " + MySQLite.TABLE_NAME + GetElephantQueryRestriction(info);
+        List<ElephantInfo> results = new ArrayList<>();
+        Log.i("request", query);
+        Cursor cursor = database.rawQuery(query, null);
+
+        if (cursor.getCount() > 0)
+        {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                results.add(cursorToElephant(cursor));
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+
+        return (results);
+    }
+
+    private String GetElephantQueryRestriction(ElephantInfo info) {
+        List<String> param = new ArrayList<String>();
+        String restriction = " ";
+
+
+        if (!info.name.isEmpty())
+            param.add("WHERE " + MySQLite.COL_NAME + " = '" + info.name + "'");
+        if (!info.chips1.isEmpty())
+            param.add("WHERE " + MySQLite.COL_CHIPS + " = '" + info.chips1 + "'");
+        if (info.sex != ElephantInfo.Gender.UNKNOWN)
+            param.add("WHERE " + MySQLite.COL_SEX + " = '" + info.sex);
+        if (!info.registrationProvince.isEmpty())
+            param.add("WHERE " + MySQLite.COL_REGISTRATION_PROVINCE + " = '" + info.registrationProvince + "'");
+        if (!info.registrationDistrict.isEmpty())
+            param.add("WHERE " + MySQLite.COL_REGISTRATION_DISTRICT + " = '" + info.registrationDistrict + "'");
+        if (!info.registrationProvince.isEmpty())
+            param.add("WHERE " + MySQLite.COL_REGISTRATION_PROVINCE + " = '" + info.registrationProvince + "'");
+        if (!info.registrationVillage.isEmpty())
+            param.add("WHERE " + MySQLite.COL_REGISTRATION_VILLAGE + " = '" + info.registrationVillage + "'");
+
+        for (int i = 0;  i < param.size(); i++) {
+            if (i > 0)
+                param.set(i- 1,  param.get(i - 1) + " AND ");
+        }
+
+        for (int i = 0; i < param.size(); i++) {
+            restriction += param.get(i);
+        }
+
+        return restriction;
     }
 
     /**

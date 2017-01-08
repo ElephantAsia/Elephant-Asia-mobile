@@ -1,14 +1,17 @@
 package fr.elefantasia.elefantasia.fragment;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.view.ViewTreeObserver;
+import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.interfaces.AddElephantInterface;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
+import fr.elefantasia.elefantasia.utils.StaticTools;
 import fr.elefantasia.elefantasia.view.EA_EditText;
 
 
@@ -28,13 +32,14 @@ public class AddElephantRegistrationFragment extends Fragment {
 
     private RadioGroup sexRadioGroup;
 
-    private CheckBox earTagCheckBox;
-    private CheckBox eyedCheckBox;
+    private CheckedTextView earTagCheckTextView;
+    private CheckedTextView eyedCheckTextView;
 
     private EA_EditText birthDateEditText;
     private EA_EditText birthVillageEditText;
     private EA_EditText birthDistrictEditText;
     private EA_EditText birthProvinceEditText;
+
 
     private EA_EditText chipNumberEditText;
 
@@ -53,6 +58,7 @@ public class AddElephantRegistrationFragment extends Fragment {
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_elephant_registration_fragment, container, false);
@@ -60,8 +66,8 @@ public class AddElephantRegistrationFragment extends Fragment {
         nameEditText = (EA_EditText)view.findViewById(R.id.elephant_name);
         nicknameEditText = (EA_EditText)view.findViewById(R.id.elephant_nickname);
         sexRadioGroup = (RadioGroup)view.findViewById(R.id.elephant_rg_sex);
-        earTagCheckBox = (CheckBox)view.findViewById(R.id.ear_tag);
-        eyedCheckBox = (CheckBox)view.findViewById(R.id.eyeD);
+        earTagCheckTextView = (CheckedTextView) view.findViewById(R.id.ear_tag);
+        eyedCheckTextView = (CheckedTextView) view.findViewById(R.id.eyeD);
         birthDateEditText = (EA_EditText)view.findViewById(R.id.elephant_birth_date);
         birthVillageEditText = (EA_EditText)view.findViewById(R.id.elephant_birth_village);
         birthDistrictEditText = (EA_EditText)view.findViewById(R.id.elephant_birth_district);
@@ -116,6 +122,7 @@ public class AddElephantRegistrationFragment extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 View view = group.findViewById(R.id.elephant_radio_male);
+
                 if (view == group.findViewById(checkedId)) {
                     ((AddElephantInterface) getActivity()).setSex(ElephantInfo.Gender.MALE);
                 } else {
@@ -124,17 +131,19 @@ public class AddElephantRegistrationFragment extends Fragment {
             }
         });
 
-        earTagCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                ((AddElephantInterface) getActivity()).hasEarTag(isChecked);
+        earTagCheckTextView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                ((CheckedTextView) v).toggle();
+                ((AddElephantInterface) getActivity()).hasEarTag(((CheckedTextView) v).isChecked());
             }
         });
 
-        eyedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                ((AddElephantInterface) getActivity()).hasEyeD(isChecked);
+        eyedCheckTextView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                ((CheckedTextView) v).toggle();
+                ((AddElephantInterface) getActivity()).hasEyeD(((CheckedTextView) v).isChecked());
             }
         });
 

@@ -28,8 +28,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/elephant_consultation_photo"
-                    android:contentDescription="@null"
                     android:src="@mipmap/elephant"
+                    android:contentDescription="@null"
                     android:layout_marginTop="17dp"
                     android:layout_marginLeft="17dp"
                     android:layout_marginStart="17dp"

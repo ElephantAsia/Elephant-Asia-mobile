@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         TextView title = (TextView)toolbar.findViewById(R.id.title);
-        title.setText(String.format(getString(R.string.search_result), toSearch.name));
+        title.setText(getString(R.string.search_result));
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -52,7 +53,6 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
 
         mListView = (ListView) findViewById(R.id.listViewSearch);
         noItem = (TextView) findViewById(R.id.search_browser_no_item);
-
         refreshList();
     }
 
@@ -81,7 +81,7 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
     }
 
     private void refreshList() {
-        List<ElephantInfo> elephants = database.getElephant(toSearch.name, toSearch.sex);
+        List<ElephantInfo> elephants = database.getCustom(toSearch);
         if (elephants.size() == 0) {
             mListView.setVisibility(View.GONE);
             noItem.setVisibility(View.VISIBLE);

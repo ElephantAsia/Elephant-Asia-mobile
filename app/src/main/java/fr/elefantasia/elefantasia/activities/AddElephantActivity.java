@@ -1,10 +1,17 @@
 package fr.elefantasia.elefantasia.activities;
 
+import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.Toast;
 
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.adapter.ViewPagerAdapter;
@@ -18,6 +25,7 @@ import fr.elefantasia.elefantasia.fragment.AddElephantParentageFragment;
 import fr.elefantasia.elefantasia.fragment.AddElephantRegistrationFragment;
 import fr.elefantasia.elefantasia.interfaces.AddElephantInterface;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
+import fr.elefantasia.elefantasia.utils.StaticTools;
 
 public class AddElephantActivity extends AppCompatActivity implements AddElephantInterface {
 
@@ -34,8 +42,24 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.add_elephant_activity);
+
+        final View activityRootView = findViewById(R.id.add_elephant_activity);
+
+        //TODO: check avec galibe si c est pas trop degeu
+        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                FloatingActionButton button = (FloatingActionButton) findViewById(R.id.elephant_registration_fab);
+
+                if (StaticTools.keyboardIsDisplay(activityRootView)) {
+                    button.hide();
+                } else {
+                    button.show();
+                }
+            }
+        });
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

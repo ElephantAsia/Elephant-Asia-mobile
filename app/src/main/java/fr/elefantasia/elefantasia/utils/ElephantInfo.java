@@ -24,9 +24,9 @@ public class ElephantInfo implements Parcelable {
     public Integer id;
     public String name;
     public String nickName;
-    public Gender sex;
-    public boolean earTag;
-    public boolean eyeD;
+    public Gender sex = Gender.UNKNOWN;
+    public boolean earTag = false;
+    public boolean eyeD = false;
 
     public String birthDate;
     public String birthVillage;
@@ -42,24 +42,25 @@ public class ElephantInfo implements Parcelable {
     public String registrationDistrict;
     public String registrationProvince;
 
+    //TODO: Check avec galibe: Pourquoi des strings avec comme valeur "null" ?
     public ElephantInfo() {
         id = 0;
-        name = "null";
-        nickName = "null";
+        name = "";
+        nickName = "";
         sex = Gender.UNKNOWN;
         earTag = false;
         eyeD = false;
-        birthDate = "null";
-        birthVillage = "null";
-        birthDistrict = "null";
-        birthProvince = "null";
-        chips1 = "null";
+        birthDate = "";
+        birthVillage = "";
+        birthDistrict = "";
+        birthProvince = "";
+        chips1 = "";
         chips2 = "";
         chips3 = "";
-        registrationID = "null";
-        registrationVillage = "null";
-        registrationDistrict = "null";
-        registrationProvince = "null";
+        registrationID = "";
+        registrationVillage = "";
+        registrationDistrict = "";
+        registrationProvince = "";
     }
 
     public ElephantInfo(ElephantInfo other) {

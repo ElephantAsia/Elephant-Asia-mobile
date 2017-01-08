@@ -1,6 +1,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,7 +9,8 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        app:layout_collapseParallaxMultiplier="0.0">
+        app:layout_collapseParallaxMultiplier="0.0"
+      >
 
         <LinearLayout
             android:orientation="vertical"
@@ -19,7 +21,8 @@
             android:padding="10dp"
             android:id="@+id/addView"
             android:clickable="true"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            tools:ignore="ExtraText">
 
             <fr.elefantasia.elefantasia.view.EA_EditText
                 android:layout_marginBottom="20dp"
@@ -28,7 +31,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/elephant_name"/>
+                android:id="@+id/elephant_name"
+                app:required_field="true"/>
 
             <fr.elefantasia.elefantasia.view.EA_EditText
                 android:layout_marginBottom="20dp"
@@ -37,7 +41,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/elephant_nickname"/>
+                android:id="@+id/elephant_nickname"
+                app:required_field="true"/>
 
             <RadioGroup
                 android:weightSum="2"
@@ -66,24 +71,26 @@
 
             </RadioGroup>
 
-            <CheckBox
+            <CheckedTextView
                 android:text="@string/ear_tag"
+                android:id="@+id/ear_tag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/ear_tag"
                 android:button="@null"
                 android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                 android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"/>
 
-            <CheckBox
+
+            <CheckedTextView
                 android:text="@string/eyeD"
+                android:id="@+id/eyeD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/eyeD"
                 android:button="@null"
                 android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                 android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                 android:layout_marginBottom="5dp" />
+                />
 
             <fr.elefantasia.elefantasia.view.EA_EditText
                 android:layout_marginBottom="20dp"
@@ -92,7 +99,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="datetime"
                 android:ems="10"
-                android:id="@+id/elephant_birth_date" />
+                android:id="@+id/elephant_birth_date"
+                app:required_field="true"/>
 
             <fr.elefantasia.elefantasia.view.EA_EditText
                 android:layout_marginBottom="20dp"
@@ -101,7 +109,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:ems="10"
-                android:id="@+id/elephant_birth_village"/>
+                android:id="@+id/elephant_birth_village"
+                app:required_field="true"/>
 
             <fr.elefantasia.elefantasia.view.EA_EditText
                 android:layout_marginBottom="20dp"
@@ -110,7 +119,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:ems="10"
-                android:id="@+id/elephant_birth_district"/>
+                android:id="@+id/elephant_birth_district"
+                app:required_field="true"/>
 
             <fr.elefantasia.elefantasia.view.EA_EditText
                 android:layout_marginBottom="20dp"
@@ -119,7 +129,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:ems="10"
-                android:id="@+id/elephant_birth_province"/>
+                android:id="@+id/elephant_birth_province"
+                app:required_field="true"/>
 
 
             <fr.elefantasia.elefantasia.view.EA_EditText
@@ -129,7 +140,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:ems="10"
-                android:id="@+id/elephant_chip"/>
+                android:id="@+id/elephant_chip"
+                app:required_field="true"/>
 
 
             <fr.elefantasia.elefantasia.view.EA_EditText
@@ -139,7 +151,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:ems="10"
-                android:id="@+id/elephant_registration_id" />
+                android:id="@+id/elephant_registration_id"
+                app:required_field="true"/>
 
             <fr.elefantasia.elefantasia.view.EA_EditText
                 android:layout_marginBottom="20dp"
@@ -148,7 +161,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:ems="10"
-                android:id="@+id/elephant_registration_village"/>
+                android:id="@+id/elephant_registration_village"
+                app:required_field="true"/>
 
             <fr.elefantasia.elefantasia.view.EA_EditText
                 android:layout_marginBottom="20dp"
@@ -157,7 +171,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:ems="10"
-                android:id="@+id/elephant_registration_district"/>
+                android:id="@+id/elephant_registration_district"
+                app:required_field="true"/>
 
             <fr.elefantasia.elefantasia.view.EA_EditText
                 android:layout_marginBottom="20dp"
@@ -166,7 +181,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:ems="10"
-                android:id="@+id/elephant_registration_province"/>
+                android:id="@+id/elephant_registration_province"
+                app:required_field="true"/>
 
         </LinearLayout>
 

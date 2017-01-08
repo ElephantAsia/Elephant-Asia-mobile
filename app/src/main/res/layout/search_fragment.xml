@@ -1,14 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="10dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+   >
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+     >
 
-        <EditText
+        <fr.elefantasia.elefantasia.view.EA_EditText
             android:textSize="16sp"
             android:id="@+id/search_elephant_name"
             android:inputType="text"
@@ -17,13 +19,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:enabled="false"
+        <fr.elefantasia.elefantasia.view.EA_EditText
             android:textSize="16sp"
-            android:id="@+id/search_elephant_ship"
+            android:id="@+id/search_elephant_microchip"
             android:inputType="numberDecimal"
             android:ems="10"
-            android:hint="@string/elephant_microship"
+            android:hint="@string/elephant_microchip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -49,55 +50,54 @@
 
         </LinearLayout>
 
-        <EditText
-            android:enabled="false"
+        <fr.elefantasia.elefantasia.view.EA_EditText
+            android:textSize="16sp"
+            android:id="@+id/search_elephant_province"
+            android:inputType="text"
+            android:ems="10"
+            android:hint="@string/elephant_registration_province"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <fr.elefantasia.elefantasia.view.EA_EditText
             android:textSize="16sp"
             android:id="@+id/search_elephant_district"
-            android:inputType="numberDecimal"
+            android:inputType="text"
             android:ems="10"
-            android:hint="@string/district"
+            android:hint="@string/elephant_registration_district"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:enabled="false"
+        <fr.elefantasia.elefantasia.view.EA_EditText
             android:textSize="16sp"
             android:id="@+id/search_elephant_village"
-            android:inputType="numberDecimal"
+            android:inputType="text"
             android:ems="10"
-            android:hint="@string/village"
+            android:hint="@string/elephant_registration_village"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:enabled="false"
-            android:textSize="16sp"
-            android:id="@+id/search_elephant_camp_name"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:hint="@string/camp_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
-        <EditText
-            android:textSize="16sp"
-            android:enabled="false"
-            android:id="@+id/search_elephant_referent_name"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:hint="@string/referent_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
-        <EditText
-            android:textSize="16sp"
-            android:enabled="false"
-            android:id="@+id/search_elephant_referent_id"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:hint="@string/referent_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <!--<fr.elefantasia.elefantasia.view.EA_EditText-->
+            <!--android:textSize="16sp"-->
+            <!--android:enabled="false"-->
+            <!--android:id="@+id/search_elephant_referent_name"-->
+            <!--android:inputType="numberDecimal"-->
+            <!--android:ems="10"-->
+            <!--android:hint="@string/referent_name"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        <!--<fr.elefantasia.elefantasia.view.EA_EditText-->
+            <!--android:textSize="16sp"-->
+            <!--android:enabled="false"-->
+            <!--android:id="@+id/search_elephant_referent_id"-->
+            <!--android:inputType="numberDecimal"-->
+            <!--android:ems="10"-->
+            <!--android:hint="@string/referent_id"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
 
     </LinearLayout>
 

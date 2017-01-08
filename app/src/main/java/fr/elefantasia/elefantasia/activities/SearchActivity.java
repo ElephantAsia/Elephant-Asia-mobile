@@ -2,13 +2,18 @@ package fr.elefantasia.elefantasia.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewTreeObserver;
 
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.fragment.SearchFragment;
 import fr.elefantasia.elefantasia.interfaces.SearchInterface;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
+import fr.elefantasia.elefantasia.utils.StaticTools;
 
 public class SearchActivity extends AppCompatActivity implements SearchInterface {
 
