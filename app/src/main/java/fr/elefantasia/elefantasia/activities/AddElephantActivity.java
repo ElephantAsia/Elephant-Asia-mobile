@@ -9,8 +9,13 @@ import android.support.v7.widget.Toolbar;
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.adapter.ViewPagerAdapter;
 import fr.elefantasia.elefantasia.database.ElefantDatabase;
-import fr.elefantasia.elefantasia.fragment.AddElephantCivilStatusFragment;
-import fr.elefantasia.elefantasia.fragment.AddElephantPhysicalFragment;
+import fr.elefantasia.elefantasia.fragment.AddElephantConsultationFragment;
+import fr.elefantasia.elefantasia.fragment.AddElephantDescriptionFragment;
+import fr.elefantasia.elefantasia.fragment.AddElephantDocumentFragment;
+import fr.elefantasia.elefantasia.fragment.AddElephantLocationFragment;
+import fr.elefantasia.elefantasia.fragment.AddElephantParentageFragment;
+import fr.elefantasia.elefantasia.fragment.AddElephantRegistrationFragment;
+import fr.elefantasia.elefantasia.fragment.AddElephantOwnershipFragment;
 import fr.elefantasia.elefantasia.interfaces.AddElephantInterface;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
@@ -101,10 +106,13 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new AddElephantCivilStatusFragment(), getString(R.string.civil_status));
-        adapter.addFragment(new AddElephantPhysicalFragment(), getString(R.string.physical));
-        adapter.addFragment(new AddElephantPhysicalFragment(), getString(R.string.heal));
-        adapter.addFragment(new AddElephantPhysicalFragment(), getString(R.string.genealogy));
+        adapter.addFragment(new AddElephantRegistrationFragment(), getString(R.string.registration));
+        adapter.addFragment(new AddElephantOwnershipFragment(), getString(R.string.ownership));
+        adapter.addFragment(new AddElephantDescriptionFragment(), getString(R.string.description));
+        adapter.addFragment(new AddElephantParentageFragment(), getString(R.string.parentage));
+        adapter.addFragment(new AddElephantConsultationFragment(), getString(R.string.consultations));
+        adapter.addFragment(new AddElephantDocumentFragment(), getString(R.string.documents));
+        adapter.addFragment(new AddElephantLocationFragment(), getString(R.string.location));
         viewPager.setAdapter(adapter);
     }
 

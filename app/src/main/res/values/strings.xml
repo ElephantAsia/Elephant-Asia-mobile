@@ -15,8 +15,18 @@
     <string name="elephant_birthdate">Birthdate (ex: 2016/12/12)</string>
     <string name="elephant_name">Name</string>
     <string name="elephant_nickname">Nickname</string>
-    <string name="elephant_id_number">ID number</string>
+    <string name="elephant_registration_number">Registration number</string>
+    <string name="elephant_registration_village">Registration village</string>
+    <string name="elephant_registration_district">Registration district</string>
+    <string name="elephant_registration_province">Registration province</string>
+
+    <string name="elephant_birth_village">Birth village</string>
+    <string name="elephant_birth_district">Birth district</string>
+    <string name="elephant_birth_province">Birth province</string>
+
     <string name="elephant_chip">Chip number #1</string>
+    <string name="ear_tag">Ear tag</string>
+    <string name="eyeD">EyeD</string>
     <string name="sex">Sex</string>
 
     <string name="elefant">ELEPHANT</string>
@@ -28,6 +38,7 @@
 
     <string name="empty_username">Empty username</string>
     <string name="empty_password">Empty password</string>
+    <string name="empty_field">Field required</string>
 
     <string name="home_page">Home Page</string>
     <string name="open">Open</string>
@@ -44,10 +55,14 @@
     <string name="logout">Log out</string>
 
     <string name="add_elephant">Add Elephant</string>
-    <string name="civil_status">Civil Status</string>
-    <string name="physical">Physical</string>
-    <string name="heal">Heal</string>
-    <string name="genealogy">Genealogy</string>
+    <string name="registration">Registration</string>
+    <string name="ownership">Ownership</string>
+    <string name="description">Description</string>
+    <string name="parentage">Parentage</string>
+
+    <string name="consultations">Consultations</string>
+    <string name="documents">Documents</string>
+    <string name="location">Location</string>
 
     <string name="name_empty">Name empty</string>
     <string name="nickname_empty">Nickname empty</string>

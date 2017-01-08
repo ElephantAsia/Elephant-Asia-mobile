@@ -17,7 +17,7 @@ import fr.elefantasia.elefantasia.utils.ElephantInfo;
 import fr.elefantasia.elefantasia.view.EA_EditText;
 
 
-public class AddElephantCivilStatusFragment extends Fragment {
+public class AddElephantRegistrationFragment extends Fragment {
 
     //private ElefantDatabase database;
     //private LinearLayout addLayout;
@@ -32,7 +32,8 @@ public class AddElephantCivilStatusFragment extends Fragment {
     private EA_EditText birthDateEditText;
 
 
-    public AddElephantCivilStatusFragment() {
+    public AddElephantRegistrationFragment() {
+        //adapter = new Adapter(getContext());
     }
 
 
@@ -45,7 +46,7 @@ public class AddElephantCivilStatusFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.add_elephant_civil_status_fragment, container, false);
+        View view = inflater.inflate(R.layout.add_elephant_registration_fragment, container, false);
 
         /*listView = (ListView) view.findViewById('R.id.main_list);
         listView.setAdapter(adapter);
@@ -68,21 +69,12 @@ public class AddElephantCivilStatusFragment extends Fragment {
         sexRadioGroup = (RadioGroup)view.findViewById(R.id.elephant_rg_sex);
         birthDateEditText = (EA_EditText)view.findViewById(R.id.elephant_birthdate);
 
-        fabNext = (FloatingActionButton)view.findViewById(R.id.elephant_civil_status_fab);
+        fabNext = (FloatingActionButton)view.findViewById(R.id.elephant_registration_fab);
         fabNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (confirm()) {
                     ((AddElephantInterface) getActivity()).next();
-                }
-            }
-        });
-
-        nameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    confirmName();
                 }
             }
         });
@@ -99,15 +91,6 @@ public class AddElephantCivilStatusFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 ((AddElephantInterface) getActivity()).setElephantName(s.toString());
-            }
-        });
-
-        nicknameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    confirmNickname();
-                }
             }
         });
 
@@ -150,15 +133,6 @@ public class AddElephantCivilStatusFragment extends Fragment {
             }
         });
 
-        chipNumberEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    confirmChip();
-                }
-            }
-        });
-
         chipNumberEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -182,15 +156,6 @@ public class AddElephantCivilStatusFragment extends Fragment {
                     ((AddElephantInterface) getActivity()).setElephantSex(ElephantInfo.Gender.MALE);
                 } else {
                     ((AddElephantInterface) getActivity()).setElephantSex(ElephantInfo.Gender.FEMALE);
-                }
-            }
-        });
-
-        birthDateEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    confirmBirthdate();
                 }
             }
         });

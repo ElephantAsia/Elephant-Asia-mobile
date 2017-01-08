@@ -1,0 +1,188 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_collapseParallaxMultiplier="0.0">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:padding="10dp"
+            android:id="@+id/addView"
+            android:clickable="true"
+            android:focusableInTouchMode="true">
+
+            <fr.elefantasia.elefantasia.view.EA_EditText
+                android:layout_marginBottom="20dp"
+                android:hint="@string/elephant_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/elephant_name"/>
+
+            <fr.elefantasia.elefantasia.view.EA_EditText
+                android:layout_marginBottom="20dp"
+                android:hint="@string/elephant_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/elephant_nickname"/>
+
+            <RadioGroup
+                android:weightSum="2"
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/elephant_rg_sex">
+
+                <RadioButton
+                    android:gravity="center"
+                    android:text="@string/male"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/elephant_radio_male"
+                    android:duplicateParentState="false" />
+
+                <RadioButton
+                    android:gravity="center"
+                    android:text="@string/female"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/elephant_radio_female" />
+
+            </RadioGroup>
+
+            <CheckBox
+                android:text="@string/ear_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ear_tag"
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"/>
+
+            <CheckBox
+                android:text="@string/eyeD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/eyeD"
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                android:layout_marginBottom="5dp" />
+
+            <fr.elefantasia.elefantasia.view.EA_EditText
+                android:layout_marginBottom="20dp"
+                android:hint="@string/elephant_birthdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="datetime"
+                android:ems="10"
+                android:id="@+id/elephant_birthdate" />
+
+            <fr.elefantasia.elefantasia.view.EA_EditText
+                android:layout_marginBottom="20dp"
+                android:hint="@string/elephant_birth_village"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:ems="10"
+                android:id="@+id/elephant_birth_village"/>
+
+            <fr.elefantasia.elefantasia.view.EA_EditText
+                android:layout_marginBottom="20dp"
+                android:hint="@string/elephant_birth_district"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:ems="10"
+                android:id="@+id/elephant_birth_district"/>
+
+            <fr.elefantasia.elefantasia.view.EA_EditText
+                android:layout_marginBottom="20dp"
+                android:hint="@string/elephant_birth_province"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:ems="10"
+                android:id="@+id/elephant_birth_province"/>
+
+
+            <fr.elefantasia.elefantasia.view.EA_EditText
+                android:layout_marginBottom="20dp"
+                android:hint="@string/elephant_chip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/elephant_chip"/>
+
+
+            <fr.elefantasia.elefantasia.view.EA_EditText
+                android:layout_marginBottom="20dp"
+                android:hint="@string/elephant_registration_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:ems="10"
+                android:id="@+id/elephant_id_number" />
+
+            <fr.elefantasia.elefantasia.view.EA_EditText
+                android:layout_marginBottom="20dp"
+                android:hint="@string/elephant_registration_village"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:ems="10"
+                android:id="@+id/elephant_registration_village"/>
+
+            <fr.elefantasia.elefantasia.view.EA_EditText
+                android:layout_marginBottom="20dp"
+                android:hint="@string/elephant_registration_district"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:ems="10"
+                android:id="@+id/elephant_registration_district"/>
+
+            <fr.elefantasia.elefantasia.view.EA_EditText
+                android:layout_marginBottom="20dp"
+                android:hint="@string/elephant_registration_province"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:ems="10"
+                android:id="@+id/elephant_registration_province"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/elephant_registration_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_media_next"
+        app:backgroundTint="@color/primary_100"
+        app:borderWidth="0dp"
+        app:elevation="0dp"
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="#cd2014" />
+
+</RelativeLayout>

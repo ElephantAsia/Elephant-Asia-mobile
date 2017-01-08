@@ -6,11 +6,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+
+import fr.elefantasia.elefantasia.R;
 
 
 /**
@@ -92,8 +95,28 @@ public class StaticTools {
         }
     }
 
+    /**
+     * Hide keyboard
+     *
+     * @param ctx   Current context
+     * @param view  Current view
+     */
     public static void hideKeyboard(Context ctx, View view) {
         InputMethodManager inputMethodManager = (InputMethodManager)ctx.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    /**
+     * Check if the the textview is empty
+     *
+     * @param ctx   Current context
+     * @param view Le Current TextView
+     */
+    public static void checkEmptyField(Context ctx, TextView view) {
+        if (view.getText().toString().trim().length() == 0) {
+            view.setError(view.getResources().getString(R.string.empty_field));
+        } else {
+            view.setError(null);
+        }
     }
 }
