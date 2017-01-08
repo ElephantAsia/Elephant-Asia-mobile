@@ -121,10 +121,11 @@ public class ElefantDatabase {
      * @return Une liste d'éléphant
      */
     public List<ElephantInfo> getElephantByName(String name) {
-        String request = "SELECT * FROM " + MySQLite.TABLE_NAME + " WHERE " + MySQLite.COL_NAME + " = ?";
+        String request = "SELECT * FROM " + MySQLite.TABLE_NAME + " WHERE " + MySQLite.COL_NAME + " LIKE '" + name + "%'";
         List<ElephantInfo> results = new ArrayList<>();
 
-        Cursor cursor = database.rawQuery(request, new String[] {name});
+        Cursor cursor = database.rawQuery(request, null);
+        //Cursor cursor = database.rawQuery(request, new String[] {name});
 
         if (cursor.getCount() > 0)
         {

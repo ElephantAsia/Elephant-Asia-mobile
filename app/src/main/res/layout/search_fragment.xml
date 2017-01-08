@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fr.elefantasia.elefantasia.view.EA_EditText
+        android:inputType="text"
+        android:hint="@string/elephant_name"
+        android:id="@+id/search_elephant_name"
+        android:ems="10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/search_button_search"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/search"
+        android:layout_width="120dp"
+        android:layout_height="60dp" />
+
+</RelativeLayout>

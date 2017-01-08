@@ -1,25 +1,23 @@
 package fr.elefantasia.elefantasia.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.ListView;
-
-import java.util.List;
 
 import fr.elefantasia.elefantasia.R;
-import fr.elefantasia.elefantasia.adapter.ElephantAdapter;
-import fr.elefantasia.elefantasia.database.ElefantDatabase;
+import fr.elefantasia.elefantasia.fragment.SearchFragment;
+import fr.elefantasia.elefantasia.interfaces.SearchInterface;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
 /**
  * Created by care_j on 15/11/16.
  */
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements SearchInterface {
 
-    private ListView mListView;
-    private ElefantDatabase database;
+    private SearchFragment searchFragment;
+    //private SearchBrowserFragment searchBrowserFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +31,37 @@ public class SearchActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        database = new ElefantDatabase(getApplicationContext());
-        database.open();
+        //currentState = State.Search;
 
-        mListView = (ListView) findViewById(R.id.listViewSearch);
-
-        List<ElephantInfo> elephants = database.getElephantByName("test");
-
-        ElephantAdapter adapter = new ElephantAdapter(getApplicationContext());
-        adapter.addList(elephants);
-        mListView.setAdapter(adapter);
+        setSearchFragment();
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void onClickSearch(ElephantInfo item) {
+        setBrowserFragment(item);
+    }
+
+    private void setSearchFragment() {
+        if (searchFragment == null) {
+            searchFragment = new SearchFragment();
+        }
+
+        Bundle args = new Bundle();
+        searchFragment.setArguments(args);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.search_fragment, searchFragment).commit();
+    }
+
+    private void setBrowserFragment(ElephantInfo info) {
+        Intent intent = new Intent(this, SearchBrowserActivity.class);
+        SearchBrowserActivity.setName(intent, info.name);
+        startActivity(intent);
     }
 
 }

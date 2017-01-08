@@ -116,6 +116,9 @@ public class MainActivity extends AppCompatActivity implements HomePageInterface
     public void onResume() {
         super.onResume();
         refreshProfilPicBlurred();
+
+        drawerListAdapter.setSelection(FRAGMENT_HOME_PAGE);
+        drawerListAdapter.notifyDataSetChanged();
     }
 
     @Override
