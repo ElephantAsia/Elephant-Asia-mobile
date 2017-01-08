@@ -5,13 +5,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
-
-import static java.lang.String.valueOf;
 
 /**
  * Created by Stephane on 31/10/2016.
@@ -26,7 +25,7 @@ public class ElefantDatabase {
     /**
      * Version de la base de donnée
      */
-    private static final int VERSION_BDD = 2;
+    private static final int VERSION_BDD = 4;
 
     /**
      * Nom du fichier de la base de donnée
@@ -75,13 +74,24 @@ public class ElefantDatabase {
      * @return Code d'erreur
      */
     public long insertElephant(ElephantInfo elefant) {
+        Log.i("registraction village", elefant.registrationVillage);
+        Log.i("registraction province", elefant.registrationProvince);
+
         ContentValues values = new ContentValues();
         values.put(MySQLite.COL_NAME, elefant.name);
         values.put(MySQLite.COL_NICKNAME, elefant.nickName);
-        values.put(MySQLite.COL_REGISTRATION_NUMBER, elefant.registrationName);
+        values.put(MySQLite.COL_SEX, String.valueOf(elefant.sex));
+        values.put(MySQLite.COL_EAR_TAG, String.valueOf(elefant.earTag));
+        values.put(MySQLite.COL_EYED, String.valueOf(elefant.eyeD));
+        values.put(MySQLite.COL_BIRTH_DATE, elefant.birthDate);
+        values.put(MySQLite.COL_BIRTH_VILLAGE, elefant.birthVillage);
+        values.put(MySQLite.COL_BIRTH_DISTRICT, elefant.birthDistrict);
+        values.put(MySQLite.COL_BIRTH_PROVINCE, elefant.birthProvince);
         values.put(MySQLite.COL_CHIPS, elefant.chips.get(0));
-        values.put(MySQLite.COL_SEX, valueOf(elefant.sex));
-        values.put(MySQLite.COL_BIRTHDATE, valueOf(elefant.birthDate));
+        values.put(MySQLite.COL_REGISTRATION_ID, elefant.registrationID);
+        values.put(MySQLite.COL_REGISTRATION_VILLAGE, elefant.registrationVillage);
+        values.put(MySQLite.COL_REGISTRATION_DISTRICT, elefant.registrationDistrict);
+        values.put(MySQLite.COL_REGISTRATION_PROVINCE, elefant.registrationProvince);
 
         return (database.insert(MySQLite.TABLE_NAME, null, values));
     }
@@ -97,10 +107,18 @@ public class ElefantDatabase {
         ContentValues values = new ContentValues();
         values.put(MySQLite.COL_NAME, elefant.name);
         values.put(MySQLite.COL_NICKNAME, elefant.nickName);
-        values.put(MySQLite.COL_REGISTRATION_NUMBER, elefant.registrationName);
+        values.put(MySQLite.COL_SEX, String.valueOf(elefant.sex));
+        values.put(MySQLite.COL_EAR_TAG, String.valueOf(elefant.earTag));
+        values.put(MySQLite.COL_EYED, String.valueOf(elefant.eyeD));
+        values.put(MySQLite.COL_BIRTH_DATE, elefant.birthDate);
+        values.put(MySQLite.COL_BIRTH_VILLAGE, elefant.birthVillage);
+        values.put(MySQLite.COL_BIRTH_DISTRICT, elefant.birthDistrict);
+        values.put(MySQLite.COL_BIRTH_PROVINCE, elefant.birthProvince);
         values.put(MySQLite.COL_CHIPS, elefant.chips.get(0));
-        values.put(MySQLite.COL_SEX, valueOf(elefant.sex));
-        values.put(MySQLite.COL_BIRTHDATE, valueOf(elefant.birthDate));
+        values.put(MySQLite.COL_REGISTRATION_ID, elefant.registrationID);
+        values.put(MySQLite.COL_REGISTRATION_VILLAGE, elefant.registrationVillage);
+        values.put(MySQLite.COL_REGISTRATION_DISTRICT, elefant.registrationDistrict);
+        values.put(MySQLite.COL_REGISTRATION_PROVINCE, elefant.registrationProvince);
 
         return (database.update(MySQLite.TABLE_NAME, values, MySQLite.COL_ID + " = " + id, null));
     }
@@ -151,10 +169,18 @@ public class ElefantDatabase {
         elefant.id = cursor.getInt(MySQLite.NUM_COL_ID);
         elefant.name = cursor.getString(MySQLite.NUM_COL_NAME);
         elefant.nickName = cursor.getString(MySQLite.NUM_COL_NICKNAME);
-        elefant.registrationName = cursor.getString(MySQLite.NUM_COL_REGISTRATION_NUMBER);
-        elefant.addChips(cursor.getString(MySQLite.NUM_COL_CHIPS));
         elefant.sex = ElephantInfo.Gender.valueOf(cursor.getString(MySQLite.NUM_COL_SEX));
-        elefant.birthDate = cursor.getString(MySQLite.NUM_COL_BIRTHDATE);
+        elefant.earTag = Boolean.valueOf(cursor.getString(MySQLite.NUM_COL_EAR_TAG));
+        elefant.eyeD = Boolean.valueOf(cursor.getString(MySQLite.NUM_COL_EYED));
+        elefant.birthDate = cursor.getString(MySQLite.NUM_COL_BIRTH_DATE);
+        elefant.birthVillage = cursor.getString(MySQLite.NUM_COL_BIRTH_VILLAGE);
+        elefant.birthDistrict = cursor.getString(MySQLite.NUM_COL_BIRTH_DISTRICT);
+        elefant.birthProvince = cursor.getString(MySQLite.NUM_COL_BIRTH_PROVINCE);
+        elefant.addChips(cursor.getString(MySQLite.NUM_COL_CHIPS));
+        elefant.registrationID = cursor.getString(MySQLite.NUM_COL_REGISTRATION_ID);
+        elefant.registrationVillage = cursor.getString(MySQLite.NUM_COL_REGISTRATION_VILLAGE);
+        elefant.registrationDistrict = cursor.getString(MySQLite.NUM_COL_REGISTRATION_DISTRICT);
+        elefant.registrationProvince = cursor.getString(MySQLite.NUM_COL_REGISTRATION_PROVINCE);
         return (elefant);
     }
 

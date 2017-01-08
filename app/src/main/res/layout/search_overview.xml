@@ -1,69 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:background="@color/black_transparant">
+    android:layout_height="140dp"
+    android:paddingTop="5dp"
+    android:paddingStart="5dp"
+    android:paddingLeft="5dp"
+    android:paddingEnd="5dp"
+    android:paddingRight="5dp">
 
-    <TextView
-        android:text="Name"
-        android:id="@+id/ovName"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:textColor="#FFF"
-        android:background="#454" />
-
-    <TextView
-        android:id="@+id/age"
-        android:text="Age"
-        android:gravity="center"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_alignLeft="@+id/ovName"
-        android:layout_alignStart="@id/ovName"
-        android:layout_below="@id/ovName"
-        android:background="@color/black_transparant"
-        android:layout_marginTop="10dp" />
-
-    <TextView
-        android:text="Registration Number"
+    <ImageView
+        android:id="@+id/search_overview_background"
+        android:src="@mipmap/stripe"
+        android:scaleType="centerCrop"
+        android:contentDescription="@null"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_toRightOf="@+id/age"
-        android:layout_toEndOf="@id/age"
-        android:layout_below="@id/ovName"
-        android:gravity="center"
-        android:background="@color/black_transparant"
-        android:layout_marginTop="10dp"
-        android:id="@+id/registration" />
+        android:layout_height="match_parent" />
 
-    <ImageView
-        android:id="@+id/legal"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:textColor="@android:color/black"
-        android:contentDescription="Legal"
-        tools:background="#505"
-        android:layout_above="@+id/registration"
-        android:layout_alignRight="@+id/registration"
-        android:layout_alignEnd="@+id/registration" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/search_overview_photo"
+        android:contentDescription="@null"
+        android:src="@mipmap/elephant"
+        android:layout_marginTop="17dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 
-    <ImageView
-        android:id="@+id/sex"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:textStyle="bold"
-        tools:text="Pseudo"
-        tools:background="#AAA"
-        android:contentDescription="Sex"
-        android:layout_above="@+id/registration"
-        android:layout_toLeftOf="@+id/legal"
-        android:layout_toStartOf="@+id/legal"
-        android:layout_marginRight="11dp"
-        android:layout_marginEnd="11dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_toRightOf="@id/search_overview_photo"
+        android:layout_toEndOf="@id/search_overview_photo"
+        android:layout_alignTop="@id/search_overview_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/search_overview_name"
+            android:text="@string/elephant_name_sex_age"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        
+        <TextView
+            android:text="@string/elephant_registration"
+            android:id="@+id/search_overview_registration"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/search_overview_location"
+            android:text="@string/elephant_location"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </RelativeLayout>

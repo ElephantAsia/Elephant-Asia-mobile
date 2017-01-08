@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -61,38 +60,17 @@ public class ElephantAdapter extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.search_overview, parent, false);
         }
 
-        //TextView registration = (TextView) view.findViewById(R.id.ovName);
-        TextView name = (TextView) view.findViewById(R.id.ovName);
-        TextView age = (TextView) view.findViewById(R.id.age);
-        ImageView sex = (ImageView) view.findViewById(R.id.sex);
-        ImageView legal = (ImageView) view.findViewById(R.id.legal);
+        ElephantInfo info = getItem(index);
+        String sex = (info.sex == ElephantInfo.Gender.FEMALE) ? context.getString(R.string.female) : context.getString(R.string.male);
 
-        //getItem(position) va récupérer l'item [position] de la List<ElephantInfo> tweets
-        ElephantInfo elephant = getItem(index);
+        TextView name = (TextView)view.findViewById(R.id.search_overview_name);
+        TextView registration = (TextView)view.findViewById(R.id.search_overview_registration);
+        TextView location = (TextView)view.findViewById(R.id.search_overview_location);
 
-        //il ne reste plus qu'à remplir notre vue
-        name.setText(elephant.name);
-        age.setText(elephant.birthDate);
-        //viewHolder.registration.setText(elephant.getDatabaseNumber());
-        if (elephant.sex == ElephantInfo.Gender.MALE) {
-            sex.setImageResource(R.drawable.male);
-        }
-        else if (elephant.sex == ElephantInfo.Gender.FEMALE){
-            sex.setImageResource(R.drawable.female);
-        }
-        else {
-            sex.setImageResource(R.drawable.unknown);
-        }
-        /*ElephantInfo.Legallity legal = elephant.getLegallyRegistered();
-        if (legal == ElephantInfo.Legallity.LEGAL) {
-            viewHolder.legal.setImageResource(R.drawable.unknown);
-        }
-        else if (legal == ElephantInfo.Legallity.ILLEGAL) {
-            viewHolder.legal.setImageResource(R.drawable.unknown);
-        }
-        else {*/
-            legal.setImageResource(R.drawable.unknown);
-        //}
+        name.setText(String.format(context.getString(R.string.elephant_name_sex_age), info.name, sex, "-"));
+        registration.setText(info.registrationID);
+        location.setText(String.format(context.getString(R.string.elephant_location), info.registrationVillage, info.registrationProvince));
+
         return view;
     }
 }

@@ -8,13 +8,23 @@ import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
 public interface AddElephantInterface {
 
-    void next();
+    void nextPage();
 
-    void setElephantName(String name);
-    void setElephantNickname(String nickname);
-    void setElephantIDNumber(String number);
-    void setElephantChipNumber(String value);
-    void setElephantSex(ElephantInfo.Gender sex);
-    void setElephantBirthdate(String birthdate);
+    void setName(String name);
+    void setNickname(String nickname);
+    void setSex(ElephantInfo.Gender sex);
+    void hasEarTag(boolean value);
+    void hasEyeD(boolean value);
 
+    void setBirthdate(String date);
+    void setBirthVillage(String village);
+    void setBirthDistrict(String district);
+    void setBirthProvince(String province);
+
+    void setChipNumber(String value);
+
+    void setRegistrationID(String id);
+    void setRegistrationVillage(String village);
+    void setRegistrationDistrict(String district);
+    void setRegistrationProvince(String province);
 }

@@ -13,9 +13,9 @@ import fr.elefantasia.elefantasia.fragment.AddElephantConsultationFragment;
 import fr.elefantasia.elefantasia.fragment.AddElephantDescriptionFragment;
 import fr.elefantasia.elefantasia.fragment.AddElephantDocumentFragment;
 import fr.elefantasia.elefantasia.fragment.AddElephantLocationFragment;
+import fr.elefantasia.elefantasia.fragment.AddElephantOwnershipFragment;
 import fr.elefantasia.elefantasia.fragment.AddElephantParentageFragment;
 import fr.elefantasia.elefantasia.fragment.AddElephantRegistrationFragment;
-import fr.elefantasia.elefantasia.fragment.AddElephantOwnershipFragment;
 import fr.elefantasia.elefantasia.interfaces.AddElephantInterface;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
@@ -62,7 +62,12 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     }
 
     @Override
-    public void next() {
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void nextPage() {
         /*if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1) {
             viewPager.setCurrentItem(0);
         } else {
@@ -75,33 +80,73 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     }
 
     @Override
-    public void setElephantName(String name) {
-        elephantInfo.setName(name);
+    public void setName(String name) {
+        elephantInfo.name = name;
     }
 
     @Override
-    public void setElephantNickname(String nickname) {
-        elephantInfo.setNickname(nickname);
+    public void setNickname(String nickname) {
+        elephantInfo.nickName = nickname;
     }
 
     @Override
-    public void setElephantIDNumber(String number) {
-        elephantInfo.setRegistrationName(number);
+    public void setSex(ElephantInfo.Gender sex) {
+        elephantInfo.sex = sex;
     }
 
     @Override
-    public void setElephantChipNumber(String value) {
+    public void hasEarTag(boolean value) {
+        elephantInfo.earTag = value;
+    }
+
+    @Override
+    public void hasEyeD(boolean value) {
+        elephantInfo.eyeD = value;
+    }
+
+    @Override
+    public void setBirthdate(String date) {
+        elephantInfo.birthDate = date;
+    }
+
+    @Override
+    public void setBirthVillage(String village) {
+        elephantInfo.birthVillage = village;
+    }
+
+    @Override
+    public void setBirthDistrict(String district) {
+        elephantInfo.birthDistrict = district;
+    }
+
+    @Override
+    public void setBirthProvince(String province) {
+        elephantInfo.birthProvince = province;
+    }
+
+    @Override
+    public void setChipNumber(String value) {
         elephantInfo.addChips(value);
     }
 
     @Override
-    public void setElephantSex(ElephantInfo.Gender sex) {
-        elephantInfo.setSex(sex);
+    public void setRegistrationID(String id) {
+        elephantInfo.registrationID = id;
     }
 
     @Override
-    public void setElephantBirthdate(String birthdate) {
-        elephantInfo.setBirthdate(birthdate);
+    public void setRegistrationVillage(String village) {
+        elephantInfo.registrationVillage = village;
+    }
+
+    @Override
+    public void setRegistrationDistrict(String district) {
+        elephantInfo.registrationDistrict = district;
+    }
+
+    @Override
+    public void setRegistrationProvince(String province) {
+        elephantInfo.registrationProvince = province;
     }
 
     private void setupViewPager(ViewPager viewPager) {

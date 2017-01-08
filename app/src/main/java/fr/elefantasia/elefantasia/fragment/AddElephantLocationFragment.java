@@ -33,7 +33,7 @@ public class AddElephantLocationFragment extends Fragment {
         fabNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((AddElephantInterface) getActivity()).next();
+                ((AddElephantInterface) getActivity()).nextPage();
             }
         });
 

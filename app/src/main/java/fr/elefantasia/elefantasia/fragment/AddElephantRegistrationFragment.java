@@ -8,6 +8,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -19,23 +21,31 @@ import fr.elefantasia.elefantasia.view.EA_EditText;
 
 public class AddElephantRegistrationFragment extends Fragment {
 
-    //private ElefantDatabase database;
-    //private LinearLayout addLayout;
-
     private FloatingActionButton fabNext;
 
     private EA_EditText nameEditText;
     private EA_EditText nicknameEditText;
-    private EA_EditText idNumberEditText;
-    private EA_EditText chipNumberEditText;
+
     private RadioGroup sexRadioGroup;
+
+    private CheckBox earTagCheckBox;
+    private CheckBox eyedCheckBox;
+
     private EA_EditText birthDateEditText;
+    private EA_EditText birthVillageEditText;
+    private EA_EditText birthDistrictEditText;
+    private EA_EditText birthProvinceEditText;
+
+    private EA_EditText chipNumberEditText;
+
+    private EA_EditText registrationIDEditText;
+    private EA_EditText registrationVillageEditText;
+    private EA_EditText registrationDistrictEditText;
+    private EA_EditText registrationProvinceEditText;
 
 
     public AddElephantRegistrationFragment() {
-        //adapter = new Adapter(getContext());
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,37 +54,30 @@ public class AddElephantRegistrationFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_elephant_registration_fragment, container, false);
-
-        /*listView = (ListView) view.findViewById('R.id.main_list);
-        listView.setAdapter(adapter);
-
-        database = new ElefantDatabase(getActivity());
-        database.open();
-
-        Elefant elefant = createElefant("stephouuu");
-        Elefant elefant1 = createElefant("robert");
-
-        database.insertElefant(elefant);
-        database.insertElefant(elefant1);
-
-        adapter.addData(database.getElefantWithName("robert"));*/
 
         nameEditText = (EA_EditText)view.findViewById(R.id.elephant_name);
         nicknameEditText = (EA_EditText)view.findViewById(R.id.elephant_nickname);
-        idNumberEditText = (EA_EditText)view.findViewById(R.id.elephant_id_number);
-        chipNumberEditText = (EA_EditText)view.findViewById(R.id.elephant_chip);
         sexRadioGroup = (RadioGroup)view.findViewById(R.id.elephant_rg_sex);
-        birthDateEditText = (EA_EditText)view.findViewById(R.id.elephant_birthdate);
+        earTagCheckBox = (CheckBox)view.findViewById(R.id.ear_tag);
+        eyedCheckBox = (CheckBox)view.findViewById(R.id.eyeD);
+        birthDateEditText = (EA_EditText)view.findViewById(R.id.elephant_birth_date);
+        birthVillageEditText = (EA_EditText)view.findViewById(R.id.elephant_birth_village);
+        birthDistrictEditText = (EA_EditText)view.findViewById(R.id.elephant_birth_district);
+        birthProvinceEditText = (EA_EditText)view.findViewById(R.id.elephant_birth_province);
+        chipNumberEditText = (EA_EditText)view.findViewById(R.id.elephant_chip);
+        registrationIDEditText = (EA_EditText)view.findViewById(R.id.elephant_registration_id);
+        registrationVillageEditText = (EA_EditText)view.findViewById(R.id.elephant_registration_village);
+        registrationDistrictEditText = (EA_EditText)view.findViewById(R.id.elephant_registration_district);
+        registrationProvinceEditText = (EA_EditText)view.findViewById(R.id.elephant_registration_province);
 
         fabNext = (FloatingActionButton)view.findViewById(R.id.elephant_registration_fab);
         fabNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (confirm()) {
-                    ((AddElephantInterface) getActivity()).next();
+                    ((AddElephantInterface) getActivity()).nextPage();
                 }
             }
         });
@@ -90,7 +93,7 @@ public class AddElephantRegistrationFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                ((AddElephantInterface) getActivity()).setElephantName(s.toString());
+                ((AddElephantInterface) getActivity()).setName(s.toString());
             }
         });
 
@@ -105,46 +108,7 @@ public class AddElephantRegistrationFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                ((AddElephantInterface) getActivity()).setElephantNickname(s.toString());
-            }
-        });
-
-        idNumberEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    confirmId();
-                }
-            }
-        });
-
-        idNumberEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                ((AddElephantInterface) getActivity()).setElephantIDNumber(s.toString());
-            }
-        });
-
-        chipNumberEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                ((AddElephantInterface) getActivity()).setElephantChipNumber(s.toString());
+                ((AddElephantInterface) getActivity()).setNickname(s.toString());
             }
         });
 
@@ -153,10 +117,24 @@ public class AddElephantRegistrationFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 View view = group.findViewById(R.id.elephant_radio_male);
                 if (view == group.findViewById(checkedId)) {
-                    ((AddElephantInterface) getActivity()).setElephantSex(ElephantInfo.Gender.MALE);
+                    ((AddElephantInterface) getActivity()).setSex(ElephantInfo.Gender.MALE);
                 } else {
-                    ((AddElephantInterface) getActivity()).setElephantSex(ElephantInfo.Gender.FEMALE);
+                    ((AddElephantInterface) getActivity()).setSex(ElephantInfo.Gender.FEMALE);
                 }
+            }
+        });
+
+        earTagCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ((AddElephantInterface) getActivity()).hasEarTag(isChecked);
+            }
+        });
+
+        eyedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ((AddElephantInterface) getActivity()).hasEyeD(isChecked);
             }
         });
 
@@ -171,7 +149,127 @@ public class AddElephantRegistrationFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                ((AddElephantInterface) getActivity()).setElephantBirthdate(s.toString());
+                ((AddElephantInterface) getActivity()).setBirthdate(s.toString());
+            }
+        });
+
+        birthVillageEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ((AddElephantInterface) getActivity()).setBirthVillage(s.toString());
+            }
+        });
+
+        birthDistrictEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ((AddElephantInterface) getActivity()).setBirthDistrict(s.toString());
+            }
+        });
+
+        birthProvinceEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ((AddElephantInterface) getActivity()).setBirthProvince(s.toString());
+            }
+        });
+
+        chipNumberEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ((AddElephantInterface) getActivity()).setChipNumber(s.toString());
+            }
+        });
+
+        registrationIDEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ((AddElephantInterface) getActivity()).setRegistrationID(s.toString());
+            }
+        });
+
+        registrationVillageEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ((AddElephantInterface) getActivity()).setRegistrationVillage(s.toString());
+            }
+        });
+
+        registrationDistrictEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ((AddElephantInterface) getActivity()).setRegistrationDistrict(s.toString());
+            }
+        });
+
+        registrationProvinceEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ((AddElephantInterface) getActivity()).setRegistrationProvince(s.toString());
             }
         });
 
@@ -202,11 +300,11 @@ public class AddElephantRegistrationFragment extends Fragment {
     }
 
     private boolean confirmId() {
-        if (idNumberEditText.getText().toString().trim().length() == 0) {
-            idNumberEditText.setError(getResources().getString(R.string.id_number_empty));
+        if (registrationIDEditText.getText().toString().trim().length() == 0) {
+            registrationIDEditText.setError(getResources().getString(R.string.id_number_empty));
             return false;
         }
-        idNumberEditText.setError(null);
+        registrationIDEditText.setError(null);
         return true;
     }
 

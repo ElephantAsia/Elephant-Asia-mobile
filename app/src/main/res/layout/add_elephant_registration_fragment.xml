@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="datetime"
                 android:ems="10"
-                android:id="@+id/elephant_birthdate" />
+                android:id="@+id/elephant_birth_date" />
 
             <fr.elefantasia.elefantasia.view.EA_EditText
                 android:layout_marginBottom="20dp"
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:ems="10"
-                android:id="@+id/elephant_id_number" />
+                android:id="@+id/elephant_registration_id" />
 
             <fr.elefantasia.elefantasia.view.EA_EditText
                 android:layout_marginBottom="20dp"

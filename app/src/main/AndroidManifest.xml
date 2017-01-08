@@ -34,7 +34,9 @@
         <activity
             android:name=".activities.SearchActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activities.SearchBrowserActivity"></activity>
+        <activity
+            android:name=".activities.SearchBrowserActivity"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

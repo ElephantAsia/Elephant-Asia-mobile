@@ -74,4 +74,8 @@
     <string name="search_result">Result for \'%s\'</string>
     <string name="no_item_found">No item found</string>
 
+    <string name="elephant_name_sex_age">%1$s, %2$s, %3$s y/o</string>
+    <string name="elephant_registration">#%s</string>
+    <string name="elephant_location">%1$s, %2$s</string>
+
 </resources>
