@@ -2,13 +2,14 @@ package fr.elefantasia.elefantasia.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.adapter.ElephantAdapter;
+import fr.elefantasia.elefantasia.database.ElefantDatabase;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
 /**
@@ -17,27 +18,37 @@ import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
 public class SearchActivity extends AppCompatActivity {
 
-        ListView mListView;
+    private ListView mListView;
+    private ElefantDatabase database;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.search_activity);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.search_activity);
 
-            mListView = (ListView) findViewById(R.id.listViewSearch);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-            List<ElephantInfo> elephants = generateElephants();
-            ElephantAdapter adapter = new ElephantAdapter(SearchActivity.this, elephants);
-            mListView.setAdapter(adapter);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        database = new ElefantDatabase(getApplicationContext());
+        database.open();
 
-        private List<ElephantInfo> generateElephants(){
-            List<ElephantInfo> elephants = new ArrayList<ElephantInfo>();
-            elephants.add(new ElephantInfo("José", "MS001", "ELVESPA", "17/09/1993", ElephantInfo.Legallity.ILLEGAL, ElephantInfo.Gender.MALE));
-            elephants.add(new ElephantInfo("Julien", "MS002", "JUTIN", "19/06/1996", ElephantInfo.Legallity.LEGAL, ElephantInfo.Gender.MALE));
-            elephants.add(new ElephantInfo("Joffrey", "MS003", "SPACEINVADER", "10/05/1995", ElephantInfo.Legallity.ILLEGAL, ElephantInfo.Gender.MALE));
-            elephants.add(new ElephantInfo("Josiane", "MS004", "JOSIANETKT", "14/01/1993", ElephantInfo.Legallity.ILLEGAL, ElephantInfo.Gender.FEMALE));
-            return elephants;
-        }
+        mListView = (ListView) findViewById(R.id.listViewSearch);
+
+        List<ElephantInfo> elephants = database.getElephantByName("test");
+
+        ElephantAdapter adapter = new ElephantAdapter(getApplicationContext());
+        adapter.addList(elephants);
+        mListView.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
 }

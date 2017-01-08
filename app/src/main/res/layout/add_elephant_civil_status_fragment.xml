@@ -63,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:id="@+id/rgSex">
+                android:id="@+id/elephant_rg_sex">
 
                 <RadioButton
                     android:gravity="center"
@@ -71,7 +71,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:id="@+id/rbMale"
+                    android:id="@+id/elephant_radio_male"
                     android:duplicateParentState="false" />
 
                 <RadioButton
@@ -80,7 +80,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:id="@+id/rbFemale" />
+                    android:id="@+id/elephant_radio_female" />
 
             </RadioGroup>
 
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="datetime"
                 android:ems="10"
-                android:id="@+id/etBirthDate" />
+                android:id="@+id/elephant_birthdate" />
 
         </LinearLayout>
 

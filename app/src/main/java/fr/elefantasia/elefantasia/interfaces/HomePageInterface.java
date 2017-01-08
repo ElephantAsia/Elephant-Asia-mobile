@@ -8,6 +8,6 @@ import android.content.Intent;
 
 public interface HomePageInterface {
 
-    void onItemClick(Intent intent);
+    void onNewActivity(Intent intent, Integer resultCode);
 
 }

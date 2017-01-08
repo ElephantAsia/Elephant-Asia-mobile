@@ -1,18 +1,13 @@
 package fr.elefantasia.elefantasia.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by care_j on 29/10/16.
  */
 
 public class ElephantInfo {
-
-    public boolean complete;
-    private String name;
-    private String databaseNumber;
-    private String registrationName;
-    private Legallity legallyRegistered;
-    private Gender sex;
-    private String bornDate;
 
     public enum Gender {
         MALE,
@@ -26,91 +21,75 @@ public class ElephantInfo {
         UNKNOWN
     }
 
+    public Integer id;
+    public String name;
+    public String nickName;
+    public String registrationName;
+    public List<String> chips;
+    //private String databaseNumber;
+    //private Legallity legallyRegistered;
+    public Gender sex;
+    public String birthDate;
+
     public ElephantInfo() {
-        complete = false;
+        //complete = false;
         name = "";
-        databaseNumber = "";
+        nickName = "";
         registrationName = "";
-        legallyRegistered = Legallity.UNKNOWN;
+        chips = new ArrayList<>();
+        /*databaseNumber = "";
+        registrationName = "";
+        legallyRegistered = Legallity.UNKNOWN;*/
         sex = Gender.UNKNOWN;
-        bornDate = "0/0/0000";
+        birthDate = "0/0/0000";
     }
 
-    public ElephantInfo(String name, String database, String registration, String born, Legallity legal, Gender sex) {
-        complete = false;
+    public ElephantInfo(String name, String nickname, String idNumber, List<String> chips, Gender sex, String birthdate) {
+        this.chips = new ArrayList<>();
         setName(name);
-        setDatabaseNumber(database);
+        setNickname(nickname);
+        setRegistrationName(idNumber);
+        setChips(chips);
         setSex(sex);
-        setLegallyRegistered(legal);
-        setRegistrationName(registration);
-        setBornDate(born);
+        setBirthdate(birthdate);
     }
 
-    public void setName(String newName) {
-        name = newName;
-        setComplete(isComplete());
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setDatabaseNumber(String newDatabaseNumber) {
-        databaseNumber = newDatabaseNumber;
-        setComplete(isComplete());
+    public void setNickname(String nickName) {
+        this.nickName = nickName;
     }
 
-    public void setComplete(boolean isComplete) {
-        complete = isComplete;
+    public void setRegistrationName(String idNumber) {
+        this.registrationName = idNumber;
     }
 
-    public void setRegistrationName(String newRegistrationName) {
-        registrationName = newRegistrationName;
-        setComplete(isComplete());
+    public void addChips(String item) {
+        this.chips.clear();
+        this.chips.add(item);
     }
 
-    public void setLegallyRegistered(Legallity newLegallyRegistered) {
-        legallyRegistered = newLegallyRegistered;
-        setComplete(isComplete());
+    public void setChips(List<String> chips) {
+        this.chips.addAll(chips);
     }
 
-    public void setSex(Gender newSex) {
-        sex = newSex;
-        setComplete(isComplete());
+    public void setSex(Gender sex) {
+        this.sex = sex;
     }
 
-    public void setBornDate(String newBornDate) {
-        bornDate = newBornDate;
-        setComplete(isComplete());
+    public void setBirthdate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public String getName() {
-        return (name);
-    }
-
-    public String getDatabaseNumber() {
-        return (databaseNumber);
-    }
-
-    public String getRegistrationName() {
-        return (registrationName);
-    }
-
-    public Legallity getLegallyRegistered() {
-        return (legallyRegistered);
-    }
-
-    public Gender getSex() {
-        return (sex);
-    }
-
-    public String getBornDate() {
-        return (bornDate);
-    }
-
-    public boolean isComplete() {
-        return (!name.equals("") &&
-                !databaseNumber.equals("") &&
-                !registrationName.equals("") &&
-                legallyRegistered != Legallity.UNKNOWN &&
-                sex != Gender.UNKNOWN &&
-                !bornDate.equals("0/0/0000"));
+    @Override
+    public String toString() {
+        if (chips.size() > 0) {
+            return ("name: " + name + " nickname: " + nickName + " id: " + registrationName + " chip: " + chips.get(0)
+                    + " sex: " + ((sex == Gender.FEMALE) ? "female" : "male") + " birthdate: " + birthDate);
+        }
+        return super.toString();
     }
 
 }

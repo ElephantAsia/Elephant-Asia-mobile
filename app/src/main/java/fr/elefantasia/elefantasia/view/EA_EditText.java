@@ -35,4 +35,5 @@ public class EA_EditText extends EditText {
         }
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
     }
+
 }

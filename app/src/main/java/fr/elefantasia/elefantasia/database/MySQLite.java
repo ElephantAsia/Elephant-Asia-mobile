@@ -23,10 +23,30 @@ public class MySQLite extends SQLiteOpenHelper {
     public static final String COL_NAME = "name";
     public static final int NUM_COL_NAME = 1;
 
+    public static final String COL_NICKNAME = "nickname";
+    public static final int NUM_COL_NICKNAME = 2;
+
+    public static final String COL_REGISTRATION_NUMBER = "id_number";
+    public static final int NUM_COL_REGISTRATION_NUMBER = 3;
+
+    public static final String COL_CHIPS = "chips";
+    public static final int NUM_COL_CHIPS = 4;
+
+    public static final String COL_SEX = "sex";
+    public static final int NUM_COL_SEX = 5;
+
+    public static final String COL_BIRTHDATE = "birthdate";
+    public static final int NUM_COL_BIRTHDATE = 6;
+
 
     private static final String TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_NAME + " TEXT NOT NULL);";
+            + COL_NAME + " TEXT NOT NULL, "
+            + COL_NICKNAME + " TEXT NOT NULL, "
+            + COL_REGISTRATION_NUMBER + " TEXT NOT NULL, "
+            + COL_CHIPS + " TEXT NOT NULL, "
+            + COL_SEX + " TEXT NOT NULL, "
+            + COL_BIRTHDATE + " TEXT NOT NULL);";
 
     /**
      * @param context Le contexte

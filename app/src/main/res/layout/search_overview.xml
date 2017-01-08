@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:background="@color/black_transparant"
-    >
+    android:background="@color/black_transparant">
 
     <TextView
         android:text="Name"
@@ -14,8 +13,7 @@
         android:layout_height="50dp"
         android:gravity="center"
         android:textColor="#FFF"
-        android:background="#454"
-        />
+        android:background="#454" />
 
     <TextView
         android:id="@+id/age"
@@ -27,8 +25,7 @@
         android:layout_alignStart="@id/ovName"
         android:layout_below="@id/ovName"
         android:background="@color/black_transparant"
-        android:layout_marginTop="10dp"
-    />
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:text="Registration Number"

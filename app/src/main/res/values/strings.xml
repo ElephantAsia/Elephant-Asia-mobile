@@ -49,6 +49,13 @@
     <string name="heal">Heal</string>
     <string name="genealogy">Genealogy</string>
 
+    <string name="name_empty">Name empty</string>
+    <string name="nickname_empty">Nickname empty</string>
+    <string name="id_number_empty">ID empty</string>
+    <string name="chip_number_empty">Chip empty</string>
+    <string name="sex_empty">Sex empty</string>
+    <string name="birthdate_empty">Birthdate empty</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

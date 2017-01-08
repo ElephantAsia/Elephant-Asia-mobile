@@ -33,6 +33,10 @@
             android:name=".activities.MainActivity"
             android:windowSoftInputMode="stateHidden"/>
 
+        <activity
+            android:name=".activities.SearchActivity"
+            android:windowSoftInputMode="stateHidden" />
+
     </application>
 
 </manifest>

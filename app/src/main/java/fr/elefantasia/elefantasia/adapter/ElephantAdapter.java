@@ -1,83 +1,99 @@
 package fr.elefantasia.elefantasia.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
+
 /**
  * Created by care_j on 15/11/16.
  */
 
-public class ElephantAdapter extends ArrayAdapter<ElephantInfo> {
-    public ElephantAdapter(Context context, List<ElephantInfo> elephants) {
-        super(context, 0, elephants);
+public class ElephantAdapter extends BaseAdapter {
+
+    private Context context;
+    private List<ElephantInfo> elephants;
+
+    public ElephantAdapter(Context context) {
+        this.context = context;
+        this.elephants = new ArrayList<>();
+    }
+
+    public void addList(List<ElephantInfo> elephants) {
+        this.elephants.addAll(elephants);
+        notifyDataSetChanged();
     }
 
     @Override
-    @NonNull
-    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+    public int getCount() {
+        return (elephants.size());
+    }
 
-        if(convertView == null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.search_overview,parent, false);
+    @Override
+    public ElephantInfo getItem(int index) {
+        return (elephants.get(index));
+    }
+
+    @Override
+    public long getItemId(int index) {
+        return index;
+    }
+
+
+    @Override
+    public View getView(final int index, View old, ViewGroup parent) {
+
+        View view;
+
+        if (old != null) {
+            view = old;
+        } else {
+            view = LayoutInflater.from(context).inflate(R.layout.search_overview, parent, false);
         }
 
-        TweetViewHolder viewHolder = (TweetViewHolder) convertView.getTag();
-        if(viewHolder == null){
-            viewHolder = new TweetViewHolder();
-            viewHolder.registration = (TextView) convertView.findViewById(R.id.ovName);
-            viewHolder.name = (TextView) convertView.findViewById(R.id.text);
-            viewHolder.age = (TextView) convertView.findViewById(R.id.age);
-            viewHolder.sex = (ImageView) convertView.findViewById(R.id.sex);
-            viewHolder.legal = (ImageView) convertView.findViewById(R.id.legal);
-            convertView.setTag(viewHolder);
-        }
+        //TextView registration = (TextView) view.findViewById(R.id.ovName);
+        TextView name = (TextView) view.findViewById(R.id.ovName);
+        TextView age = (TextView) view.findViewById(R.id.age);
+        ImageView sex = (ImageView) view.findViewById(R.id.sex);
+        ImageView legal = (ImageView) view.findViewById(R.id.legal);
 
         //getItem(position) va récupérer l'item [position] de la List<ElephantInfo> tweets
-        ElephantInfo elephant = getItem(position);
+        ElephantInfo elephant = getItem(index);
 
         //il ne reste plus qu'à remplir notre vue
-        viewHolder.name.setText(elephant.getName());
-        viewHolder.age.setText(elephant.getBornDate());
-        viewHolder.registration.setText(elephant.getDatabaseNumber());
-        ElephantInfo.Gender sex = elephant.getSex();
-        if (sex == ElephantInfo.Gender.MALE) {
-            viewHolder.sex.setImageResource(R.drawable.male);
+        name.setText(elephant.name);
+        age.setText(elephant.birthDate);
+        //viewHolder.registration.setText(elephant.getDatabaseNumber());
+        if (elephant.sex == ElephantInfo.Gender.MALE) {
+            sex.setImageResource(R.drawable.male);
         }
-        else if (sex == ElephantInfo.Gender.FEMALE){
-            viewHolder.sex.setImageResource(R.drawable.female);
+        else if (elephant.sex == ElephantInfo.Gender.FEMALE){
+            sex.setImageResource(R.drawable.female);
         }
         else {
-            viewHolder.sex.setImageResource(R.drawable.unknown);
+            sex.setImageResource(R.drawable.unknown);
         }
-        ElephantInfo.Legallity legal = elephant.getLegallyRegistered();
+        /*ElephantInfo.Legallity legal = elephant.getLegallyRegistered();
         if (legal == ElephantInfo.Legallity.LEGAL) {
             viewHolder.legal.setImageResource(R.drawable.unknown);
         }
         else if (legal == ElephantInfo.Legallity.ILLEGAL) {
             viewHolder.legal.setImageResource(R.drawable.unknown);
         }
-        else {
-            viewHolder.legal.setImageResource(R.drawable.unknown);
-        }
-        return convertView;
-    }
-
-    private class TweetViewHolder {
-        public TextView registration;
-        public TextView name;
-        public TextView age;
-        public ImageView sex;
-        public ImageView legal;
+        else {*/
+            legal.setImageResource(R.drawable.unknown);
+        //}
+        return view;
     }
 }
 

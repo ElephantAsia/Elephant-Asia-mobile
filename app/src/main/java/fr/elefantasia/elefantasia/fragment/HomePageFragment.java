@@ -20,22 +20,19 @@ public class HomePageFragment extends Fragment {
     private HomePageInterface homePageInterface;
     private HomePageFragmentGridViewAdapter homePageFragmentGridViewAdapter;
 
-
     public HomePageFragment() {
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.home_page_fragment, container, false);
 
         gridView = (GridView)view.findViewById(R.id.home_page_gridview);
-
         homePageInterface = new HomePageInterface() {
             @Override
-            public void onItemClick(Intent intent) {
-                ((HomePageInterface)getActivity()).onItemClick(intent);
+            public void onNewActivity(Intent intent, Integer code) {
+                ((HomePageInterface)getActivity()).onNewActivity(intent, code);
             }
         };
 

@@ -14,6 +14,7 @@ import java.util.List;
 
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.activities.AddElephantActivity;
+import fr.elefantasia.elefantasia.activities.MainActivity;
 import fr.elefantasia.elefantasia.interfaces.HomePageInterface;
 
 /**
@@ -26,21 +27,29 @@ public class HomePageFragmentGridViewAdapter extends BaseAdapter {
     private HomePageInterface listener;
     private List<String> content;
     private List<Intent> intents;
+    private List<Integer> codes;
 
     public HomePageFragmentGridViewAdapter(Context context, HomePageInterface listener) {
         this.context = context;
         this.listener = listener;
         this.content = new ArrayList<>();
         this.intents = new ArrayList<>();
+        this.codes = new ArrayList<>();
 
         content.add(context.getString(R.string.add_elephant));
 
         intents.add(new Intent(context, AddElephantActivity.class));
+        codes.add(MainActivity.REQUEST_ADD_ELEPHANT);
     }
 
     @NonNull
     public Intent getIntent(int index) {
         return (intents.get(index));
+    }
+
+    @NonNull
+    public Integer getResultCode(int index) {
+        return (codes.get(index));
     }
 
     @Override
@@ -68,13 +77,12 @@ public class HomePageFragmentGridViewAdapter extends BaseAdapter {
         } else {
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.grid_item_home, parent, false);
-
         }
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClick(getIntent(index));
+                listener.onNewActivity(getIntent(index), getResultCode(index));
             }
         });
 

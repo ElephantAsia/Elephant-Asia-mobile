@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements HomePageInterface
     private static final int FRAGMENT_OFFICIALS = 7;
     private static final int FRAGMENT_SUPPORT = 8;
     private static final int FRAGMENT_DISCONNECT = 9;
+
+    public static final int REQUEST_ADD_ELEPHANT = 1;
 
     private ActionBarDrawerToggle toggle;
     private DrawerLayout drawer;
@@ -117,8 +120,10 @@ public class MainActivity extends AppCompatActivity implements HomePageInterface
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 0 && resultCode == RESULT_OK) {
-            int a = 0;
+        if (requestCode == REQUEST_ADD_ELEPHANT) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "Elephant add with success", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -146,6 +151,9 @@ public class MainActivity extends AppCompatActivity implements HomePageInterface
             case FRAGMENT_HOME_PAGE:
                 setHomePageFragment();
                 break;
+            case FRAGMENT_SEARCH:
+                setSearchActivity();
+                break;
             case FRAGMENT_DISCONNECT:
                 setDisconnectFragment();
                 break;
@@ -160,6 +168,11 @@ public class MainActivity extends AppCompatActivity implements HomePageInterface
         getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fragment).commit();
     }
 
+    private void setSearchActivity() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
     private void setDisconnectFragment() {
         Preferences.setUsername(getApplicationContext(), null);
         Preferences.setPassword(getApplicationContext(), null);
@@ -171,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements HomePageInterface
 
 
     @Override
-    public void onItemClick(Intent intent) {
-        startActivity(intent);
+    public void onNewActivity(Intent intent, Integer code) {
+        startActivityForResult(intent, code);
     }
 }

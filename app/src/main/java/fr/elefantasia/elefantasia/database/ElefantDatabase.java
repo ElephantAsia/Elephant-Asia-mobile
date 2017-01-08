@@ -9,6 +9,10 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.elefantasia.elefantasia.utils.ElephantInfo;
+
+import static java.lang.String.valueOf;
+
 /**
  * Created by Stephane on 31/10/2016.
  */
@@ -22,7 +26,7 @@ public class ElefantDatabase {
     /**
      * Version de la base de donnée
      */
-    private static final int VERSION_BDD = 1;
+    private static final int VERSION_BDD = 2;
 
     /**
      * Nom du fichier de la base de donnée
@@ -70,9 +74,14 @@ public class ElefantDatabase {
      * @param elefant l'éléphant à insérer
      * @return Code d'erreur
      */
-    public long insertElefant(Elefant elefant) {
+    public long insertElephant(ElephantInfo elefant) {
         ContentValues values = new ContentValues();
         values.put(MySQLite.COL_NAME, elefant.name);
+        values.put(MySQLite.COL_NICKNAME, elefant.nickName);
+        values.put(MySQLite.COL_REGISTRATION_NUMBER, elefant.registrationName);
+        values.put(MySQLite.COL_CHIPS, elefant.chips.get(0));
+        values.put(MySQLite.COL_SEX, valueOf(elefant.sex));
+        values.put(MySQLite.COL_BIRTHDATE, valueOf(elefant.birthDate));
 
         return (database.insert(MySQLite.TABLE_NAME, null, values));
     }
@@ -84,9 +93,14 @@ public class ElefantDatabase {
      * @param elefant La ou les nouvelle(s) valeur(s)
      * @return Code d'erreur
      */
-    public int updateElefant(int id, Elefant elefant) {
+    public int updateElephant(int id, ElephantInfo elefant) {
         ContentValues values = new ContentValues();
         values.put(MySQLite.COL_NAME, elefant.name);
+        values.put(MySQLite.COL_NICKNAME, elefant.nickName);
+        values.put(MySQLite.COL_REGISTRATION_NUMBER, elefant.registrationName);
+        values.put(MySQLite.COL_CHIPS, elefant.chips.get(0));
+        values.put(MySQLite.COL_SEX, valueOf(elefant.sex));
+        values.put(MySQLite.COL_BIRTHDATE, valueOf(elefant.birthDate));
 
         return (database.update(MySQLite.TABLE_NAME, values, MySQLite.COL_ID + " = " + id, null));
     }
@@ -96,7 +110,7 @@ public class ElefantDatabase {
      * @param id L'ID de l'éléphant à supprimer
      * @return Code d'erreur
      */
-    public int removeElefant(int id) {
+    public int removeElephant(int id) {
         return (database.delete(MySQLite.TABLE_NAME, MySQLite.COL_ID + " = "  + id, null));
     }
 
@@ -106,9 +120,9 @@ public class ElefantDatabase {
      * @param name Le nom de l'éléphant à récupéré
      * @return Une liste d'éléphant
      */
-    public List<Elefant> getElefantWithName(String name) {
+    public List<ElephantInfo> getElephantByName(String name) {
         String request = "SELECT * FROM " + MySQLite.TABLE_NAME + " WHERE " + MySQLite.COL_NAME + " = ?";
-        List<Elefant> results = new ArrayList<>();
+        List<ElephantInfo> results = new ArrayList<>();
 
         Cursor cursor = database.rawQuery(request, new String[] {name});
 
@@ -116,7 +130,7 @@ public class ElefantDatabase {
         {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                results.add(cursorToElefant(cursor));
+                results.add(cursorToElephant(cursor));
                 cursor.moveToNext();
             }
         }
@@ -131,11 +145,15 @@ public class ElefantDatabase {
      * @param cursor Le curseur
      * @return L'éléphant
      */
-    private Elefant cursorToElefant(Cursor cursor){
-        Elefant elefant = new Elefant();
+    private ElephantInfo cursorToElephant(Cursor cursor){
+        ElephantInfo elefant = new ElephantInfo();
         elefant.id = cursor.getInt(MySQLite.NUM_COL_ID);
         elefant.name = cursor.getString(MySQLite.NUM_COL_NAME);
-
+        elefant.nickName = cursor.getString(MySQLite.NUM_COL_NICKNAME);
+        elefant.registrationName = cursor.getString(MySQLite.NUM_COL_REGISTRATION_NUMBER);
+        elefant.addChips(cursor.getString(MySQLite.NUM_COL_CHIPS));
+        elefant.sex = ElephantInfo.Gender.valueOf(cursor.getString(MySQLite.NUM_COL_SEX));
+        elefant.birthDate = cursor.getString(MySQLite.NUM_COL_BIRTHDATE);
         return (elefant);
     }
 
