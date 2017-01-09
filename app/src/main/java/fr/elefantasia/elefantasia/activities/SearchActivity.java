@@ -10,14 +10,7 @@ import fr.elefantasia.elefantasia.fragment.SearchFragment;
 import fr.elefantasia.elefantasia.interfaces.SearchInterface;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
-/**
- * Created by care_j on 15/11/16.
- */
-
 public class SearchActivity extends AppCompatActivity implements SearchInterface {
-
-    private SearchFragment searchFragment;
-    //private SearchBrowserFragment searchBrowserFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +24,6 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        //currentState = State.Search;
-
         setSearchFragment();
     }
 
@@ -43,25 +34,17 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
     }
 
     @Override
-    public void onClickSearch(ElephantInfo item) {
-        setBrowserFragment(item);
+    public void onClickSearch(ElephantInfo info) {
+        Intent intent = new Intent(this, SearchBrowserActivity.class);
+        intent.putExtra(SearchBrowserActivity.EXTRA_ELEPHANT, info);
+        startActivity(intent);
     }
 
     private void setSearchFragment() {
-        if (searchFragment == null) {
-            searchFragment = new SearchFragment();
-        }
-
+        SearchFragment searchFragment = new SearchFragment();
         Bundle args = new Bundle();
         searchFragment.setArguments(args);
-
         getSupportFragmentManager().beginTransaction().replace(R.id.search_fragment, searchFragment).commit();
-    }
-
-    private void setBrowserFragment(ElephantInfo info) {
-        Intent intent = new Intent(this, SearchBrowserActivity.class);
-        SearchBrowserActivity.setName(intent, info.name);
-        startActivity(intent);
     }
 
 }

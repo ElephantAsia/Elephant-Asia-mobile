@@ -13,18 +13,15 @@ import java.util.List;
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
-
-/**
- * Created by care_j on 15/11/16.
- */
-
-public class ElephantAdapter extends BaseAdapter {
+public class SearchElephantAdapter extends BaseAdapter {
 
     private Context context;
+    private Listener listener;
     private List<ElephantInfo> elephants;
 
-    public ElephantAdapter(Context context) {
+    public SearchElephantAdapter(Context context, Listener listener) {
         this.context = context;
+        this.listener = listener;
         this.elephants = new ArrayList<>();
     }
 
@@ -60,7 +57,7 @@ public class ElephantAdapter extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.search_overview, parent, false);
         }
 
-        ElephantInfo info = getItem(index);
+        final ElephantInfo info = getItem(index);
         String sex = (info.sex == ElephantInfo.Gender.FEMALE) ? context.getString(R.string.female) : context.getString(R.string.male);
 
         TextView name = (TextView)view.findViewById(R.id.search_overview_name);
@@ -71,7 +68,19 @@ public class ElephantAdapter extends BaseAdapter {
         registration.setText(info.registrationID);
         location.setText(String.format(context.getString(R.string.elephant_location), info.registrationVillage, info.registrationProvince));
 
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(info);
+            }
+        });
+
         return view;
+    }
+
+    public interface Listener
+    {
+        void onItemClick(ElephantInfo info);
     }
 }
 

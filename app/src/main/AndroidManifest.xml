@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.elefantasia.elefantasia">
 
     <application
@@ -11,32 +12,22 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.SplashScreenActivity"
-            android:theme="@style/SplashTheme"
-            android:windowSoftInputMode="stateHidden">
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <data android:scheme="@string/app_name" />
-
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.AddElephantActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".activities.LoginActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".activities.MainActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".activities.SearchActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".activities.SearchBrowserActivity"
-            android:windowSoftInputMode="stateHidden"/>
+
+        <activity android:name=".activities.AddElephantActivity"/>
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.SearchActivity" />
+        <activity android:name=".activities.SearchBrowserActivity"/>
+        <activity android:name=".activities.ElephantConsultationActivity"/>
+
     </application>
 
 </manifest>

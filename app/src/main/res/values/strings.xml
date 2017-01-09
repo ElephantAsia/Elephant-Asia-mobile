@@ -11,11 +11,10 @@
     <string name="legally_registered">Legally Registered</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="registration_number">Registration number</string>
     <string name="elephant_birthdate">Birthdate (ex: 2016/12/12)</string>
-    <string name="elephant_name">Name</string>
+    <string name="elephant_name">Elephant name</string>
     <string name="elephant_nickname">Nickname</string>
-    <string name="elephant_registration_number">Registration number</string>
+    <string name="elephant_registration_number">Registration ID</string>
     <string name="elephant_registration_village">Registration village</string>
     <string name="elephant_registration_district">Registration district</string>
     <string name="elephant_registration_province">Registration province</string>
@@ -77,5 +76,27 @@
     <string name="elephant_name_sex_age">%1$s, %2$s, %3$s y/o</string>
     <string name="elephant_registration">#%s</string>
     <string name="elephant_location">%1$s, %2$s</string>
+
+    <string name="elephant_microship">Elephant microship (not available)</string>
+    <string name="district">District (not available)</string>
+    <string name="village">Village (not available)</string>
+    <string name="camp_name">Camp name (not available)</string>
+    <string name="referent_name">Referent owner name (not available)</string>
+    <string name="referent_id">Referent owner ID (not available)</string>
+
+    <string-array name="elephant_sex">
+        <item>Male</item>
+        <item>Female</item>
+        <item>All</item>
+    </string-array>
+
+    <string-array name="country">
+        <item>Burma</item>
+        <item>Thailand</item>
+        <item>India</item>
+        <item>All</item>
+    </string-array>
+
+    <string name="elephant_consultation_title">%1$s - #%2$s</string>
 
 </resources>

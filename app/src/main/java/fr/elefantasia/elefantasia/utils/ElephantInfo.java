@@ -1,13 +1,13 @@
 package fr.elefantasia.elefantasia.utils;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by care_j on 29/10/16.
  */
 
-public class ElephantInfo {
+public class ElephantInfo implements Parcelable {
 
     public enum Gender {
         MALE,
@@ -33,15 +33,15 @@ public class ElephantInfo {
     public String birthDistrict;
     public String birthProvince;
 
-    public List<String> chips;
+    //public List<String> chips;
+    public String chips1;
+    public String chips2;
+    public String chips3;
 
     public String registrationID;
     public String registrationVillage;
     public String registrationDistrict;
     public String registrationProvince;
-
-    //private String databaseNumber;
-    //private Legallity legallyRegistered;
 
     public ElephantInfo() {
         name = "null";
@@ -53,32 +53,70 @@ public class ElephantInfo {
         birthVillage = "null";
         birthDistrict = "null";
         birthProvince = "null";
-        chips = new ArrayList<>();
+        chips1 = "null";
+        chips2 = "";
+        chips3 = "";
         registrationID = "null";
         registrationVillage = "null";
         registrationDistrict = "null";
         registrationProvince = "null";
     }
 
-    /*String idNumber, List<String> chips,
-    public ElephantInfo(String name, String nickname, Gender sex, boolean earTag, boolean eyeD,
-                        String birthdate, String birthVillage, String birthDistrict, String birthP) {
-        this.chips = new ArrayList<>();
-        setName(name);
-        setNickname(nickname);
-        setRegistrationName(idNumber);
-        setChips(chips);
-        setSex(sex);
-        setBirthdate(birthdate);
-    }*/
-
-    public void addChips(String item) {
-        this.chips.clear();
-        this.chips.add(item);
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setChips(List<String> chips) {
-        this.chips.addAll(chips);
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(name);
+        out.writeString(nickName);
+        out.writeString(String.valueOf(sex));
+        out.writeString(String.valueOf(earTag));
+        out.writeString(String.valueOf(eyeD));
+        out.writeString(birthDate);
+        out.writeString(birthVillage);
+        out.writeString(birthDistrict);
+        out.writeString(birthProvince);
+        out.writeString(chips1);
+        out.writeString(chips2);
+        out.writeString(chips3);
+        out.writeString(registrationID);
+        out.writeString(registrationVillage);
+        out.writeString(registrationDistrict);
+        out.writeString(registrationProvince);
+    }
+
+    public static final Parcelable.Creator<ElephantInfo> CREATOR  = new Parcelable.Creator<ElephantInfo>() {
+
+        @Override
+        public ElephantInfo createFromParcel(Parcel in) {
+            return new ElephantInfo(in);
+        }
+
+        @Override
+        public ElephantInfo[] newArray(int size) {
+            return new ElephantInfo[size];
+        }
+    };
+
+    private ElephantInfo(Parcel in) {
+        name = in.readString();
+        nickName = in.readString();
+        sex = Gender.valueOf(in.readString());
+        earTag = Boolean.valueOf(in.readString());
+        eyeD = Boolean.valueOf(in.readString());
+        birthDate = in.readString();
+        birthVillage = in.readString();
+        birthDate = in.readString();
+        birthProvince = in.readString();
+        chips1 = in.readString();
+        chips2 = in.readString();
+        chips3 = in.readString();
+        registrationID = in.readString();
+        registrationVillage = in.readString();
+        registrationDistrict = in.readString();
+        registrationProvince = in.readString();
     }
 
 }

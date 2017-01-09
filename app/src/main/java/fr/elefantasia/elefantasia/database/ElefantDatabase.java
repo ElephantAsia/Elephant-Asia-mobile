@@ -87,7 +87,7 @@ public class ElefantDatabase {
         values.put(MySQLite.COL_BIRTH_VILLAGE, elefant.birthVillage);
         values.put(MySQLite.COL_BIRTH_DISTRICT, elefant.birthDistrict);
         values.put(MySQLite.COL_BIRTH_PROVINCE, elefant.birthProvince);
-        values.put(MySQLite.COL_CHIPS, elefant.chips.get(0));
+        values.put(MySQLite.COL_CHIPS, elefant.chips1);
         values.put(MySQLite.COL_REGISTRATION_ID, elefant.registrationID);
         values.put(MySQLite.COL_REGISTRATION_VILLAGE, elefant.registrationVillage);
         values.put(MySQLite.COL_REGISTRATION_DISTRICT, elefant.registrationDistrict);
@@ -114,7 +114,7 @@ public class ElefantDatabase {
         values.put(MySQLite.COL_BIRTH_VILLAGE, elefant.birthVillage);
         values.put(MySQLite.COL_BIRTH_DISTRICT, elefant.birthDistrict);
         values.put(MySQLite.COL_BIRTH_PROVINCE, elefant.birthProvince);
-        values.put(MySQLite.COL_CHIPS, elefant.chips.get(0));
+        values.put(MySQLite.COL_CHIPS, elefant.chips1);
         values.put(MySQLite.COL_REGISTRATION_ID, elefant.registrationID);
         values.put(MySQLite.COL_REGISTRATION_VILLAGE, elefant.registrationVillage);
         values.put(MySQLite.COL_REGISTRATION_DISTRICT, elefant.registrationDistrict);
@@ -158,6 +158,33 @@ public class ElefantDatabase {
         return (results);
     }
 
+    public List<ElephantInfo> getElephant(String name, ElephantInfo.Gender sex) {
+        String request = "SELECT * FROM " + MySQLite.TABLE_NAME + " WHERE " + MySQLite.COL_NAME + " LIKE '" + name + "%'";
+        List<ElephantInfo> results = new ArrayList<>();
+
+        if (sex != ElephantInfo.Gender.UNKNOWN) {
+            request += " AND " + MySQLite.COL_SEX + " = '" + String.valueOf(sex) + "';";
+        } else {
+            request += ";";
+        }
+
+        Log.i("request", request);
+
+        Cursor cursor = database.rawQuery(request, null);
+
+        if (cursor.getCount() > 0)
+        {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                results.add(cursorToElephant(cursor));
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+
+        return (results);
+    }
+
     /**
      * Récuperer les infos d'un cursor et les convertis en Elefant
      *
@@ -176,7 +203,7 @@ public class ElefantDatabase {
         elefant.birthVillage = cursor.getString(MySQLite.NUM_COL_BIRTH_VILLAGE);
         elefant.birthDistrict = cursor.getString(MySQLite.NUM_COL_BIRTH_DISTRICT);
         elefant.birthProvince = cursor.getString(MySQLite.NUM_COL_BIRTH_PROVINCE);
-        elefant.addChips(cursor.getString(MySQLite.NUM_COL_CHIPS));
+        elefant.chips1 = cursor.getString(MySQLite.NUM_COL_CHIPS);
         elefant.registrationID = cursor.getString(MySQLite.NUM_COL_REGISTRATION_ID);
         elefant.registrationVillage = cursor.getString(MySQLite.NUM_COL_REGISTRATION_VILLAGE);
         elefant.registrationDistrict = cursor.getString(MySQLite.NUM_COL_REGISTRATION_DISTRICT);

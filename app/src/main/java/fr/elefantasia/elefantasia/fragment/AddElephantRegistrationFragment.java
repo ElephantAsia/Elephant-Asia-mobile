@@ -276,6 +276,11 @@ public class AddElephantRegistrationFragment extends Fragment {
         return (view);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
     private boolean confirm() {
         return (confirmName() && confirmNickname() && confirmId() && confirmChip() && confirmSex()
                 && confirmBirthdate());

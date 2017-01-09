@@ -126,7 +126,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
     @Override
     public void setChipNumber(String value) {
-        elephantInfo.addChips(value);
+        elephantInfo.chips1 = value;
     }
 
     @Override

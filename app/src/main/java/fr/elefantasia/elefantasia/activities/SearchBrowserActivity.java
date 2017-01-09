@@ -11,25 +11,21 @@ import android.widget.TextView;
 import java.util.List;
 
 import fr.elefantasia.elefantasia.R;
-import fr.elefantasia.elefantasia.adapter.ElephantAdapter;
+import fr.elefantasia.elefantasia.adapter.SearchElephantAdapter;
 import fr.elefantasia.elefantasia.database.ElefantDatabase;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
-public class SearchBrowserActivity extends AppCompatActivity {
+public class SearchBrowserActivity extends AppCompatActivity implements SearchElephantAdapter.Listener {
 
-    public static String EXTRA_NAME = "search.browser.name";
+    public static String EXTRA_ELEPHANT = "extra.elephant";
 
-    private String name;
     private ListView mListView;
     private ElefantDatabase database;
     private TextView noItem;
+    private ElephantInfo toSearch;
 
-    public static void setName(Intent intent, String value) {
-        intent.putExtra(EXTRA_NAME, value);
-    }
-
-    public static String getName(Intent intent) {
-        return intent.getStringExtra(EXTRA_NAME);
+    private static ElephantInfo getElephantInfo(Intent intent) {
+        return (ElephantInfo)intent.getParcelableExtra(EXTRA_ELEPHANT);
     }
 
     @Override
@@ -40,11 +36,11 @@ public class SearchBrowserActivity extends AppCompatActivity {
         database = new ElefantDatabase(getApplicationContext());
         database.open();
 
-        name = getName(getIntent());
+        toSearch = getElephantInfo(getIntent());
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         TextView title = (TextView)toolbar.findViewById(R.id.title);
-        title.setText(String.format(getString(R.string.search_result), name));
+        title.setText(String.format(getString(R.string.search_result), toSearch.name));
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -54,13 +50,14 @@ public class SearchBrowserActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.listViewSearch);
         noItem = (TextView) findViewById(R.id.search_browser_no_item);
 
-        List<ElephantInfo> elephants = database.getElephantByName(name);
+        List<ElephantInfo> elephants = database.getElephant(toSearch.name, toSearch.sex);
         if (elephants.size() == 0) {
             mListView.setVisibility(View.GONE);
             noItem.setVisibility(View.VISIBLE);
         }
 
-        ElephantAdapter adapter = new ElephantAdapter(getApplicationContext());
+        SearchElephantAdapter adapter = new SearchElephantAdapter(getApplicationContext(), this);
+
         adapter.addList(elephants);
         mListView.setAdapter(adapter);
     }
@@ -69,5 +66,12 @@ public class SearchBrowserActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void onItemClick(ElephantInfo info) {
+        Intent intent = new Intent(this, ElephantConsultationActivity.class);
+        intent.putExtra(EXTRA_ELEPHANT, info);
+        startActivity(intent);
     }
 }
