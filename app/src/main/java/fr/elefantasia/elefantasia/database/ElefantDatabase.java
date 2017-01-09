@@ -99,28 +99,27 @@ public class ElefantDatabase {
     /**
      * Met à jour un éléphant
      *
-     * @param id L'ID de l'éléphant à mettre à jour
-     * @param elefant La ou les nouvelle(s) valeur(s)
+     * @param elephant La ou les nouvelle(s) valeur(s)
      * @return Code d'erreur
      */
-    public int updateElephant(int id, ElephantInfo elefant) {
+    public int updateElephant(ElephantInfo elephant) {
         ContentValues values = new ContentValues();
-        values.put(MySQLite.COL_NAME, elefant.name);
-        values.put(MySQLite.COL_NICKNAME, elefant.nickName);
-        values.put(MySQLite.COL_SEX, String.valueOf(elefant.sex));
-        values.put(MySQLite.COL_EAR_TAG, String.valueOf(elefant.earTag));
-        values.put(MySQLite.COL_EYED, String.valueOf(elefant.eyeD));
-        values.put(MySQLite.COL_BIRTH_DATE, elefant.birthDate);
-        values.put(MySQLite.COL_BIRTH_VILLAGE, elefant.birthVillage);
-        values.put(MySQLite.COL_BIRTH_DISTRICT, elefant.birthDistrict);
-        values.put(MySQLite.COL_BIRTH_PROVINCE, elefant.birthProvince);
-        values.put(MySQLite.COL_CHIPS, elefant.chips1);
-        values.put(MySQLite.COL_REGISTRATION_ID, elefant.registrationID);
-        values.put(MySQLite.COL_REGISTRATION_VILLAGE, elefant.registrationVillage);
-        values.put(MySQLite.COL_REGISTRATION_DISTRICT, elefant.registrationDistrict);
-        values.put(MySQLite.COL_REGISTRATION_PROVINCE, elefant.registrationProvince);
+        values.put(MySQLite.COL_NAME, elephant.name);
+        values.put(MySQLite.COL_NICKNAME, elephant.nickName);
+        values.put(MySQLite.COL_SEX, String.valueOf(elephant.sex));
+        values.put(MySQLite.COL_EAR_TAG, String.valueOf(elephant.earTag));
+        values.put(MySQLite.COL_EYED, String.valueOf(elephant.eyeD));
+        values.put(MySQLite.COL_BIRTH_DATE, elephant.birthDate);
+        values.put(MySQLite.COL_BIRTH_VILLAGE, elephant.birthVillage);
+        values.put(MySQLite.COL_BIRTH_DISTRICT, elephant.birthDistrict);
+        values.put(MySQLite.COL_BIRTH_PROVINCE, elephant.birthProvince);
+        values.put(MySQLite.COL_CHIPS, elephant.chips1);
+        values.put(MySQLite.COL_REGISTRATION_ID, elephant.registrationID);
+        values.put(MySQLite.COL_REGISTRATION_VILLAGE, elephant.registrationVillage);
+        values.put(MySQLite.COL_REGISTRATION_DISTRICT, elephant.registrationDistrict);
+        values.put(MySQLite.COL_REGISTRATION_PROVINCE, elephant.registrationProvince);
 
-        return (database.update(MySQLite.TABLE_NAME, values, MySQLite.COL_ID + " = " + id, null));
+        return (database.update(MySQLite.TABLE_NAME, values, MySQLite.COL_ID + " = " + elephant.id, null));
     }
 
     /**

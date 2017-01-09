@@ -80,10 +80,10 @@ public class SearchFragment extends Fragment {
 
         elephantInfo.name = nameEditText.getText().toString();
         switch (sexSpinner.getSelectedItemPosition()) {
-            case 0:
+            case 1:
                 elephantInfo.sex = ElephantInfo.Gender.MALE;
                 break;
-            case 1:
+            case 2:
                 elephantInfo.sex = ElephantInfo.Gender.FEMALE;
                 break;
         }

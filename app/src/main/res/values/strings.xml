@@ -85,9 +85,9 @@
     <string name="referent_id">Referent owner ID (not available)</string>
 
     <string-array name="elephant_sex">
+        <item>All</item>
         <item>Male</item>
         <item>Female</item>
-        <item>All</item>
     </string-array>
 
     <string-array name="country">

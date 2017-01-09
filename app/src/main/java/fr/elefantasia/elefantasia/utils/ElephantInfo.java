@@ -62,6 +62,26 @@ public class ElephantInfo implements Parcelable {
         registrationProvince = "null";
     }
 
+    public ElephantInfo(ElephantInfo other) {
+        id = other.id;
+        name = other.name;
+        nickName = other.nickName;
+        sex = other.sex;
+        earTag = other.earTag;
+        eyeD = other.eyeD;
+        birthDate = other.birthDate;
+        birthVillage = other.birthVillage;
+        birthDistrict = other.birthDistrict;
+        birthProvince = other.birthProvince;
+        chips1 = other.chips1;
+        chips2 = other.chips2;
+        chips3 = other.chips3;
+        registrationID = other.registrationID;
+        registrationVillage = other.registrationVillage;
+        registrationDistrict = other.registrationDistrict;
+        registrationProvince = other.registrationProvince;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -110,7 +130,7 @@ public class ElephantInfo implements Parcelable {
         eyeD = Boolean.valueOf(in.readString());
         birthDate = in.readString();
         birthVillage = in.readString();
-        birthDate = in.readString();
+        birthDistrict = in.readString();
         birthProvince = in.readString();
         chips1 = in.readString();
         chips2 = in.readString();

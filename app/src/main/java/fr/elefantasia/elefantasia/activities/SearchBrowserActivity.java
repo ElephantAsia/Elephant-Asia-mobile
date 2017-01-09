@@ -17,12 +17,15 @@ import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
 public class SearchBrowserActivity extends AppCompatActivity implements SearchElephantAdapter.Listener {
 
-    public static String EXTRA_ELEPHANT = "extra.elephant";
+    public final static String EXTRA_ELEPHANT = "extra.elephant";
+
+    private final static int REQUEST_CONSULTATION = 1;
 
     private ListView mListView;
     private ElefantDatabase database;
     private TextView noItem;
     private ElephantInfo toSearch;
+    private SearchElephantAdapter adapter;
 
     private static ElephantInfo getElephantInfo(Intent intent) {
         return (ElephantInfo)intent.getParcelableExtra(EXTRA_ELEPHANT);
@@ -50,16 +53,7 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
         mListView = (ListView) findViewById(R.id.listViewSearch);
         noItem = (TextView) findViewById(R.id.search_browser_no_item);
 
-        List<ElephantInfo> elephants = database.getElephant(toSearch.name, toSearch.sex);
-        if (elephants.size() == 0) {
-            mListView.setVisibility(View.GONE);
-            noItem.setVisibility(View.VISIBLE);
-        }
-
-        SearchElephantAdapter adapter = new SearchElephantAdapter(getApplicationContext(), this);
-
-        adapter.addList(elephants);
-        mListView.setAdapter(adapter);
+        refreshList();
     }
 
     @Override
@@ -69,9 +63,31 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CONSULTATION) {
+            if (resultCode == RESULT_OK) {
+                refreshList();
+            }
+        }
+    }
+
+    @Override
     public void onItemClick(ElephantInfo info) {
         Intent intent = new Intent(this, ConsultationActivity.class);
         intent.putExtra(EXTRA_ELEPHANT, info);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CONSULTATION);
+    }
+
+    private void refreshList() {
+        List<ElephantInfo> elephants = database.getElephant(toSearch.name, toSearch.sex);
+        if (elephants.size() == 0) {
+            mListView.setVisibility(View.GONE);
+            noItem.setVisibility(View.VISIBLE);
+        }
+
+        adapter = new SearchElephantAdapter(getApplicationContext(), this);
+
+        adapter.addList(elephants);
+        mListView.setAdapter(adapter);
     }
 }

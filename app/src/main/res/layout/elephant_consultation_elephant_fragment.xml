@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/elephant_consultation_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,6 +14,7 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
+                android:id="@+id/elephant_consultation_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -45,7 +47,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/search_overview_name"
+                        android:id="@+id/elephant_consultation_header_name"
                         android:text="@string/elephant_name_sex_age"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -55,14 +57,14 @@
 
                     <TextView
                         android:text="@string/elephant_registration"
-                        android:id="@+id/search_overview_registration"
+                        android:id="@+id/elephant_consultation_header_registration"
                         android:textSize="16sp"
                         android:textColor="@android:color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/search_overview_location"
+                        android:id="@+id/elephant_consultation_header_location"
                         android:text="@string/elephant_location"
                         android:textSize="16sp"
                         android:textColor="@android:color/white"
@@ -74,6 +76,7 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/elephant_consultation_content"
                 android:layout_margin="24dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -91,13 +94,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:text="test"
-                        android:textSize="18sp"
-                        android:textColor="@android:color/black"
-                        android:id="@+id/elephant_consultation_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/elephant_consultation_name"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <fr.elefantasia.elefantasia.view.EA_EditText
+                            android:visibility="gone"
+                            android:id="@+id/elephant_consultation_edit_name"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </FrameLayout>
+
 
                 </LinearLayout>
 
@@ -114,13 +132,27 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:text="test"
-                        android:id="@+id/elephant_consultation_nickname"
-                        android:textSize="18sp"
-                        android:textColor="@android:color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/elephant_consultation_nickname"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <fr.elefantasia.elefantasia.view.EA_EditText
+                            android:visibility="gone"
+                            android:id="@+id/elephant_consultation_edit_nickname"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </FrameLayout>
 
                 </LinearLayout>
 
@@ -137,13 +169,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:text="test"
-                        android:id="@+id/elephant_consultation_identification_number"
-                        android:textSize="18sp"
-                        android:textColor="@android:color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/elephant_consultation_identification_number"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <fr.elefantasia.elefantasia.view.EA_EditText
+                            android:visibility="gone"
+                            android:id="@+id/elephant_consultation_edit_identification_number"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </FrameLayout>
 
                 </LinearLayout>
 
@@ -160,15 +205,56 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:text="test"
-                        android:id="@+id/elephant_consultation_chip"
-                        android:textSize="18sp"
-                        android:textColor="@android:color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/elephant_consultation_chip"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <fr.elefantasia.elefantasia.view.EA_EditText
+                            android:visibility="gone"
+                            android:id="@+id/elephant_consultation_edit_chip"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </FrameLayout>
 
                 </LinearLayout>
+
+                <RadioGroup
+                    android:layout_marginTop="14dp"
+                    android:visibility="gone"
+                    android:weightSum="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/elephant_rg_sex">
+
+                    <RadioButton
+                        android:gravity="center"
+                        android:text="@string/male"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/elephant_radio_male"
+                        android:duplicateParentState="false" />
+
+                    <RadioButton
+                        android:gravity="center"
+                        android:text="@string/female"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/elephant_radio_female" />
+
+                </RadioGroup>
 
                 <LinearLayout
                     android:layout_marginTop="14dp"
@@ -183,13 +269,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:text="test"
-                        android:id="@+id/elephant_consultation_birth_date"
-                        android:textSize="18sp"
-                        android:textColor="@android:color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/elephant_consultation_birth_date"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <fr.elefantasia.elefantasia.view.EA_EditText
+                            android:visibility="gone"
+                            android:id="@+id/elephant_consultation_edit_birth_date"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </FrameLayout>
 
                 </LinearLayout>
 
