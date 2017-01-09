@@ -99,4 +99,14 @@
 
     <string name="elephant_consultation_title">%1$s - #%2$s</string>
 
+    <string name="name">Name</string>
+    <string name="nickname">Nickname</string>
+    <string name="id_number">Identification number</string>
+    <string name="chip">Chip number #1</string>
+    <string name="birth_date">Birthdate</string>
+    <string name="elephantasia_db_number">Elephant Data Number (EDN)</string>
+    <string name="eartag">EARtag</string>
+
+    <string name="yes_enabled">Yes - Enabled</string>
+    <string name="no_disabled">No - Disabled</string>
 </resources>

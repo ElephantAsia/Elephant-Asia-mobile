@@ -33,7 +33,6 @@ public class ElephantInfo implements Parcelable {
     public String birthDistrict;
     public String birthProvince;
 
-    //public List<String> chips;
     public String chips1;
     public String chips2;
     public String chips3;
@@ -44,6 +43,7 @@ public class ElephantInfo implements Parcelable {
     public String registrationProvince;
 
     public ElephantInfo() {
+        id = 0;
         name = "null";
         nickName = "null";
         sex = Gender.UNKNOWN;
@@ -69,6 +69,7 @@ public class ElephantInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(id);
         out.writeString(name);
         out.writeString(nickName);
         out.writeString(String.valueOf(sex));
@@ -87,7 +88,7 @@ public class ElephantInfo implements Parcelable {
         out.writeString(registrationProvince);
     }
 
-    public static final Parcelable.Creator<ElephantInfo> CREATOR  = new Parcelable.Creator<ElephantInfo>() {
+    public static final Parcelable.Creator<ElephantInfo> CREATOR = new Parcelable.Creator<ElephantInfo>() {
 
         @Override
         public ElephantInfo createFromParcel(Parcel in) {
@@ -101,6 +102,7 @@ public class ElephantInfo implements Parcelable {
     };
 
     private ElephantInfo(Parcel in) {
+        id = in.readInt();
         name = in.readString();
         nickName = in.readString();
         sex = Gender.valueOf(in.readString());

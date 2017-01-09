@@ -42,6 +42,7 @@
             android:text="@string/elephant_name_sex_age"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         
@@ -49,7 +50,7 @@
             android:text="@string/elephant_registration"
             android:id="@+id/search_overview_registration"
             android:textSize="16sp"
-            android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -57,7 +58,7 @@
             android:id="@+id/search_overview_location"
             android:text="@string/elephant_location"
             android:textSize="16sp"
-            android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

@@ -2,10 +2,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:id="@+id/elephant_consultation_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.elefantasia.elefantasia.activities.ElephantConsultationActivity">
+    tools:context="fr.elefantasia.elefantasia.activities.ConsultationActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -29,5 +30,10 @@
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/consultation_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

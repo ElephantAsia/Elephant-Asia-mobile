@@ -70,7 +70,7 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
 
     @Override
     public void onItemClick(ElephantInfo info) {
-        Intent intent = new Intent(this, ElephantConsultationActivity.class);
+        Intent intent = new Intent(this, ConsultationActivity.class);
         intent.putExtra(EXTRA_ELEPHANT, info);
         startActivity(intent);
     }
