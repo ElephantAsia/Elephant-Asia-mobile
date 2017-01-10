@@ -1,24 +1,24 @@
 package fr.elefantasia.elefantasia.fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
 import fr.elefantasia.elefantasia.R;
-import fr.elefantasia.elefantasia.adapter.HomePageFragmentGridViewAdapter;
 import fr.elefantasia.elefantasia.interfaces.HomePageInterface;
 
 
 public class HomePageFragment extends Fragment {
 
-    private GridView gridView;
-    private HomePageInterface homePageInterface;
-    private HomePageFragmentGridViewAdapter homePageFragmentGridViewAdapter;
+    //private GridView gridView;
+    //private HomePageInterface homePageInterface;
+    //private HomePageFragmentGridViewAdapter homePageFragmentGridViewAdapter;
+
+    private FloatingActionButton addFab;
 
     public HomePageFragment() {
     }
@@ -28,7 +28,7 @@ public class HomePageFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.home_page_fragment, container, false);
 
-        gridView = (GridView)view.findViewById(R.id.home_page_gridview);
+        /*gridView = (GridView)view.findViewById(R.id.home_page_gridview);
         homePageInterface = new HomePageInterface() {
             @Override
             public void onNewActivity(Intent intent, Integer code) {
@@ -37,7 +37,15 @@ public class HomePageFragment extends Fragment {
         };
 
         homePageFragmentGridViewAdapter = new HomePageFragmentGridViewAdapter(getContext(), homePageInterface);
-        gridView.setAdapter(homePageFragmentGridViewAdapter);
+        gridView.setAdapter(homePageFragmentGridViewAdapter);*/
+
+        addFab = (FloatingActionButton)view.findViewById(R.id.home_page_fab);
+        addFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((HomePageInterface) getActivity()).addElephant();
+            }
+        });
 
         return (view);
     }

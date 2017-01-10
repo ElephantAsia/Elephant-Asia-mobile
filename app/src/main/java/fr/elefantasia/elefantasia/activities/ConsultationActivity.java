@@ -50,6 +50,7 @@ public class ConsultationActivity extends AppCompatActivity implements Consultat
     public boolean onSupportNavigateUp() {
         setResult(RESULT_OK);
         finish();
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
         return true;
     }
 

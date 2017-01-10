@@ -7,6 +7,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -29,15 +32,15 @@ public class MainActivity extends AppCompatActivity implements HomePageInterface
     private static final String EXTRA_FRAGMENT = "main.fragment";
 
     private static final int FRAGMENT_HOME_PAGE = 0;
-    private static final int FRAGMENT_SEARCH = 1;
-    private static final int FRAGMENT_CURRENT_ANIMAL = 2;
-    private static final int FRAGMENT_LOCATIONS = 3;
-    private static final int FRAGMENT_REPORTS = 4;
-    private static final int FRAGMENT_FAVORITES = 5;
-    private static final int FRAGMENT_SETTINGS = 6;
-    private static final int FRAGMENT_OFFICIALS = 7;
-    private static final int FRAGMENT_SUPPORT = 8;
-    private static final int FRAGMENT_DISCONNECT = 9;
+    //private static final int FRAGMENT_SEARCH = 1;
+    private static final int FRAGMENT_CURRENT_ANIMAL = 1;
+    private static final int FRAGMENT_LOCATIONS = 2;
+    private static final int FRAGMENT_REPORTS = 3;
+    private static final int FRAGMENT_FAVORITES = 4;
+    private static final int FRAGMENT_SETTINGS = 5;
+    private static final int FRAGMENT_OFFICIALS = 6;
+    private static final int FRAGMENT_SUPPORT = 7;
+    private static final int FRAGMENT_DISCONNECT = 8;
 
     public static final int REQUEST_ADD_ELEPHANT = 1;
 
@@ -51,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements HomePageInterface
     private MainActivityDrawerListAdapter drawerListAdapter;
 
     private HomePageFragment homePageFragment;
+
+    private MenuItem searchItem;
 
     public static int getFragment(Intent intent) {
         return intent.getIntExtra(EXTRA_FRAGMENT, FRAGMENT_HOME_PAGE);
@@ -113,6 +118,27 @@ public class MainActivity extends AppCompatActivity implements HomePageInterface
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+
+        searchItem = menu.findItem(R.id.main_menu_search);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.main_menu_search) {
+            Intent search = new Intent(this, SearchActivity.class);
+            startActivity(search);
+            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         refreshProfilPicBlurred();
@@ -125,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements HomePageInterface
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_ADD_ELEPHANT) {
             if (resultCode == RESULT_OK) {
-                Toast.makeText(this, "Elephant add with success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Elephant added with success", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -154,9 +180,9 @@ public class MainActivity extends AppCompatActivity implements HomePageInterface
             case FRAGMENT_HOME_PAGE:
                 setHomePageFragment();
                 break;
-            case FRAGMENT_SEARCH:
+            /*case FRAGMENT_SEARCH:
                 setSearchActivity();
-                break;
+                break;*/
             case FRAGMENT_DISCONNECT:
                 setDisconnectFragment();
                 break;
@@ -171,10 +197,10 @@ public class MainActivity extends AppCompatActivity implements HomePageInterface
         getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fragment).commit();
     }
 
-    private void setSearchActivity() {
+    /*private void setSearchActivity() {
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
-    }
+    }*/
 
     private void setDisconnectFragment() {
         Preferences.setUsername(getApplicationContext(), null);
@@ -186,8 +212,14 @@ public class MainActivity extends AppCompatActivity implements HomePageInterface
     }
 
 
-    @Override
+    /*@Override
     public void onNewActivity(Intent intent, Integer code) {
         startActivityForResult(intent, code);
+    }*/
+
+    @Override
+    public void addElephant() {
+        Intent intent = new Intent(this, AddElephantActivity.class);
+        startActivityForResult(intent, REQUEST_ADD_ELEPHANT);
     }
 }

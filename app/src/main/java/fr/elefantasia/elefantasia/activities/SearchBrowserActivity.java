@@ -59,6 +59,7 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
     @Override
     public boolean onSupportNavigateUp() {
         finish();
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
         return true;
     }
 
@@ -76,6 +77,7 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
         Intent intent = new Intent(this, ConsultationActivity.class);
         intent.putExtra(EXTRA_ELEPHANT, info);
         startActivityForResult(intent, REQUEST_CONSULTATION);
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 
     private void refreshList() {

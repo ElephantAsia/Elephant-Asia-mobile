@@ -30,6 +30,7 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
     @Override
     public boolean onSupportNavigateUp() {
         finish();
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
         return true;
     }
 
@@ -38,6 +39,7 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
         Intent intent = new Intent(this, SearchBrowserActivity.class);
         intent.putExtra(SearchBrowserActivity.EXTRA_ELEPHANT, info);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 
     private void setSearchFragment() {

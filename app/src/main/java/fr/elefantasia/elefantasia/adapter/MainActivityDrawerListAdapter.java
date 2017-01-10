@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ public class MainActivityDrawerListAdapter extends BaseAdapter {
         this.content = new ArrayList<>();
 
         content.add(context.getString(R.string.home_page));
-        content.add(context.getString(R.string.search));
+        //content.add(context.getString(R.string.search));
         content.add(context.getString(R.string.current_animal));
         content.add(context.getString(R.string.locations));
         content.add(context.getString(R.string.reports));

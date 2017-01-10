@@ -21,6 +21,7 @@ import fr.elefantasia.elefantasia.interfaces.HomePageInterface;
  * Created by Stephane on 07/01/2017.
  */
 
+@Deprecated
 public class HomePageFragmentGridViewAdapter extends BaseAdapter {
 
     private Context context;
@@ -82,7 +83,7 @@ public class HomePageFragmentGridViewAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onNewActivity(getIntent(index), getResultCode(index));
+                //listener.onNewActivity(getIntent(index), getResultCode(index));
             }
         });
 
