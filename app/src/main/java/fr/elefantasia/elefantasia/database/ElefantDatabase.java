@@ -127,7 +127,7 @@ public class ElefantDatabase {
      * @param id L'ID de l'éléphant à supprimer
      * @return Code d'erreur
      */
-    public int removeElephant(int id) {
+    public int deleteElephant(int id) {
         return (database.delete(MySQLite.TABLE_NAME, MySQLite.COL_ID + " = "  + id, null));
     }
 

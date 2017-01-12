@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,6 +52,8 @@ public class ElephantConsultationFragment extends Fragment {
     private EA_EditText chipEditText;
     private EA_EditText birthDateEditText;
 
+    private Button deleteButton;
+
     public ElephantConsultationFragment() {
     }
 
@@ -80,6 +83,14 @@ public class ElephantConsultationFragment extends Fragment {
         nickNameEditText = (EA_EditText )view.findViewById(R.id.elephant_consultation_edit_nickname);
         chipEditText = (EA_EditText) view.findViewById(R.id.elephant_consultation_edit_chip);
         birthDateEditText = (EA_EditText) view.findViewById(R.id.elephant_consultation_edit_birth_date);
+
+        deleteButton = (Button) view.findViewById(R.id.elephant_consultation_delete);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((ConsultationInterface) getActivity()).deleteElephant(info.id);
+            }
+        });
 
         fab = (FloatingActionButton) view.findViewById(R.id.elephant_consultation_fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +158,7 @@ public class ElephantConsultationFragment extends Fragment {
         idNumberTextView.setVisibility(View.GONE);
         chipTextView.setVisibility(View.GONE);
         birthDateTextView.setVisibility(View.GONE);
+        deleteButton.setVisibility(View.GONE);
 
         nameEditText.setVisibility(View.VISIBLE);
         nickNameEditText.setVisibility(View.VISIBLE);
@@ -266,6 +278,7 @@ public class ElephantConsultationFragment extends Fragment {
         idNumberTextView.setVisibility(View.VISIBLE);
         chipTextView.setVisibility(View.VISIBLE);
         birthDateTextView.setVisibility(View.VISIBLE);
+        deleteButton.setVisibility(View.VISIBLE);
 
         sexRadioGroup.setVisibility(View.GONE);
 

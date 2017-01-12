@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.database.ElefantDatabase;
@@ -55,6 +56,11 @@ public class ConsultationActivity extends AppCompatActivity implements Consultat
     }
 
     @Override
+    public ElephantInfo getElephantInfo() {
+        return elephantInfo;
+    }
+
+    @Override
     public void updateElephant(ElephantInfo info) {
         elephantInfo = new ElephantInfo(info);
         database.updateElephant(elephantInfo);
@@ -63,8 +69,12 @@ public class ConsultationActivity extends AppCompatActivity implements Consultat
     }
 
     @Override
-    public ElephantInfo getElephantInfo() {
-        return elephantInfo;
+    public void deleteElephant(int id) {
+        database.deleteElephant(id);
+        setResult(RESULT_OK);
+        Toast.makeText(this, "Elephant deleted with success", Toast.LENGTH_SHORT).show();
+        finish();
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
     private void refreshToolbarTitle() {

@@ -10,5 +10,6 @@ public interface ConsultationInterface {
 
     ElephantInfo getElephantInfo();
     void updateElephant(ElephantInfo info);
+    void deleteElephant(int id);
 
 }

@@ -338,6 +338,14 @@
 
                 </LinearLayout>
 
+                <Button
+                    android:id="@+id/elephant_consultation_delete"
+                    android:layout_marginTop="22dp"
+                    android:layout_gravity="center"
+                    android:text="@string/delete"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp" />
+
             </LinearLayout>
 
         </LinearLayout>

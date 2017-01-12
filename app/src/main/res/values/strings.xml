@@ -109,4 +109,5 @@
 
     <string name="yes_enabled">Yes - Enabled</string>
     <string name="no_disabled">No - Disabled</string>
+    <string name="delete">Delete</string>
 </resources>
