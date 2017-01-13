@@ -1,17 +1,13 @@
 package fr.elefantasia.elefantasia.activities;
 
-import android.app.Activity;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.Toast;
 
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.adapter.ViewPagerAdapter;
@@ -52,10 +48,12 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
             public void onGlobalLayout() {
                 FloatingActionButton button = (FloatingActionButton) findViewById(R.id.elephant_registration_fab);
 
-                if (StaticTools.keyboardIsDisplay(activityRootView)) {
-                    button.hide();
-                } else {
-                    button.show();
+                if (button != null) {
+                    if (StaticTools.keyboardIsDisplay(activityRootView)) {
+                        button.hide();
+                    } else {
+                        button.show();
+                    }
                 }
             }
         });

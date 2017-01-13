@@ -5,15 +5,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by Stephane on 31/10/2016.
@@ -83,7 +80,7 @@ public class ElefantDatabase {
         ContentValues values = new ContentValues();
         values.put(MySQLite.COL_NAME, elefant.name);
         values.put(MySQLite.COL_NICKNAME, elefant.nickName);
-        values.put(MySQLite.COL_SEX, String.valueOf(elefant.sex));
+        values.put(MySQLite.COL_SEX, String.valueOf(elefant.sex).toUpperCase());
         values.put(MySQLite.COL_EAR_TAG, String.valueOf(elefant.earTag));
         values.put(MySQLite.COL_EYED, String.valueOf(elefant.eyeD));
         values.put(MySQLite.COL_BIRTH_DATE, elefant.birthDate);
@@ -211,13 +208,12 @@ public class ElefantDatabase {
         List<String> param = new ArrayList<String>();
         String restriction = " ";
 
-
         if (!info.name.isEmpty())
             param.add("WHERE " + MySQLite.COL_NAME + " = '" + info.name + "'");
         if (!info.chips1.isEmpty())
             param.add("WHERE " + MySQLite.COL_CHIPS + " = '" + info.chips1 + "'");
         if (info.sex != ElephantInfo.Gender.UNKNOWN)
-            param.add("WHERE " + MySQLite.COL_SEX + " = '" + info.sex);
+            param.add("WHERE " + MySQLite.COL_SEX + " = '" + info.sex + "'");
         if (!info.registrationProvince.isEmpty())
             param.add("WHERE " + MySQLite.COL_REGISTRATION_PROVINCE + " = '" + info.registrationProvince + "'");
         if (!info.registrationDistrict.isEmpty())
