@@ -4,15 +4,15 @@
 
         <item name="android:windowActivityTransitions" tools:targetApi="21">true</item>
 
-        <item name="colorPrimary">@color/primary_100</item>
-        <item name="android:colorPrimary" tools:targetApi="21">@color/primary_100</item>
+        <item name="colorPrimary">@color/primary_grey_100</item>
+        <item name="android:colorPrimary" tools:targetApi="21">@color/primary_grey_100</item>
 
 
         <item name="colorPrimaryDark">@color/primary_dark_100</item>
         <item name="android:colorPrimaryDark" tools:targetApi="21">@color/primary_dark_100</item>
 
-        <item name="colorAccent">@color/primary_100</item>
-        <item name="android:colorAccent" tools:targetApi="21">@color/primary_100</item>
+        <item name="colorAccent">@color/primary_grey_100</item>
+        <item name="android:colorAccent" tools:targetApi="21">@color/primary_grey_100</item>
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
@@ -30,8 +30,8 @@
         <item name="colorControlNormal">@color/grey_light_100</item>
         <item name="android:colorControlNormal" tools:targetApi="21">@color/grey_light_100</item>
 
-        <item name="colorControlActivated">@color/primary_100</item>
-        <item name="android:colorControlActivated" tools:targetApi="21">@color/primary_100</item>
+        <item name="colorControlActivated">@color/primary_grey_100</item>
+        <item name="android:colorControlActivated" tools:targetApi="21">@color/primary_grey_100</item>
 
         <item name="colorControlHighlight">@color/primary_50</item>
         <item name="android:colorControlHighlight" tools:targetApi="21">@color/primary_50</item>
@@ -43,7 +43,7 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/primary_100</item>
+        <item name="colorPrimary">@color/primary_grey_100</item>
         <item name="colorPrimaryDark">@color/primary_dark_100</item>
         <!--<item name="colorAccent">@color/colorAccent</item>-->
     </style>

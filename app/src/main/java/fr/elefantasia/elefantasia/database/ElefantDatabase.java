@@ -188,7 +188,6 @@ public class ElefantDatabase {
     public List<ElephantInfo> getCustom(ElephantInfo info) {
         String query = "SELECT * FROM " + MySQLite.TABLE_NAME + GetElephantQueryRestriction(info);
         List<ElephantInfo> results = new ArrayList<>();
-        Log.i("request", query);
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0)

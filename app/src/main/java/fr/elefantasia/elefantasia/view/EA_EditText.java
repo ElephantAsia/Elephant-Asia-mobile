@@ -44,7 +44,7 @@ public class EA_EditText extends EditText {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
 
         if (!focused) {
-            //StaticTools.hideKeyboard(getContext(), this);
+            StaticTools.hideKeyboard(getContext(), this);
 
             if (isRequired) {
                 StaticTools.checkEmptyField(getContext(), this);

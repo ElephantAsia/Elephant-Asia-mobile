@@ -98,7 +98,23 @@
         <item>All</item>
     </string-array>
 
+    <string-array name="tusks">
+        <item>None</item>
+        <item>Right tusk only</item>
+        <item>Left tusk only</item>
+        <item>Both</item>
+    </string-array>
+
+
     <string name="elephant_consultation_title">%1$s - #%2$s</string>
+
+    <string name="tusk">Tusks</string>
+    <string name="nails_front_left">Nails front left</string>
+    <string name="nails_front_right">Nails front right</string>
+    <string name="nails_rear_right">Nails rear right</string>
+    <string name="nails_rear_left">Nails rear left</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
 
     <string name="name">Name</string>
     <string name="nickname">Nickname</string>
@@ -111,4 +127,5 @@
     <string name="yes_enabled">Yes - Enabled</string>
     <string name="no_disabled">No - Disabled</string>
     <string name="delete">Delete</string>
+    <string name="comming_soon">comming soon...</string>
 </resources>

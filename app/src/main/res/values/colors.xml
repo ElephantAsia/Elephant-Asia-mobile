@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary_100">#ffef4136</color>
+    <color name="primary_grey_100">#404040</color>
     <color name="primary_75">#bfef4136</color>
     <color name="primary_50">#80ef4136</color>
     <color name="primary_25">#40ef4136</color>
@@ -11,7 +11,7 @@
     <color name="background_100">#FFFAFAFA</color>
     <color name="background_60">#99FAFAFA</color>
 
-    <color name="primary_dark_100">#ef4136</color>
+    <color name="primary_dark_100">#404040</color>
     <!--<color name="colorAccent">#66000000</color>-->
 
     <color name="list_selection">#4285f4</color>

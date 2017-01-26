@@ -174,8 +174,8 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new AddElephantRegistrationFragment(), getString(R.string.registration));
-        adapter.addFragment(new AddElephantOwnershipFragment(), getString(R.string.ownership));
         adapter.addFragment(new AddElephantDescriptionFragment(), getString(R.string.description));
+        adapter.addFragment(new AddElephantOwnershipFragment(), getString(R.string.ownership));
         adapter.addFragment(new AddElephantParentageFragment(), getString(R.string.parentage));
         adapter.addFragment(new AddElephantConsultationFragment(), getString(R.string.consultations));
         adapter.addFragment(new AddElephantDocumentFragment(), getString(R.string.documents));
