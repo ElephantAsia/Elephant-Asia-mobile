@@ -65,8 +65,8 @@ public class SearchElephantAdapter extends BaseAdapter {
         TextView location = (TextView)view.findViewById(R.id.search_overview_location);
 
         name.setText(String.format(context.getString(R.string.elephant_name_sex_age), info.name, sex, "-"));
-        registration.setText(info.registrationID);
-        location.setText(String.format(context.getString(R.string.elephant_location), info.registrationVillage, info.registrationProvince));
+        registration.setText(info.regID);
+        location.setText(String.format(context.getString(R.string.elephant_location), info.regVillage, info.regProvince));
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

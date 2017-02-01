@@ -1,206 +1,264 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_collapseParallaxMultiplier="0.0"
-      >
+    <data>
+        <variable name="e" type="fr.elefantasia.elefantasia.utils.ElephantInfo"/>
+        <import type="fr.elefantasia.elefantasia.utils.ElephantInfo.Gender"/>
+    </data>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_collapseParallaxMultiplier="0.0"
+          >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:padding="10dp"
+                android:id="@+id/addView"
+                android:clickable="true"
+                android:focusableInTouchMode="true"
+                tools:ignore="ExtraText">
+
+                <EditText
+                    android:text="@={e.name}"
+                    android:layout_marginBottom="20dp"
+                    android:hint="@string/elephant_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/elephant_name"
+                    />
+
+                <EditText
+                    android:text="@={e.nickName}"
+                    android:layout_marginBottom="20dp"
+                    android:hint="@string/elephant_nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/elephant_nickname"
+                    />
+
+                <RadioGroup
+                    android:weightSum="2"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/elephant_rg_sex"
+                    >
+
+                    <RadioButton
+                        android:gravity="center"
+                        android:text="@string/male"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/elephant_radio_male"
+                        android:duplicateParentState="false"
+                        android:onClick="@{() -> e.setSex(Gender.MALE)}"
+                      />
+
+                    <RadioButton
+                        android:gravity="center"
+                        android:text="@string/female"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/elephant_radio_female"
+                        android:onClick="@{() -> e.setSex(Gender.FEMALE)}"
+                        />
+
+                </RadioGroup>
+
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:text="@string/ear_tag"
+                        android:textSize="@dimen/font_size_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"
+                        />
+
+                    <CheckBox
+                        android:id="@+id/ear_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:checked="@={e.earTag}"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:text="@string/eyeD"
+                        android:textSize="@dimen/font_size_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"
+                        />
+
+                    <CheckBox
+                        android:id="@+id/eyeD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:checked="@={e.eyeD}"
+                        />
+
+                </RelativeLayout>
+
+                <EditText
+                    android:text="@={e.birthDate}"
+                    android:layout_marginBottom="20dp"
+                    android:hint="@string/elephant_birthdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="datetime"
+                    android:ems="10"
+                    android:id="@+id/elephant_birth_date"
+                    />
+
+                <EditText
+                    android:text="@={e.birthVillage}"
+                    android:layout_marginBottom="20dp"
+                    android:hint="@string/elephant_birth_village"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/birth_village"
+                    />
+
+                <EditText
+                    android:text="@={e.birthDistrict}"
+                    android:layout_marginBottom="20dp"
+                    android:hint="@string/elephant_birth_district"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/birth_district"
+                    />
+
+                <EditText
+                    android:text="@={e.birthProvince}"
+                    android:layout_marginBottom="20dp"
+                    android:hint="@string/elephant_birth_province"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/birth_province"
+                    />
+
+
+                <EditText
+                    android:text="@={e.chips1}"
+                    android:layout_marginBottom="20dp"
+                    android:hint="@string/elephant_chip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:id="@+id/chip1"
+                    />
+
+
+                <EditText
+                    android:text="@={e.regID}"
+                    android:layout_marginBottom="20dp"
+                    android:hint="@string/elephant_registration_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/registration_id"
+                    />
+
+                <EditText
+                    android:text="@={e.regVillage}"
+                    android:layout_marginBottom="20dp"
+                    android:hint="@string/elephant_registration_village"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/reg_village"
+                    />
+
+                <EditText
+                    android:text="@={e.regDistrict}"
+                    android:layout_marginBottom="20dp"
+                    android:hint="@string/elephant_registration_district"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/reg_district"
+                    />
+
+                <EditText
+                    android:text="@={e.regProvince}"
+                    android:layout_marginBottom="20dp"
+                    android:hint="@string/elephant_registration_province"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/reg_province"
+                    />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/elephant_registration_fab"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:padding="10dp"
-            android:id="@+id/addView"
-            android:clickable="true"
-            android:focusableInTouchMode="true"
-            tools:ignore="ExtraText">
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@android:drawable/ic_media_next"
+            app:backgroundTint="@color/primary_grey_100"
+            app:borderWidth="0dp"
+            app:elevation="0dp"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="#cd2014" />
 
-            <fr.elefantasia.elefantasia.view.EA_EditText
-                android:layout_marginBottom="20dp"
-                android:hint="@string/elephant_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/elephant_name"
-                app:required_field="true"/>
-
-            <fr.elefantasia.elefantasia.view.EA_EditText
-                android:layout_marginBottom="20dp"
-                android:hint="@string/elephant_nickname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/elephant_nickname"
-                app:required_field="true"/>
-
-            <RadioGroup
-                android:weightSum="2"
-                android:layout_marginBottom="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/elephant_rg_sex">
-
-                <RadioButton
-                    android:gravity="center"
-                    android:text="@string/male"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/elephant_radio_male"
-                    android:duplicateParentState="false" />
-
-                <RadioButton
-                    android:gravity="center"
-                    android:text="@string/female"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/elephant_radio_female" />
-
-            </RadioGroup>
-
-            <CheckedTextView
-                android:text="@string/ear_tag"
-                android:id="@+id/ear_tag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:button="@null"
-                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
-                android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"/>
-
-
-            <CheckedTextView
-                android:text="@string/eyeD"
-                android:id="@+id/eyeD"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:button="@null"
-                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
-                android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
-                android:layout_marginBottom="5dp" />
-                />
-
-            <fr.elefantasia.elefantasia.view.EA_EditText
-                android:layout_marginBottom="20dp"
-                android:hint="@string/elephant_birthdate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="datetime"
-                android:ems="10"
-                android:id="@+id/elephant_birth_date"
-                app:required_field="true"/>
-
-            <fr.elefantasia.elefantasia.view.EA_EditText
-                android:layout_marginBottom="20dp"
-                android:hint="@string/elephant_birth_village"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:ems="10"
-                android:id="@+id/elephant_birth_village"
-                app:required_field="true"/>
-
-            <fr.elefantasia.elefantasia.view.EA_EditText
-                android:layout_marginBottom="20dp"
-                android:hint="@string/elephant_birth_district"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:ems="10"
-                android:id="@+id/elephant_birth_district"
-                app:required_field="true"/>
-
-            <fr.elefantasia.elefantasia.view.EA_EditText
-                android:layout_marginBottom="20dp"
-                android:hint="@string/elephant_birth_province"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:ems="10"
-                android:id="@+id/elephant_birth_province"
-                app:required_field="true"/>
-
-
-            <fr.elefantasia.elefantasia.view.EA_EditText
-                android:layout_marginBottom="20dp"
-                android:hint="@string/elephant_chip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:ems="10"
-                android:id="@+id/elephant_chip"
-                app:required_field="true"/>
-
-
-            <fr.elefantasia.elefantasia.view.EA_EditText
-                android:layout_marginBottom="20dp"
-                android:hint="@string/elephant_registration_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:ems="10"
-                android:id="@+id/elephant_registration_id"
-                app:required_field="true"/>
-
-            <fr.elefantasia.elefantasia.view.EA_EditText
-                android:layout_marginBottom="20dp"
-                android:hint="@string/elephant_registration_village"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:ems="10"
-                android:id="@+id/elephant_registration_village"
-                app:required_field="true"/>
-
-            <fr.elefantasia.elefantasia.view.EA_EditText
-                android:layout_marginBottom="20dp"
-                android:hint="@string/elephant_registration_district"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:ems="10"
-                android:id="@+id/elephant_registration_district"
-                app:required_field="true"/>
-
-            <fr.elefantasia.elefantasia.view.EA_EditText
-                android:layout_marginBottom="20dp"
-                android:hint="@string/elephant_registration_province"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:ems="10"
-                android:id="@+id/elephant_registration_province"
-                app:required_field="true"/>
-
-        </LinearLayout>
-
-    </ScrollView>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/elephant_registration_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_media_next"
-        app:backgroundTint="@color/primary_grey_100"
-        app:borderWidth="0dp"
-        app:elevation="0dp"
-        app:pressedTranslationZ="12dp"
-        app:rippleColor="#cd2014" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

@@ -12,7 +12,6 @@ public interface AddElephantInterface {
 
     void setName(String name);
     void setNickname(String nickname);
-    void setSex(ElephantInfo.Gender sex);
     void hasEarTag(boolean value);
     void hasEyeD(boolean value);
 

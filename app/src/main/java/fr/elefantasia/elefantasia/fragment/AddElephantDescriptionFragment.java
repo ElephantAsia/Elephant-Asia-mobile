@@ -13,7 +13,6 @@ import android.widget.Spinner;
 
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.interfaces.AddElephantInterface;
-import fr.elefantasia.elefantasia.view.EA_EditText;
 
 public class AddElephantDescriptionFragment extends Fragment {
 
@@ -25,8 +24,8 @@ public class AddElephantDescriptionFragment extends Fragment {
     private Spinner nailsRearLeft;
     private Spinner nailsRearRight;
 
-    private EA_EditText weightEditText;
-    private EA_EditText heightEditText;
+    private EditText weightEditText;
+    private EditText heightEditText;
 
 
     public AddElephantDescriptionFragment() {
@@ -67,8 +66,8 @@ public class AddElephantDescriptionFragment extends Fragment {
         nailsRearLeft.setAdapter(adapter);
         nailsRearRight.setAdapter(adapter);
 
-        weightEditText = (EA_EditText) view.findViewById(R.id.elephant_weight);
-        heightEditText = (EA_EditText) view.findViewById(R.id.elephant_height);
+        weightEditText = (EditText) view.findViewById(R.id.elephant_weight);
+        heightEditText = (EditText) view.findViewById(R.id.elephant_height);
 
 
 

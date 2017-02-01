@@ -17,18 +17,17 @@ import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.interfaces.SearchInterface;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
 import fr.elefantasia.elefantasia.utils.StaticTools;
-import fr.elefantasia.elefantasia.view.EA_EditText;
 
 import static android.content.ContentValues.TAG;
 
 
 public class SearchFragment extends Fragment {
 
-    private EA_EditText nameEditText;
-    private EA_EditText microchipEditText;
-    private EA_EditText registrationProvinceEditText;
-    private EA_EditText registrationDistrictEditText;
-    private EA_EditText registrationVillageEditText;
+    private EditText nameEditText;
+    private EditText microchipEditText;
+    private EditText registrationProvinceEditText;
+    private EditText registrationDistrictEditText;
+    private EditText registrationVillageEditText;
 
     private Spinner sexSpinner;
     private Spinner countrySpinner;
@@ -42,11 +41,11 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.search_fragment, container, false);
 
-        nameEditText = (EA_EditText)view.findViewById(R.id.search_elephant_name);
-        microchipEditText = (EA_EditText)view.findViewById(R.id.search_elephant_microchip);
-        registrationProvinceEditText = (EA_EditText)view.findViewById(R.id.search_elephant_province);
-        registrationDistrictEditText = (EA_EditText)view.findViewById(R.id.search_elephant_district);
-        registrationVillageEditText = (EA_EditText)view.findViewById(R.id.search_elephant_village);
+        nameEditText = (EditText)view.findViewById(R.id.search_elephant_name);
+        microchipEditText = (EditText)view.findViewById(R.id.search_elephant_microchip);
+        registrationProvinceEditText = (EditText)view.findViewById(R.id.search_elephant_province);
+        registrationDistrictEditText = (EditText)view.findViewById(R.id.search_elephant_district);
+        registrationVillageEditText = (EditText)view.findViewById(R.id.search_elephant_village);
 
         searchButton = (Button)view.findViewById(R.id.search_button_search);
 
@@ -96,14 +95,14 @@ public class SearchFragment extends Fragment {
         elephantInfo.name = nameEditText.getText().toString();
         elephantInfo.chips1 = microchipEditText.getText().toString();
 
-        switch (sexSpinner.getSelectedItemPosition()) {
-            case 1:
-                elephantInfo.sex = ElephantInfo.Gender.MALE;
-                break;
-            case 2:
-                elephantInfo.sex = ElephantInfo.Gender.FEMALE;
-                break;
-        }
+//        switch (sexSpinner.getSelectedItemPosition()) {
+//            case 1:
+//                elephantInfo.sex = ElephantInfo.Gender.MALE;
+//                break;
+//            case 2:
+//                elephantInfo.sex = ElephantInfo.Gender.FEMALE;
+//                break;
+//        }
 
         ((SearchInterface) getActivity()).onClickSearch(elephantInfo);
     }

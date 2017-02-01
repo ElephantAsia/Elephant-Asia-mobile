@@ -1,370 +1,404 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/elephant_consultation_parent"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView
+    <data>
+        <variable name="e" type="fr.elefantasia.elefantasia.utils.ElephantInfo"/>
+        <variable name="mode" type="fr.elefantasia.elefantasia.fragment.ElephantConsultationFragment.State"/>
+        <import type="fr.elefantasia.elefantasia.utils.ElephantInfo.Gender"/>
+        <import type="fr.elefantasia.elefantasia.fragment.ElephantConsultationFragment.State"/>
+        <import type="android.view.View" />
+    </data>
+
+    <RelativeLayout android:id="@+id/elephant_consultation_parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
-        <LinearLayout
-            android:orientation="vertical"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:id="@+id/elephant_consultation_header"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/elephant_consultation_background"
-                    android:src="@mipmap/stripe"
-                    android:scaleType="centerCrop"
-                    android:contentDescription="@null"
-                    android:layout_width="match_parent"
-                    android:layout_height="160dp" />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/elephant_consultation_photo"
-                    android:src="@mipmap/elephant"
-                    android:contentDescription="@null"
-                    android:layout_marginTop="17dp"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginStart="17dp"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp" />
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_toRightOf="@id/elephant_consultation_photo"
-                    android:layout_toEndOf="@id/elephant_consultation_photo"
-                    android:layout_alignTop="@id/elephant_consultation_photo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/elephant_consultation_header_name"
-                        android:text="@string/elephant_name_sex_age"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:text="@string/elephant_registration"
-                        android:id="@+id/elephant_consultation_header_registration"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/elephant_consultation_header_location"
-                        android:text="@string/elephant_location"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/elephant_consultation_content"
-                android:layout_margin="24dp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="@string/name"
-                        android:textSize="14sp"
-                        android:textColor="@color/grey_light_100"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/elephant_consultation_name"
-                            android:textSize="18sp"
-                            android:textColor="@android:color/black"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <fr.elefantasia.elefantasia.view.EA_EditText
-                            android:visibility="gone"
-                            android:id="@+id/elephant_consultation_edit_name"
-                            android:textSize="18sp"
-                            android:textColor="@android:color/black"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                    </FrameLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="14dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="@string/nickname"
-                        android:textColor="@color/grey_light_100"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/elephant_consultation_nickname"
-                            android:textSize="18sp"
-                            android:textColor="@android:color/black"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <fr.elefantasia.elefantasia.view.EA_EditText
-                            android:visibility="gone"
-                            android:id="@+id/elephant_consultation_edit_nickname"
-                            android:textSize="18sp"
-                            android:textColor="@android:color/black"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                    </FrameLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="14dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="@string/id_number"
-                        android:textColor="@color/grey_light_100"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/elephant_consultation_identification_number"
-                            android:textSize="18sp"
-                            android:textColor="@android:color/black"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <fr.elefantasia.elefantasia.view.EA_EditText
-                            android:visibility="gone"
-                            android:id="@+id/elephant_consultation_edit_identification_number"
-                            android:textSize="18sp"
-                            android:textColor="@android:color/black"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                    </FrameLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="14dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="@string/chip"
-                        android:textColor="@color/grey_light_100"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/elephant_consultation_chip"
-                            android:textSize="18sp"
-                            android:textColor="@android:color/black"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <fr.elefantasia.elefantasia.view.EA_EditText
-                            android:visibility="gone"
-                            android:id="@+id/elephant_consultation_edit_chip"
-                            android:textSize="18sp"
-                            android:textColor="@android:color/black"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                    </FrameLayout>
-
-                </LinearLayout>
-
-                <RadioGroup
-                    android:layout_marginTop="14dp"
-                    android:visibility="gone"
-                    android:weightSum="2"
+                <RelativeLayout
+                    android:id="@+id/elephant_consultation_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:id="@+id/elephant_rg_sex">
+                    android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}">
 
-                    <RadioButton
-                        android:gravity="center"
-                        android:text="@string/male"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/elephant_radio_male"
-                        android:duplicateParentState="false" />
+                    <ImageView
+                        android:id="@+id/elephant_consultation_background"
+                        android:src="@mipmap/stripe"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp" />
 
-                    <RadioButton
-                        android:gravity="center"
-                        android:text="@string/female"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/elephant_radio_female" />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/elephant_consultation_photo"
+                        android:src="@mipmap/elephant"
+                        android:contentDescription="@null"
+                        android:layout_marginTop="17dp"
+                        android:layout_marginLeft="17dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp" />
 
-                </RadioGroup>
-
-                <LinearLayout
-                    android:layout_marginTop="14dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="@string/birth_date"
-                        android:textColor="@color/grey_light_100"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <FrameLayout
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_toRightOf="@id/elephant_consultation_photo"
+                        android:layout_toEndOf="@id/elephant_consultation_photo"
+                        android:layout_alignTop="@id/elephant_consultation_photo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:id="@+id/elephant_consultation_birth_date"
+                            android:id="@+id/elephant_consultation_header_name"
+                            android:text='@{e.name + " " + e.getSex()}'
+                            android:textSize="@dimen/font_size_normal"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:text="@={e.regID}"
+                            android:id="@+id/elephant_consultation_header_registration"
+                            android:textSize="@dimen/font_size_normal"
+                            android:textColor="@android:color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/elephant_consultation_header_location"
+                            android:text='@{e.regVillage + " " + e.regDistrict + " " + e.regProvince}'
+                            android:textSize="@dimen/font_size_normal"
+                            android:textColor="@android:color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/elephant_consultation_content"
+                    android:layout_margin="24dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="@string/name"
+                            android:textSize="14sp"
+                            android:textColor="@color/grey_light_100"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:text="@{e.name}"
+                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"
+                                android:id="@+id/elephant_consultation_name"
+                                android:textSize="18sp"
+                                android:textColor="@android:color/black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <EditText
+                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"
+                                android:text="@={e.name}"
+                                android:id="@+id/name"
+                                android:textSize="18sp"
+                                android:textColor="@android:color/black"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                />
+
+                        </FrameLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="14dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="@string/nickname"
+                            android:textColor="@color/grey_light_100"
+                            android:textSize="14sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:text="@{e.nickName}"
+                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"
+                                android:id="@+id/elephant_consultation_nickname"
+                                android:textSize="18sp"
+                                android:textColor="@android:color/black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <EditText
+                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"
+                                android:text="@={e.nickName}"
+                                android:id="@+id/nickname"
+                                android:textSize="18sp"
+                                android:textColor="@android:color/black"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="14dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="@string/id_number"
+                            android:textColor="@color/grey_light_100"
+                            android:textSize="14sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:text="@{e.regID}"
+                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"
+                                android:id="@+id/identification_number"
+                                android:textSize="18sp"
+                                android:textColor="@android:color/black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <EditText
+                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"
+                                android:text="@={e.regID}"
+                                android:id="@+id/id_number"
+                                android:textSize="18sp"
+                                android:textColor="@android:color/black"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="14dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="@string/chip"
+                            android:textColor="@color/grey_light_100"
+                            android:textSize="14sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:text="@{e.chips1}"
+                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"
+                                android:id="@+id/elephant_consultation_chip"
+                                android:textSize="18sp"
+                                android:textColor="@android:color/black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <EditText
+                                android:text="@={e.chips1}"
+                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"
+                                android:id="@+id/chip"
+                                android:textSize="18sp"
+                                android:textColor="@android:color/black"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <RadioGroup
+                        android:layout_marginTop="14dp"
+                        android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"
+                        android:weightSum="2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/elephant_rg_sex">
+
+                        <RadioButton
+                            android:checked='@{e.isMale()}'
+                            android:onClick="@{() -> e.setSex(Gender.MALE)}"
+                            android:gravity="center"
+                            android:text="@string/male"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/elephant_radio_male"
+                            android:duplicateParentState="false"
+                            />
+
+                        <RadioButton
+                            android:checked='@{e.isFemale()}'
+                            android:onClick="@{() -> e.setSex(Gender.FEMALE)}"
+                            android:gravity="center"
+                            android:text="@string/female"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/elephant_radio_female" />
+
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:layout_marginTop="14dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="@string/birth_date"
+                            android:textColor="@color/grey_light_100"
+                            android:textSize="14sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:text="@{e.birthDate}"
+                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"
+                                android:id="@+id/elephant_consultation_birth_date"
+                                android:textSize="18sp"
+                                android:textColor="@android:color/black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <EditText
+                                android:text="@={e.birthDate}"
+                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"
+                                android:id="@+id/birth_date"
+                                android:textSize="18sp"
+                                android:textColor="@android:color/black"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="14dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="@string/elephantasia_db_number"
+                            android:textColor="@color/grey_light_100"
+                            android:textSize="14sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:text='@{String.format("%08d", e.id)}'
+                            android:id="@+id/elephant_consultation_edn"
                             android:textSize="18sp"
                             android:textColor="@android:color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
-                        <fr.elefantasia.elefantasia.view.EA_EditText
-                            android:visibility="gone"
-                            android:id="@+id/elephant_consultation_edit_birth_date"
-                            android:textSize="18sp"
-                            android:textColor="@android:color/black"
-                            android:layout_width="match_parent"
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="14dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="@string/eartag"
+                            android:textColor="@color/grey_light_100"
+                            android:textSize="14sp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
-                    </FrameLayout>
+                        <TextView
+                            android:text='@{e.earTag ? @string/yes_enabled : @string/no_disabled}'
+                            android:id="@+id/elephant_consultation_ear_tag"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"
+                        android:id="@+id/elephant_consultation_delete"
+                        android:layout_marginTop="22dp"
+                        android:layout_gravity="center"
+                        android:text="@string/delete"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp" />
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="14dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="@string/elephantasia_db_number"
-                        android:textColor="@color/grey_light_100"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:text="test"
-                        android:id="@+id/elephant_consultation_edn"
-                        android:textSize="18sp"
-                        android:textColor="@android:color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="14dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="@string/eartag"
-                        android:textColor="@color/grey_light_100"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:text="test"
-                        android:id="@+id/elephant_consultation_ear_tag"
-                        android:textSize="18sp"
-                        android:textColor="@android:color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/elephant_consultation_delete"
-                    android:layout_marginTop="22dp"
-                    android:layout_gravity="center"
-                    android:text="@string/delete"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp" />
 
             </LinearLayout>
 
-        </LinearLayout>
+        </ScrollView>
 
-    </ScrollView>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/elephant_consultation_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@android:drawable/ic_menu_edit"
+            app:backgroundTint="@color/primary_grey_100"
+            app:borderWidth="0dp"
+            app:elevation="0dp"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="#cd2014" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/elephant_consultation_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_menu_edit"
-        app:backgroundTint="@color/primary_grey_100"
-        app:borderWidth="0dp"
-        app:elevation="0dp"
-        app:pressedTranslationZ="12dp"
-        app:rippleColor="#cd2014" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

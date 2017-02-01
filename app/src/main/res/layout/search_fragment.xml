@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
      >
 
-        <fr.elefantasia.elefantasia.view.EA_EditText
+        <EditText
             android:textSize="16sp"
             android:id="@+id/search_elephant_name"
             android:inputType="text"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <fr.elefantasia.elefantasia.view.EA_EditText
+        <EditText
             android:textSize="16sp"
             android:id="@+id/search_elephant_microchip"
             android:inputType="numberDecimal"
@@ -50,7 +50,7 @@
 
         </LinearLayout>
 
-        <fr.elefantasia.elefantasia.view.EA_EditText
+        <EditText
             android:textSize="16sp"
             android:id="@+id/search_elephant_province"
             android:inputType="text"
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <fr.elefantasia.elefantasia.view.EA_EditText
+        <EditText
             android:textSize="16sp"
             android:id="@+id/search_elephant_district"
             android:inputType="text"
@@ -68,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <fr.elefantasia.elefantasia.view.EA_EditText
+        <EditText
             android:textSize="16sp"
             android:id="@+id/search_elephant_village"
             android:inputType="text"
@@ -79,7 +79,7 @@
 
 
 
-        <!--<fr.elefantasia.elefantasia.view.EA_EditText-->
+        <!--<EditText-->
             <!--android:textSize="16sp"-->
             <!--android:enabled="false"-->
             <!--android:id="@+id/search_elephant_referent_name"-->
@@ -89,7 +89,7 @@
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content" />-->
 
-        <!--<fr.elefantasia.elefantasia.view.EA_EditText-->
+        <!--<EditText-->
             <!--android:textSize="16sp"-->
             <!--android:enabled="false"-->
             <!--android:id="@+id/search_elephant_referent_id"-->

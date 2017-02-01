@@ -79,7 +79,7 @@ public class ConsultationActivity extends AppCompatActivity implements Consultat
 
     private void refreshToolbarTitle() {
         String name = elephantInfo.name;
-        String regID = elephantInfo.registrationID;
+        String regID = elephantInfo.regID;
         String format = String.format(getString(R.string.elephant_consultation_title), name, regID);
         ((TextView)toolbar.findViewById(R.id.title)).setText(format);
     }

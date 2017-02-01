@@ -81,7 +81,7 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
     }
 
     private void refreshList() {
-        List<ElephantInfo> elephants = database.getCustom(toSearch);
+        List<ElephantInfo> elephants = database.getElephantFromSearch(toSearch);
         if (elephants.size() == 0) {
             mListView.setVisibility(View.GONE);
             noItem.setVisibility(View.VISIBLE);

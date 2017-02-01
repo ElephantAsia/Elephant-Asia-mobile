@@ -99,17 +99,19 @@ public class StaticTools {
         }
     }
 
-
     /**
      * Hide keyboard
-     *
-     * @param ctx   Current context
-     * @param view  Current view
      */
-    public static void hideKeyboard(Context ctx, View view) {
-        InputMethodManager inputMethodManager = (InputMethodManager)ctx.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
+
+
+//    public static void hideKeyboard(Context ctx, View view) {
+//        InputMethodManager inputMethodManager = (InputMethodManager)ctx.getSystemService(Activity.INPUT_METHOD_SERVICE);
+//        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+//    }
 
     /**
      * Check if keyboard is display.

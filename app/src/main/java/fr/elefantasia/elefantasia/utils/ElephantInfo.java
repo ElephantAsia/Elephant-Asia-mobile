@@ -1,11 +1,11 @@
 package fr.elefantasia.elefantasia.utils;
 
+import android.databinding.BaseObservable;
+import android.databinding.ObservableBoolean;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
-/**
- * Created by care_j on 29/10/16.
- */
 
 public class ElephantInfo implements Parcelable {
 
@@ -13,6 +13,7 @@ public class ElephantInfo implements Parcelable {
         MALE,
         FEMALE,
         UNKNOWN
+
     }
 
     public enum Legallity {
@@ -21,10 +22,14 @@ public class ElephantInfo implements Parcelable {
         UNKNOWN
     }
 
+    public void setSex(Gender gender) {
+        this.sex = Gender.MALE;
+    }
+
     public Integer id;
     public String name;
     public String nickName;
-    public Gender sex = Gender.UNKNOWN;
+    public Gender sex ;
     public boolean earTag = false;
     public boolean eyeD = false;
 
@@ -37,12 +42,25 @@ public class ElephantInfo implements Parcelable {
     public String chips2;
     public String chips3;
 
-    public String registrationID;
-    public String registrationVillage;
-    public String registrationDistrict;
-    public String registrationProvince;
+    public String regID;
+    public String regVillage;
+    public String regDistrict;
+    public String regProvince;
 
-    //TODO: Check avec galibe: Pourquoi des strings avec comme valeur "null" ?
+    public String getSex() {
+        String sex = this.sex.toString();
+        return sex.substring(0, 1).toUpperCase() + sex.substring(1, sex.length()).toLowerCase();
+    }
+
+    public boolean isMale() {
+        return this.sex == Gender.MALE;
+    }
+
+    public boolean isFemale() {
+        return this.sex == Gender.FEMALE;
+    }
+
+
     public ElephantInfo() {
         id = 0;
         name = "";
@@ -57,10 +75,10 @@ public class ElephantInfo implements Parcelable {
         chips1 = "";
         chips2 = "";
         chips3 = "";
-        registrationID = "";
-        registrationVillage = "";
-        registrationDistrict = "";
-        registrationProvince = "";
+        regID = "";
+        regVillage = "";
+        regDistrict = "";
+        regProvince = "";
     }
 
     public ElephantInfo(ElephantInfo other) {
@@ -77,10 +95,10 @@ public class ElephantInfo implements Parcelable {
         chips1 = other.chips1;
         chips2 = other.chips2;
         chips3 = other.chips3;
-        registrationID = other.registrationID;
-        registrationVillage = other.registrationVillage;
-        registrationDistrict = other.registrationDistrict;
-        registrationProvince = other.registrationProvince;
+        regID = other.regID;
+        regVillage = other.regVillage;
+        regDistrict = other.regDistrict;
+        regProvince = other.regProvince;
     }
 
     @Override
@@ -103,10 +121,10 @@ public class ElephantInfo implements Parcelable {
         out.writeString(chips1);
         out.writeString(chips2);
         out.writeString(chips3);
-        out.writeString(registrationID);
-        out.writeString(registrationVillage);
-        out.writeString(registrationDistrict);
-        out.writeString(registrationProvince);
+        out.writeString(regID);
+        out.writeString(regVillage);
+        out.writeString(regDistrict);
+        out.writeString(regProvince);
     }
 
     public static final Parcelable.Creator<ElephantInfo> CREATOR = new Parcelable.Creator<ElephantInfo>() {
@@ -136,10 +154,28 @@ public class ElephantInfo implements Parcelable {
         chips1 = in.readString();
         chips2 = in.readString();
         chips3 = in.readString();
-        registrationID = in.readString();
-        registrationVillage = in.readString();
-        registrationDistrict = in.readString();
-        registrationProvince = in.readString();
+        regID = in.readString();
+        regVillage = in.readString();
+        regDistrict = in.readString();
+        regProvince = in.readString();
+    }
+
+
+    public void displayAttr() {
+        Log.i("name", this.name);
+        Log.i("nickName", this.nickName);
+        Log.i("sex", this.sex.toString());
+        Log.i("earTag", String.valueOf(this.earTag));
+        Log.i("eyeD", String.valueOf(this.eyeD));
+        Log.i("birthDate", this.birthDate);
+        Log.i("birthVillage", this.birthVillage);
+        Log.i("birthDistrict", this.birthDistrict);
+        Log.i("birthProvince", this.birthProvince);
+        Log.i("chips1", this.chips1);
+        Log.i("regID", this.regID);
+        Log.i("regVillage", this.regVillage);
+        Log.i("regDistrict", this.regDistrict);
+        Log.i("regProvince", this.regProvince);
     }
 
 }

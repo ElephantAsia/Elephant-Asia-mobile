@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -66,7 +65,6 @@
                     android:gravity="start"
                     android:padding="5dp"
                     />
-
             </LinearLayout>
 
             <LinearLayout
@@ -141,7 +139,6 @@
                     android:layout_weight="0.3"
                     android:layout_height="wrap_content"
                     android:gravity="start" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -160,13 +157,12 @@
                     android:textSize="@dimen/font_size_normal"
                     />
 
-                <fr.elefantasia.elefantasia.view.EA_EditText
+                <EditText
                     android:layout_width="0dp"
                     android:layout_weight="0.3"
                     android:layout_height="match_parent"
                     android:inputType="numberSigned"
                     android:id="@+id/elephant_weight" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -186,7 +182,7 @@
                     android:textSize="@dimen/font_size_normal"
                     />
 
-                <fr.elefantasia.elefantasia.view.EA_EditText
+                <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
@@ -196,14 +192,7 @@
 
             </LinearLayout>
 
-
-
-
-
         </LinearLayout>
-
-
-
 
     </ScrollView>
 
