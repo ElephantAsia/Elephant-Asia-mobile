@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "fr.elefantasia.elefantasia"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 25
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
@@ -31,11 +31,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.android.support:palette-v7:24.0.0'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:design:25.2.0'
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:support-v4:25.2.0'
+    compile 'com.android.support:palette-v7:25.2.0'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'jp.wasabeef:blurry:2.0.3'
     compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'

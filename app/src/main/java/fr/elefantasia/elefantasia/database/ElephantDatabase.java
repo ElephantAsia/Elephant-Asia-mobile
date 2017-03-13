@@ -21,7 +21,7 @@ import fr.elefantasia.elefantasia.utils.ElephantInfo;
  * Cette classe a pour but de gérer la base donnée Elefant
  */
 
-public class ElefantDatabase {
+public class ElephantDatabase {
 
     /**
      * Version de la base de donnée
@@ -49,7 +49,7 @@ public class ElefantDatabase {
      *
      * @param context Le contexte
      */
-    public ElefantDatabase(Context context) {
+    public ElephantDatabase(Context context) {
         mySQLite = new MySQLite(context, NOM_BDD, null, VERSION_BDD);
 
     }
@@ -225,9 +225,3 @@ public class ElefantDatabase {
     }
 
 }
-
-
-/*Cursor c = database.query(MySQLite.TABLE_NAME, new String[] {MySQLite.COL_ID, MySQLite.COL_NAME},
-        MySQLite.COL_NAME + " LIKE \"" + name +"\"", null, null, null, null);
-
-return (cursorToELefant(c));*/

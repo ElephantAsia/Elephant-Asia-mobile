@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -13,7 +12,7 @@ import java.util.List;
 
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.adapter.SearchElephantAdapter;
-import fr.elefantasia.elefantasia.database.ElefantDatabase;
+import fr.elefantasia.elefantasia.database.ElephantDatabase;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
 
 public class SearchBrowserActivity extends AppCompatActivity implements SearchElephantAdapter.Listener {
@@ -23,7 +22,7 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
     private final static int REQUEST_CONSULTATION = 1;
 
     private ListView mListView;
-    private ElefantDatabase database;
+    private ElephantDatabase database;
     private TextView noItem;
     private ElephantInfo toSearch;
     private SearchElephantAdapter adapter;
@@ -37,7 +36,7 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_browser_activity);
 
-        database = new ElefantDatabase(getApplicationContext());
+        database = new ElephantDatabase(getApplicationContext());
         database.open();
 
         toSearch = getElephantInfo(getIntent());

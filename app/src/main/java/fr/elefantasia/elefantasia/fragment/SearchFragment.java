@@ -3,7 +3,6 @@ package fr.elefantasia.elefantasia.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.interfaces.SearchInterface;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
-import fr.elefantasia.elefantasia.utils.StaticTools;
 
-import static android.content.ContentValues.TAG;
 
 
 public class SearchFragment extends Fragment {
@@ -66,27 +62,11 @@ public class SearchFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (confirm()) {
-                    sendData();
-                }
+                sendData();
             }
         });
 
         return (view);
-    }
-
-    private boolean confirm() {
-        return (confirmName());
-    }
-
-    private boolean confirmName() {
-//        if (nameEditText.isEmpty() && microchipEditText.isEmpty()
-//                && registrationProvinceEditText.isEmpty() && registrationDistrictEditText.isEmpty()
-//                && registrationVillageEditText.isEmpty()) {
-//            Toast.makeText(getActivity(), "At least one field must be set", Toast.LENGTH_LONG).show();
-//            return false;
-//        }
-        return true;
     }
 
     private void sendData() {
@@ -94,15 +74,18 @@ public class SearchFragment extends Fragment {
 
         elephantInfo.name = nameEditText.getText().toString();
         elephantInfo.chips1 = microchipEditText.getText().toString();
+        elephantInfo.regProvince = registrationProvinceEditText.getText().toString();
+        elephantInfo.regDistrict = registrationDistrictEditText.getText().toString();
+        elephantInfo.regVillage = registrationVillageEditText.getText().toString();
 
-//        switch (sexSpinner.getSelectedItemPosition()) {
-//            case 1:
-//                elephantInfo.sex = ElephantInfo.Gender.MALE;
-//                break;
-//            case 2:
-//                elephantInfo.sex = ElephantInfo.Gender.FEMALE;
-//                break;
-//        }
+        switch (sexSpinner.getSelectedItemPosition()) {
+            case 1:
+                elephantInfo.sex = ElephantInfo.Gender.MALE;
+                break;
+            case 2:
+                elephantInfo.sex = ElephantInfo.Gender.FEMALE;
+                break;
+        }
 
         ((SearchInterface) getActivity()).onClickSearch(elephantInfo);
     }

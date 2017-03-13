@@ -6,26 +6,25 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.adapter.ViewPagerAdapter;
-import fr.elefantasia.elefantasia.database.ElefantDatabase;
-import fr.elefantasia.elefantasia.fragment.AddElephantConsultationFragment;
-import fr.elefantasia.elefantasia.fragment.AddElephantDescriptionFragment;
-import fr.elefantasia.elefantasia.fragment.AddElephantDocumentFragment;
-import fr.elefantasia.elefantasia.fragment.AddElephantLocationFragment;
-import fr.elefantasia.elefantasia.fragment.AddElephantOwnershipFragment;
-import fr.elefantasia.elefantasia.fragment.AddElephantParentageFragment;
-import fr.elefantasia.elefantasia.fragment.AddElephantRegistrationFragment;
+import fr.elefantasia.elefantasia.database.ElephantDatabase;
+import fr.elefantasia.elefantasia.fragment.addElephant.AddElephantConsultationFragment;
+import fr.elefantasia.elefantasia.fragment.addElephant.AddElephantDescriptionFragment;
+import fr.elefantasia.elefantasia.fragment.addElephant.AddElephantDocumentFragment;
+import fr.elefantasia.elefantasia.fragment.addElephant.AddElephantLocationFragment;
+import fr.elefantasia.elefantasia.fragment.addElephant.AddElephantOwnershipFragment;
+import fr.elefantasia.elefantasia.fragment.addElephant.AddElephantParentageFragment;
+import fr.elefantasia.elefantasia.fragment.addElephant.AddElephantRegistrationFragment;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
 import fr.elefantasia.elefantasia.utils.StaticTools;
 
 public class AddElephantActivity extends AppCompatActivity {
 
-    private ElefantDatabase database;
+    private ElephantDatabase database;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -70,7 +69,7 @@ public class AddElephantActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        database = new ElefantDatabase(this);
+        database = new ElephantDatabase(this);
         database.open();
     }
 

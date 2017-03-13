@@ -8,7 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import fr.elefantasia.elefantasia.R;
-import fr.elefantasia.elefantasia.database.ElefantDatabase;
+import fr.elefantasia.elefantasia.database.ElephantDatabase;
 import fr.elefantasia.elefantasia.fragment.ElephantConsultationFragment;
 import fr.elefantasia.elefantasia.interfaces.ConsultationInterface;
 import fr.elefantasia.elefantasia.utils.ElephantInfo;
@@ -17,7 +17,7 @@ import static fr.elefantasia.elefantasia.activities.SearchBrowserActivity.EXTRA_
 
 public class ConsultationActivity extends AppCompatActivity implements ConsultationInterface {
 
-    private ElefantDatabase database;
+    private ElephantDatabase database;
     private ElephantInfo elephantInfo;
 
     private Toolbar toolbar;
@@ -31,7 +31,7 @@ public class ConsultationActivity extends AppCompatActivity implements Consultat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.consultation_activity);
 
-        database = new ElefantDatabase(this);
+        database = new ElephantDatabase(this);
         database.open();
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);

@@ -1,7 +1,6 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -63,7 +62,6 @@
                     android:layout_weight="0.3"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:padding="5dp"
                     />
             </LinearLayout>
 
@@ -162,7 +160,10 @@
                     android:layout_weight="0.3"
                     android:layout_height="match_parent"
                     android:inputType="numberSigned"
-                    android:id="@+id/elephant_weight" />
+                    android:id="@+id/elephant_weight"
+                    android:gravity="center"
+                    />
+
             </LinearLayout>
 
             <LinearLayout
@@ -172,6 +173,7 @@
                 android:gravity="center_vertical"
                 android:layout_marginTop="@dimen/regular_vertical_margin"
                 >
+
 
                 <TextView
                     android:layout_width="0dp"
@@ -188,6 +190,7 @@
                     android:layout_weight="0.3"
                     android:inputType="numberSigned"
                     android:id="@+id/elephant_height"
+                    android:gravity="center"
                     />
 
             </LinearLayout>

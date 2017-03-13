@@ -1,4 +1,4 @@
-package fr.elefantasia.elefantasia.fragment;
+package fr.elefantasia.elefantasia.fragment.addElephant;
 
 
 import android.os.Bundle;
@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import fr.elefantasia.elefantasia.R;
 import fr.elefantasia.elefantasia.interfaces.AddElephantInterface;
 
-public class AddElephantConsultationFragment extends Fragment {
+public class AddElephantOwnershipFragment extends Fragment {
 
     private FloatingActionButton fabNext;
 
-    public AddElephantConsultationFragment() {
+    public AddElephantOwnershipFragment() {
     }
 
     @Override
@@ -27,9 +27,9 @@ public class AddElephantConsultationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.add_elephant_consultation_fragment, container, false);
+        View view = inflater.inflate(R.layout.add_elephant_ownership_fragment, container, false);
 
-        fabNext = (FloatingActionButton)view.findViewById(R.id.elephant_consultation_fab);
+        fabNext = (FloatingActionButton)view.findViewById(R.id.elephant_ownership_fab);
         fabNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
