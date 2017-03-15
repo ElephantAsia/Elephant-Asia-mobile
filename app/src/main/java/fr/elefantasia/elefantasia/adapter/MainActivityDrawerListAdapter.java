@@ -1,6 +1,8 @@
 package fr.elefantasia.elefantasia.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +82,7 @@ public class MainActivityDrawerListAdapter extends BaseAdapter {
             //label.setTextColor(context.getResources().getColor(R.color.list_selection));
         } else {
             //image.setImageResource(R.drawable.menu_icon_home_disabled);
-            label.setTextColor(context.getResources().getColor(R.color.list_indice));
+            label.setTextColor(ContextCompat.getColor(context, R.color.list_indice));
         }
         return view;
     }
