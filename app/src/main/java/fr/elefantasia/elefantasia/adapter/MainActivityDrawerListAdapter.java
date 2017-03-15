@@ -77,7 +77,7 @@ public class MainActivityDrawerListAdapter extends BaseAdapter {
 
         if (index == selection) {
             //image.setImageResource(R.drawable.menu_icon_home_enabled);
-            label.setTextColor(context.getResources().getColor(R.color.list_selection));
+            //label.setTextColor(context.getResources().getColor(R.color.list_selection));
         } else {
             //image.setImageResource(R.drawable.menu_icon_home_disabled);
             label.setTextColor(context.getResources().getColor(R.color.list_indice));

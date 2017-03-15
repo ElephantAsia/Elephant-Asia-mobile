@@ -9,24 +9,15 @@ import fr.elefantasia.elefantasia.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private final int SPLASH_DELAY = 2000;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash_screen_activity);
+        //setContentView(R.layout.splash_screen_activity);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                SplashScreenActivity.this.startActivity(intent);
-                SplashScreenActivity.this.finish();
-            }
-        }, SPLASH_DELAY);
-
-
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
 
     }
 }
