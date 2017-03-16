@@ -67,8 +67,8 @@ public class ConsultationActivity extends AppCompatActivity implements Consultat
     }
 
     @Override
-    public void deleteElephant(int id) {
-        database.deleteElephant(id);
+    public void deleteElephant(ElephantInfo info) {
+        database.deleteElephant(info);
         setResult(RESULT_OK);
         Toast.makeText(this, "Elephant deleted with success", Toast.LENGTH_SHORT).show();
         finish();

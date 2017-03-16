@@ -1,5 +1,7 @@
 package fr.elephantasia.elephantasia.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -56,7 +58,6 @@ public class AddElephantActivity extends AppCompatActivity {
             }
         });
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -76,9 +77,13 @@ public class AddElephantActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        setResult(RESULT_CANCELED);
-        finish();
+        confirmFinish(true);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        confirmFinish(true);
     }
 
     @Override
@@ -103,6 +108,26 @@ public class AddElephantActivity extends AppCompatActivity {
         return this.elephantInfo;
     }
 
+    private void confirmFinish(final boolean confirm) {
+        if (confirm) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.app_name)
+                    .setMessage(R.string.put_drafts)
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            elephantInfo.state = ElephantInfo.State.DRAFT;
+                            database.updateElephant(elephantInfo);
+                            confirmFinish(false);
+                        }
+                    })
+                    .show();
+        } else {
+            setResult(RESULT_CANCELED);
+            finish();
+        }
+    }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());

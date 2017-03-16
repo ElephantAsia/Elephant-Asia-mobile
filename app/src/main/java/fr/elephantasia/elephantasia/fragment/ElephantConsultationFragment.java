@@ -31,8 +31,6 @@ public class ElephantConsultationFragment extends Fragment {
 
     private Button deleteButton;
 
-    public ElephantConsultationFragment() {
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,7 +45,7 @@ public class ElephantConsultationFragment extends Fragment {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((ConsultationInterface) getActivity()).deleteElephant(info.id);
+                ((ConsultationInterface) getActivity()).deleteElephant(info);
             }
         });
 
@@ -56,10 +54,11 @@ public class ElephantConsultationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (binding.getMode() == State.CONSULTATION) {
-                    fab.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_menu_save));
+                    fab.setImageResource(android.R.drawable.ic_menu_save);
                     binding.setMode(State.EDITION);
                 } else {
-                    fab.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_menu_edit));
+                    fab.setImageResource(android.R.drawable.ic_menu_edit);
+
                     ((ConsultationInterface) getActivity()).updateElephant(info);
                     binding.setMode(State.CONSULTATION);
                 }

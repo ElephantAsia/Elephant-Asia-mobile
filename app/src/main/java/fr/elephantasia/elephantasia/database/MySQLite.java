@@ -62,6 +62,9 @@ public class MySQLite extends SQLiteOpenHelper {
     public static final String COL_REGISTRATION_PROVINCE = "registration_province";
     public static final int NUM_COL_REGISTRATION_PROVINCE = 14;
 
+    public static final String COL_STATE = "state";
+    public static final int NUM_COL_STATE = 15;
+
 
     private static final String TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -78,7 +81,8 @@ public class MySQLite extends SQLiteOpenHelper {
             + COL_REGISTRATION_ID + " TEXT NOT NULL, "
             + COL_REGISTRATION_VILLAGE + " TEXT NOT NULL, "
             + COL_REGISTRATION_DISTRICT + " TEXT NOT NULL, "
-            + COL_REGISTRATION_PROVINCE + " TEXT NOT NULL);";
+            + COL_REGISTRATION_PROVINCE + " TEXT NOT NULL, "
+            + COL_STATE + " INTEGER DEFAULT 0);";
 
     /**
      * @param context Le contexte

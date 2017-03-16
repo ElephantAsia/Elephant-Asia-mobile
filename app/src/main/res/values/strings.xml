@@ -70,7 +70,7 @@
     <string name="sex_empty">Sex empty</string>
     <string name="birthdate_empty">Birthdate empty</string>
 
-    <string name="search_result">Result(s): </string>
+    <string name="search_result">Result(s)</string>
     <string name="no_item_found">No item found</string>
 
     <string name="elephant_name_sex_age">%1$s, %2$s, %3$s y/o</string>
@@ -128,4 +128,6 @@
     <string name="delete">Delete</string>
     <string name="comming_soon">comming soon...</string>
     <string name="date">%1$04d/%2$02d/%3$02d</string>
+
+    <string name="put_drafts">Put this elephant in drafts ?</string>
 </resources>

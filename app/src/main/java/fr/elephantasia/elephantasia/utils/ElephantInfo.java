@@ -11,13 +11,19 @@ public class ElephantInfo implements Parcelable {
         MALE,
         FEMALE,
         UNKNOWN
-
     }
 
     public enum Legallity {
         LEGAL,
         ILLEGAL,
         UNKNOWN
+    }
+
+    public enum State {
+        DEFAULT,
+        PENDING,
+        DELETED,
+        DRAFT
     }
 
     public void setSex(Gender gender) {
@@ -27,7 +33,10 @@ public class ElephantInfo implements Parcelable {
     public Integer id;
     public String name;
     public String nickName;
-    public Gender sex ;
+
+    public Gender sex;
+    public State state;
+
     public boolean earTag = false;
     public boolean eyeD = false;
 
@@ -64,6 +73,7 @@ public class ElephantInfo implements Parcelable {
         name = "";
         nickName = "";
         sex = Gender.UNKNOWN;
+        state = State.DEFAULT;
         earTag = false;
         eyeD = false;
         birthDate = "";
@@ -84,6 +94,7 @@ public class ElephantInfo implements Parcelable {
         name = other.name;
         nickName = other.nickName;
         sex = other.sex;
+        state = other.state;
         earTag = other.earTag;
         eyeD = other.eyeD;
         birthDate = other.birthDate;
@@ -110,6 +121,7 @@ public class ElephantInfo implements Parcelable {
         out.writeString(name);
         out.writeString(nickName);
         out.writeString(String.valueOf(sex));
+        out.writeString(String.valueOf(state));
         out.writeString(String.valueOf(earTag));
         out.writeString(String.valueOf(eyeD));
         out.writeString(birthDate);
@@ -143,6 +155,7 @@ public class ElephantInfo implements Parcelable {
         name = in.readString();
         nickName = in.readString();
         sex = Gender.valueOf(in.readString());
+        state = State.valueOf(in.readString());
         earTag = Boolean.valueOf(in.readString());
         eyeD = Boolean.valueOf(in.readString());
         birthDate = in.readString();
@@ -162,6 +175,7 @@ public class ElephantInfo implements Parcelable {
     public void displayAttr() {
         Log.i("name", this.name);
         Log.i("nickName", this.nickName);
+        Log.i("state", this.state.toString());
         Log.i("sex", this.sex.toString());
         Log.i("earTag", String.valueOf(this.earTag));
         Log.i("eyeD", String.valueOf(this.eyeD));
