@@ -7,7 +7,6 @@
         <item name="colorPrimary">@color/primary_grey_100</item>
         <item name="android:colorPrimary" tools:targetApi="21">@color/primary_grey_100</item>
 
-
         <item name="colorPrimaryDark">@color/primary_dark_100</item>
         <item name="android:colorPrimaryDark" tools:targetApi="21">@color/primary_dark_100</item>
 
@@ -20,7 +19,8 @@
         <item name="android:windowContentOverlay">@null</item>
 
         <!-- Window background color -->
-        <item name="android:windowBackground">@color/background_100</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item>
 
         <!-- Widgets style -->
         <item name="android:editTextStyle">@style/App_EditTextStyle</item>
@@ -35,7 +35,10 @@
 
         <item name="colorControlHighlight">@color/primary_50</item>
         <item name="android:colorControlHighlight" tools:targetApi="21">@color/primary_50</item>
+    </style>
 
+    <style name="AppThemeWhiteBackground" parent="AppTheme">
+        <item name="android:textColor">@color/text_color_primary_white_background</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -80,5 +83,4 @@
     <style name="spinnerDropDownItemStyle">
         <item name="android:gravity">center</item>
     </style>
-
 </resources>

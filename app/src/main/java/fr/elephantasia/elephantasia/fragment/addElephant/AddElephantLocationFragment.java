@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import fr.elephantasia.elephantasia.R;
-import fr.elephantasia.elephantasia.interfaces.AddElephantInterface;
 
 public class AddElephantLocationFragment extends Fragment {
 
@@ -28,14 +27,6 @@ public class AddElephantLocationFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.add_elephant_location_fragment, container, false);
-
-        fabNext = (FloatingActionButton)view.findViewById(R.id.elephant_location_fab);
-        fabNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((AddElephantInterface) getActivity()).nextPage();
-            }
-        });
 
         return (view);
     }

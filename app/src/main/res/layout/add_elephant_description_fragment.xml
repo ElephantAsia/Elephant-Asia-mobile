@@ -1,217 +1,226 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools"
+    android:theme="@style/AppThemeWhiteBackground">
 
-    <ScrollView
+    <data>
+        <variable name="e" type="fr.elephantasia.elephantasia.utils.ElephantInfo"/>
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
-        <LinearLayout
-            android:orientation="vertical"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusableInTouchMode="true">
+            android:layout_height="match_parent">
 
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/regular_vertical_margin">
+                android:clickable="true"
+                android:focusableInTouchMode="true">
 
-                <TextView
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tusk"
-                    android:layout_weight="0.7"
-                    android:textSize="@dimen/font_size_normal"
-                    android:padding="10dp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/regular_vertical_margin">
 
-                <Spinner
-                    android:id="@+id/elephant_tusks_spinner"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.3"
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tusk"
+                        android:layout_weight="0.7"
+                        android:textSize="@dimen/font_size_normal"
+                        android:padding="10dp" />
+
+                    <Spinner
+                        android:id="@+id/elephant_tusks_spinner"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/tusks"
+                        android:prompt="@string/tusk"
+                        android:gravity="start"
+                        bind:selectedValue="@={e.tusk}"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:entries="@array/tusks"
-                    android:prompt="@string/tusk"
-                    android:gravity="start" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/regular_vertical_margin">
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nails_front_left"
+                        android:layout_weight="0.7"
+                        android:textSize="@dimen/font_size_normal"
+                        android:padding="10dp" />
+
+                    <Spinner
+                        android:id="@+id/elephant_nails_front_left"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        bind:selectedValue="@={e.nailsFrontLeft}"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/regular_vertical_margin">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nails_front_right"
+                        android:layout_weight="0.7"
+                        android:padding="10dp"
+                        android:textSize="@dimen/font_size_normal"
+                        />
+
+                    <Spinner
+                        android:id="@+id/elephant_nails_front_right"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        bind:selectedValue="@={e.nailsFrontRight}"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/regular_vertical_margin">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nails_rear_left"
+                        android:layout_weight="0.7"
+                        android:padding="10dp"
+                        android:textSize="@dimen/font_size_normal"
+                        />
+
+                    <Spinner
+                        android:id="@+id/elephant_nails_rear_left"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        bind:selectedValue="@={e.nailsRearLeft}"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/regular_vertical_margin">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nails_rear_right"
+                        android:layout_weight="0.7"
+                        android:padding="10dp"
+                        android:textSize="@dimen/font_size_normal"
+                        />
+
+                    <Spinner
+                        android:id="@+id/elephant_nails_rear_right"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        bind:selectedValue="@={e.nailsRearRight}"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/regular_vertical_margin">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:padding="10dp"
+                        android:text="@string/weight"
+                        android:textSize="@dimen/font_size_normal" />
+
+                    <EditText
+                        android:text="@={e.weight}"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:id="@+id/elephant_weight"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"
+                        android:gravity="center"
+                        android:inputType="numberSigned" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/regular_vertical_margin">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:padding="10dp"
+                        android:text="@string/height"
+                        android:textSize="@dimen/font_size_normal" />
+
+                    <EditText
+                        android:text="@={e.height}"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:id="@+id/elephant_height"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"
+                        android:gravity="center"
+                        android:inputType="numberSigned" />
+
+                </LinearLayout>
+
+                <!--Used to prevent floating button to hide relevant field-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="60dp"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/regular_vertical_margin">
+        </ScrollView>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/nails_front_left"
-                    android:layout_weight="0.7"
-                    android:textSize="@dimen/font_size_normal"
-                    android:padding="10dp" />
+    </RelativeLayout>
+</layout>
 
-                <Spinner
-                    android:id="@+id/elephant_nails_front_left"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.3"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/regular_vertical_margin">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/nails_front_right"
-                    android:layout_weight="0.7"
-                    android:padding="10dp"
-                    android:textSize="@dimen/font_size_normal"
-                    />
-
-                <Spinner
-                    android:id="@+id/elephant_nails_front_right"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.3"
-                    android:layout_height="wrap_content"
-                    android:gravity="start" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/regular_vertical_margin">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/nails_rear_left"
-                    android:layout_weight="0.7"
-                    android:padding="10dp"
-                    android:textSize="@dimen/font_size_normal"
-                    />
-
-                <Spinner
-                    android:id="@+id/elephant_nails_rear_left"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.3"
-                    android:layout_height="wrap_content"
-                    android:gravity="start" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/regular_vertical_margin">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/nails_rear_right"
-                    android:layout_weight="0.7"
-                    android:padding="10dp"
-                    android:textSize="@dimen/font_size_normal"
-                    />
-
-                <Spinner
-                    android:id="@+id/elephant_nails_rear_right"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.3"
-                    android:layout_height="wrap_content"
-                    android:gravity="start" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/regular_vertical_margin">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/weight"
-                    android:layout_weight="0.7"
-                    android:padding="10dp"
-                    android:textSize="@dimen/font_size_normal"
-                    />
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_weight="0.3"
-                    android:layout_height="match_parent"
-                    android:inputType="numberSigned"
-                    android:id="@+id/elephant_weight"
-                    android:gravity="center"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/regular_vertical_margin"
-                >
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/height"
-                    android:layout_weight="0.7"
-                    android:padding="10dp"
-                    android:textSize="@dimen/font_size_normal"
-                    />
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.3"
-                    android:inputType="numberSigned"
-                    android:id="@+id/elephant_height"
-                    android:gravity="center"
-                    />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/elephant_description_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_media_next"
-        app:backgroundTint="@color/primary_grey_100"
-        app:borderWidth="0dp"
-        app:elevation="0dp"
-        app:pressedTranslationZ="12dp"
-        app:rippleColor="#cd2014" />
-
-</RelativeLayout>

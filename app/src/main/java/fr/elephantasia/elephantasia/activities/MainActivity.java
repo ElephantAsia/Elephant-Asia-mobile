@@ -57,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
     private HomePageFragment homePageFragment;
 
-    private MenuItem searchItem;
-
     public static int getFragment(Intent intent) {
         return intent.getIntExtra(EXTRA_FRAGMENT, FRAGMENT_HOME_PAGE);
     }
@@ -131,9 +129,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
-
-        searchItem = menu.findItem(R.id.main_menu_search);
-
         return true;
     }
 

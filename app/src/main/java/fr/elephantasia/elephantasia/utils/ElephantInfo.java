@@ -30,6 +30,7 @@ public class ElephantInfo implements Parcelable {
         this.sex = Gender.MALE;
     }
 
+    //Registration
     public Integer id;
     public String name;
     public String nickName;
@@ -54,6 +55,15 @@ public class ElephantInfo implements Parcelable {
     public String regDistrict;
     public String regProvince;
 
+    // Description
+    public String tusk;
+    public String nailsFrontLeft;
+    public String nailsFrontRight;
+    public String nailsRearLeft;
+    public String nailsRearRight;
+    public String weight;
+    public String height;
+
     public String getSex() {
         String sex = this.sex.toString();
         return sex.substring(0, 1).toUpperCase() + sex.substring(1, sex.length()).toLowerCase();
@@ -70,6 +80,7 @@ public class ElephantInfo implements Parcelable {
 
     public ElephantInfo() {
         id = 0;
+        // Registration
         name = "";
         nickName = "";
         sex = Gender.UNKNOWN;
@@ -87,6 +98,15 @@ public class ElephantInfo implements Parcelable {
         regVillage = "";
         regDistrict = "";
         regProvince = "";
+
+        // Description
+        tusk = "";
+        nailsFrontLeft = "";
+        nailsFrontRight = "";
+        nailsRearLeft = "";
+        nailsRearRight = "";
+        weight = "";
+        height = "";
     }
 
     public ElephantInfo(ElephantInfo other) {
@@ -108,6 +128,15 @@ public class ElephantInfo implements Parcelable {
         regVillage = other.regVillage;
         regDistrict = other.regDistrict;
         regProvince = other.regProvince;
+
+        //Description
+        tusk = other.tusk;
+        nailsFrontLeft = other.nailsFrontLeft;
+        nailsFrontRight = other.nailsFrontRight;
+        nailsRearLeft = other.nailsRearLeft;
+        nailsRearRight = other.nailsRearRight;
+        weight = other.weight;
+        height = other.height;
     }
 
     @Override
@@ -135,6 +164,15 @@ public class ElephantInfo implements Parcelable {
         out.writeString(regVillage);
         out.writeString(regDistrict);
         out.writeString(regProvince);
+
+        //Description
+        out.writeString(tusk);
+        out.writeString(nailsFrontLeft);
+        out.writeString(nailsFrontRight);
+        out.writeString(nailsRearLeft);
+        out.writeString(nailsRearRight);
+        out.writeString(weight);
+        out.writeString(height);
     }
 
     public static final Parcelable.Creator<ElephantInfo> CREATOR = new Parcelable.Creator<ElephantInfo>() {
@@ -169,6 +207,14 @@ public class ElephantInfo implements Parcelable {
         regVillage = in.readString();
         regDistrict = in.readString();
         regProvince = in.readString();
+
+        // Description
+        nailsFrontLeft = in.readString();
+        nailsFrontRight = in.readString();
+        nailsRearLeft = in.readString();
+        nailsRearRight = in.readString();
+        weight = in.readString();
+        height = in.readString();
     }
 
 
@@ -188,6 +234,15 @@ public class ElephantInfo implements Parcelable {
         Log.i("regVillage", this.regVillage);
         Log.i("regDistrict", this.regDistrict);
         Log.i("regProvince", this.regProvince);
+
+        // Description
+        Log.i("tusk", this.tusk);
+        Log.i("nails front left", this.nailsFrontLeft);
+        Log.i("nails front right", this.nailsFrontRight);
+        Log.i("nails rear left", this.nailsRearLeft);
+        Log.i("nails rear right", this.nailsRearRight);
+        Log.i("weight", this.weight);
+        Log.i("height", this.weight);
     }
 
 }

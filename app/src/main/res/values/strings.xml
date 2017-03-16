@@ -23,6 +23,12 @@
     <string name="elephant_birth_district">Birth district</string>
     <string name="elephant_birth_province">Birth province</string>
 
+    <string name="validate">Validate</string>
+    <string name="save_as_draft">Save as a draft</string>
+    <string name="cancel">Cancel</string>
+    <string name="OK">OK</string>
+
+
     <string name="elephant_chip">Chip number #1</string>
     <string name="ear_tag">Ear tag</string>
     <string name="eyeD">EyeD</string>
@@ -85,6 +91,8 @@
     <string name="referent_name">Referent owner name (not available)</string>
     <string name="referent_id">Referent owner ID (not available)</string>
 
+    <string name="select_weight">Select weight</string>
+
     <string-array name="elephant_sex">
         <item>All</item>
         <item>Male</item>
@@ -103,6 +111,16 @@
         <item>Right tusk only</item>
         <item>Left tusk only</item>
         <item>Both</item>
+    </string-array>
+
+    <string-array name="weight_unit">
+        <item>kg</item>
+        <item>pounds</item>
+    </string-array>
+
+    <string-array name="height_unit">
+        <item>cm</item>
+        <item>inches</item>
     </string-array>
 
     <string name="elephant_consultation_title">%1$s - #%2$s</string>

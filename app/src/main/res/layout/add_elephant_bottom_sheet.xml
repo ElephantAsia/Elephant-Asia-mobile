@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_60"
+    android:orientation="vertical"
+  >
+
+    <TextView
+        android:drawableLeft="@mipmap/check"
+        android:drawableStart="@mipmap/check"
+        android:drawablePadding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/validate"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="?attr/selectableItemBackground"
+        />
+
+    <TextView
+        android:drawableLeft="@mipmap/save"
+        android:drawableStart="@mipmap/save"
+        android:drawablePadding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/save_as_draft"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="?attr/selectableItemBackground"
+        />
+
+    <View
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="@color/grey_light_12"
+        android:paddingTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/add_elephant_menu_cancel"
+        android:drawableLeft="@mipmap/close"
+        android:drawableStart="@mipmap/close"
+        android:drawablePadding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/cancel"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:paddingTop="5dp"
+        android:layout_marginBottom="10dp"
+        />
+
+</LinearLayout>

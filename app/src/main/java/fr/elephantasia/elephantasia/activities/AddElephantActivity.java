@@ -2,34 +2,43 @@ package fr.elephantasia.elephantasia.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.TextView;
 
 import fr.elephantasia.elephantasia.R;
 import fr.elephantasia.elephantasia.adapter.ViewPagerAdapter;
 import fr.elephantasia.elephantasia.database.ElephantDatabase;
-import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantConsultationFragment;
+import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantBottomSheet;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDescriptionFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDocumentFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantLocationFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantOwnershipFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantParentageFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantRegistrationFragment;
+import fr.elephantasia.elephantasia.interfaces.AddElephantInterface;
 import fr.elephantasia.elephantasia.utils.ElephantInfo;
 import fr.elephantasia.elephantasia.utils.StaticTools;
 
-public class AddElephantActivity extends AppCompatActivity {
+public class AddElephantActivity extends AppCompatActivity implements AddElephantInterface {
 
     private ElephantDatabase database;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private FloatingActionButton fabNext;
+    private BottomSheetDialogFragment bs;
 
     private ElephantInfo elephantInfo;
 
@@ -48,13 +57,22 @@ public class AddElephantActivity extends AppCompatActivity {
             @Override
             public void onGlobalLayout() {
                 boolean keyboardIsUp = StaticTools.keyboardIsDisplay(activityRootView);
-                FloatingActionButton button = (FloatingActionButton) findViewById(R.id.elephant_registration_fab);
+                FloatingActionButton button = (FloatingActionButton) findViewById(R.id.add_elephant_fab);
 
                 if (button != null && keyboardIsUp) {
                     button.hide();
                 } else if (button != null) {
                     button.show();
                 }
+            }
+        });
+
+        bs = AddElephantBottomSheet.newInstance();
+        fabNext = (FloatingActionButton)findViewById(R.id.add_elephant_fab);
+        fabNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nextPage();
             }
         });
 
@@ -92,16 +110,16 @@ public class AddElephantActivity extends AppCompatActivity {
     }
 
     public void nextPage() {
-        /*if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1) {
+        if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1) {
             viewPager.setCurrentItem(0);
         } else {
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-        }*/
+        }
 
-        elephantInfo.displayAttr();
-        database.insertElephant(elephantInfo);
-        setResult(RESULT_OK);
-        finish();
+//        elephantInfo.displayAttr();
+//        database.insertElephant(elephantInfo);
+//        setResult(RESULT_OK);
+//        finish();
     }
 
     public ElephantInfo getElephantInfo() {
@@ -135,7 +153,6 @@ public class AddElephantActivity extends AppCompatActivity {
         adapter.addFragment(new AddElephantDescriptionFragment(), getString(R.string.description));
         adapter.addFragment(new AddElephantOwnershipFragment(), getString(R.string.ownership));
         adapter.addFragment(new AddElephantParentageFragment(), getString(R.string.parentage));
-        adapter.addFragment(new AddElephantConsultationFragment(), getString(R.string.consultations));
         adapter.addFragment(new AddElephantDocumentFragment(), getString(R.string.documents));
         adapter.addFragment(new AddElephantLocationFragment(), getString(R.string.location));
         viewPager.setAdapter(adapter);
@@ -143,6 +160,22 @@ public class AddElephantActivity extends AppCompatActivity {
 
     public void showDialogFragment(DialogFragment dialog) {
         dialog.show(getSupportFragmentManager(), "Date");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.add_elephant_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.add_elephant_menu) {
+            bs.show(getSupportFragmentManager(), bs.getTag());
+            return true;
+        }
+        return false;
     }
 
 }

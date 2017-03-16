@@ -11,20 +11,4 @@
         android:textSize="40dp"
         android:textStyle="bold"
         android:layout_centerInParent="true"/>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/elephant_document_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_media_next"
-        app:backgroundTint="@color/primary_grey_100"
-        app:borderWidth="0dp"
-        app:elevation="0dp"
-        app:pressedTranslationZ="12dp"
-        app:rippleColor="#cd2014" />
-
 </RelativeLayout>

@@ -3,7 +3,6 @@ package fr.elephantasia.elephantasia.fragment.addElephant;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,6 @@ import fr.elephantasia.elephantasia.utils.StaticTools;
 
 public class AddElephantRegistrationFragment extends Fragment {
 
-    private FloatingActionButton fabNext;
     private EditText birthDateEditText;
 
     @Override
@@ -34,14 +32,6 @@ public class AddElephantRegistrationFragment extends Fragment {
         final ElephantInfo elephant = ((AddElephantActivity)getActivity()).getElephantInfo();
         View view = binding.getRoot();
         binding.setE(elephant);
-
-        fabNext = (FloatingActionButton)view.findViewById(R.id.elephant_registration_fab);
-        fabNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            ((AddElephantActivity) getActivity()).nextPage();
-            }
-        });
 
         birthDateEditText = (EditText)view.findViewById(R.id.elephant_birth_date);
         birthDateEditText.setOnClickListener(new View.OnClickListener() {
@@ -57,18 +47,7 @@ public class AddElephantRegistrationFragment extends Fragment {
                 ((AddElephantActivity)getActivity()).showDialogFragment(dialog);
             }
         });
-
+        StaticTools.setupHideKeyboardListener(view, getActivity());
         return (view);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        StaticTools.setupHideKeyboardListener(getView(), getActivity());
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 }
