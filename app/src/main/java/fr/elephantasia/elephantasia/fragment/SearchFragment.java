@@ -28,10 +28,6 @@ public class SearchFragment extends Fragment {
     private Spinner countrySpinner;
     private Button searchButton;
 
-    public SearchFragment() {
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.search_fragment, container, false);

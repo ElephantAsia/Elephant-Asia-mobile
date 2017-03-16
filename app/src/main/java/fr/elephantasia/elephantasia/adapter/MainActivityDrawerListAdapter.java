@@ -29,7 +29,6 @@ public class MainActivityDrawerListAdapter extends BaseAdapter {
         this.content = new ArrayList<>();
 
         content.add(context.getString(R.string.home_page));
-        //content.add(context.getString(R.string.search));
         content.add(context.getString(R.string.current_animal));
         content.add(context.getString(R.string.locations));
         content.add(context.getString(R.string.reports));
