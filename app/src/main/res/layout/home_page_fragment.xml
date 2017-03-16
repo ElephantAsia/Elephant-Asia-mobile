@@ -1,31 +1,14 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center">
 
-    <!--<GridView
-        android:numColumns="2"
-        android:horizontalSpacing="5dp"
-        android:verticalSpacing="5dp"
-        android:id="@+id/home_page_gridview"
+    <ListView
+        android:id="@+id/list"
+        android:divider="@null"
+        android:dividerHeight="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>-->
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/home_page_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@mipmap/add"
-        app:backgroundTint="@color/primary_grey_100"
-        app:borderWidth="0dp"
-        app:elevation="0dp"
-        app:pressedTranslationZ="12dp"
-        app:rippleColor="#cd2014" />
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

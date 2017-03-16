@@ -2,10 +2,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="e" type="fr.elefantasia.elefantasia.utils.ElephantInfo"/>
-        <variable name="mode" type="fr.elefantasia.elefantasia.fragment.ElephantConsultationFragment.State"/>
-        <import type="fr.elefantasia.elefantasia.utils.ElephantInfo.Gender"/>
-        <import type="fr.elefantasia.elefantasia.fragment.ElephantConsultationFragment.State"/>
+        <variable name="e" type="fr.elephantasia.elephantasia.utils.ElephantInfo"/>
+        <variable name="mode" type="fr.elephantasia.elephantasia.fragment.ElephantConsultationFragment.State"/>
+        <import type="fr.elephantasia.elephantasia.utils.ElephantInfo.Gender"/>
+        <import type="fr.elephantasia.elephantasia.fragment.ElephantConsultationFragment.State"/>
         <import type="android.view.View" />
     </data>
 

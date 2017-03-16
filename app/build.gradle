@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "fr.elefantasia.elefantasia"
+        applicationId "fr.elephantasia.elephantasia"
         minSdkVersion 15
         targetSdkVersion 25
         multiDexEnabled true

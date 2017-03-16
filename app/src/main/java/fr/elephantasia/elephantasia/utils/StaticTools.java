@@ -1,12 +1,10 @@
-package fr.elefantasia.elefantasia.utils;
+package fr.elephantasia.elephantasia.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,7 +18,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
-import fr.elefantasia.elefantasia.R;
+import fr.elephantasia.elephantasia.R;
 
 
 /**

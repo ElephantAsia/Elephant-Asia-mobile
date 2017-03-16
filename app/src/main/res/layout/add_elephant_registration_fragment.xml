@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="e" type="fr.elefantasia.elefantasia.utils.ElephantInfo"/>
-        <import type="fr.elefantasia.elefantasia.utils.ElephantInfo.Gender"/>
+        <variable name="e" type="fr.elephantasia.elephantasia.utils.ElephantInfo"/>
+        <import type="fr.elephantasia.elephantasia.utils.ElephantInfo.Gender"/>
     </data>
 
     <RelativeLayout
@@ -15,8 +15,7 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
-            app:layout_collapseParallaxMultiplier="0.0"
-          >
+            app:layout_collapseParallaxMultiplier="0.0">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -148,8 +147,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="datetime"
                     android:ems="10"
-                    android:id="@+id/elephant_birth_date"
-                    />
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:id="@+id/elephant_birth_date" />
 
                 <EditText
                     android:text="@={e.birthVillage}"

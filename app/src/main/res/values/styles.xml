@@ -57,7 +57,7 @@
 
     <style name="App_ButtonStyle" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/button_primary</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/primary_dark_100</item>
     </style>
 
     <style name="App_ListViewStyle" parent="android:style/Widget.ListView">

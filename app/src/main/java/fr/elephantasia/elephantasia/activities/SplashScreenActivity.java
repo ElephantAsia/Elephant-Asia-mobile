@@ -1,11 +1,8 @@
-package fr.elefantasia.elefantasia.activities;
+package fr.elephantasia.elephantasia.activities;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import fr.elefantasia.elefantasia.R;
+import android.support.v7.app.AppCompatActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
 

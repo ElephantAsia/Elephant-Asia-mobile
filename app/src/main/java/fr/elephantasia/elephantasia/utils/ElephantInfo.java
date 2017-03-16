@@ -1,7 +1,5 @@
-package fr.elefantasia.elefantasia.utils;
+package fr.elephantasia.elephantasia.utils;
 
-import android.databinding.BaseObservable;
-import android.databinding.ObservableBoolean;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;

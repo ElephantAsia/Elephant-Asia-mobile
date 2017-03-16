@@ -6,7 +6,7 @@
     android:id="@+id/elephant_consultation_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.elefantasia.elefantasia.activities.ConsultationActivity">
+    tools:context="fr.elephantasia.elephantasia.fr.elephantasia.elephantasia.activities.ConsultationActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

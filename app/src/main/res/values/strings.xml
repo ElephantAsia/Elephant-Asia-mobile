@@ -11,7 +11,7 @@
     <string name="legally_registered">Legally Registered</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="elephant_birthdate">Birthdate (ex: 2016/12/12)</string>
+    <string name="elephant_birthdate">Birthdate</string>
     <string name="elephant_name">Elephant name</string>
     <string name="elephant_nickname">Nickname</string>
     <string name="elephant_registration_number">Registration ID</string>
@@ -127,4 +127,5 @@
     <string name="no_disabled">No - Disabled</string>
     <string name="delete">Delete</string>
     <string name="comming_soon">comming soon...</string>
+    <string name="date">%1$04d/%2$02d/%3$02d</string>
 </resources>
