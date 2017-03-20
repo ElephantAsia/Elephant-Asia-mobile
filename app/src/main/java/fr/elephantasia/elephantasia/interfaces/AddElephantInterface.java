@@ -6,6 +6,7 @@ package fr.elephantasia.elephantasia.interfaces;
 
 public interface AddElephantInterface {
 
-
+    void nextPage();
+    void addOwner();
 
 }

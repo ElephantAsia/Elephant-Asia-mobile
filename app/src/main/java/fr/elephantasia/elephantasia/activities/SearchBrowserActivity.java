@@ -12,7 +12,7 @@ import java.util.List;
 
 import fr.elephantasia.elephantasia.R;
 import fr.elephantasia.elephantasia.adapter.SearchElephantAdapter;
-import fr.elephantasia.elephantasia.database.ElephantDatabase;
+import fr.elephantasia.elephantasia.database.Database;
 import fr.elephantasia.elephantasia.utils.ElephantInfo;
 
 public class SearchBrowserActivity extends AppCompatActivity implements SearchElephantAdapter.Listener {
@@ -22,7 +22,7 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
     private final static int REQUEST_CONSULTATION = 1;
 
     private ListView mListView;
-    private ElephantDatabase database;
+    private Database database;
     private TextView noItem;
     private ElephantInfo toSearch;
     private SearchElephantAdapter adapter;
@@ -36,7 +36,7 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_browser_activity);
 
-        database = new ElephantDatabase(getApplicationContext());
+        database = new Database(getApplicationContext());
         database.open();
 
         toSearch = getElephantInfo(getIntent());
@@ -80,7 +80,7 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
     }
 
     private void refreshList() {
-        List<ElephantInfo> elephants = database.getElephantFromSearch(toSearch);
+        List<ElephantInfo> elephants = database.search(toSearch);
         if (elephants.size() == 0) {
             mListView.setVisibility(View.GONE);
             noItem.setVisibility(View.VISIBLE);

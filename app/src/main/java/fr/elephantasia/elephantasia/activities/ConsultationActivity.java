@@ -8,14 +8,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import fr.elephantasia.elephantasia.R;
-import fr.elephantasia.elephantasia.database.ElephantDatabase;
+import fr.elephantasia.elephantasia.database.Database;
 import fr.elephantasia.elephantasia.fragment.ElephantConsultationFragment;
 import fr.elephantasia.elephantasia.interfaces.ConsultationInterface;
 import fr.elephantasia.elephantasia.utils.ElephantInfo;
 
 public class ConsultationActivity extends AppCompatActivity implements ConsultationInterface {
 
-    private ElephantDatabase database;
+    private Database database;
     private ElephantInfo elephantInfo;
 
     private Toolbar toolbar;
@@ -29,7 +29,7 @@ public class ConsultationActivity extends AppCompatActivity implements Consultat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.consultation_activity);
 
-        database = new ElephantDatabase(this);
+        database = new Database(this);
         database.open();
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -61,14 +61,14 @@ public class ConsultationActivity extends AppCompatActivity implements Consultat
     @Override
     public void updateElephant(ElephantInfo info) {
         elephantInfo = new ElephantInfo(info);
-        database.updateElephant(elephantInfo);
+        database.update(elephantInfo);
         refreshFragment();
         refreshToolbarTitle();
     }
 
     @Override
     public void deleteElephant(ElephantInfo info) {
-        database.deleteElephant(info);
+        database.delete(info);
         setResult(RESULT_OK);
         Toast.makeText(this, "Elephant deleted with success", Toast.LENGTH_SHORT).show();
         finish();

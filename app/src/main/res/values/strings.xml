@@ -148,4 +148,8 @@
     <string name="date">%1$04d/%2$02d/%3$02d</string>
 
     <string name="put_drafts">Put this elephant in drafts ?</string>
+
+    <string name="add_owner">Add Owner</string>
+    <string name="select_owner">Select Owner</string>
+
 </resources>

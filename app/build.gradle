@@ -41,5 +41,6 @@ dependencies {
     compile 'jp.wasabeef:blurry:2.0.3'
     compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
     compile 'com.android.support:recyclerview-v7:25.3.0'
+
     testCompile 'junit:junit:4.12'
 }

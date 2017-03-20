@@ -217,6 +217,9 @@ public class ElephantInfo implements Parcelable {
         height = in.readString();
     }
 
+    public boolean isValid() {
+        return name != null && !name.isEmpty();
+    }
 
     public void displayAttr() {
         Log.i("name", this.name);

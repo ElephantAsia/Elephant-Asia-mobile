@@ -16,11 +16,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.TextView;
 
 import fr.elephantasia.elephantasia.R;
 import fr.elephantasia.elephantasia.adapter.ViewPagerAdapter;
-import fr.elephantasia.elephantasia.database.ElephantDatabase;
+import fr.elephantasia.elephantasia.database.Database;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantBottomSheet;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDescriptionFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDocumentFragment;
@@ -31,14 +30,21 @@ import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantRegistration
 import fr.elephantasia.elephantasia.interfaces.AddElephantInterface;
 import fr.elephantasia.elephantasia.utils.ElephantInfo;
 import fr.elephantasia.elephantasia.utils.StaticTools;
+import fr.elephantasia.elephantasia.utils.UserInfo;
 
 public class AddElephantActivity extends AppCompatActivity implements AddElephantInterface {
 
-    private ElephantDatabase database;
+    public static final int REQUEST_CODE_ADD_OWNER = 1;
+
+    private static final int FRAGMENT_OWNERSHIP_IDX = 2;
+
+    private Database database;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private FloatingActionButton fabNext;
     private BottomSheetDialogFragment bs;
+
+    private ViewPagerAdapter adapter;
 
     private ElephantInfo elephantInfo;
 
@@ -89,7 +95,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        database = new ElephantDatabase(this);
+        database = new Database(this);
         database.open();
     }
 
@@ -109,6 +115,17 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
         super.onDestroy();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_ADD_OWNER) {
+            if (resultCode == RESULT_OK && data != null) {
+                UserInfo user = data.getParcelableExtra(SelectOwnerActivity.EXTRA_RESULT_USER_SELECTED);
+                refreshOwner(user);
+            }
+        }
+    }
+
+    @Override
     public void nextPage() {
         if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1) {
             viewPager.setCurrentItem(0);
@@ -127,16 +144,21 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     }
 
     private void confirmFinish(final boolean confirm) {
-        if (confirm) {
+        if (confirm && elephantInfo != null && elephantInfo.isValid()) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.app_name)
                     .setMessage(R.string.put_drafts)
-                    .setNegativeButton(android.R.string.no, null)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            confirmFinish(false);
+                        }
+                    })
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             elephantInfo.state = ElephantInfo.State.DRAFT;
-                            database.updateElephant(elephantInfo);
+                            database.update(elephantInfo);
                             confirmFinish(false);
                         }
                     })
@@ -147,8 +169,19 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
         }
     }
 
+    @Override
+    public void addOwner() {
+        Intent intent = new Intent(this, SelectOwnerActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_ADD_OWNER);
+    }
+
+    private void refreshOwner(UserInfo user) {
+        AddElephantOwnershipFragment fragment = (AddElephantOwnershipFragment)adapter.getItem(FRAGMENT_OWNERSHIP_IDX);
+        fragment.refreshOwner(user);
+    }
+
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new AddElephantRegistrationFragment(), getString(R.string.registration));
         adapter.addFragment(new AddElephantDescriptionFragment(), getString(R.string.description));
         adapter.addFragment(new AddElephantOwnershipFragment(), getString(R.string.ownership));
