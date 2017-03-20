@@ -27,6 +27,9 @@ import fr.elephantasia.elephantasia.fragment.HomePageFragment;
 import fr.elephantasia.elephantasia.utils.Preferences;
 import jp.wasabeef.blurry.Blurry;
 
+import static fr.elephantasia.elephantasia.activities.AddElephantActivity.RESULT_DRAFT;
+import static fr.elephantasia.elephantasia.activities.AddElephantActivity.RESULT_VALIDATE;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String EXTRA_FRAGMENT = "main.fragment";
@@ -55,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
     private ListView drawerList;
     private MainActivityDrawerListAdapter drawerListAdapter;
 
-    private HomePageFragment homePageFragment;
-
     public static int getFragment(Intent intent) {
         return intent.getIntExtra(EXTRA_FRAGMENT, FRAGMENT_HOME_PAGE);
     }
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         drawer = (DrawerLayout)findViewById(R.id.main_drawer);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close);
         toggle.setDrawerIndicatorEnabled(false);
-        toggle.setHomeAsUpIndicator(R.mipmap.hamburger);
+        toggle.setHomeAsUpIndicator(R.mipmap.ic_menu_white_24dp);
         toggle.syncState();
 
         toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
@@ -155,8 +156,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_ADD_ELEPHANT) {
-            if (resultCode == RESULT_OK) {
-                Toast.makeText(this, "Elephant added with success", Toast.LENGTH_SHORT).show();
+            if (resultCode == RESULT_DRAFT) {
+                Toast.makeText(this, R.string.elephant_draft_added, Toast.LENGTH_SHORT).show();
+            } else if (resultCode == RESULT_VALIDATE) {
+                Toast.makeText(this, R.string.elephant_local_added, Toast.LENGTH_SHORT).show();
             }
         }
     }

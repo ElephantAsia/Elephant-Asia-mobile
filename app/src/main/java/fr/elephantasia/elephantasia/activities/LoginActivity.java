@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import fr.elephantasia.elephantasia.R;
 import fr.elephantasia.elephantasia.utils.Preferences;
+import fr.elephantasia.elephantasia.utils.StaticTools;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,6 +22,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        final View activityRootView = findViewById(R.id.login_activity_main_layout);
+        StaticTools.setupHideKeyboardListener(activityRootView, this);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -56,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkHasSignin();
     }
 

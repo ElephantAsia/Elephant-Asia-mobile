@@ -371,6 +371,7 @@
                     </LinearLayout>
 
                     <Button
+                        android:textColor="@android:color/white"
                         android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"
                         android:id="@+id/elephant_consultation_delete"
                         android:layout_marginTop="22dp"

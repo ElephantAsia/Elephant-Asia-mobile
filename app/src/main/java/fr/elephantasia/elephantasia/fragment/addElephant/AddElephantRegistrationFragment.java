@@ -21,6 +21,9 @@ public class AddElephantRegistrationFragment extends Fragment {
 
     private EditText birthDateEditText;
 
+    //Mandatory field
+    private EditText name;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,7 @@ public class AddElephantRegistrationFragment extends Fragment {
         View view = binding.getRoot();
         binding.setE(elephant);
 
+        name = (EditText)view.findViewById(R.id.elephant_name);
         birthDateEditText = (EditText)view.findViewById(R.id.elephant_birth_date);
         birthDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,5 +53,10 @@ public class AddElephantRegistrationFragment extends Fragment {
         });
         StaticTools.setupHideKeyboardListener(view, getActivity());
         return (view);
+    }
+
+
+    public void setNameError() {
+        name.setError("Name is required");
     }
 }

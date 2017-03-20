@@ -1,108 +1,131 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="10dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:theme="@style/AppThemeWhiteBackground"
+    >
 
-    <LinearLayout
-        android:orientation="vertical"
+    <data>
+        <variable name="e" type="fr.elephantasia.elephantasia.utils.ElephantInfo"/>
+    </data>
+
+    <RelativeLayout
+        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
 
-        <EditText
-            android:textSize="16sp"
-            android:id="@+id/search_elephant_name"
-            android:inputType="text"
-            android:hint="@string/elephant_name"
-            android:ems="10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:textSize="16sp"
-            android:id="@+id/search_elephant_microchip"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:hint="@string/elephant_microchip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        >
 
         <LinearLayout
-            android:weightSum="2"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+         >
 
-            <Spinner
-                android:id="@+id/search_elephant_sex"
-                android:layout_width="0dp"
-                android:layout_weight="0.75"
-                android:layout_height="wrap_content"/>
+            <EditText
+                android:text="@={e.name}"
+                android:textSize="16sp"
+                android:id="@+id/search_elephant_name"
+                android:inputType="text"
+                android:hint="@string/elephant_name"
+                android:ems="10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-            <Spinner
-                android:id="@+id/search_elephant_country"
-                android:layout_width="0dp"
-                android:layout_weight="1.25"
-                android:layout_height="wrap_content"/>
+            <EditText
+                android:text="@={e.chips1}"
+                android:textSize="16sp"
+                android:id="@+id/search_elephant_microchip"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:hint="@string/elephant_microchip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:weightSum="2"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/search_elephant_sex"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.75"
+                    android:layout_height="wrap_content"
+                    android:popupBackground="@android:color/white"
+                    android:entries="@array/elephant_sex"
+                    />
+
+                <Spinner
+                    android:id="@+id/search_elephant_country"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.25"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/search_country"
+                    />
+
+            </LinearLayout>
+
+            <EditText
+                android:text="@={e.regProvince}"
+                android:textSize="16sp"
+                android:id="@+id/search_elephant_province"
+                android:inputType="text"
+                android:ems="10"
+                android:hint="@string/elephant_registration_province"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:text="@={e.regDistrict}"
+                android:textSize="16sp"
+                android:id="@+id/search_elephant_district"
+                android:inputType="text"
+                android:ems="10"
+                android:hint="@string/elephant_registration_district"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:text="@={e.regVillage}"
+                android:textSize="16sp"
+                android:id="@+id/search_elephant_village"
+                android:inputType="text"
+                android:ems="10"
+                android:hint="@string/elephant_registration_village"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--<EditText-->
+                <!--android:textSize="16sp"-->
+                <!--android:enabled="false"-->
+                <!--android:id="@+id/search_elephant_referent_name"-->
+                <!--android:inputType="numberDecimal"-->
+                <!--android:ems="10"-->
+                <!--android:hint="@string/referent_name"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+
+            <!--<EditText-->
+                <!--android:textSize="16sp"-->
+                <!--android:enabled="false"-->
+                <!--android:id="@+id/search_elephant_referent_id"-->
+                <!--android:inputType="numberDecimal"-->
+                <!--android:ems="10"-->
+                <!--android:hint="@string/referent_id"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
 
         </LinearLayout>
 
-        <EditText
-            android:textSize="16sp"
-            android:id="@+id/search_elephant_province"
-            android:inputType="text"
-            android:ems="10"
-            android:hint="@string/elephant_registration_province"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <Button
+            android:textColor="@android:color/white"
+            android:id="@+id/search_button_search"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/search"
+            android:layout_width="120dp"
+            android:layout_height="60dp" />
 
-        <EditText
-            android:textSize="16sp"
-            android:id="@+id/search_elephant_district"
-            android:inputType="text"
-            android:ems="10"
-            android:hint="@string/elephant_registration_district"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:textSize="16sp"
-            android:id="@+id/search_elephant_village"
-            android:inputType="text"
-            android:ems="10"
-            android:hint="@string/elephant_registration_village"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <!--<EditText-->
-            <!--android:textSize="16sp"-->
-            <!--android:enabled="false"-->
-            <!--android:id="@+id/search_elephant_referent_name"-->
-            <!--android:inputType="numberDecimal"-->
-            <!--android:ems="10"-->
-            <!--android:hint="@string/referent_name"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
-
-        <!--<EditText-->
-            <!--android:textSize="16sp"-->
-            <!--android:enabled="false"-->
-            <!--android:id="@+id/search_elephant_referent_id"-->
-            <!--android:inputType="numberDecimal"-->
-            <!--android:ems="10"-->
-            <!--android:hint="@string/referent_id"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/search_button_search"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/search"
-        android:layout_width="120dp"
-        android:layout_height="60dp" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

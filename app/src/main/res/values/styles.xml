@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-
         <item name="android:windowActivityTransitions" tools:targetApi="21">true</item>
 
         <item name="colorPrimary">@color/primary_grey_100</item>
@@ -21,6 +20,7 @@
         <!-- Window background color -->
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:popupBackground">@android:color/white</item>
 
         <!-- Widgets style -->
         <item name="android:editTextStyle">@style/App_EditTextStyle</item>
@@ -35,11 +35,14 @@
 
         <item name="colorControlHighlight">@color/primary_50</item>
         <item name="android:colorControlHighlight" tools:targetApi="21">@color/primary_50</item>
+
     </style>
 
+    <!--App theme White background-->
     <style name="AppThemeWhiteBackground" parent="AppTheme">
         <item name="android:textColor">@color/text_color_primary_white_background</item>
     </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

@@ -4,7 +4,6 @@ package fr.elephantasia.elephantasia.fragment.addElephant;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,14 +61,12 @@ public class AddElephantDescriptionFragment extends Fragment {
             }
         };
 
-
         weightEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddElephantDescriptionDialogFragment tmp = AddElephantDescriptionDialogFragment.newInstance(AddElephantDescriptionDialogFragment.DialogType.WEIGHT);
                 tmp.setListener(unitListener);
                 tmp.show(getFragmentManager(), "");
-                Log.i("DEBUG", "onClick: " + ((AddElephantActivity) getActivity()).getElephantInfo().tusk);
             }
         });
 

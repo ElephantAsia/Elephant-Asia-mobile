@@ -26,6 +26,7 @@ public class ElephantInfo implements Parcelable {
         DEFAULT,
         PENDING,
         DELETED,
+        LOCAL,
         DRAFT
     }
 
@@ -91,6 +92,7 @@ public class ElephantInfo implements Parcelable {
 
     public ElephantInfo() {
         id = 0;
+
         // Registration
         name = "";
         nickName = "";
@@ -130,6 +132,8 @@ public class ElephantInfo implements Parcelable {
 
     public ElephantInfo(ElephantInfo other) {
         id = other.id;
+
+        // Registration
         name = other.name;
         nickName = other.nickName;
         sex = other.sex;
@@ -174,6 +178,8 @@ public class ElephantInfo implements Parcelable {
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeInt(id);
+
+        // Registration
         out.writeString(name);
         out.writeString(nickName);
         out.writeString(String.valueOf(sex));
@@ -225,6 +231,8 @@ public class ElephantInfo implements Parcelable {
 
     private ElephantInfo(Parcel in) {
         id = in.readInt();
+
+        // Registration
         name = in.readString();
         nickName = in.readString();
         sex = Gender.valueOf(in.readString());

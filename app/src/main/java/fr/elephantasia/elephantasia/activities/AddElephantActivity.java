@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
@@ -12,15 +11,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import fr.elephantasia.elephantasia.R;
 import fr.elephantasia.elephantasia.adapter.ViewPagerAdapter;
 import fr.elephantasia.elephantasia.database.Database;
-import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantBottomSheet;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDescriptionFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDocumentFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantLocationFragment;
@@ -39,14 +38,20 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     private static final int REQUEST_SET_MOTHER = 3;
     private static final int REQUEST_ADD_CHILDREN = 4;
 
+    // Result code
+    public static final int RESULT_DRAFT = 2;
+    public static final int RESULT_VALIDATE = 3;
+
     private static final int FRAGMENT_OWNERSHIP_IDX = 2;
     private static final int FRAGMENT_PARENTAGE_IDX = 3;
+
+    //Fragment
+    AddElephantRegistrationFragment registrationFragment;
 
     private Database database;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private FloatingActionButton fabNext;
-    private BottomSheetDialogFragment bs;
 
     private ViewPagerAdapter adapter;
 
@@ -54,6 +59,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
     public AddElephantActivity() {
         elephantInfo = new ElephantInfo();
+        registrationFragment = new AddElephantRegistrationFragment();
     }
 
     @Override
@@ -77,7 +83,6 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
             }
         });
 
-        bs = AddElephantBottomSheet.newInstance();
         fabNext = (FloatingActionButton)findViewById(R.id.add_elephant_fab);
         fabNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,16 +151,54 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
     @Override
     public void nextPage() {
-        /*if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1) {
+        if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1) {
             viewPager.setCurrentItem(0);
         } else {
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-        }*/
+        }
+    }
 
-        elephantInfo.displayAttr();
-        database.insert(elephantInfo);
-        setResult(RESULT_OK);
-        finish();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_elephant_more_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.add_elephant_menu_draft) {
+            saveElephant(ElephantInfo.State.DRAFT);
+            return true;
+        } else if (item.getItemId() == R.id.add_elephant_menu_validate) {
+            saveElephant(ElephantInfo.State.LOCAL);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkMandatoryField() {
+
+        if (elephantInfo.name.isEmpty()) {
+            registrationFragment.setNameError();
+            Toast.makeText(this, R.string.name_required, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+
+    public void saveElephant(ElephantInfo.State state) {
+
+        if (checkMandatoryField()) {
+            int result = state == ElephantInfo.State.DRAFT ? RESULT_DRAFT : RESULT_VALIDATE;
+            elephantInfo.state = state;
+            elephantInfo.displayAttr();
+            database.insert(elephantInfo);
+            setResult(result);
+            finish();
+        } else {
+
+        }
     }
 
     public ElephantInfo getElephantInfo() {
@@ -253,7 +296,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new AddElephantRegistrationFragment(), getString(R.string.registration));
+        adapter.addFragment(registrationFragment, getString(R.string.registration));
         adapter.addFragment(new AddElephantDescriptionFragment(), getString(R.string.description));
         adapter.addFragment(new AddElephantOwnershipFragment(), getString(R.string.ownership));
         adapter.addFragment(new AddElephantParentageFragment(), getString(R.string.parentage));
@@ -265,21 +308,4 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     public void showDialogFragment(DialogFragment dialog) {
         dialog.show(getSupportFragmentManager(), "Date");
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.add_elephant_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.add_elephant_menu) {
-            bs.show(getSupportFragmentManager(), bs.getTag());
-            return true;
-        }
-        return false;
-    }
-
 }

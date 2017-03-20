@@ -13,11 +13,12 @@ import fr.elephantasia.elephantasia.utils.ElephantInfo;
 
 class ElephantTable {
 
-    static final String TABLE_NAME = "Elefants";
+    static final String TABLE_NAME = "Elephants";
 
     private static final String COL_ID = "ID";
     private static final int NUM_COL_ID = 0;
 
+    // Registration
     private static final String COL_NAME = "name";
     private static final int NUM_COL_NAME = 1;
 
@@ -60,23 +61,50 @@ class ElephantTable {
     private static final String COL_REGISTRATION_PROVINCE = "registration_province";
     private static final int NUM_COL_REGISTRATION_PROVINCE = 14;
 
-    private static final String COL_STATE = "state";
-    private static final int NUM_COL_STATE = 15;
+    // Description
+    private static final String COL_TUSKS = "tusks";
+    private static final int NUM_COL_TUSKS = 15;
 
+    private static final String COL_NAILS_FRONT_LEFT = "nails_front_left";
+    private static final int NUM_COL_NAILS_FRONT_LEFT = 16;
+
+    private static final String COL_NAILS_FRONT_RIGHT = "nails_front_right";
+    private static final int NUM_COL_NAILS_FRONT_RIGHT = 17;
+
+    private static final String COL_NAILS_REAR_LEFT = "nails_rear_left";
+    private static final int NUM_COL_NAILS_REAR_LEFT = 18;
+
+    private static final String COL_NAILS_REAR_RIGHT = "nails_rear_right";
+    private static final int NUM_COL_NAILS_REAR_RIGHT = 19;
+
+    private static final String COL_WEIGHT = "weight";
+    private static final int NUM_COL_WEIGHT = 20;
+
+    private static final String COL_HEIGHT = "height";
+    private static final int NUM_COL_HEIGHT = 21;
+
+    // Owners
     private static final String COL_OWNERS = "owners";
-    private static final int NUM_COL_OWNERS = 16;
+    private static final int NUM_COL_OWNERS = 22;
 
+    // Parentage
     private static final String COL_FATHER_ID = "father_id";
-    private static final int NUM_COL_FATHER_ID = 17;
+    private static final int NUM_COL_FATHER_ID = 23;
 
     private static final String COL_MOTHER_ID = "mother_id";
-    private static final int NUM_COL_MOTHER_ID = 18;
+    private static final int NUM_COL_MOTHER_ID = 24;
 
     private static final String COL_CHILDREN_ID = "children_ids";
-    private static final int NUM_COL_CHILDREN_ID = 19;
-    
+    private static final int NUM_COL_CHILDREN_ID = 25;
+
+    //Other
+    private static final String COL_STATE = "state";
+    private static final int NUM_COL_STATE = 26;
+
     static final String TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+
+            // Registration
             + COL_NAME + " TEXT NOT NULL, "
             + COL_NICKNAME + " TEXT NOT NULL, "
             + COL_SEX + " TEXT NOT NULL, "
@@ -91,11 +119,27 @@ class ElephantTable {
             + COL_REGISTRATION_VILLAGE + " TEXT NOT NULL, "
             + COL_REGISTRATION_DISTRICT + " TEXT NOT NULL, "
             + COL_REGISTRATION_PROVINCE + " TEXT NOT NULL, "
-            + COL_STATE + " INTEGER DEFAULT 0, "
+
+            // Description
+            + COL_TUSKS + " TEXT NOT NULL,"
+            + COL_NAILS_FRONT_LEFT + " TEXT NOT NULL,"
+            + COL_NAILS_FRONT_RIGHT + " TEXT NOT NULL,"
+            + COL_NAILS_REAR_LEFT + " TEXT NOT NULL,"
+            + COL_NAILS_REAR_RIGHT + " TEXT NOT NULL,"
+            + COL_WEIGHT + " TEXT NOT NULL,"
+            + COL_HEIGHT + " TEXT NOT NULL,"
+
+            // Owner
             + COL_OWNERS + " TEXT NOT NULL, "
+
+            // Parentage
             + COL_FATHER_ID + " TEXT NOT NULL, "
             + COL_MOTHER_ID + " TEXT NOT NULL, "
-            + COL_CHILDREN_ID + " TEXT NOT NULL);";
+            + COL_CHILDREN_ID + " TEXT NOT NULL,"
+
+            // Other
+            + COL_STATE + " INTEGER DEFAULT 0);"
+            ;
 
     static long insert(SQLiteDatabase database, ElephantInfo elephant) {
         return (database.insert(TABLE_NAME, null, getContentValues(elephant)));
@@ -161,6 +205,8 @@ class ElephantTable {
 
     private static ContentValues getContentValues(ElephantInfo elephant) {
         ContentValues values = new ContentValues();
+
+        // Registration
         values.put(COL_NAME, elephant.name);
         values.put(COL_NICKNAME, elephant.nickName);
         values.put(COL_SEX, String.valueOf(elephant.sex));
@@ -175,7 +221,15 @@ class ElephantTable {
         values.put(COL_REGISTRATION_VILLAGE, elephant.regVillage);
         values.put(COL_REGISTRATION_DISTRICT, elephant.regDistrict);
         values.put(COL_REGISTRATION_PROVINCE, elephant.regProvince);
-        values.put(COL_STATE, elephant.state.toString());
+
+        //Description
+        values.put(COL_TUSKS, elephant.tusk);
+        values.put(COL_NAILS_FRONT_LEFT, elephant.nailsFrontLeft);
+        values.put(COL_NAILS_FRONT_RIGHT, elephant.nailsFrontRight);
+        values.put(COL_NAILS_REAR_LEFT, elephant.nailsRearLeft);
+        values.put(COL_NAILS_REAR_RIGHT, elephant.nailsRearRight);
+        values.put(COL_WEIGHT, elephant.weight);
+        values.put(COL_HEIGHT, elephant.height);
 
         // Owners
         values.put(COL_OWNERS, elephant.getOwners());
@@ -185,10 +239,15 @@ class ElephantTable {
         values.put(COL_MOTHER_ID, elephant.mother);
         values.put(COL_CHILDREN_ID, elephant.getChildren());
 
+        // Other
+        values.put(COL_STATE, elephant.state.toString());
+
         return (values);
     }
 
     private static ElephantInfo cursorToValue(Cursor cursor){
+
+        // Registration
         ElephantInfo elephant = new ElephantInfo();
         elephant.id = cursor.getInt(NUM_COL_ID);
         elephant.name = cursor.getString(NUM_COL_NAME);
@@ -205,7 +264,15 @@ class ElephantTable {
         elephant.regVillage = cursor.getString(NUM_COL_REGISTRATION_VILLAGE);
         elephant.regDistrict = cursor.getString(NUM_COL_REGISTRATION_DISTRICT);
         elephant.regProvince = cursor.getString(NUM_COL_REGISTRATION_PROVINCE);
-        elephant.state = ElephantInfo.State.valueOf(cursor.getString(NUM_COL_STATE));
+
+        //Description
+        elephant.tusk = cursor.getString(NUM_COL_TUSKS);
+        elephant.nailsFrontLeft = cursor.getString(NUM_COL_NAILS_FRONT_LEFT);
+        elephant.nailsFrontRight = cursor.getString(NUM_COL_NAILS_FRONT_RIGHT);
+        elephant.nailsRearLeft = cursor.getString(NUM_COL_NAILS_REAR_LEFT);
+        elephant.nailsRearRight = cursor.getString(NUM_COL_NAILS_REAR_RIGHT);
+        elephant.weight = cursor.getString(NUM_COL_WEIGHT);
+        elephant.height = cursor.getString(NUM_COL_HEIGHT);
 
         // Owners
         elephant.setOwners(cursor.getString(NUM_COL_OWNERS));
@@ -215,6 +282,7 @@ class ElephantTable {
         elephant.mother = cursor.getString(NUM_COL_MOTHER_ID);
         elephant.setChildren(cursor.getString(NUM_COL_CHILDREN_ID));
 
+        elephant.state = ElephantInfo.State.valueOf(cursor.getString(NUM_COL_STATE).toUpperCase());
         return (elephant);
     }
 

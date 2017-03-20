@@ -28,6 +28,10 @@
     <string name="cancel">Cancel</string>
     <string name="OK">OK</string>
 
+    <string name="name_required">Name is required</string>
+    <string name="elephant_draft_added">Elephant added to draft</string>
+    <string name="elephant_local_added">Elephant added to local database</string>
+
 
     <string name="elephant_chip">Chip number #1</string>
     <string name="ear_tag">Ear tag</string>
@@ -99,7 +103,7 @@
         <item>Female</item>
     </string-array>
 
-    <string-array name="country">
+    <string-array name="search_country">
         <item>Burma</item>
         <item>Thailand</item>
         <item>India</item>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/AppThemeWhiteBackground"
+    >
+
+    <item
+        android:title=""
+        android:id="@+id/add_elephant_menu_draft"
+        android:icon="@mipmap/ic_archive_white_24dp"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:title=""
+        android:id="@+id/add_elephant_menu_validate"
+        android:icon="@mipmap/ic_done_white_24dp"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+</menu>
