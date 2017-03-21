@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import fr.elephantasia.elephantasia.R;
@@ -177,7 +176,6 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     }
 
     private boolean checkMandatoryField() {
-
         if (elephantInfo.name.isEmpty()) {
             registrationFragment.setNameError();
             Toast.makeText(this, R.string.name_required, Toast.LENGTH_SHORT).show();
@@ -188,7 +186,6 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
 
     public void saveElephant(ElephantInfo.State state) {
-
         if (checkMandatoryField()) {
             int result = state == ElephantInfo.State.DRAFT ? RESULT_DRAFT : RESULT_VALIDATE;
             elephantInfo.state = state;

@@ -9,7 +9,7 @@ import fr.elephantasia.elephantasia.utils.ElephantInfo;
 
 public class Database {
 
-    private static final int VERSION_BDD = 6;
+    private static final int VERSION_BDD = 1;
     private static final String NAME_BDD = "elephantasia.db";
     private SQLiteDatabase database;
     private MySQLite mySQLite;
