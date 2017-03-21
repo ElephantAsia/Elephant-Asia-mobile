@@ -31,13 +31,13 @@ public class ElephantConsultationFragment extends Fragment {
 
     private Button deleteButton;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         binding = DataBindingUtil.inflate(inflater, R.layout.elephant_consultation_elephant_fragment, container, false);
         View view = binding.getRoot();
+
         info = new ElephantInfo(((ConsultationInterface)getActivity()).getElephantInfo());
+
         binding.setE(info);
         binding.setMode(State.CONSULTATION);
 

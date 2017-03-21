@@ -9,7 +9,7 @@ import fr.elephantasia.elephantasia.utils.ElephantInfo;
 
 public class Database {
 
-    private static final int VERSION_BDD = 4;
+    private static final int VERSION_BDD = 6;
     private static final String NAME_BDD = "elephantasia.db";
     private SQLiteDatabase database;
     private MySQLite mySQLite;
@@ -37,6 +37,10 @@ public class Database {
     public int delete(ElephantInfo elephant) {
         return ElephantTable.delete(database, elephant);
     }
+
+    /*public ElephantInfo getElephantByID(int id) {
+        return ElephantTable.getElephantByID(database, id);
+    }*/
 
     public List<ElephantInfo> getDrafts() {
         return ElephantTable.getDrafts(database);

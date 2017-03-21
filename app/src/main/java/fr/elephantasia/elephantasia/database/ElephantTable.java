@@ -62,6 +62,18 @@ class ElephantTable {
 
     private static final String COL_STATE = "state";
     private static final int NUM_COL_STATE = 15;
+
+    private static final String COL_OWNERS = "owners";
+    private static final int NUM_COL_OWNERS = 16;
+
+    private static final String COL_FATHER_ID = "father_id";
+    private static final int NUM_COL_FATHER_ID = 17;
+
+    private static final String COL_MOTHER_ID = "mother_id";
+    private static final int NUM_COL_MOTHER_ID = 18;
+
+    private static final String COL_CHILDREN_ID = "children_ids";
+    private static final int NUM_COL_CHILDREN_ID = 19;
     
     static final String TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -79,7 +91,11 @@ class ElephantTable {
             + COL_REGISTRATION_VILLAGE + " TEXT NOT NULL, "
             + COL_REGISTRATION_DISTRICT + " TEXT NOT NULL, "
             + COL_REGISTRATION_PROVINCE + " TEXT NOT NULL, "
-            + COL_STATE + " INTEGER DEFAULT 0);";
+            + COL_STATE + " INTEGER DEFAULT 0, "
+            + COL_OWNERS + " TEXT NOT NULL, "
+            + COL_FATHER_ID + " TEXT NOT NULL, "
+            + COL_MOTHER_ID + " TEXT NOT NULL, "
+            + COL_CHILDREN_ID + " TEXT NOT NULL);";
 
     static long insert(SQLiteDatabase database, ElephantInfo elephant) {
         return (database.insert(TABLE_NAME, null, getContentValues(elephant)));
@@ -95,6 +111,16 @@ class ElephantTable {
 
         return (database.update(TABLE_NAME, values, COL_ID + " = " + elephant.id, null));
     }
+
+    /*static ElephantInfo getElephantByID(SQLiteDatabase database, int id) {
+        ElephantInfo info = null;
+        Cursor c = database.query(TABLE_NAME, new String[] {"*"}, COL_ID, new String[] {id + ""}, null, null, null);
+        if (c.getCount() > 0) {
+            info = cursorToValue(c);
+        }
+        c.close();
+        return info;
+    }*/
 
     static List<ElephantInfo> search(SQLiteDatabase database, ElephantInfo info) {
         String query = "SELECT * FROM " + TABLE_NAME + getQuerySearchRestriction(info);
@@ -137,7 +163,7 @@ class ElephantTable {
         ContentValues values = new ContentValues();
         values.put(COL_NAME, elephant.name);
         values.put(COL_NICKNAME, elephant.nickName);
-        values.put(COL_SEX, String.valueOf(elephant.sex).toUpperCase());
+        values.put(COL_SEX, String.valueOf(elephant.sex));
         values.put(COL_EAR_TAG, String.valueOf(elephant.earTag));
         values.put(COL_EYED, String.valueOf(elephant.eyeD));
         values.put(COL_BIRTH_DATE, elephant.birthDate);
@@ -150,6 +176,15 @@ class ElephantTable {
         values.put(COL_REGISTRATION_DISTRICT, elephant.regDistrict);
         values.put(COL_REGISTRATION_PROVINCE, elephant.regProvince);
         values.put(COL_STATE, elephant.state.toString());
+
+        // Owners
+        values.put(COL_OWNERS, elephant.getOwners());
+
+        // Parentage
+        values.put(COL_FATHER_ID, elephant.father);
+        values.put(COL_MOTHER_ID, elephant.mother);
+        values.put(COL_CHILDREN_ID, elephant.getChildren());
+
         return (values);
     }
 
@@ -158,7 +193,7 @@ class ElephantTable {
         elephant.id = cursor.getInt(NUM_COL_ID);
         elephant.name = cursor.getString(NUM_COL_NAME);
         elephant.nickName = cursor.getString(NUM_COL_NICKNAME);
-        elephant.sex = ElephantInfo.Gender.valueOf(cursor.getString(NUM_COL_SEX).toUpperCase());
+        elephant.sex = ElephantInfo.Gender.valueOf(cursor.getString(NUM_COL_SEX));
         elephant.earTag = Boolean.valueOf(cursor.getString(NUM_COL_EAR_TAG));
         elephant.eyeD = Boolean.valueOf(cursor.getString(NUM_COL_EYED));
         elephant.birthDate = cursor.getString(NUM_COL_BIRTH_DATE);
@@ -170,12 +205,20 @@ class ElephantTable {
         elephant.regVillage = cursor.getString(NUM_COL_REGISTRATION_VILLAGE);
         elephant.regDistrict = cursor.getString(NUM_COL_REGISTRATION_DISTRICT);
         elephant.regProvince = cursor.getString(NUM_COL_REGISTRATION_PROVINCE);
-        elephant.state = ElephantInfo.State.valueOf(cursor.getString(NUM_COL_STATE).toUpperCase());
+        elephant.state = ElephantInfo.State.valueOf(cursor.getString(NUM_COL_STATE));
+
+        // Owners
+        elephant.setOwners(cursor.getString(NUM_COL_OWNERS));
+
+        // Parentage
+        elephant.father = cursor.getString(NUM_COL_FATHER_ID);
+        elephant.mother = cursor.getString(NUM_COL_MOTHER_ID);
+        elephant.setChildren(cursor.getString(NUM_COL_CHILDREN_ID));
 
         return (elephant);
     }
 
-    static String getQuerySearchRestriction(ElephantInfo info) {
+    private static String getQuerySearchRestriction(ElephantInfo info) {
         List<String> restriction = new ArrayList<String>();
 
         if (!info.name.isEmpty())

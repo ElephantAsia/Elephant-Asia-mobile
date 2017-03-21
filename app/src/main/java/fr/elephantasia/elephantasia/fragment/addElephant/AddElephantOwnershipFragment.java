@@ -2,7 +2,6 @@ package fr.elephantasia.elephantasia.fragment.addElephant;
 
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import fr.elephantasia.elephantasia.utils.UserInfo;
 public class AddElephantOwnershipFragment extends Fragment {
 
     private ListView list;
-    private FloatingActionButton fabNext;
 
     private AddOwnershipAdapter adapter;
 
@@ -46,7 +44,6 @@ public class AddElephantOwnershipFragment extends Fragment {
 
         list = (ListView)view.findViewById(R.id.list);
         list.setAdapter(adapter);
-
 
         return (view);
     }

@@ -15,13 +15,19 @@ import fr.elephantasia.elephantasia.utils.ElephantInfo;
 
 public class ConsultationActivity extends AppCompatActivity implements ConsultationInterface {
 
+    public static final String EXTRA_ELEPHANT = "elephant";
+
     private Database database;
     private ElephantInfo elephantInfo;
 
     private Toolbar toolbar;
 
-    private static ElephantInfo getElephantInfo(Intent intent) {
-        return (ElephantInfo)intent.getParcelableExtra(SearchBrowserActivity.EXTRA_ELEPHANT);
+    private static ElephantInfo getElephantID(Intent intent) {
+        return intent.getParcelableExtra(EXTRA_ELEPHANT);
+    }
+
+    public static void setElephant(Intent intent, ElephantInfo info) {
+        intent.putExtra(EXTRA_ELEPHANT, info);
     }
 
     @Override
@@ -39,7 +45,7 @@ public class ConsultationActivity extends AppCompatActivity implements Consultat
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        elephantInfo = getElephantInfo(getIntent());
+        elephantInfo = getElephantID(getIntent());
         refreshToolbarTitle();
 
         refreshFragment();
@@ -84,9 +90,6 @@ public class ConsultationActivity extends AppCompatActivity implements Consultat
 
     private void refreshFragment() {
         ElephantConsultationFragment fragment = new ElephantConsultationFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(SearchBrowserActivity.EXTRA_ELEPHANT, elephantInfo);
-        fragment.setArguments(args);
         getSupportFragmentManager().beginTransaction().replace(R.id.consultation_fragment, fragment).commit();
     }
 }

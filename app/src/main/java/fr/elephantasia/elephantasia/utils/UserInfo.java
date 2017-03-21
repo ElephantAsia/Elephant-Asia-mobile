@@ -23,7 +23,7 @@ public class UserInfo implements Parcelable {
         Woman
     }
 
-    public long id;
+    public int id;
     public String name;
     public Status status;
     public String email;
@@ -37,7 +37,7 @@ public class UserInfo implements Parcelable {
         address = "address";
     }
 
-    private UserInfo(long id, String username, Status status, String email, String address) {
+    private UserInfo(int id, String username, Status status, String email, String address) {
         this.id = id;
         this.name = username;
         this.status = status;
@@ -52,7 +52,7 @@ public class UserInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        out.writeLong(id);
+        out.writeInt(id);
         out.writeString(name);
         out.writeString(String.valueOf(status));
         out.writeString(email);
@@ -73,7 +73,7 @@ public class UserInfo implements Parcelable {
     };
 
     private UserInfo(Parcel in) {
-        id = in.readLong();
+        id = in.readInt();
         name = in.readString();
         status = Status.valueOf(in.readString());
         email = in.readString();

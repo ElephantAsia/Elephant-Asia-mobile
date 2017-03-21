@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 public class ElephantInfo implements Parcelable {
 
@@ -64,6 +67,14 @@ public class ElephantInfo implements Parcelable {
     public String weight;
     public String height;
 
+    // Owner
+    private String owners;
+
+    // Parentage
+    public String father;
+    public String mother;
+    private String children;
+
     public String getSex() {
         String sex = this.sex.toString();
         return sex.substring(0, 1).toUpperCase() + sex.substring(1, sex.length()).toLowerCase();
@@ -107,6 +118,14 @@ public class ElephantInfo implements Parcelable {
         nailsRearRight = "";
         weight = "";
         height = "";
+
+        // Owner
+        owners = "";
+
+        // Parentage
+        father = "";
+        mother = "";
+        children = "";
     }
 
     public ElephantInfo(ElephantInfo other) {
@@ -129,7 +148,7 @@ public class ElephantInfo implements Parcelable {
         regDistrict = other.regDistrict;
         regProvince = other.regProvince;
 
-        //Description
+        // Description
         tusk = other.tusk;
         nailsFrontLeft = other.nailsFrontLeft;
         nailsFrontRight = other.nailsFrontRight;
@@ -137,6 +156,14 @@ public class ElephantInfo implements Parcelable {
         nailsRearRight = other.nailsRearRight;
         weight = other.weight;
         height = other.height;
+
+        // Owners
+        owners = other.owners;
+
+        // Parentage
+        father = other.father;
+        mother = other.mother;
+        children = other.children;
     }
 
     @Override
@@ -165,7 +192,7 @@ public class ElephantInfo implements Parcelable {
         out.writeString(regDistrict);
         out.writeString(regProvince);
 
-        //Description
+        // Description
         out.writeString(tusk);
         out.writeString(nailsFrontLeft);
         out.writeString(nailsFrontRight);
@@ -173,6 +200,14 @@ public class ElephantInfo implements Parcelable {
         out.writeString(nailsRearRight);
         out.writeString(weight);
         out.writeString(height);
+
+        // Owners
+        out.writeString(owners);
+
+        // Parentage
+        out.writeString(father);
+        out.writeString(mother);
+        out.writeString(children);
     }
 
     public static final Parcelable.Creator<ElephantInfo> CREATOR = new Parcelable.Creator<ElephantInfo>() {
@@ -209,12 +244,21 @@ public class ElephantInfo implements Parcelable {
         regProvince = in.readString();
 
         // Description
+        tusk = in.readString();
         nailsFrontLeft = in.readString();
         nailsFrontRight = in.readString();
         nailsRearLeft = in.readString();
         nailsRearRight = in.readString();
         weight = in.readString();
         height = in.readString();
+
+        // Owners
+        owners = in.readString();
+
+        // Parentage
+        father = in.readString();
+        mother = in.readString();
+        children = in.readString();
     }
 
     public boolean isValid() {
@@ -246,6 +290,66 @@ public class ElephantInfo implements Parcelable {
         Log.i("nails rear right", this.nailsRearRight);
         Log.i("weight", this.weight);
         Log.i("height", this.weight);
+
+        // Owners
+        Log.i("owners", owners);
+
+        // Parentage
+        Log.i("father", father);
+        Log.i("mother", mother);
+        Log.i("children", children);
+    }
+
+    public void addChildren(int elephantID) {
+        if (children.isEmpty()) {
+            children = String.valueOf(elephantID);
+        } else {
+            children += ";" + elephantID;
+        }
+    }
+
+    public void setChildren(String children) {
+        this.children = children;
+    }
+
+    public String getChildren() {
+        return children;
+    }
+
+    public List<String> getChildrenAsList() {
+        return Arrays.asList(children.split(";"));
+    }
+
+    public void addOwner(int ownerID) {
+        if (owners.isEmpty()) {
+            owners = String.valueOf(ownerID);
+        } else {
+            owners += ";" + ownerID;
+        }
+    }
+
+    public void setOwners(String owners) {
+        this.owners = owners;
+    }
+
+    public String getOwners() {
+        return owners;
+    }
+
+    public List<String> getOwnersAsList() {
+        return Arrays.asList(owners.split(";"));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof ElephantInfo
+                && ((ElephantInfo)other).id.equals(id)
+                && ((ElephantInfo)other).regID.equals(regID);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode() + regID.hashCode();
     }
 
 }

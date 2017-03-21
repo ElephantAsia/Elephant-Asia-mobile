@@ -5,13 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.elephantasia.elephantasia.R;
 import fr.elephantasia.elephantasia.utils.ElephantInfo;
+import fr.elephantasia.elephantasia.utils.RefreshElephantPreview;
 
 public class SearchElephantAdapter extends BaseAdapter {
 
@@ -58,15 +58,8 @@ public class SearchElephantAdapter extends BaseAdapter {
         }
 
         final ElephantInfo info = getItem(index);
-        String sex = (info.sex == ElephantInfo.Gender.FEMALE) ? context.getString(R.string.female) : context.getString(R.string.male);
 
-        TextView name = (TextView)view.findViewById(R.id.search_overview_name);
-        TextView registration = (TextView)view.findViewById(R.id.search_overview_registration);
-        TextView location = (TextView)view.findViewById(R.id.search_overview_location);
-
-        name.setText(String.format(context.getString(R.string.elephant_name_sex_age), info.name, sex, "-"));
-        registration.setText(info.regID);
-        location.setText(String.format(context.getString(R.string.elephant_location), info.regVillage, info.regProvince));
+        RefreshElephantPreview.refresh(context, view, info);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -17,6 +17,7 @@ import fr.elephantasia.elephantasia.utils.StaticTools;
  * Created by Stephane on 31/10/2016.
  */
 
+@Deprecated
 public class TestAsyncTask extends RequestAsyncTask {
 
     private static final String PATH = "/test/route/example";

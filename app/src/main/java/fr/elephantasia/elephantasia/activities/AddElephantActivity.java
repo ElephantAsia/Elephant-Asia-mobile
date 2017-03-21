@@ -34,9 +34,13 @@ import fr.elephantasia.elephantasia.utils.UserInfo;
 
 public class AddElephantActivity extends AppCompatActivity implements AddElephantInterface {
 
-    public static final int REQUEST_CODE_ADD_OWNER = 1;
+    private static final int REQUEST_ADD_OWNER = 1;
+    private static final int REQUEST_SET_FATHER = 2;
+    private static final int REQUEST_SET_MOTHER = 3;
+    private static final int REQUEST_ADD_CHILDREN = 4;
 
     private static final int FRAGMENT_OWNERSHIP_IDX = 2;
+    private static final int FRAGMENT_PARENTAGE_IDX = 3;
 
     private Database database;
     private TabLayout tabLayout;
@@ -117,26 +121,41 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_ADD_OWNER) {
+        if (requestCode == REQUEST_ADD_OWNER) {
             if (resultCode == RESULT_OK && data != null) {
                 UserInfo user = data.getParcelableExtra(SelectOwnerActivity.EXTRA_RESULT_USER_SELECTED);
                 refreshOwner(user);
+            }
+        } else if (requestCode == REQUEST_SET_FATHER) {
+            if (resultCode == RESULT_OK && data != null) {
+                ElephantInfo info = data.getParcelableExtra(SearchActivity.EXTRA_RESULT);
+                refreshFather(info);
+            }
+        } else if (requestCode == REQUEST_SET_MOTHER) {
+            if (resultCode == RESULT_OK && data != null) {
+                ElephantInfo info = data.getParcelableExtra(SearchActivity.EXTRA_RESULT);
+                refreshMother(info);
+            }
+        } else if (requestCode == REQUEST_ADD_CHILDREN) {
+            if (resultCode == RESULT_OK && data != null) {
+                ElephantInfo info = data.getParcelableExtra(SearchActivity.EXTRA_RESULT);
+                refreshChildren(info);
             }
         }
     }
 
     @Override
     public void nextPage() {
-        if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1) {
+        /*if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1) {
             viewPager.setCurrentItem(0);
         } else {
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-        }
+        }*/
 
-//        elephantInfo.displayAttr();
-//        database.insertElephant(elephantInfo);
-//        setResult(RESULT_OK);
-//        finish();
+        elephantInfo.displayAttr();
+        database.insert(elephantInfo);
+        setResult(RESULT_OK);
+        finish();
     }
 
     public ElephantInfo getElephantInfo() {
@@ -172,12 +191,64 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     @Override
     public void addOwner() {
         Intent intent = new Intent(this, SelectOwnerActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_ADD_OWNER);
+        startActivityForResult(intent, REQUEST_ADD_OWNER);
+    }
+
+    @Override
+    public void setFather() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        SearchActivity.setMode(intent, SearchActivity.Mode.PICK_RESULT);
+        startActivityForResult(intent, REQUEST_SET_FATHER);
+    }
+
+    @Override
+    public void setMother() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        SearchActivity.setMode(intent, SearchActivity.Mode.PICK_RESULT);
+        startActivityForResult(intent, REQUEST_SET_MOTHER);
+    }
+
+    @Override
+    public void addChildren() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        SearchActivity.setMode(intent, SearchActivity.Mode.PICK_RESULT);
+        startActivityForResult(intent, REQUEST_ADD_CHILDREN);
+    }
+
+    @Override
+    public void onElephantClick(ElephantInfo elephant) {
+        Intent intent = new Intent(this, ConsultationActivity.class);
+        ConsultationActivity.setElephant(intent, elephant);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 
     private void refreshOwner(UserInfo user) {
         AddElephantOwnershipFragment fragment = (AddElephantOwnershipFragment)adapter.getItem(FRAGMENT_OWNERSHIP_IDX);
+
+        elephantInfo.addOwner(user.id);
         fragment.refreshOwner(user);
+    }
+
+    private void refreshFather(ElephantInfo info) {
+        AddElephantParentageFragment fragment = (AddElephantParentageFragment)adapter.getItem(FRAGMENT_PARENTAGE_IDX);
+
+        elephantInfo.father = info.id.toString();
+        fragment.refreshFather(info);
+    }
+
+    private void refreshMother(ElephantInfo info) {
+        AddElephantParentageFragment fragment = (AddElephantParentageFragment)adapter.getItem(FRAGMENT_PARENTAGE_IDX);
+
+        elephantInfo.mother = info.id.toString();
+        fragment.refreshMother(info);
+    }
+
+    private void refreshChildren(ElephantInfo info) {
+        AddElephantParentageFragment fragment = (AddElephantParentageFragment)adapter.getItem(FRAGMENT_PARENTAGE_IDX);
+
+        elephantInfo.addChildren(info.id);
+        fragment.refreshChildren(info);
     }
 
     private void setupViewPager(ViewPager viewPager) {
