@@ -1,6 +1,5 @@
 package fr.elephantasia.elephantasia.activities;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -24,6 +24,7 @@ import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDocumentFrag
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantLocationFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantOwnershipFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantParentageFragment;
+import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantProfilFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantRegistrationFragment;
 import fr.elephantasia.elephantasia.interfaces.AddElephantInterface;
 import fr.elephantasia.elephantasia.utils.ElephantInfo;
@@ -45,7 +46,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     private static final int FRAGMENT_PARENTAGE_IDX = 3;
 
     //Fragment
-    AddElephantRegistrationFragment registrationFragment;
+    AddElephantProfilFragment profilFragment;
 
     private Database database;
     private TabLayout tabLayout;
@@ -58,7 +59,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
     public AddElephantActivity() {
         elephantInfo = new ElephantInfo();
-        registrationFragment = new AddElephantRegistrationFragment();
+        profilFragment = new AddElephantProfilFragment();
     }
 
     @Override
@@ -109,13 +110,13 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
     @Override
     public boolean onSupportNavigateUp() {
-        confirmFinish(true);
+        confirmFinish();
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        confirmFinish(true);
+        confirmFinish();
     }
 
     @Override
@@ -175,26 +176,30 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
         return false;
     }
 
-    private boolean checkMandatoryField() {
+    private boolean checkMandatoryFields() {
         if (elephantInfo.name.isEmpty()) {
-            registrationFragment.setNameError();
+            profilFragment.setNameError();
             Toast.makeText(this, R.string.name_required, Toast.LENGTH_SHORT).show();
             return false;
         }
+        if (elephantInfo.sex == ElephantInfo.Gender.UNKNOWN) {
+            profilFragment.setSexError();
+            Toast.makeText(this, R.string.sex_required, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         return true;
     }
 
 
     public void saveElephant(ElephantInfo.State state) {
-        if (checkMandatoryField()) {
+        if (checkMandatoryFields()) {
             int result = state == ElephantInfo.State.DRAFT ? RESULT_DRAFT : RESULT_VALIDATE;
             elephantInfo.state = state;
             elephantInfo.displayAttr();
             database.insert(elephantInfo);
             setResult(result);
             finish();
-        } else {
-
         }
     }
 
@@ -202,29 +207,37 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
         return this.elephantInfo;
     }
 
-    private void confirmFinish(final boolean confirm) {
-        if (confirm && elephantInfo != null && elephantInfo.isValid()) {
+    /**
+     * Prevent user to cancel activity without saving his current Elephant.
+     * Happens only if some data have been set.
+     */
+    private void confirmFinish() {
+
+        if (elephantInfo.isEmpty()) {
+            setResult(RESULT_CANCELED);
+            finish();
+        } else {
             new AlertDialog.Builder(this)
-                    .setTitle(R.string.app_name)
                     .setMessage(R.string.put_drafts)
                     .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            confirmFinish(false);
+                            setResult(RESULT_CANCELED);
+                            finish();
                         }
                     })
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            elephantInfo.state = ElephantInfo.State.DRAFT;
-                            database.update(elephantInfo);
-                            confirmFinish(false);
+                            if (checkMandatoryFields()) {
+                                elephantInfo.state = ElephantInfo.State.DRAFT;
+                                database.insert(elephantInfo);
+                                setResult(RESULT_DRAFT);
+                                finish();
+                            }
                         }
                     })
                     .show();
-        } else {
-            setResult(RESULT_CANCELED);
-            finish();
         }
     }
 
@@ -293,7 +306,8 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(registrationFragment, getString(R.string.registration));
+        adapter.addFragment(profilFragment, getString(R.string.profil));
+        adapter.addFragment(new AddElephantRegistrationFragment(), getString(R.string.registration));
         adapter.addFragment(new AddElephantDescriptionFragment(), getString(R.string.description));
         adapter.addFragment(new AddElephantOwnershipFragment(), getString(R.string.ownership));
         adapter.addFragment(new AddElephantParentageFragment(), getString(R.string.parentage));

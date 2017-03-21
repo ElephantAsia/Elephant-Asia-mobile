@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import fr.elephantasia.elephantasia.R;
 import fr.elephantasia.elephantasia.activities.AddElephantActivity;
@@ -18,11 +20,6 @@ import fr.elephantasia.elephantasia.utils.StaticTools;
 
 
 public class AddElephantRegistrationFragment extends Fragment {
-
-    private EditText birthDateEditText;
-
-    //Mandatory field
-    private EditText name;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,28 +32,7 @@ public class AddElephantRegistrationFragment extends Fragment {
         final ElephantInfo elephant = ((AddElephantActivity)getActivity()).getElephantInfo();
         View view = binding.getRoot();
         binding.setE(elephant);
-
-        name = (EditText)view.findViewById(R.id.elephant_name);
-        birthDateEditText = (EditText)view.findViewById(R.id.elephant_birth_date);
-        birthDateEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerFragment dialog = new DatePickerFragment();
-                dialog.setListener(new DatePickerFragment.Listener() {
-                    @Override
-                    public void onDateSet(int year, int month, int dayOfMonth) {
-                        birthDateEditText.setText(getString(R.string.date, year, month, dayOfMonth));
-                    }
-                });
-                ((AddElephantActivity)getActivity()).showDialogFragment(dialog);
-            }
-        });
         StaticTools.setupHideKeyboardListener(view, getActivity());
         return (view);
-    }
-
-
-    public void setNameError() {
-        name.setError("Name is required");
     }
 }

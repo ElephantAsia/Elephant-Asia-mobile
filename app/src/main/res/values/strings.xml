@@ -12,7 +12,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="elephant_birthdate">Birthdate</string>
-    <string name="elephant_name">Elephant name</string>
+    <string name="elephant_name">Elephant name *</string>
     <string name="elephant_nickname">Nickname</string>
     <string name="elephant_registration_number">Registration ID</string>
     <string name="elephant_registration_village">Registration village</string>
@@ -29,6 +29,7 @@
     <string name="OK">OK</string>
 
     <string name="name_required">Name is required</string>
+    <string name="sex_required">Sex is required</string>
     <string name="elephant_draft_added">Elephant added to draft</string>
     <string name="elephant_local_added">Elephant added to local database</string>
 
@@ -64,6 +65,7 @@
     <string name="logout">Log out</string>
 
     <string name="add_elephant">Add Elephant</string>
+    <string name="profil">Profil</string>
     <string name="registration">Registration</string>
     <string name="ownership">Ownership</string>
     <string name="description">Description</string>

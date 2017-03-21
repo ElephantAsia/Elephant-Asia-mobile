@@ -4,6 +4,7 @@
 
     <data>
         <variable name="e" type="fr.elephantasia.elephantasia.utils.ElephantInfo"/>
+        <import type="fr.elephantasia.elephantasia.utils.ElephantInfo.Gender"/>
     </data>
 
     <ScrollView
@@ -31,71 +32,13 @@
                 >
 
                 <EditText
-                    android:text="@={e.chips1}"
-                    android:hint="@string/elephant_chip"
+                    android:id="@+id/elephant_name"
+                    android:text="@={e.name}"
+                    android:hint="@string/elephant_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:id="@+id/chip1"
+                    android:inputType="textPersonName"
                     />
-
-            </android.support.design.widget.TextInputLayout>
-
-
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="72dp"
-                android:paddingBottom="16dp"
-                >
-
-                <EditText
-                    android:text="@={e.regID}"
-                    android:hint="@string/elephant_registration_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    />
-
-            </android.support.design.widget.TextInputLayout>
-
-
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="72dp"
-                android:paddingBottom="16dp"
-                >
-
-                <EditText
-                    android:text="@={e.regVillage}"
-                    android:hint="@string/elephant_registration_village"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    />
-
-            </android.support.design.widget.TextInputLayout>
-
-
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="72dp"
-                android:paddingBottom="16dp"
-                >
-
-                <EditText
-                    android:text="@={e.regDistrict}"
-                    android:hint="@string/elephant_registration_district"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    />
-
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -106,8 +49,79 @@
                 >
 
                 <EditText
-                    android:text="@={e.regProvince}"
-                    android:hint="@string/elephant_registration_province"
+                    android:text="@={e.nickName}"
+                    android:hint="@string/elephant_nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <RadioGroup
+            android:weightSum="2"
+            android:paddingBottom="16dp"
+            android:paddingTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/elephant_rg_sex"
+            >
+
+            <RadioButton
+            android:gravity="center"
+            android:text="@string/male"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/elephant_radio_male"
+            android:duplicateParentState="false"
+            android:onClick="@{() -> e.setSex(Gender.MALE)}"
+            />
+
+            <RadioButton
+            android:gravity="center"
+            android:text="@string/female"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/elephant_radio_female"
+            android:onClick="@{() -> e.setSex(Gender.FEMALE)}"
+            />
+
+            </RadioGroup>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingBottom="16dp"
+                >
+
+                <EditText
+                    android:id="@+id/elephant_birth_date"
+                    android:text="@={e.birthDate}"
+                    android:hint="@string/elephant_birthdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="datetime"
+                    android:clickable="true"
+                    android:focusable="false"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingBottom="16dp"
+                >
+
+                <EditText
+                    android:text="@={e.birthVillage}"
+                    android:hint="@string/elephant_birth_village"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -115,61 +129,39 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <RelativeLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingBottom="16dp"
                 >
 
-                <TextView
-                    android:text="@string/ear_tag"
-                    android:textSize="@dimen/font_size_normal"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:text="@={e.birthDistrict}"
+                    android:hint="@string/elephant_birth_district"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
+                    android:inputType="text"
                     />
+            </android.support.design.widget.TextInputLayout>
 
-                <CheckBox
-                    android:id="@+id/ear_tag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:checked="@={e.earTag}"
-                    />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingBottom="16dp"
                 >
 
-                <TextView
-                    android:text="@string/eyeD"
-                    android:textSize="@dimen/font_size_normal"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:text="@={e.birthProvince}"
+                    android:hint="@string/elephant_birth_province"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
+                    android:inputType="text"
                     />
 
-                <CheckBox
-                    android:id="@+id/eyeD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:checked="@={e.eyeD}"
-                    />
+            </android.support.design.widget.TextInputLayout>
 
-            </RelativeLayout>
 
             <!--Used to prevent floating button to hide relevant field-->
             <View

@@ -269,8 +269,23 @@ public class ElephantInfo implements Parcelable {
         children = in.readString();
     }
 
-    public boolean isValid() {
-        return name != null && !name.isEmpty();
+    /**
+     * Used to check if an elephant should be saved as draft before
+     * the end of AddElephantActivity.
+     * @return true if all relevant fields are empty.
+     */
+    public boolean isEmpty() {
+        return name.isEmpty() && nickName.isEmpty()
+                && birthDate.isEmpty() && birthVillage.isEmpty()
+                && birthDistrict.isEmpty() && birthProvince.isEmpty()
+                && chips1.isEmpty() && regID.isEmpty()
+                && regVillage.isEmpty() && regDistrict.isEmpty()
+                && regProvince.isEmpty() && tusk.isEmpty()
+                && nailsFrontLeft.isEmpty() && nailsFrontRight.isEmpty()
+                && nailsRearLeft.isEmpty() && nailsRearRight.isEmpty()
+                && weight.isEmpty() && height.isEmpty()
+                && owners.isEmpty() && father.isEmpty()
+                && mother.isEmpty() && children.isEmpty();
     }
 
     public void displayAttr() {
