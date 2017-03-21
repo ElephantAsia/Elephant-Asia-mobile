@@ -17,7 +17,7 @@ public class RefreshElephantPreview {
 
         name.setText(String.format(context.getString(R.string.elephant_name_sex_age), info.name, sex, "-"));
         registration.setText(info.regID);
-        location.setText(String.format(context.getString(R.string.elephant_location), info.regVillage, info.regProvince));
+        location.setText(String.format(context.getString(R.string.elephant_location), info.regCity, info.regProvince));
     }
 
 }

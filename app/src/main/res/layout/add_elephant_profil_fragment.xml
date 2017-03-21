@@ -16,7 +16,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/addView"
             android:clickable="true"
             android:focusableInTouchMode="true"
             android:paddingLeft="16dp"
@@ -113,55 +112,23 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
                 android:layout_height="wrap_content"
                 android:minHeight="72dp"
-                android:paddingBottom="16dp"
                 >
 
                 <EditText
-                    android:text="@={e.birthVillage}"
-                    android:hint="@string/elephant_birth_village"
+                    android:id="@+id/elephant_birth_location"
+                    android:hint="@string/elephant_birth_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
+                    android:clickable="true"
+                    android:focusable="false"
                     />
 
             </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="72dp"
-                android:paddingBottom="16dp"
-                >
-
-                <EditText
-                    android:text="@={e.birthDistrict}"
-                    android:hint="@string/elephant_birth_district"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="72dp"
-                android:paddingBottom="16dp"
-                >
-
-                <EditText
-                    android:text="@={e.birthProvince}"
-                    android:hint="@string/elephant_birth_province"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    />
-
-            </android.support.design.widget.TextInputLayout>
-
 
             <!--Used to prevent floating button to hide relevant field-->
             <View

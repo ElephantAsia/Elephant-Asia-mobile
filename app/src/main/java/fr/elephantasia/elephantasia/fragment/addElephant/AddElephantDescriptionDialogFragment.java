@@ -63,7 +63,7 @@ public class AddElephantDescriptionDialogFragment extends DialogFragment impleme
             value = ((AddElephantActivity)getActivity()).getElephantInfo().weight;
         }
 
-        // Remove unit string from value
+        // Remove unit from value
         if (!value.isEmpty()) {
             value = value.replaceAll("[^\\d.]", "");
         }

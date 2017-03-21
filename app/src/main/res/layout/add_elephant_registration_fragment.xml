@@ -40,8 +40,6 @@
 
             </android.support.design.widget.TextInputLayout>
 
-
-
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,8 +57,6 @@
 
             </android.support.design.widget.TextInputLayout>
 
-
-
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,47 +65,13 @@
                 >
 
                 <EditText
-                    android:text="@={e.regVillage}"
-                    android:hint="@string/elephant_registration_village"
+                    android:id="@+id/registration_location"
+                    android:hint="@string/registration_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    />
-
-            </android.support.design.widget.TextInputLayout>
-
-
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="72dp"
-                android:paddingBottom="16dp"
-                >
-
-                <EditText
-                    android:text="@={e.regDistrict}"
-                    android:hint="@string/elephant_registration_district"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="72dp"
-                android:paddingBottom="16dp"
-                >
-
-                <EditText
-                    android:text="@={e.regProvince}"
-                    android:hint="@string/elephant_registration_province"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:clickable="true"
+                    android:focusable="false"
                     />
 
             </android.support.design.widget.TextInputLayout>

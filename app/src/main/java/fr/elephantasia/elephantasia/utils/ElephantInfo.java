@@ -46,7 +46,7 @@ public class ElephantInfo implements Parcelable {
     public boolean eyeD = false;
 
     public String birthDate;
-    public String birthVillage;
+    public String birthCity;
     public String birthDistrict;
     public String birthProvince;
 
@@ -55,7 +55,7 @@ public class ElephantInfo implements Parcelable {
     public String chips3;
 
     public String regID;
-    public String regVillage;
+    public String regCity;
     public String regDistrict;
     public String regProvince;
 
@@ -101,14 +101,14 @@ public class ElephantInfo implements Parcelable {
         earTag = false;
         eyeD = false;
         birthDate = "";
-        birthVillage = "";
+        birthCity = "";
         birthDistrict = "";
         birthProvince = "";
         chips1 = "";
         chips2 = "";
         chips3 = "";
         regID = "";
-        regVillage = "";
+        regCity = "";
         regDistrict = "";
         regProvince = "";
 
@@ -141,14 +141,14 @@ public class ElephantInfo implements Parcelable {
         earTag = other.earTag;
         eyeD = other.eyeD;
         birthDate = other.birthDate;
-        birthVillage = other.birthVillage;
+        birthCity = other.birthCity;
         birthDistrict = other.birthDistrict;
         birthProvince = other.birthProvince;
         chips1 = other.chips1;
         chips2 = other.chips2;
         chips3 = other.chips3;
         regID = other.regID;
-        regVillage = other.regVillage;
+        regCity = other.regCity;
         regDistrict = other.regDistrict;
         regProvince = other.regProvince;
 
@@ -187,14 +187,14 @@ public class ElephantInfo implements Parcelable {
         out.writeString(String.valueOf(earTag));
         out.writeString(String.valueOf(eyeD));
         out.writeString(birthDate);
-        out.writeString(birthVillage);
+        out.writeString(birthCity);
         out.writeString(birthDistrict);
         out.writeString(birthProvince);
         out.writeString(chips1);
         out.writeString(chips2);
         out.writeString(chips3);
         out.writeString(regID);
-        out.writeString(regVillage);
+        out.writeString(regCity);
         out.writeString(regDistrict);
         out.writeString(regProvince);
 
@@ -240,14 +240,14 @@ public class ElephantInfo implements Parcelable {
         earTag = Boolean.valueOf(in.readString());
         eyeD = Boolean.valueOf(in.readString());
         birthDate = in.readString();
-        birthVillage = in.readString();
+        birthCity = in.readString();
         birthDistrict = in.readString();
         birthProvince = in.readString();
         chips1 = in.readString();
         chips2 = in.readString();
         chips3 = in.readString();
         regID = in.readString();
-        regVillage = in.readString();
+        regCity = in.readString();
         regDistrict = in.readString();
         regProvince = in.readString();
 
@@ -276,10 +276,10 @@ public class ElephantInfo implements Parcelable {
      */
     public boolean isEmpty() {
         return name.isEmpty() && nickName.isEmpty()
-                && birthDate.isEmpty() && birthVillage.isEmpty()
+                && birthDate.isEmpty() && birthCity.isEmpty()
                 && birthDistrict.isEmpty() && birthProvince.isEmpty()
                 && chips1.isEmpty() && regID.isEmpty()
-                && regVillage.isEmpty() && regDistrict.isEmpty()
+                && regCity.isEmpty() && regDistrict.isEmpty()
                 && regProvince.isEmpty() && tusk.isEmpty()
                 && nailsFrontLeft.isEmpty() && nailsFrontRight.isEmpty()
                 && nailsRearLeft.isEmpty() && nailsRearRight.isEmpty()
@@ -296,12 +296,12 @@ public class ElephantInfo implements Parcelable {
         Log.i("earTag", String.valueOf(this.earTag));
         Log.i("eyeD", String.valueOf(this.eyeD));
         Log.i("birthDate", this.birthDate);
-        Log.i("birthVillage", this.birthVillage);
+        Log.i("birthCity", this.birthCity);
         Log.i("birthDistrict", this.birthDistrict);
         Log.i("birthProvince", this.birthProvince);
         Log.i("chips1", this.chips1);
         Log.i("regID", this.regID);
-        Log.i("regVillage", this.regVillage);
+        Log.i("regCity", this.regCity);
         Log.i("regDistrict", this.regDistrict);
         Log.i("regProvince", this.regProvince);
 

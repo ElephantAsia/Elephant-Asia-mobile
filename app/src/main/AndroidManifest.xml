@@ -30,6 +30,7 @@
         <activity android:name=".activities.SearchBrowserActivity" />
         <activity android:name=".activities.ConsultationActivity" />
         <activity android:name=".activities.SelectOwnerActivity" />
+        <activity android:name=".activities.FileExplorerActivity"></activity>
 
         <provider
             android:authorities="${applicationId}.provider"
@@ -40,6 +41,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths"/>
         </provider>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC03RrMCbPiC4W3loYhRvmnA9lZh4aHP5w" />
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

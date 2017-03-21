@@ -76,7 +76,7 @@
 
                         <TextView
                             android:id="@+id/elephant_consultation_header_location"
-                            android:text='@{e.regVillage + " " + e.regDistrict + " " + e.regProvince}'
+                            android:text='@{e.regCity + " " + e.regDistrict + " " + e.regProvince}'
                             android:textSize="@dimen/font_size_normal"
                             android:textColor="@android:color/white"
                             android:layout_width="wrap_content"

@@ -1,6 +1,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bind="http://schemas.android.com/tools"
-    android:theme="@style/AppThemeWhiteBackground">
+    android:theme="@style/AppThemeWhiteBackground"
+    >
 
     <data>
         <variable name="e" type="fr.elephantasia.elephantasia.utils.ElephantInfo"/>

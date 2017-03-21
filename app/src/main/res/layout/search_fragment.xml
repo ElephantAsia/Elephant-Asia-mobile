@@ -72,7 +72,7 @@
                 android:id="@+id/search_elephant_province"
                 android:inputType="text"
                 android:ems="10"
-                android:hint="@string/elephant_registration_province"
+                android:hint="@string/registration_province"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -82,17 +82,17 @@
                 android:id="@+id/search_elephant_district"
                 android:inputType="text"
                 android:ems="10"
-                android:hint="@string/elephant_registration_district"
+                android:hint="@string/registration_district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <EditText
-                android:text="@={e.regVillage}"
+                android:text="@={e.regCity}"
                 android:textSize="16sp"
-                android:id="@+id/search_elephant_village"
+                android:id="@+id/search_elephant_city"
                 android:inputType="text"
                 android:ems="10"
-                android:hint="@string/elephant_registration_village"
+                android:hint="@string/registration_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

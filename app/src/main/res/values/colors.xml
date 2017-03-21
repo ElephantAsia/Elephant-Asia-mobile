@@ -25,12 +25,14 @@
     <color name="black_transparant">#66000000</color>
     <color name="transparent">#00000000</color>
 
-    <color name="text_color_primary_white_background">#303030</color>
     <color name="navigationBarColor">#000000</color>
 
     <color name="black100">#FF000000</color>
     <color name="black75">#BF000000</color>
     <color name="black60">#96000000</color>
     <color name="black50">#80000000</color>
+    <!--Graphic chart-->
+    <color name="primary_grey">#303030</color>
+    <color name="burma_orange">#C1864E</color>
 
 </resources>

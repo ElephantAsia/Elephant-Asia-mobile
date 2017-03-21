@@ -3,6 +3,14 @@ package fr.elephantasia.elephantasia.fragment.addElephant;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.app.DialogFragment;
+import android.content.Intent;
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,19 +22,29 @@ import fr.elephantasia.elephantasia.R;
 import fr.elephantasia.elephantasia.activities.AddElephantActivity;
 import fr.elephantasia.elephantasia.databinding.AddElephantProfilFragmentBinding;
 import fr.elephantasia.elephantasia.databinding.AddElephantRegistrationFragmentBinding;
+import android.widget.Toast;
+
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
+import fr.elephantasia.elephantasia.R;
+import fr.elephantasia.elephantasia.activities.AddElephantActivity;
+import fr.elephantasia.elephantasia.databinding.AddElephantProfilFragmentBinding;
 import fr.elephantasia.elephantasia.fragment.DatePickerFragment;
 import fr.elephantasia.elephantasia.utils.ElephantInfo;
 import fr.elephantasia.elephantasia.utils.StaticTools;
 
-
 public class AddElephantProfilFragment extends Fragment {
 
     private EditText birthDateEditText;
+    private EditText birthLocationEditText;
 
     //Mandatory field
     private EditText name;
     private RadioButton male;
     private RadioButton female;
+
+    ElephantInfo elephant;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +54,7 @@ public class AddElephantProfilFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         AddElephantProfilFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_elephant_profil_fragment, container, false);
-        final ElephantInfo elephant = ((AddElephantActivity)getActivity()).getElephantInfo();
+        elephant = ((AddElephantActivity)getActivity()).getElephantInfo();
         View view = binding.getRoot();
         binding.setE(elephant);
 
@@ -44,8 +62,7 @@ public class AddElephantProfilFragment extends Fragment {
         male = (RadioButton) view.findViewById(R.id.elephant_radio_male);
         female = (RadioButton) view.findViewById(R.id.elephant_radio_female);
         RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.elephant_rg_sex);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 removeSexError();
@@ -66,6 +83,15 @@ public class AddElephantProfilFragment extends Fragment {
                 ((AddElephantActivity)getActivity()).showDialogFragment(dialog);
             }
         });
+
+        birthLocationEditText = (EditText)view.findViewById(R.id.elephant_birth_location);
+        birthLocationEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((AddElephantActivity)getActivity()).showLocationDialog(R.string.profil);
+            }
+        });
+
         StaticTools.setupHideKeyboardListener(view, getActivity());
         return (view);
     }
@@ -85,4 +111,23 @@ public class AddElephantProfilFragment extends Fragment {
         female.setError(null);
     }
 
+    //TODO: Ameliorer l affichage si il n y a pas de tous les inputs de set (pas de truncage, pas de tiret)
+    public void setLocation(String province, String district, String city) {
+        elephant.birthProvince = province;
+        elephant.birthDistrict = district;
+        elephant.birthCity = city;
+
+        String prAbbr = province.length() > 3 ? province.substring(0,3) : province;
+        String location = prAbbr.toUpperCase() + " - " + district + " - " + city;
+        birthLocationEditText.setText(location);
+    }
+
+    //TODO: Extraire la province, le district et la ville du place picker
+    public void setLocation(String location) {
+//        elephant.birthProvince = province;
+//        elephant.birthDistrict = district;
+//        elephant.birthCity = city;
+
+        birthLocationEditText.setText(location);
+    }
 }

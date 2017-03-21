@@ -15,18 +15,22 @@
     <string name="elephant_name">Elephant name *</string>
     <string name="elephant_nickname">Nickname</string>
     <string name="elephant_registration_number">Registration ID</string>
-    <string name="elephant_registration_village">Registration village</string>
-    <string name="elephant_registration_district">Registration district</string>
-    <string name="elephant_registration_province">Registration province</string>
+    <string name="registration_location">Registration location</string>
+    <string name="registration_province">Registration province</string>
+    <string name="registration_district">Registration district</string>
+    <string name="registration_city">Registration city</string>
 
-    <string name="elephant_birth_village">Birth village</string>
-    <string name="elephant_birth_district">Birth district</string>
-    <string name="elephant_birth_province">Birth province</string>
+
+    <string name="elephant_birth_location">Birth location</string>
+    <string name="province">Province</string>
+    <string name="district">District</string>
+    <string name="city">City</string>
 
     <string name="validate">Validate</string>
     <string name="save_as_draft">Save as a draft</string>
     <string name="cancel">Cancel</string>
     <string name="OK">OK</string>
+    <string name="CANCEL">CANCEL</string>
 
     <string name="name_required">Name is required</string>
     <string name="sex_required">Sex is required</string>
@@ -90,14 +94,6 @@
     <string name="elephant_location">%1$s, %2$s</string>
 
     <string name="elephant_microchip">Elephant microchip</string>
-    <string name="microchip_empty">Microchip empty</string>
-    <string name="district">District (not available)</string>
-    <string name="village">Village (not available)</string>
-    <string name="camp_name">Camp name (not available)</string>
-    <string name="referent_name">Referent owner name (not available)</string>
-    <string name="referent_id">Referent owner ID (not available)</string>
-
-    <string name="select_weight">Select weight</string>
 
     <string-array name="elephant_sex">
         <item>All</item>
@@ -127,6 +123,12 @@
     <string-array name="height_unit">
         <item>cm</item>
         <item>inches</item>
+    </string-array>
+
+
+    <string-array name="location_choices">
+        <item>Set from map</item>
+        <item>Set manually</item>
     </string-array>
 
     <string name="elephant_consultation_title">%1$s - #%2$s</string>
@@ -163,5 +165,10 @@
     <string name="get_galerie">Import</string>
 
     <string name="error">Error</string>
+    <string name="set_location_from_map">Set location from map ?</string>
+    <string name="FROM_MAP">FROM MAP</string>
+    <string name="MANUALLY">MANUALLY</string>
+    <string name="set_birth_location">Set birth location</string>
+    <string name="set_registration_location">Set registration location</string>
 
 </resources>

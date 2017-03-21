@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -20,14 +21,25 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.StackingBehavior;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import fr.elephantasia.elephantasia.R;
 import fr.elephantasia.elephantasia.adapter.ViewPagerAdapter;
 import fr.elephantasia.elephantasia.database.Database;
 import fr.elephantasia.elephantasia.dialogs.PickImageDialog;
 import fr.elephantasia.elephantasia.dialogs.PickImageDialogBuilder;
+import fr.elephantasia.elephantasia.databinding.AddElephantLocationDialogFragmentBinding;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDescriptionFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDocumentFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantLocationFragment;
@@ -41,6 +53,8 @@ import fr.elephantasia.elephantasia.utils.ImageUtil;
 import fr.elephantasia.elephantasia.utils.StaticTools;
 import fr.elephantasia.elephantasia.utils.UserInfo;
 
+import static android.content.ContentValues.TAG;
+
 public class AddElephantActivity extends AppCompatActivity implements AddElephantInterface {
 
     private static final int REQUEST_ADD_OWNER = 1;
@@ -49,6 +63,8 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     private static final int REQUEST_ADD_CHILDREN = 4;
     private static final int REQUEST_CAPTURE_PHOTO = 5;
     private static final int REQUEST_IMPORT_PHOTO = 6;
+    private static final int REQUEST_PLACE_PICKER_PROFIL = 7;
+    private static final int REQUEST_PLACE_PICKER_REGISTRATION = 8;
 
     // Result code
     public static final int RESULT_DRAFT = 2;
@@ -61,6 +77,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
     //Fragment
     private AddElephantProfilFragment profilFragment;
+    private AddElephantRegistrationFragment registrationFragment;
 
     private Database database;
     private TabLayout tabLayout;
@@ -76,6 +93,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     public AddElephantActivity() {
         elephantInfo = new ElephantInfo();
         profilFragment = new AddElephantProfilFragment();
+        registrationFragment = new AddElephantRegistrationFragment();
     }
 
     @Override
@@ -126,13 +144,13 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
     @Override
     public boolean onSupportNavigateUp() {
-        confirmFinish(true);
+        confirmFinish();
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        confirmFinish(true);
+        confirmFinish();
     }
 
     @Override
@@ -169,6 +187,17 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
         } else if (requestCode == REQUEST_IMPORT_PHOTO) {
             if (resultCode == RESULT_OK && data != null) {
                 addDocument(data.getData());
+        } else if (requestCode == REQUEST_PLACE_PICKER_PROFIL) {
+            if (resultCode == RESULT_OK) {
+                //TODO: recuperer la province, le district et la ville
+                Place selectedPlace = PlacePicker.getPlace(this, data);
+                profilFragment.setLocation(selectedPlace.getAddress().toString());
+            }
+        } else if (requestCode == REQUEST_PLACE_PICKER_REGISTRATION) {
+            if (resultCode == RESULT_OK) {
+                //TODO: recuperer la province, le district et la ville
+                Place selectedPlace = PlacePicker.getPlace(this, data);
+                registrationFragment.setLocation(selectedPlace.getAddress().toString());
             }
         }
     }
@@ -248,14 +277,19 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
      * Recursive function to avoid duplicated code.
      * @param confirm Show the pop up
      */
-    private void confirmFinish(final boolean confirm) {
-        if (confirm && !elephantInfo.isEmpty()) {
+    private void confirmFinish() {
+
+        if (elephantInfo.isEmpty()) {
+            setResult(RESULT_CANCELED);
+            finish();
+        } else {
             new AlertDialog.Builder(this)
                     .setMessage(R.string.put_drafts)
                     .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            confirmFinish(false);
+                            setResult(RESULT_CANCELED);
+                            finish();
                         }
                     })
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -270,9 +304,6 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
                         }
                     })
                     .show();
-        } else {
-            setResult(RESULT_CANCELED);
-            finish();
         }
     }
 
@@ -359,7 +390,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(profilFragment, getString(R.string.profil));
-        adapter.addFragment(new AddElephantRegistrationFragment(), getString(R.string.registration));
+        adapter.addFragment(registrationFragment, getString(R.string.registration));
         adapter.addFragment(new AddElephantDescriptionFragment(), getString(R.string.description));
         adapter.addFragment(new AddElephantOwnershipFragment(), getString(R.string.ownership));
         adapter.addFragment(new AddElephantParentageFragment(), getString(R.string.parentage));
@@ -393,5 +424,96 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
                 .setImportCode(REQUEST_IMPORT_PHOTO)
                 .load();
         pickImageDialog.show();
+    }
+
+    public void showLocationDialog(final int fragmentName) {
+        new MaterialDialog.Builder(this)
+                .title(R.string.set_location_from_map)
+                .positiveText(R.string.FROM_MAP)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        showLocationPicker(fragmentName);
+                    }
+                })
+                .negativeText(R.string.MANUALLY)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        showLocationInputs(fragmentName);
+                    }
+                })
+                .stackingBehavior(StackingBehavior.ALWAYS)
+                .show();
+    }
+
+    private void showLocationPicker(final int fragmentName) {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        LatLng burmaNorth = new LatLng(16.193669, 95.229859);
+        LatLng burmaSouth = new LatLng(28.279449, 97.576320);
+        LatLngBounds bound = new LatLngBounds(burmaNorth, burmaSouth);
+
+        builder.setLatLngBounds(bound);
+
+        try {
+            if (fragmentName == R.string.profil) {
+                startActivityForResult(builder.build(this), REQUEST_PLACE_PICKER_PROFIL);
+            } else if (fragmentName == R.string.registration) {
+                startActivityForResult(builder.build(this), REQUEST_PLACE_PICKER_REGISTRATION);
+            }
+        } catch(Exception e){
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
+    private void showLocationInputs(final int fragmentName) {
+        AddElephantLocationDialogFragmentBinding binding = DataBindingUtil.inflate(
+                getLayoutInflater(),
+                R.layout.add_elephant_location_dialog_fragment,
+                ((ViewGroup) getWindow().getDecorView().getRootView()),
+                false);
+
+        final View view = binding.getRoot();
+        String title = "";
+
+        if (fragmentName == R.string.profil) {
+            binding.setProvince(elephantInfo.birthProvince);
+            binding.setDistrict(elephantInfo.birthDistrict);
+            binding.setCity(elephantInfo.birthCity);
+            title = getString(R.string.set_birth_location);
+        } else if (fragmentName == R.string.registration) {
+            binding.setProvince(elephantInfo.regProvince);
+            binding.setDistrict(elephantInfo.regDistrict);
+            binding.setCity(elephantInfo.regCity);
+            title = getString(R.string.set_registration_location);
+        }
+
+        StaticTools.setupHideKeyboardListener(view, this);
+        new MaterialDialog.Builder(this)
+                .title(title)
+                .positiveText(R.string.OK)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                        String province = ((EditText) view.findViewById(R.id.province)).getText().toString();
+                        String district = ((EditText) view.findViewById(R.id.district)).getText().toString();
+                        String city = ((EditText) view.findViewById(R.id.city)).getText().toString();
+
+                        if (fragmentName == R.string.profil) {
+                            profilFragment.setLocation(province, district, city);
+                        } else if (fragmentName == R.string.registration) {
+                            registrationFragment.setLocation(province, district, city);
+                        }
+                    }
+                })
+                .negativeText(R.string.CANCEL)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {}
+                })
+                .customView(view, true)
+                .show();
+
     }
 }
