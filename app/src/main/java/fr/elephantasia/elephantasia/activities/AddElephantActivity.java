@@ -42,8 +42,9 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     public static final int RESULT_DRAFT = 2;
     public static final int RESULT_VALIDATE = 3;
 
-    private static final int FRAGMENT_OWNERSHIP_IDX = 2;
-    private static final int FRAGMENT_PARENTAGE_IDX = 3;
+    // Fragment index
+    private static final int FRAGMENT_OWNERSHIP_IDX = 3;
+    private static final int FRAGMENT_PARENTAGE_IDX = 4;
 
     //Fragment
     AddElephantProfilFragment profilFragment;
@@ -214,7 +215,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
      * @param confirm Show the pop up
      */
     private void confirmFinish(final boolean confirm) {
-        if (confirm && elephantInfo.isEmpty()) {
+        if (confirm && !elephantInfo.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setMessage(R.string.put_drafts)
                     .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
