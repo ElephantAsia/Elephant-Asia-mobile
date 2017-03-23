@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.elephantasia.elephantasia">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".utils.BaseApplication"
         android:allowBackup="true"
@@ -25,6 +27,7 @@
         <activity android:name=".activities.SearchBrowserActivity" />
         <activity android:name=".activities.ConsultationActivity" />
         <activity android:name=".activities.SelectOwnerActivity" />
+        <activity android:name=".activities.FileExplorerActivity"></activity>
     </application>
 
 </manifest>

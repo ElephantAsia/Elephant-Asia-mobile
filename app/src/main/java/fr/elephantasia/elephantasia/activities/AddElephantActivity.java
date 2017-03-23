@@ -110,13 +110,13 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
     @Override
     public boolean onSupportNavigateUp() {
-        confirmFinish();
+        confirmFinish(true);
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        confirmFinish();
+        confirmFinish(true);
     }
 
     @Override
@@ -210,20 +210,17 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     /**
      * Prevent user to cancel activity without saving his current Elephant.
      * Happens only if some data have been set.
+     * Recursive function to avoid duplicated code.
+     * @param confirm Show the pop up
      */
-    private void confirmFinish() {
-
-        if (elephantInfo.isEmpty()) {
-            setResult(RESULT_CANCELED);
-            finish();
-        } else {
+    private void confirmFinish(final boolean confirm) {
+        if (confirm && elephantInfo.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setMessage(R.string.put_drafts)
                     .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            setResult(RESULT_CANCELED);
-                            finish();
+                            confirmFinish(false);
                         }
                     })
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -238,6 +235,9 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
                         }
                     })
                     .show();
+        } else {
+            setResult(RESULT_CANCELED);
+            finish();
         }
     }
 
@@ -272,6 +272,14 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     public void onElephantClick(ElephantInfo elephant) {
         Intent intent = new Intent(this, ConsultationActivity.class);
         ConsultationActivity.setElephant(intent, elephant);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+    }
+
+    @Override
+    public void onAddDocumentClick() {
+        Intent intent = new Intent(this, FileExplorerActivity.class);
+
         startActivity(intent);
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }

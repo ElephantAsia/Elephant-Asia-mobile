@@ -1,4 +1,4 @@
-package fr.elefantasia.elephantasia;
+package fr.elephantasia.elephantasia;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

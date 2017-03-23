@@ -34,7 +34,7 @@ public class HomePageAdapter extends BaseAdapter {
         this.titles = Arrays.asList("Drafts", "Pending Elephant");
     }
 
-    public String getTitle(int index) {
+    private String getTitle(int index) {
         return titles.get(index);
     }
 

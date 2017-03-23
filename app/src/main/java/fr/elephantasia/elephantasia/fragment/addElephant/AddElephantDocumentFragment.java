@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import fr.elephantasia.elephantasia.R;
+import fr.elephantasia.elephantasia.interfaces.AddElephantInterface;
 
 public class AddElephantDocumentFragment extends Fragment {
 
-    public AddElephantDocumentFragment() {
-    }
+    private View addDocumentButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,16 @@ public class AddElephantDocumentFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.add_elephant_document_fragment, container, false);
+
+        addDocumentButton = view.findViewById(R.id.add_document_button);
+
+        addDocumentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((AddElephantInterface)getActivity()).onAddDocumentClick();
+            }
+        });
+
         return (view);
     }
 

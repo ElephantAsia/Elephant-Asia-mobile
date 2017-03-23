@@ -18,4 +18,6 @@ public interface AddElephantInterface {
 
     void onElephantClick(ElephantInfo elephant);
 
+    void onAddDocumentClick();
+
 }
