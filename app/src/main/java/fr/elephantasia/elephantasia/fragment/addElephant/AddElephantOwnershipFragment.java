@@ -10,22 +10,22 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import fr.elephantasia.elephantasia.R;
-import fr.elephantasia.elephantasia.adapter.AddOwnershipAdapter;
+import fr.elephantasia.elephantasia.adapter.OwnershipAdapter;
 import fr.elephantasia.elephantasia.interfaces.AddElephantInterface;
-import fr.elephantasia.elephantasia.interfaces.AddOwnershipListener;
+import fr.elephantasia.elephantasia.interfaces.OwnershipListener;
 import fr.elephantasia.elephantasia.utils.UserInfo;
 
 public class AddElephantOwnershipFragment extends Fragment {
 
     private ListView list;
 
-    private AddOwnershipAdapter adapter;
+    private OwnershipAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new AddOwnershipAdapter(getContext(), true, new AddOwnershipListener() {
+        adapter = new OwnershipAdapter(getContext(), true, new OwnershipListener() {
             @Override
             public void onAddClick() {
                 ((AddElephantInterface)getActivity()).addOwner();

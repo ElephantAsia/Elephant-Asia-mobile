@@ -1,15 +1,22 @@
 package fr.elephantasia.elephantasia.activities;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +26,8 @@ import android.widget.Toast;
 import fr.elephantasia.elephantasia.R;
 import fr.elephantasia.elephantasia.adapter.ViewPagerAdapter;
 import fr.elephantasia.elephantasia.database.Database;
+import fr.elephantasia.elephantasia.dialogs.PickImageDialog;
+import fr.elephantasia.elephantasia.dialogs.PickImageDialogBuilder;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDescriptionFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDocumentFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantLocationFragment;
@@ -28,6 +37,7 @@ import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantProfilFragme
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantRegistrationFragment;
 import fr.elephantasia.elephantasia.interfaces.AddElephantInterface;
 import fr.elephantasia.elephantasia.utils.ElephantInfo;
+import fr.elephantasia.elephantasia.utils.ImageUtil;
 import fr.elephantasia.elephantasia.utils.StaticTools;
 import fr.elephantasia.elephantasia.utils.UserInfo;
 
@@ -37,6 +47,8 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     private static final int REQUEST_SET_FATHER = 2;
     private static final int REQUEST_SET_MOTHER = 3;
     private static final int REQUEST_ADD_CHILDREN = 4;
+    private static final int REQUEST_CAPTURE_PHOTO = 5;
+    private static final int REQUEST_IMPORT_PHOTO = 6;
 
     // Result code
     public static final int RESULT_DRAFT = 2;
@@ -45,9 +57,10 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     // Fragment index
     private static final int FRAGMENT_OWNERSHIP_IDX = 3;
     private static final int FRAGMENT_PARENTAGE_IDX = 4;
+    private static final int FRAGMENT_DOCUMENTS_IDX = 5;
 
     //Fragment
-    AddElephantProfilFragment profilFragment;
+    private AddElephantProfilFragment profilFragment;
 
     private Database database;
     private TabLayout tabLayout;
@@ -57,6 +70,8 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     private ViewPagerAdapter adapter;
 
     private ElephantInfo elephantInfo;
+
+    private PickImageDialog pickImageDialog;
 
     public AddElephantActivity() {
         elephantInfo = new ElephantInfo();
@@ -147,6 +162,14 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
                 ElephantInfo info = data.getParcelableExtra(SearchActivity.EXTRA_RESULT);
                 refreshChildren(info);
             }
+        } else if (requestCode == REQUEST_CAPTURE_PHOTO) {
+            if (resultCode == RESULT_OK) {
+                addDocument(Uri.fromFile(ImageUtil.getCapturePhotoFile(this)));
+            }
+        } else if (requestCode == REQUEST_IMPORT_PHOTO) {
+            if (resultCode == RESULT_OK && data != null) {
+                addDocument(data.getData());
+            }
         }
     }
 
@@ -156,6 +179,17 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
             viewPager.setCurrentItem(0);
         } else {
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 0) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (pickImageDialog != null) {
+                    startActivityForResult(pickImageDialog.getIntent(0), pickImageDialog.getRequestCode(0));
+                }
+            }
         }
     }
 
@@ -279,10 +313,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
     @Override
     public void onAddDocumentClick() {
-        Intent intent = new Intent(this, FileExplorerActivity.class);
-
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+        buildPickDocumentDialog();
     }
 
     private void refreshOwner(UserInfo user) {
@@ -313,6 +344,18 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
         fragment.refreshChildren(info);
     }
 
+    private void addDocument(Uri uri) {
+        AddElephantDocumentFragment fragment = (AddElephantDocumentFragment)adapter.getItem(FRAGMENT_DOCUMENTS_IDX);
+        String path = ImageUtil.createImageFileFromUri(this, uri);
+
+        if (path != null) {
+            Log.i("add_photo", "aucune erreur");
+            fragment.addDocument(path);
+        } else {
+            Toast.makeText(getApplicationContext(), "Error on adding document", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(profilFragment, getString(R.string.profil));
@@ -327,5 +370,28 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
     public void showDialogFragment(DialogFragment dialog) {
         dialog.show(getSupportFragmentManager(), "Date");
+    }
+
+    private void buildPickDocumentDialog() {
+        pickImageDialog = new PickImageDialogBuilder(this)
+                .build()
+                .setListener(new PickImageDialog.Listener() {
+                    @Override
+                    public void execute(Intent intent, int requestCode) {
+                        if (requestCode == REQUEST_CAPTURE_PHOTO) {
+                            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.requestPermissions(AddElephantActivity.this, new String[]{Manifest.permission.CAMERA}, 0);
+                            } else {
+                                startActivityForResult(intent, requestCode);
+                            }
+                        } else {
+                            startActivityForResult(intent, requestCode);
+                        }
+                    }
+                })
+                .setCaptureCode(REQUEST_CAPTURE_PHOTO)
+                .setImportCode(REQUEST_IMPORT_PHOTO)
+                .load();
+        pickImageDialog.show();
     }
 }

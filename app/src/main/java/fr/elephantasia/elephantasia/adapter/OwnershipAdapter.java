@@ -11,21 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.elephantasia.elephantasia.R;
-import fr.elephantasia.elephantasia.interfaces.AddOwnershipListener;
+import fr.elephantasia.elephantasia.interfaces.OwnershipListener;
 import fr.elephantasia.elephantasia.utils.UserInfo;
 
-/**
- * Created by Stephane on 16/03/2017.
- */
-
-public class AddOwnershipAdapter extends BaseAdapter {
+public class OwnershipAdapter extends BaseAdapter {
 
     private Context context;
     private boolean showFooter;
-    private AddOwnershipListener listener;
+    private OwnershipListener listener;
     private List<UserInfo> users;
 
-    public AddOwnershipAdapter(Context context, boolean showFooter, AddOwnershipListener listener) {
+    public OwnershipAdapter(Context context, boolean showFooter, OwnershipListener listener) {
         this.context = context;
         this.showFooter = showFooter;
         this.listener = listener;
@@ -124,5 +120,4 @@ public class AddOwnershipAdapter extends BaseAdapter {
     private boolean isFooter(int index) {
         return index > users.size() - 1 && showFooter;
     }
-
 }

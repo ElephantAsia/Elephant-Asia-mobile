@@ -5,11 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
+import fr.elephantasia.elephantasia.utils.DocumentInfo;
 import fr.elephantasia.elephantasia.utils.ElephantInfo;
 
 public class Database {
 
-    private static final int VERSION_BDD = 1;
+    private static final int VERSION_BDD = 2;
     private static final String NAME_BDD = "elephantasia.db";
     private SQLiteDatabase database;
     private MySQLite mySQLite;
@@ -30,8 +31,16 @@ public class Database {
         return ElephantTable.insert(database, elephant);
     }
 
+    public long insert(DocumentInfo document) {
+        return DocumentTable.insert(database, document);
+    }
+
     public int update(ElephantInfo elephant) {
         return ElephantTable.update(database, elephant);
+    }
+
+    public int update(DocumentInfo document) {
+        return DocumentTable.update(database, document);
     }
 
     public int delete(ElephantInfo elephant) {

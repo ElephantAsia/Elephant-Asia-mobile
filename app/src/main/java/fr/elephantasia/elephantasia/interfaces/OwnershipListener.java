@@ -3,10 +3,10 @@ package fr.elephantasia.elephantasia.interfaces;
 import fr.elephantasia.elephantasia.utils.UserInfo;
 
 /**
- * Created by Stephane on 16/03/2017.
+ * Created by Stephane on 23/03/2017.
  */
 
-public interface AddOwnershipListener {
+public interface OwnershipListener {
 
     void onAddClick();
     void onItemClick(UserInfo userInfo);

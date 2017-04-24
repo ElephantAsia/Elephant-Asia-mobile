@@ -158,4 +158,10 @@
     <string name="add_owner">Add Owner</string>
     <string name="select_owner">Select Owner</string>
 
+    <string name="add_document">Add Document</string>
+    <string name="get_photo">Capture</string>
+    <string name="get_galerie">Import</string>
+
+    <string name="error">Error</string>
+
 </resources>

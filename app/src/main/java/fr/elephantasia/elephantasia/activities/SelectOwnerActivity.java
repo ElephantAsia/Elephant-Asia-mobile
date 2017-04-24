@@ -7,8 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 
 import fr.elephantasia.elephantasia.R;
-import fr.elephantasia.elephantasia.adapter.AddOwnershipAdapter;
-import fr.elephantasia.elephantasia.interfaces.AddOwnershipListener;
+import fr.elephantasia.elephantasia.adapter.OwnershipAdapter;
+import fr.elephantasia.elephantasia.interfaces.OwnershipListener;
 import fr.elephantasia.elephantasia.utils.UserInfo;
 
 public class SelectOwnerActivity extends AppCompatActivity {
@@ -16,7 +16,7 @@ public class SelectOwnerActivity extends AppCompatActivity {
     public static final String EXTRA_RESULT_USER_SELECTED = "user_selected";
 
     private ListView list;
-    private AddOwnershipAdapter adapter;
+    private OwnershipAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class SelectOwnerActivity extends AppCompatActivity {
         }
 
         list = (ListView)findViewById(R.id.list);
-        adapter = new AddOwnershipAdapter(this, false, new AddOwnershipListener() {
+        adapter = new OwnershipAdapter(this, false, new OwnershipListener() {
             @Override
             public void onAddClick() {
                 // nothing to do

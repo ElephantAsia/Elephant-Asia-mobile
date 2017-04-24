@@ -1,13 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:theme="@style/AppThemeWhiteBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/add_document_button"
-        android:contentDescription="@null"
-        android:src="@mipmap/pic_profil_defaut"
-        android:layout_width="60dp"
-        android:layout_height="60dp" />
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

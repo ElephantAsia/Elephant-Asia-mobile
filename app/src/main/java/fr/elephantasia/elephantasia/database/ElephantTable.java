@@ -94,12 +94,16 @@ class ElephantTable {
     private static final String COL_MOTHER_ID = "mother_id";
     private static final int NUM_COL_MOTHER_ID = 24;
 
-    private static final String COL_CHILDREN_ID = "children_ids";
+    private static final String COL_CHILDREN_ID = "children_id";
     private static final int NUM_COL_CHILDREN_ID = 25;
+
+    // Documents
+    private static final String COL_DOCUMENTS_ID = "documents_id";
+    private static final int NUM_COL_DOCUMENTS_ID = 26;
 
     //Other
     private static final String COL_STATE = "state";
-    private static final int NUM_COL_STATE = 26;
+    private static final int NUM_COL_STATE = 27;
 
     static final String TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -137,9 +141,13 @@ class ElephantTable {
             + COL_MOTHER_ID + " TEXT NOT NULL, "
             + COL_CHILDREN_ID + " TEXT NOT NULL,"
 
+            // Documents
+            + COL_DOCUMENTS_ID + " TEXT NOT NULL, "
+
             // Other
-            + COL_STATE + " INTEGER DEFAULT 0);"
-            ;
+            + COL_STATE + " INTEGER DEFAULT 0 "
+
+            + ");";
 
     static long insert(SQLiteDatabase database, ElephantInfo elephant) {
         return (database.insert(TABLE_NAME, null, getContentValues(elephant)));
@@ -173,8 +181,7 @@ class ElephantTable {
 
         Log.i("search_query", "query: " + query);
         Log.i("search_query", "nb result: " + cursor.getCount() + "");
-        if (cursor.getCount() > 0)
-        {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 results.add(cursorToValue(cursor));

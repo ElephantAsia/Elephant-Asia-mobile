@@ -15,12 +15,14 @@ class MySQLite extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(ElephantTable.TABLE);
         db.execSQL(UserTable.TABLE);
+        db.execSQL(DocumentTable.TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE " + ElephantTable.TABLE_NAME + ";");
         db.execSQL("DROP TABLE " + UserTable.TABLE_NAME + ";");
+        db.execSQL("DROP TABLE " + DocumentTable.TABLE_NAME + ";");
         onCreate(db);
     }
 

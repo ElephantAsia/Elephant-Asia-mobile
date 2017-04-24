@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -97,6 +99,17 @@ public class StaticTools {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return (null);
+        }
+    }
+
+    public static boolean copyStreamToFile(InputStream input, File target) {
+        try {
+            target.getParentFile().mkdirs();
+            FileOutputStream output = new FileOutputStream(target);
+            return copyStreamToStream(input, output);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
