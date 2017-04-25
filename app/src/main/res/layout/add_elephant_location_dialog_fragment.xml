@@ -2,12 +2,6 @@
     android:theme="@style/AppThemeWhiteBackground"
     >
 
-    <data>
-        <variable name="province" type="String"/>
-        <variable name="district" type="String"/>
-        <variable name="city" type="String"/>
-    </data>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +17,6 @@
             >
 
             <EditText
-                android:text="@{province}"
                 android:id="@+id/province"
                 android:hint="@string/province"
                 android:layout_width="match_parent"
@@ -42,7 +35,6 @@
             >
 
             <EditText
-                android:text="@{district}"
                 android:id="@+id/district"
                 android:hint="@string/district"
                 android:layout_width="match_parent"
@@ -61,7 +53,6 @@
             >
 
             <EditText
-                android:text="@{city}"
                 android:id="@+id/city"
                 android:hint="@string/city"
                 android:layout_width="match_parent"

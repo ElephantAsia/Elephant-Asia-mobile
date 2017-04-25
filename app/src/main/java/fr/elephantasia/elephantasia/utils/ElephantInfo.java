@@ -10,369 +10,401 @@ import java.util.List;
 
 public class ElephantInfo implements Parcelable {
 
-    public enum Gender {
-        MALE,
-        FEMALE,
-        UNKNOWN
-    }
+  public enum Gender {
+    MALE,
+    FEMALE,
+    UNKNOWN
+  }
 
-    public enum Legallity {
-        LEGAL,
-        ILLEGAL,
-        UNKNOWN
-    }
+  public enum Legallity {
+    LEGAL,
+    ILLEGAL,
+    UNKNOWN
+  }
 
-    public enum State {
-        DEFAULT,
-        PENDING,
-        DELETED,
-        LOCAL,
-        DRAFT
-    }
+  public enum State {
+    DEFAULT,
+    PENDING,
+    DELETED,
+    LOCAL,
+    DRAFT
+  }
 
-    public void setSex(Gender gender) {
-        this.sex = Gender.MALE;
-    }
+  public void setSex(Gender gender) {
+    this.sex = gender;
+  }
 
-    //Registration
-    public Integer id;
-    public String name;
-    public String nickName;
+  public Integer id;
+  public State state;
 
-    public Gender sex;
-    public State state;
+  //Profil
+  public String name;
+  public String nickName;
 
-    public boolean earTag = false;
-    public boolean eyeD = false;
+  public Gender sex;
 
-    public String birthDate;
-    public String birthCity;
-    public String birthDistrict;
-    public String birthProvince;
+  public String currentCity;
+  public String currentDistrict;
+  public String currentProvince;
 
-    public String chips1;
-    public String chips2;
-    public String chips3;
+  public String birthDate;
+  public String birthCity;
+  public String birthDistrict;
+  public String birthProvince;
 
-    public String regID;
-    public String regCity;
-    public String regDistrict;
-    public String regProvince;
+  // Registration
+  public boolean earTag = false;
+  public boolean eyeD = false;
+
+  public String chips1;
+  public String chips2;
+  public String chips3;
+
+  public String regID;
+  public String regCity;
+  public String regDistrict;
+  public String regProvince;
+
+  // Description
+  public String tusk;
+  public String nailsFrontLeft;
+  public String nailsFrontRight;
+  public String nailsRearLeft;
+  public String nailsRearRight;
+  public String weight;
+  public String height;
+
+  // Owner
+  private String owners;
+
+  // Parentage
+  public String father;
+  public String mother;
+  private String children;
+
+  public String getSex() {
+    String sex = this.sex.toString();
+    return sex.substring(0, 1).toUpperCase() + sex.substring(1, sex.length()).toLowerCase();
+  }
+
+  public boolean isMale() {
+    return this.sex == Gender.MALE;
+  }
+
+  public boolean isFemale() {
+    return this.sex == Gender.FEMALE;
+  }
+
+
+  public ElephantInfo() {
+    id = 0;
+    state = State.DEFAULT;
+
+    // Profil
+    name = "";
+    nickName = "";
+    sex = Gender.UNKNOWN;
+    currentCity = "";
+    currentDistrict = "";
+    currentProvince = "";
+    birthDate = "";
+    birthCity = "";
+    birthDistrict = "";
+    birthProvince = "";
+
+    // Registration
+    earTag = false;
+    eyeD = false;
+    chips1 = "";
+    chips2 = "";
+    chips3 = "";
+    regID = "";
+    regCity = "";
+    regDistrict = "";
+    regProvince = "";
 
     // Description
-    public String tusk;
-    public String nailsFrontLeft;
-    public String nailsFrontRight;
-    public String nailsRearLeft;
-    public String nailsRearRight;
-    public String weight;
-    public String height;
+    tusk = "";
+    nailsFrontLeft = "";
+    nailsFrontRight = "";
+    nailsRearLeft = "";
+    nailsRearRight = "";
+    weight = "";
+    height = "";
 
     // Owner
-    private String owners;
+    owners = "";
 
     // Parentage
-    public String father;
-    public String mother;
-    private String children;
+    father = "";
+    mother = "";
+    children = "";
+  }
 
-    public String getSex() {
-        String sex = this.sex.toString();
-        return sex.substring(0, 1).toUpperCase() + sex.substring(1, sex.length()).toLowerCase();
-    }
+  public ElephantInfo(ElephantInfo other) {
+    id = other.id;
+    state = other.state;
 
-    public boolean isMale() {
-        return this.sex == Gender.MALE;
-    }
+    // Profil
+    name = other.name;
+    nickName = other.nickName;
+    sex = other.sex;
+    regCity = other.currentCity;
+    regDistrict = other.currentDistrict;
+    regProvince = other.currentProvince;
+    birthDate = other.birthDate;
+    birthCity = other.birthCity;
+    birthDistrict = other.birthDistrict;
+    birthProvince = other.birthProvince;
 
-    public boolean isFemale() {
-        return this.sex == Gender.FEMALE;
-    }
+    // Registration
+    earTag = other.earTag;
+    eyeD = other.eyeD;
+    chips1 = other.chips1;
+    chips2 = other.chips2;
+    chips3 = other.chips3;
+    regID = other.regID;
+    regCity = other.regCity;
+    regDistrict = other.regDistrict;
+    regProvince = other.regProvince;
 
+    // Description
+    tusk = other.tusk;
+    nailsFrontLeft = other.nailsFrontLeft;
+    nailsFrontRight = other.nailsFrontRight;
+    nailsRearLeft = other.nailsRearLeft;
+    nailsRearRight = other.nailsRearRight;
+    weight = other.weight;
+    height = other.height;
 
-    public ElephantInfo() {
-        id = 0;
+    // Owners
+    owners = other.owners;
 
-        // Registration
-        name = "";
-        nickName = "";
-        sex = Gender.UNKNOWN;
-        state = State.DEFAULT;
-        earTag = false;
-        eyeD = false;
-        birthDate = "";
-        birthCity = "";
-        birthDistrict = "";
-        birthProvince = "";
-        chips1 = "";
-        chips2 = "";
-        chips3 = "";
-        regID = "";
-        regCity = "";
-        regDistrict = "";
-        regProvince = "";
+    // Parentage
+    father = other.father;
+    mother = other.mother;
+    children = other.children;
+  }
 
-        // Description
-        tusk = "";
-        nailsFrontLeft = "";
-        nailsFrontRight = "";
-        nailsRearLeft = "";
-        nailsRearRight = "";
-        weight = "";
-        height = "";
+  @Override
+  public int describeContents() {
+    return 0;
+  }
 
-        // Owner
-        owners = "";
+  @Override
+  public void writeToParcel(Parcel out, int flags) {
+    out.writeInt(id);
+    out.writeString(String.valueOf(state));
 
-        // Parentage
-        father = "";
-        mother = "";
-        children = "";
-    }
+    // Profil
+    out.writeString(name);
+    out.writeString(nickName);
+    out.writeString(String.valueOf(sex));
+    out.writeString(currentCity);
+    out.writeString(currentDistrict);
+    out.writeString(currentProvince);
+    out.writeString(birthDate);
+    out.writeString(birthCity);
+    out.writeString(birthDistrict);
+    out.writeString(birthProvince);
 
-    public ElephantInfo(ElephantInfo other) {
-        id = other.id;
+    // Registration
+    out.writeString(String.valueOf(earTag));
+    out.writeString(String.valueOf(eyeD));out.writeString(chips1);
+    out.writeString(chips2);
+    out.writeString(chips3);
+    out.writeString(regID);
+    out.writeString(regCity);
+    out.writeString(regDistrict);
+    out.writeString(regProvince);
 
-        // Registration
-        name = other.name;
-        nickName = other.nickName;
-        sex = other.sex;
-        state = other.state;
-        earTag = other.earTag;
-        eyeD = other.eyeD;
-        birthDate = other.birthDate;
-        birthCity = other.birthCity;
-        birthDistrict = other.birthDistrict;
-        birthProvince = other.birthProvince;
-        chips1 = other.chips1;
-        chips2 = other.chips2;
-        chips3 = other.chips3;
-        regID = other.regID;
-        regCity = other.regCity;
-        regDistrict = other.regDistrict;
-        regProvince = other.regProvince;
+    // Description
+    out.writeString(tusk);
+    out.writeString(nailsFrontLeft);
+    out.writeString(nailsFrontRight);
+    out.writeString(nailsRearLeft);
+    out.writeString(nailsRearRight);
+    out.writeString(weight);
+    out.writeString(height);
 
-        // Description
-        tusk = other.tusk;
-        nailsFrontLeft = other.nailsFrontLeft;
-        nailsFrontRight = other.nailsFrontRight;
-        nailsRearLeft = other.nailsRearLeft;
-        nailsRearRight = other.nailsRearRight;
-        weight = other.weight;
-        height = other.height;
+    // Owners
+    out.writeString(owners);
 
-        // Owners
-        owners = other.owners;
+    // Parentage
+    out.writeString(father);
+    out.writeString(mother);
+    out.writeString(children);
+  }
 
-        // Parentage
-        father = other.father;
-        mother = other.mother;
-        children = other.children;
+  public static final Parcelable.Creator<ElephantInfo> CREATOR = new Parcelable.Creator<ElephantInfo>() {
+
+    @Override
+    public ElephantInfo createFromParcel(Parcel in) {
+      return new ElephantInfo(in);
     }
 
     @Override
-    public int describeContents() {
-        return 0;
+    public ElephantInfo[] newArray(int size) {
+      return new ElephantInfo[size];
     }
+  };
 
-    @Override
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeInt(id);
+  private ElephantInfo(Parcel in) {
+    id = in.readInt();
+    state = State.valueOf(in.readString());
 
-        // Registration
-        out.writeString(name);
-        out.writeString(nickName);
-        out.writeString(String.valueOf(sex));
-        out.writeString(String.valueOf(state));
-        out.writeString(String.valueOf(earTag));
-        out.writeString(String.valueOf(eyeD));
-        out.writeString(birthDate);
-        out.writeString(birthCity);
-        out.writeString(birthDistrict);
-        out.writeString(birthProvince);
-        out.writeString(chips1);
-        out.writeString(chips2);
-        out.writeString(chips3);
-        out.writeString(regID);
-        out.writeString(regCity);
-        out.writeString(regDistrict);
-        out.writeString(regProvince);
+    // Profil
+    name = in.readString();
+    nickName = in.readString();
+    sex = Gender.valueOf(in.readString());
+    currentCity = in.readString();
+    currentDistrict = in.readString();
+    currentProvince = in.readString();
+    birthDate = in.readString();
+    birthCity = in.readString();
+    birthDistrict = in.readString();
+    birthProvince = in.readString();
 
-        // Description
-        out.writeString(tusk);
-        out.writeString(nailsFrontLeft);
-        out.writeString(nailsFrontRight);
-        out.writeString(nailsRearLeft);
-        out.writeString(nailsRearRight);
-        out.writeString(weight);
-        out.writeString(height);
+    // Registration
+    earTag = Boolean.valueOf(in.readString());
+    eyeD = Boolean.valueOf(in.readString()); chips1 = in.readString();
+    chips2 = in.readString();
+    chips3 = in.readString();
+    regID = in.readString();
+    regCity = in.readString();
+    regDistrict = in.readString();
+    regProvince = in.readString();
 
-        // Owners
-        out.writeString(owners);
+    // Description
+    tusk = in.readString();
+    nailsFrontLeft = in.readString();
+    nailsFrontRight = in.readString();
+    nailsRearLeft = in.readString();
+    nailsRearRight = in.readString();
+    weight = in.readString();
+    height = in.readString();
 
-        // Parentage
-        out.writeString(father);
-        out.writeString(mother);
-        out.writeString(children);
+    // Owners
+    owners = in.readString();
+
+    // Parentage
+    father = in.readString();
+    mother = in.readString();
+    children = in.readString();
+  }
+
+  /**
+   * Used to check if an elephant should be saved as draft before
+   * the end of AddElephantActivity.
+   *
+   * @return true if all relevant fields are empty.
+   */
+  public boolean isEmpty() {
+    return name.isEmpty() && nickName.isEmpty()
+        && currentCity.isEmpty() && currentDistrict.isEmpty()
+        && currentProvince.isEmpty()
+        && birthDate.isEmpty() && birthCity.isEmpty()
+        && birthDistrict.isEmpty() && birthProvince.isEmpty()
+        && chips1.isEmpty() && regID.isEmpty()
+        && regCity.isEmpty() && regDistrict.isEmpty()
+        && regProvince.isEmpty() && tusk.isEmpty()
+        && nailsFrontLeft.isEmpty() && nailsFrontRight.isEmpty()
+        && nailsRearLeft.isEmpty() && nailsRearRight.isEmpty()
+        && weight.isEmpty() && height.isEmpty()
+        && owners.isEmpty() && father.isEmpty()
+        && mother.isEmpty() && children.isEmpty();
+  }
+
+  public void displayAttr() {
+    // Profil
+    Log.i("name", this.name);
+    Log.i("nickName", this.nickName);
+    Log.i("state", this.state.toString());
+    Log.i("sex", this.sex.toString());
+    Log.i("currentCity", this.currentCity);
+    Log.i("currentDistrict", this.currentDistrict);
+    Log.i("currentProvince", this.currentProvince);
+    Log.i("birthDate", this.birthDate);
+    Log.i("birthCity", this.birthCity);
+    Log.i("birthDistrict", this.birthDistrict);
+    Log.i("birthProvince", this.birthProvince);
+
+    // Registration
+    Log.i("earTag", String.valueOf(this.earTag));
+    Log.i("eyeD", String.valueOf(this.eyeD));    Log.i("chips1", this.chips1);
+    Log.i("regID", this.regID);
+    Log.i("regCity", this.regCity);
+    Log.i("regDistrict", this.regDistrict);
+    Log.i("regProvince", this.regProvince);
+
+    // Description
+    Log.i("tusk", this.tusk);
+    Log.i("nails front left", this.nailsFrontLeft);
+    Log.i("nails front right", this.nailsFrontRight);
+    Log.i("nails rear left", this.nailsRearLeft);
+    Log.i("nails rear right", this.nailsRearRight);
+    Log.i("weight", this.weight);
+    Log.i("height", this.weight);
+
+    // Owners
+    Log.i("owners", owners);
+
+    // Parentage
+    Log.i("father", father);
+    Log.i("mother", mother);
+    Log.i("children", children);
+  }
+
+  public void addChildren(int elephantID) {
+    if (children.isEmpty()) {
+      children = String.valueOf(elephantID);
+    } else {
+      children += ";" + elephantID;
     }
+  }
 
-    public static final Parcelable.Creator<ElephantInfo> CREATOR = new Parcelable.Creator<ElephantInfo>() {
+  public void setChildren(String children) {
+    this.children = children;
+  }
 
-        @Override
-        public ElephantInfo createFromParcel(Parcel in) {
-            return new ElephantInfo(in);
-        }
+  public String getChildren() {
+    return children;
+  }
 
-        @Override
-        public ElephantInfo[] newArray(int size) {
-            return new ElephantInfo[size];
-        }
-    };
+  public List<String> getChildrenAsList() {
+    return Arrays.asList(children.split(";"));
+  }
 
-    private ElephantInfo(Parcel in) {
-        id = in.readInt();
-
-        // Registration
-        name = in.readString();
-        nickName = in.readString();
-        sex = Gender.valueOf(in.readString());
-        state = State.valueOf(in.readString());
-        earTag = Boolean.valueOf(in.readString());
-        eyeD = Boolean.valueOf(in.readString());
-        birthDate = in.readString();
-        birthCity = in.readString();
-        birthDistrict = in.readString();
-        birthProvince = in.readString();
-        chips1 = in.readString();
-        chips2 = in.readString();
-        chips3 = in.readString();
-        regID = in.readString();
-        regCity = in.readString();
-        regDistrict = in.readString();
-        regProvince = in.readString();
-
-        // Description
-        tusk = in.readString();
-        nailsFrontLeft = in.readString();
-        nailsFrontRight = in.readString();
-        nailsRearLeft = in.readString();
-        nailsRearRight = in.readString();
-        weight = in.readString();
-        height = in.readString();
-
-        // Owners
-        owners = in.readString();
-
-        // Parentage
-        father = in.readString();
-        mother = in.readString();
-        children = in.readString();
+  public void addOwner(int ownerID) {
+    if (owners.isEmpty()) {
+      owners = String.valueOf(ownerID);
+    } else {
+      owners += ";" + ownerID;
     }
+  }
 
-    /**
-     * Used to check if an elephant should be saved as draft before
-     * the end of AddElephantActivity.
-     * @return true if all relevant fields are empty.
-     */
-    public boolean isEmpty() {
-        return name.isEmpty() && nickName.isEmpty()
-                && birthDate.isEmpty() && birthCity.isEmpty()
-                && birthDistrict.isEmpty() && birthProvince.isEmpty()
-                && chips1.isEmpty() && regID.isEmpty()
-                && regCity.isEmpty() && regDistrict.isEmpty()
-                && regProvince.isEmpty() && tusk.isEmpty()
-                && nailsFrontLeft.isEmpty() && nailsFrontRight.isEmpty()
-                && nailsRearLeft.isEmpty() && nailsRearRight.isEmpty()
-                && weight.isEmpty() && height.isEmpty()
-                && owners.isEmpty() && father.isEmpty()
-                && mother.isEmpty() && children.isEmpty();
-    }
+  public void setOwners(String owners) {
+    this.owners = owners;
+  }
 
-    public void displayAttr() {
-        Log.i("name", this.name);
-        Log.i("nickName", this.nickName);
-        Log.i("state", this.state.toString());
-        Log.i("sex", this.sex.toString());
-        Log.i("earTag", String.valueOf(this.earTag));
-        Log.i("eyeD", String.valueOf(this.eyeD));
-        Log.i("birthDate", this.birthDate);
-        Log.i("birthCity", this.birthCity);
-        Log.i("birthDistrict", this.birthDistrict);
-        Log.i("birthProvince", this.birthProvince);
-        Log.i("chips1", this.chips1);
-        Log.i("regID", this.regID);
-        Log.i("regCity", this.regCity);
-        Log.i("regDistrict", this.regDistrict);
-        Log.i("regProvince", this.regProvince);
+  public String getOwners() {
+    return owners;
+  }
 
-        // Description
-        Log.i("tusk", this.tusk);
-        Log.i("nails front left", this.nailsFrontLeft);
-        Log.i("nails front right", this.nailsFrontRight);
-        Log.i("nails rear left", this.nailsRearLeft);
-        Log.i("nails rear right", this.nailsRearRight);
-        Log.i("weight", this.weight);
-        Log.i("height", this.weight);
+  public List<String> getOwnersAsList() {
+    return Arrays.asList(owners.split(";"));
+  }
 
-        // Owners
-        Log.i("owners", owners);
+  @Override
+  public boolean equals(Object other) {
+    return other instanceof ElephantInfo
+        && ((ElephantInfo) other).id.equals(id)
+        && ((ElephantInfo) other).regID.equals(regID);
+  }
 
-        // Parentage
-        Log.i("father", father);
-        Log.i("mother", mother);
-        Log.i("children", children);
-    }
-
-    public void addChildren(int elephantID) {
-        if (children.isEmpty()) {
-            children = String.valueOf(elephantID);
-        } else {
-            children += ";" + elephantID;
-        }
-    }
-
-    public void setChildren(String children) {
-        this.children = children;
-    }
-
-    public String getChildren() {
-        return children;
-    }
-
-    public List<String> getChildrenAsList() {
-        return Arrays.asList(children.split(";"));
-    }
-
-    public void addOwner(int ownerID) {
-        if (owners.isEmpty()) {
-            owners = String.valueOf(ownerID);
-        } else {
-            owners += ";" + ownerID;
-        }
-    }
-
-    public void setOwners(String owners) {
-        this.owners = owners;
-    }
-
-    public String getOwners() {
-        return owners;
-    }
-
-    public List<String> getOwnersAsList() {
-        return Arrays.asList(owners.split(";"));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other instanceof ElephantInfo
-                && ((ElephantInfo)other).id.equals(id)
-                && ((ElephantInfo)other).regID.equals(regID);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode() + regID.hashCode();
-    }
+  @Override
+  public int hashCode() {
+    return id.hashCode() + regID.hashCode();
+  }
 
 }

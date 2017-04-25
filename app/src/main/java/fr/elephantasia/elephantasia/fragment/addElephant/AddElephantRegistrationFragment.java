@@ -37,7 +37,7 @@ public class AddElephantRegistrationFragment extends Fragment {
         registrationLocationEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((AddElephantActivity) getActivity()).showLocationDialog(R.string.registration);
+                ((AddElephantActivity) getActivity()).showLocationDialog(AddElephantActivity.LocationType.REGISTRATION);
             }
         });
 
@@ -46,7 +46,7 @@ public class AddElephantRegistrationFragment extends Fragment {
     }
 
     //TODO: Ameliorer l affichage si il n y a pas de tous les inputs de set (pas de truncage, pas de tiret)
-    public void setLocation(String province, String district, String city) {
+    public void setRegistrationLocation(String province, String district, String city) {
         elephant.regProvince = province;
         elephant.regDistrict = district;
         elephant.regCity = city;
@@ -57,7 +57,7 @@ public class AddElephantRegistrationFragment extends Fragment {
     }
 
     //TODO: Extraire la province, le district et la ville du place picker
-    public void setLocation(String location) {
+    public void setRegistrationLocation(String location) {
 //        elephant.regProvince = province;
 //        elephant.regDistrict = district;
 //        elephant.regCity = city;

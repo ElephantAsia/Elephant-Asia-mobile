@@ -99,6 +99,25 @@
                 >
 
                 <EditText
+                    android:id="@+id/elephant_current_location"
+                    android:hint="@string/current_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:clickable="true"
+                    android:focusable="false"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingBottom="16dp"
+                >
+
+                <EditText
                     android:id="@+id/elephant_birth_date"
                     android:text="@={e.birthDate}"
                     android:hint="@string/elephant_birthdate"
@@ -112,10 +131,10 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_weight="0.7"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="72dp"
+                android:paddingBottom="16dp"
                 >
 
                 <EditText
