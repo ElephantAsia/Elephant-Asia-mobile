@@ -41,6 +41,7 @@ import fr.elephantasia.elephantasia.dialogs.PickImageDialogBuilder;
 import fr.elephantasia.elephantasia.databinding.AddElephantLocationDialogFragmentBinding;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDescriptionFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDocumentFragment;
+import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantOwnershipFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantParentageFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantProfilFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantRegistrationFragment;
@@ -401,7 +402,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
   }
 
   private void refreshOwner(UserInfo user) {
-    AddElephantContactFragment fragment = (AddElephantContactFragment) adapter.getItem(FRAGMENT_OWNERSHIP_IDX);
+    AddElephantOwnershipFragment fragment = (AddElephantOwnershipFragment) adapter.getItem(FRAGMENT_OWNERSHIP_IDX);
 
     elephantInfo.addOwner(user.id);
     fragment.refreshOwner(user);
@@ -433,7 +434,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     adapter.addFragment(profilFragment, getString(R.string.profil));
     adapter.addFragment(registrationFragment, getString(R.string.registration));
     adapter.addFragment(new AddElephantDescriptionFragment(), getString(R.string.description));
-    adapter.addFragment(new AddElephantContactFragment(), getString(R.string.contact));
+    adapter.addFragment(new AddElephantOwnershipFragment(), getString(R.string.contact));
     adapter.addFragment(new AddElephantParentageFragment(), getString(R.string.parentage));
     adapter.addFragment(new AddElephantDocumentFragment(), getString(R.string.documents));
     viewPager.setAdapter(adapter);
