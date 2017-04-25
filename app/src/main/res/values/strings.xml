@@ -22,6 +22,7 @@
 
 
     <string name="elephant_birth_location">Birth location</string>
+    <string name="current_location">Current location</string>
     <string name="province">Province</string>
     <string name="district">District</string>
     <string name="city">City</string>
@@ -71,7 +72,7 @@
     <string name="add_elephant">Add Elephant</string>
     <string name="profil">Profil</string>
     <string name="registration">Registration</string>
-    <string name="ownership">Ownership</string>
+    <string name="contact">Contact</string>
     <string name="description">Description</string>
     <string name="parentage">Parentage</string>
 
@@ -169,6 +170,9 @@
     <string name="FROM_MAP">FROM MAP</string>
     <string name="MANUALLY">MANUALLY</string>
     <string name="set_birth_location">Set birth location</string>
+    <string name="set_current_location">Set current location</string>
     <string name="set_registration_location">Set registration location</string>
+    <string name="set_weight">Set weight</string>
+    <string name="set_height">Set height</string>
 
 </resources>
