@@ -220,12 +220,12 @@ class ElephantTable {
     values.put(COL_EAR_TAG, String.valueOf(elephant.earTag));
     values.put(COL_EYED, String.valueOf(elephant.eyeD));
     values.put(COL_BIRTH_DATE, elephant.birthDate);
-    values.put(COL_BIRTH_VILLAGE, elephant.birthVillage);
+    values.put(COL_BIRTH_VILLAGE, elephant.birthCity);
     values.put(COL_BIRTH_DISTRICT, elephant.birthDistrict);
     values.put(COL_BIRTH_PROVINCE, elephant.birthProvince);
     values.put(COL_CHIPS, elephant.chips1);
     values.put(COL_REGISTRATION_ID, elephant.regID);
-    values.put(COL_REGISTRATION_VILLAGE, elephant.regVillage);
+    values.put(COL_REGISTRATION_VILLAGE, elephant.regCity);
     values.put(COL_REGISTRATION_DISTRICT, elephant.regDistrict);
     values.put(COL_REGISTRATION_PROVINCE, elephant.regProvince);
 
@@ -263,12 +263,12 @@ class ElephantTable {
     elephant.earTag = Boolean.valueOf(cursor.getString(NUM_COL_EAR_TAG));
     elephant.eyeD = Boolean.valueOf(cursor.getString(NUM_COL_EYED));
     elephant.birthDate = cursor.getString(NUM_COL_BIRTH_DATE);
-    elephant.birthVillage = cursor.getString(NUM_COL_BIRTH_VILLAGE);
+    elephant.birthCity = cursor.getString(NUM_COL_BIRTH_VILLAGE);
     elephant.birthDistrict = cursor.getString(NUM_COL_BIRTH_DISTRICT);
     elephant.birthProvince = cursor.getString(NUM_COL_BIRTH_PROVINCE);
     elephant.chips1 = cursor.getString(NUM_COL_CHIPS);
     elephant.regID = cursor.getString(NUM_COL_REGISTRATION_ID);
-    elephant.regVillage = cursor.getString(NUM_COL_REGISTRATION_VILLAGE);
+    elephant.regCity = cursor.getString(NUM_COL_REGISTRATION_VILLAGE);
     elephant.regDistrict = cursor.getString(NUM_COL_REGISTRATION_DISTRICT);
     elephant.regProvince = cursor.getString(NUM_COL_REGISTRATION_PROVINCE);
 
@@ -308,8 +308,8 @@ class ElephantTable {
       restriction.add(" WHERE " + ElephantTable.COL_REGISTRATION_DISTRICT + " = '" + info.regDistrict + "'");
     if (!info.regProvince.isEmpty())
       restriction.add(" WHERE " + ElephantTable.COL_REGISTRATION_PROVINCE + " = '" + info.regProvince + "'");
-    if (!info.regVillage.isEmpty())
-      restriction.add(" WHERE " + ElephantTable.COL_REGISTRATION_VILLAGE + " = '" + info.regVillage + "'");
+    if (!info.regCity.isEmpty())
+      restriction.add(" WHERE " + ElephantTable.COL_REGISTRATION_VILLAGE + " = '" + info.regCity + "'");
 
     restriction.add(" WHERE " + ElephantTable.COL_STATE + " != '" + ElephantInfo.State.DELETED.toString() + "'");
     restriction.add(" WHERE " + ElephantTable.COL_STATE + " != '" + ElephantInfo.State.DRAFT.toString() + "'");
