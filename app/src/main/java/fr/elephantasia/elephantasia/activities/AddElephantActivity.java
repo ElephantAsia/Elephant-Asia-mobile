@@ -38,7 +38,6 @@ import fr.elephantasia.elephantasia.adapter.ViewPagerAdapter;
 import fr.elephantasia.elephantasia.database.Database;
 import fr.elephantasia.elephantasia.dialogs.PickImageDialog;
 import fr.elephantasia.elephantasia.dialogs.PickImageDialogBuilder;
-import fr.elephantasia.elephantasia.databinding.AddElephantLocationDialogFragmentBinding;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDescriptionFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantDocumentFragment;
 import fr.elephantasia.elephantasia.fragment.addElephant.AddElephantOwnershipFragment;
@@ -203,11 +202,12 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
           break;
       }
     }
+  }
 
-    @Override
-    public void onAddDocumentClick () {
-      buildPickDocumentDialog();
-    }
+  @Override
+  public void onAddDocumentClick() {
+    buildPickDocumentDialog();
+  }
 
   @Override
   public void nextPage() {
@@ -247,6 +247,8 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
       Toast.makeText(this, R.string.sex_required, Toast.LENGTH_SHORT).show();
       return false;
     }
+    return true;
+  }
 
   private void addDocument(Uri uri) {
     AddElephantDocumentFragment fragment = (AddElephantDocumentFragment) adapter.getItem(FRAGMENT_DOCUMENTS_IDX);
@@ -258,18 +260,6 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     } else {
       Toast.makeText(getApplicationContext(), "Error on adding document", Toast.LENGTH_SHORT).show();
     }
-  }
-
-  private void setupViewPager(ViewPager viewPager) {
-    adapter = new ViewPagerAdapter(getSupportFragmentManager());
-    adapter.addFragment(profilFragment, getString(R.string.profil));
-    adapter.addFragment(registrationFragment, getString(R.string.registration));
-    adapter.addFragment(new AddElephantDescriptionFragment(), getString(R.string.description));
-    adapter.addFragment(new AddElephantOwnershipFragment(), getString(R.string.ownership));
-    adapter.addFragment(new AddElephantParentageFragment(), getString(R.string.parentage));
-    adapter.addFragment(new AddElephantDocumentFragment(), getString(R.string.documents));
-    adapter.addFragment(new AddElephantLocationFragment(), getString(R.string.location));
-    viewPager.setAdapter(adapter);
   }
 
   public void saveElephant(ElephantInfo.State state) {
@@ -344,27 +334,6 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     pickImageDialog.show();
   }
 
-  public void showLocationDialog(final int fragmentName) {
-    new MaterialDialog.Builder(this)
-        .title(R.string.set_location_from_map)
-        .positiveText(R.string.FROM_MAP)
-        .onPositive(new MaterialDialog.SingleButtonCallback() {
-          @Override
-          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            showLocationPicker(fragmentName);
-          }
-        })
-        .negativeText(R.string.MANUALLY)
-        .onNegative(new MaterialDialog.SingleButtonCallback() {
-          @Override
-          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            showLocationInputs(fragmentName);
-          }
-        })
-        .stackingBehavior(StackingBehavior.ALWAYS)
-        .show();
-  }
-
   @Override
   public void addOwner() {
     Intent intent = new Intent(this, SelectOwnerActivity.class);
@@ -384,7 +353,6 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     SearchActivity.setMode(intent, SearchActivity.Mode.PICK_RESULT);
     startActivityForResult(intent, REQUEST_SET_MOTHER);
   }
-  @Override
 
   @Override
   public void addChildren() {
@@ -428,6 +396,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     elephantInfo.addChildren(info.id);
     fragment.refreshChildren(info);
   }
+
 
   private void setupViewPager(ViewPager viewPager) {
     adapter = new ViewPagerAdapter(getSupportFragmentManager());
