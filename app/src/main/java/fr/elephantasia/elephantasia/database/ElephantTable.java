@@ -98,12 +98,12 @@ class ElephantTable {
   private static final int NUM_COL_CHILDREN_ID = 25;
 
   // Documents
-  private static final String COL_DOCUMENTS_ID = "documents_id";
-  private static final int NUM_COL_DOCUMENTS_ID = 26;
+//  private static final String COL_DOCUMENTS_ID = "documents_id";
+//  private static final int NUM_COL_DOCUMENTS_ID = 26;
 
   //Other
   private static final String COL_STATE = "state";
-  private static final int NUM_COL_STATE = 27;
+  private static final int NUM_COL_STATE = 26;
 
   static final String TABLE = "CREATE TABLE " + TABLE_NAME + " ("
       + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -142,7 +142,7 @@ class ElephantTable {
       + COL_CHILDREN_ID + " TEXT NOT NULL,"
 
       // Documents
-      + COL_DOCUMENTS_ID + " TEXT NOT NULL, "
+//      + COL_DOCUMENTS_ID + " TEXT NOT NULL, "
 
       // Other
       + COL_STATE + " INTEGER DEFAULT 0 "

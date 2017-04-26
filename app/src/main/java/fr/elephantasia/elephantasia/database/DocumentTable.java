@@ -15,7 +15,7 @@ public class DocumentTable {
     private static final String COL_TITLE = "title";
     private static final int NUM_COL_TITLE = 1;
 
-    private static final String COL_NAME = "title";
+    private static final String COL_NAME = "name";
     private static final int NUM_COL_NAME = 2;
 
     static final String TABLE = "CREATE TABLE " + TABLE_NAME + " ("
