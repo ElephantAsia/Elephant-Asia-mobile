@@ -15,137 +15,96 @@ class ElephantTable {
 
   static final String TABLE_NAME = "Elephants";
 
-  private static final String COL_ID = "ID";
-  private static final int NUM_COL_ID = 0;
+  // Auto set
+  private static final String ID = "ID";
+  private static final String STATE = "state";
+
+  // Profil
+  private static final String NAME = "name";
+  private static final String NICKNAME = "nickname";
+  private static final String SEX = "sex";
+  private static final String CURRENT_CITY = "current_city";
+  private static final String CURRENT_DISTRICT = "current_district";
+  private static final String CURRENT_PROVINCE = "current_province";
+  private static final String BIRTH_DATE = "birthdate";
+  private static final String BIRTH_CITY = "birthdate_city";
+  private static final String BIRTH_DISTRICT = "birthdate_district";
+  private static final String BIRTH_PROVINCE = "birthdate_province";
 
   // Registration
-  private static final String COL_NAME = "name";
-  private static final int NUM_COL_NAME = 1;
-
-  private static final String COL_NICKNAME = "nickname";
-  private static final int NUM_COL_NICKNAME = 2;
-
-  private static final String COL_SEX = "sex";
-  private static final int NUM_COL_SEX = 3;
-
-  private static final String COL_EAR_TAG = "ear_tag";
-  private static final int NUM_COL_EAR_TAG = 4;
-
-  private static final String COL_EYED = "eyed";
-  private static final int NUM_COL_EYED = 5;
-
-  private static final String COL_BIRTH_DATE = "birthdate";
-  private static final int NUM_COL_BIRTH_DATE = 6;
-
-  private static final String COL_BIRTH_VILLAGE = "birthdate_village";
-  private static final int NUM_COL_BIRTH_VILLAGE = 7;
-
-  private static final String COL_BIRTH_DISTRICT = "birthdate_district";
-  private static final int NUM_COL_BIRTH_DISTRICT = 8;
-
-  private static final String COL_BIRTH_PROVINCE = "birthdate_province";
-  private static final int NUM_COL_BIRTH_PROVINCE = 9;
-
-  private static final String COL_CHIPS = "chips";
-  private static final int NUM_COL_CHIPS = 10;
-
-  private static final String COL_REGISTRATION_ID = "registration_id";
-  private static final int NUM_COL_REGISTRATION_ID = 11;
-
-  private static final String COL_REGISTRATION_VILLAGE = "registration_village";
-  private static final int NUM_COL_REGISTRATION_VILLAGE = 12;
-
-  private static final String COL_REGISTRATION_DISTRICT = "registration_district";
-  private static final int NUM_COL_REGISTRATION_DISTRICT = 13;
-
-  private static final String COL_REGISTRATION_PROVINCE = "registration_province";
-  private static final int NUM_COL_REGISTRATION_PROVINCE = 14;
+  private static final String EAR_TAG = "ear_tag";
+  private static final String EYED = "eyed";
+  private static final String CHIPS = "chips";
+  private static final String REGISTRATION_ID = "registration_id";
+  private static final String REGISTRATION_CITY = "registration_city";
+  private static final String REGISTRATION_DISTRICT = "registration_district";
+  private static final String REGISTRATION_PROVINCE = "registration_province";
 
   // Description
-  private static final String COL_TUSKS = "tusks";
-  private static final int NUM_COL_TUSKS = 15;
-
-  private static final String COL_NAILS_FRONT_LEFT = "nails_front_left";
-  private static final int NUM_COL_NAILS_FRONT_LEFT = 16;
-
-  private static final String COL_NAILS_FRONT_RIGHT = "nails_front_right";
-  private static final int NUM_COL_NAILS_FRONT_RIGHT = 17;
-
-  private static final String COL_NAILS_REAR_LEFT = "nails_rear_left";
-  private static final int NUM_COL_NAILS_REAR_LEFT = 18;
-
-  private static final String COL_NAILS_REAR_RIGHT = "nails_rear_right";
-  private static final int NUM_COL_NAILS_REAR_RIGHT = 19;
-
-  private static final String COL_WEIGHT = "weight";
-  private static final int NUM_COL_WEIGHT = 20;
-
-  private static final String COL_HEIGHT = "height";
-  private static final int NUM_COL_HEIGHT = 21;
+  private static final String TUSKS = "tusks";
+  private static final String NAILS_FRONT_LEFT = "nails_front_left";
+  private static final String NAILS_FRONT_RIGHT = "nails_front_right";
+  private static final String NAILS_REAR_LEFT = "nails_rear_left";
+  private static final String NAILS_REAR_RIGHT = "nails_rear_right";
+  private static final String WEIGHT = "weight";
+  private static final String HEIGHT = "height";
 
   // Owners
-  private static final String COL_OWNERS = "owners";
-  private static final int NUM_COL_OWNERS = 22;
+  private static final String OWNERS = "owners";
 
   // Parentage
-  private static final String COL_FATHER_ID = "father_id";
-  private static final int NUM_COL_FATHER_ID = 23;
-
-  private static final String COL_MOTHER_ID = "mother_id";
-  private static final int NUM_COL_MOTHER_ID = 24;
-
-  private static final String COL_CHILDREN_ID = "children_id";
-  private static final int NUM_COL_CHILDREN_ID = 25;
+  private static final String FATHER_ID = "father_id";
+  private static final String MOTHER_ID = "mother_id";
+  private static final String CHILDREN_ID = "children_id";
 
   // Documents
-//  private static final String COL_DOCUMENTS_ID = "documents_id";
-//  private static final int NUM_COL_DOCUMENTS_ID = 26;
-
-  //Other
-  private static final String COL_STATE = "state";
-  private static final int NUM_COL_STATE = 26;
+//  private static final String DOCUMENTS_ID = "documents_id";
 
   static final String TABLE = "CREATE TABLE " + TABLE_NAME + " ("
-      + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+
+      // Auto set
+      + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+      + STATE + " INTEGER DEFAULT 0, "
+
+      // Profil
+      + NAME + " TEXT NOT NULL, "
+      + NICKNAME + " TEXT NOT NULL, "
+      + SEX + " TEXT NOT NULL, "
+      + CURRENT_CITY + " TEXT NOT NULL, "
+      + CURRENT_DISTRICT + " TEXT NOT NULL, "
+      + CURRENT_PROVINCE + " TEXT NOT NULL, "
+      + BIRTH_DATE + " TEXT NOT NULL, "
+      + BIRTH_CITY + " TEXT NOT NULL, "
+      + BIRTH_DISTRICT + " TEXT NOT NULL, "
+      + BIRTH_PROVINCE + " TEXT NOT NULL, "
 
       // Registration
-      + COL_NAME + " TEXT NOT NULL, "
-      + COL_NICKNAME + " TEXT NOT NULL, "
-      + COL_SEX + " TEXT NOT NULL, "
-      + COL_EAR_TAG + " TEXT NOT NULL, "
-      + COL_EYED + " TEXT NOT NULL, "
-      + COL_BIRTH_DATE + " TEXT NOT NULL, "
-      + COL_BIRTH_VILLAGE + " TEXT NOT NULL, "
-      + COL_BIRTH_DISTRICT + " TEXT NOT NULL, "
-      + COL_BIRTH_PROVINCE + " TEXT NOT NULL, "
-      + COL_CHIPS + " TEXT NOT NULL, "
-      + COL_REGISTRATION_ID + " TEXT NOT NULL, "
-      + COL_REGISTRATION_VILLAGE + " TEXT NOT NULL, "
-      + COL_REGISTRATION_DISTRICT + " TEXT NOT NULL, "
-      + COL_REGISTRATION_PROVINCE + " TEXT NOT NULL, "
+      + EAR_TAG + " TEXT NOT NULL, "
+      + EYED + " TEXT NOT NULL, "      + CHIPS + " TEXT NOT NULL, "
+      + REGISTRATION_ID + " TEXT NOT NULL, "
+      + REGISTRATION_CITY + " TEXT NOT NULL, "
+      + REGISTRATION_DISTRICT + " TEXT NOT NULL, "
+      + REGISTRATION_PROVINCE + " TEXT NOT NULL, "
 
       // Description
-      + COL_TUSKS + " TEXT NOT NULL,"
-      + COL_NAILS_FRONT_LEFT + " TEXT NOT NULL,"
-      + COL_NAILS_FRONT_RIGHT + " TEXT NOT NULL,"
-      + COL_NAILS_REAR_LEFT + " TEXT NOT NULL,"
-      + COL_NAILS_REAR_RIGHT + " TEXT NOT NULL,"
-      + COL_WEIGHT + " TEXT NOT NULL,"
-      + COL_HEIGHT + " TEXT NOT NULL,"
+      + TUSKS + " TEXT NOT NULL,"
+      + NAILS_FRONT_LEFT + " TEXT NOT NULL,"
+      + NAILS_FRONT_RIGHT + " TEXT NOT NULL,"
+      + NAILS_REAR_LEFT + " TEXT NOT NULL,"
+      + NAILS_REAR_RIGHT + " TEXT NOT NULL,"
+      + WEIGHT + " TEXT NOT NULL,"
+      + HEIGHT + " TEXT NOT NULL,"
 
       // Owner
-      + COL_OWNERS + " TEXT NOT NULL, "
+      + OWNERS + " TEXT NOT NULL, "
 
       // Parentage
-      + COL_FATHER_ID + " TEXT NOT NULL, "
-      + COL_MOTHER_ID + " TEXT NOT NULL, "
-      + COL_CHILDREN_ID + " TEXT NOT NULL,"
+      + FATHER_ID + " TEXT NOT NULL, "
+      + MOTHER_ID + " TEXT NOT NULL, "
+      + CHILDREN_ID + " TEXT NOT NULL"
 
       // Documents
-//      + COL_DOCUMENTS_ID + " TEXT NOT NULL, "
-
-      // Other
-      + COL_STATE + " INTEGER DEFAULT 0 "
+//      + DOCUMENTS_ID + " TEXT NOT NULL, "
 
       + ");";
 
@@ -154,19 +113,19 @@ class ElephantTable {
   }
 
   static int update(SQLiteDatabase database, ElephantInfo elephant) {
-    return (database.update(TABLE_NAME, getContentValues(elephant), COL_ID + " = " + elephant.id, null));
+    return (database.update(TABLE_NAME, getContentValues(elephant), ID + " = " + elephant.id, null));
   }
 
   static int delete(SQLiteDatabase database, ElephantInfo elephant) {
     ContentValues values = getContentValues(elephant);
-    values.put(ElephantTable.COL_STATE, ElephantInfo.State.DELETED.toString());
+    values.put(ElephantTable.STATE, ElephantInfo.State.DELETED.toString());
 
-    return (database.update(TABLE_NAME, values, COL_ID + " = " + elephant.id, null));
+    return (database.update(TABLE_NAME, values, ID + " = " + elephant.id, null));
   }
 
     /*static ElephantInfo getElephantByID(SQLiteDatabase database, int id) {
         ElephantInfo info = null;
-        Cursor c = database.query(TABLE_NAME, new String[] {"*"}, COL_ID, new String[] {id + ""}, null, null, null);
+        Cursor c = database.query(TABLE_NAME, new String[] {"*"}, ID, new String[] {id + ""}, null, null, null);
         if (c.getCount() > 0) {
             info = cursorToValue(c);
         }
@@ -194,7 +153,7 @@ class ElephantTable {
   }
 
   static List<ElephantInfo> getDrafts(SQLiteDatabase database) {
-    String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL_STATE + " = " + ElephantInfo.State.DRAFT;
+    String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + STATE + " = " + ElephantInfo.State.DRAFT;
     List<ElephantInfo> results = new ArrayList<>();
     Cursor cursor = database.rawQuery(query, null);
 
@@ -213,106 +172,118 @@ class ElephantTable {
   private static ContentValues getContentValues(ElephantInfo elephant) {
     ContentValues values = new ContentValues();
 
+    // Auto set
+    values.put(STATE, elephant.state.toString());
+
+    // Profil
+    values.put(NAME, elephant.name);
+    values.put(NICKNAME, elephant.nickName);
+    values.put(SEX, String.valueOf(elephant.sex));
+    values.put(CURRENT_CITY, elephant.currentCity);
+    values.put(CURRENT_DISTRICT, elephant.currentDistrict);
+    values.put(CURRENT_PROVINCE, elephant.currentProvince);
+    values.put(BIRTH_DATE, elephant.birthDate);
+    values.put(BIRTH_CITY, elephant.birthCity);
+    values.put(BIRTH_DISTRICT, elephant.birthDistrict);
+    values.put(BIRTH_PROVINCE, elephant.birthProvince);
+
     // Registration
-    values.put(COL_NAME, elephant.name);
-    values.put(COL_NICKNAME, elephant.nickName);
-    values.put(COL_SEX, String.valueOf(elephant.sex));
-    values.put(COL_EAR_TAG, String.valueOf(elephant.earTag));
-    values.put(COL_EYED, String.valueOf(elephant.eyeD));
-    values.put(COL_BIRTH_DATE, elephant.birthDate);
-    values.put(COL_BIRTH_VILLAGE, elephant.birthCity);
-    values.put(COL_BIRTH_DISTRICT, elephant.birthDistrict);
-    values.put(COL_BIRTH_PROVINCE, elephant.birthProvince);
-    values.put(COL_CHIPS, elephant.chips1);
-    values.put(COL_REGISTRATION_ID, elephant.regID);
-    values.put(COL_REGISTRATION_VILLAGE, elephant.regCity);
-    values.put(COL_REGISTRATION_DISTRICT, elephant.regDistrict);
-    values.put(COL_REGISTRATION_PROVINCE, elephant.regProvince);
+    values.put(EAR_TAG, String.valueOf(elephant.earTag));
+    values.put(EYED, String.valueOf(elephant.eyeD));
+    values.put(CHIPS, elephant.chips1);
+    values.put(REGISTRATION_ID, elephant.regID);
+    values.put(REGISTRATION_CITY, elephant.regCity);
+    values.put(REGISTRATION_DISTRICT, elephant.regDistrict);
+    values.put(REGISTRATION_PROVINCE, elephant.regProvince);
 
     //Description
-    values.put(COL_TUSKS, elephant.tusk);
-    values.put(COL_NAILS_FRONT_LEFT, elephant.nailsFrontLeft);
-    values.put(COL_NAILS_FRONT_RIGHT, elephant.nailsFrontRight);
-    values.put(COL_NAILS_REAR_LEFT, elephant.nailsRearLeft);
-    values.put(COL_NAILS_REAR_RIGHT, elephant.nailsRearRight);
-    values.put(COL_WEIGHT, elephant.weight);
-    values.put(COL_HEIGHT, elephant.height);
+    values.put(TUSKS, elephant.tusk);
+    values.put(NAILS_FRONT_LEFT, elephant.nailsFrontLeft);
+    values.put(NAILS_FRONT_RIGHT, elephant.nailsFrontRight);
+    values.put(NAILS_REAR_LEFT, elephant.nailsRearLeft);
+    values.put(NAILS_REAR_RIGHT, elephant.nailsRearRight);
+    values.put(WEIGHT, elephant.weight);
+    values.put(HEIGHT, elephant.height);
 
     // Owners
-    values.put(COL_OWNERS, elephant.getOwners());
+    values.put(OWNERS, elephant.getOwners());
 
     // Parentage
-    values.put(COL_FATHER_ID, elephant.father);
-    values.put(COL_MOTHER_ID, elephant.mother);
-    values.put(COL_CHILDREN_ID, elephant.getChildren());
-
-    // Other
-    values.put(COL_STATE, elephant.state.toString());
+    values.put(FATHER_ID, elephant.father);
+    values.put(MOTHER_ID, elephant.mother);
+    values.put(CHILDREN_ID, elephant.getChildren());
 
     return (values);
   }
 
   private static ElephantInfo cursorToValue(Cursor cursor){
+    ElephantInfo e = new ElephantInfo();
+
+    // Auto set
+    e.state = ElephantInfo.State.valueOf(cursor.getString(cursor.getColumnIndex(STATE)).toUpperCase());
+
+    // Profil
+    e.id = cursor.getInt(cursor.getColumnIndex(ID));
+    e.name = cursor.getString(cursor.getColumnIndex(NAME));
+    e.nickName = cursor.getString(cursor.getColumnIndex(NICKNAME));
+    e.sex = ElephantInfo.Gender.valueOf(cursor.getString(cursor.getColumnIndex(SEX)));
+    e.currentCity = cursor.getString(cursor.getColumnIndex(CURRENT_CITY));
+    e.currentDistrict = cursor.getString(cursor.getColumnIndex(CURRENT_DISTRICT));
+    e.currentProvince = cursor.getString(cursor.getColumnIndex(CURRENT_PROVINCE));
+    e.birthDate = cursor.getString(cursor.getColumnIndex(BIRTH_DATE));
+    e.birthCity = cursor.getString(cursor.getColumnIndex(BIRTH_CITY));
+    e.birthDistrict = cursor.getString(cursor.getColumnIndex(BIRTH_DISTRICT));
+    e.birthProvince = cursor.getString(cursor.getColumnIndex(BIRTH_PROVINCE));
 
     // Registration
-    ElephantInfo elephant = new ElephantInfo();
-    elephant.id = cursor.getInt(NUM_COL_ID);
-    elephant.name = cursor.getString(NUM_COL_NAME);
-    elephant.nickName = cursor.getString(NUM_COL_NICKNAME);
-    elephant.sex = ElephantInfo.Gender.valueOf(cursor.getString(NUM_COL_SEX));
-    elephant.earTag = Boolean.valueOf(cursor.getString(NUM_COL_EAR_TAG));
-    elephant.eyeD = Boolean.valueOf(cursor.getString(NUM_COL_EYED));
-    elephant.birthDate = cursor.getString(NUM_COL_BIRTH_DATE);
-    elephant.birthCity = cursor.getString(NUM_COL_BIRTH_VILLAGE);
-    elephant.birthDistrict = cursor.getString(NUM_COL_BIRTH_DISTRICT);
-    elephant.birthProvince = cursor.getString(NUM_COL_BIRTH_PROVINCE);
-    elephant.chips1 = cursor.getString(NUM_COL_CHIPS);
-    elephant.regID = cursor.getString(NUM_COL_REGISTRATION_ID);
-    elephant.regCity = cursor.getString(NUM_COL_REGISTRATION_VILLAGE);
-    elephant.regDistrict = cursor.getString(NUM_COL_REGISTRATION_DISTRICT);
-    elephant.regProvince = cursor.getString(NUM_COL_REGISTRATION_PROVINCE);
+    e.earTag = Boolean.valueOf(cursor.getString(cursor.getColumnIndex(EAR_TAG)));
+    e.eyeD = Boolean.valueOf(cursor.getString(cursor.getColumnIndex(EYED))); 
+    e.chips1 = cursor.getString(cursor.getColumnIndex(CHIPS));
+    e.regID = cursor.getString(cursor.getColumnIndex(REGISTRATION_ID));
+    e.regCity = cursor.getString(cursor.getColumnIndex(REGISTRATION_CITY));
+    e.regDistrict = cursor.getString(cursor.getColumnIndex(REGISTRATION_DISTRICT));
+    e.regProvince = cursor.getString(cursor.getColumnIndex(REGISTRATION_PROVINCE));
 
     //Description
-    elephant.tusk = cursor.getString(NUM_COL_TUSKS);
-    elephant.nailsFrontLeft = cursor.getString(NUM_COL_NAILS_FRONT_LEFT);
-    elephant.nailsFrontRight = cursor.getString(NUM_COL_NAILS_FRONT_RIGHT);
-    elephant.nailsRearLeft = cursor.getString(NUM_COL_NAILS_REAR_LEFT);
-    elephant.nailsRearRight = cursor.getString(NUM_COL_NAILS_REAR_RIGHT);
-    elephant.weight = cursor.getString(NUM_COL_WEIGHT);
-    elephant.height = cursor.getString(NUM_COL_HEIGHT);
+    e.tusk = cursor.getString(cursor.getColumnIndex(TUSKS));
+    e.nailsFrontLeft = cursor.getString(cursor.getColumnIndex(NAILS_FRONT_LEFT));
+    e.nailsFrontRight = cursor.getString(cursor.getColumnIndex(NAILS_FRONT_RIGHT));
+    e.nailsRearLeft = cursor.getString(cursor.getColumnIndex(NAILS_REAR_LEFT));
+    e.nailsRearRight = cursor.getString(cursor.getColumnIndex(NAILS_REAR_RIGHT));
+    e.weight = cursor.getString(cursor.getColumnIndex(WEIGHT));
+    e.height = cursor.getString(cursor.getColumnIndex(HEIGHT));
 
     // Owners
-    elephant.setOwners(cursor.getString(NUM_COL_OWNERS));
+    e.setOwners(cursor.getString(cursor.getColumnIndex(OWNERS)));
 
     // Parentage
-    elephant.father = cursor.getString(NUM_COL_FATHER_ID);
-    elephant.mother = cursor.getString(NUM_COL_MOTHER_ID);
-    elephant.setChildren(cursor.getString(NUM_COL_CHILDREN_ID));
+    e.father = cursor.getString(cursor.getColumnIndex(FATHER_ID));
+    e.mother = cursor.getString(cursor.getColumnIndex(MOTHER_ID));
+    e.setChildren(cursor.getString(cursor.getColumnIndex(CHILDREN_ID)));
 
-    elephant.state = ElephantInfo.State.valueOf(cursor.getString(NUM_COL_STATE).toUpperCase());
-    return (elephant);
+    return (e);
   }
 
   private static String getQuerySearchRestriction(ElephantInfo info) {
-    List<String> restriction = new ArrayList<String>();
+    List<String> restriction = new ArrayList<>();
 
     if (!info.name.isEmpty())
-      restriction.add(" WHERE " + ElephantTable.COL_NAME + " LIKE '" + info.name + "%'");
+      restriction.add(" WHERE " + ElephantTable.NAME + " LIKE '" + info.name + "%'");
     if (!info.chips1.isEmpty())
-      restriction.add(" WHERE " + ElephantTable.COL_CHIPS + " = '" + info.chips1 + "'");
+      restriction.add(" WHERE " + ElephantTable.CHIPS + " = '" + info.chips1 + "'");
     if (info.sex != ElephantInfo.Gender.UNKNOWN)
-      restriction.add(" WHERE " + ElephantTable.COL_SEX + " = '" + info.sex + "'");
+      restriction.add(" WHERE " + ElephantTable.SEX + " = '" + info.sex + "'");
     if (!info.regProvince.isEmpty())
-      restriction.add(" WHERE " + ElephantTable.COL_REGISTRATION_PROVINCE + " = '" + info.regProvince + "'");
+      restriction.add(" WHERE " + ElephantTable.REGISTRATION_PROVINCE + " = '" + info.regProvince + "'");
     if (!info.regDistrict.isEmpty())
-      restriction.add(" WHERE " + ElephantTable.COL_REGISTRATION_DISTRICT + " = '" + info.regDistrict + "'");
+      restriction.add(" WHERE " + ElephantTable.REGISTRATION_DISTRICT + " = '" + info.regDistrict + "'");
     if (!info.regProvince.isEmpty())
-      restriction.add(" WHERE " + ElephantTable.COL_REGISTRATION_PROVINCE + " = '" + info.regProvince + "'");
+      restriction.add(" WHERE " + ElephantTable.REGISTRATION_PROVINCE + " = '" + info.regProvince + "'");
     if (!info.regCity.isEmpty())
-      restriction.add(" WHERE " + ElephantTable.COL_REGISTRATION_VILLAGE + " = '" + info.regCity + "'");
+      restriction.add(" WHERE " + ElephantTable.REGISTRATION_CITY + " = '" + info.regCity + "'");
 
-    restriction.add(" WHERE " + ElephantTable.COL_STATE + " != '" + ElephantInfo.State.DELETED.toString() + "'");
-    restriction.add(" WHERE " + ElephantTable.COL_STATE + " != '" + ElephantInfo.State.DRAFT.toString() + "'");
+    restriction.add(" WHERE " + ElephantTable.STATE + " != '" + ElephantInfo.State.DELETED.toString() + "'");
+    restriction.add(" WHERE " + ElephantTable.STATE + " != '" + ElephantInfo.State.DRAFT.toString() + "'");
 
     for (int i = 0;  i < restriction.size(); i++) {
       if (i > 0) {

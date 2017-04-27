@@ -40,13 +40,10 @@ public class ElephantInfo implements Parcelable {
   //Profil
   public String name;
   public String nickName;
-
   public Gender sex;
-
   public String currentCity;
   public String currentDistrict;
   public String currentProvince;
-
   public String birthDate;
   public String birthCity;
   public String birthDistrict;
@@ -55,11 +52,9 @@ public class ElephantInfo implements Parcelable {
   // Registration
   public boolean earTag = false;
   public boolean eyeD = false;
-
   public String chips1;
   public String chips2;
   public String chips3;
-
   public String regID;
   public String regCity;
   public String regDistrict;
@@ -313,46 +308,6 @@ public class ElephantInfo implements Parcelable {
         && weight.isEmpty() && height.isEmpty()
         && owners.isEmpty() && father.isEmpty()
         && mother.isEmpty() && children.isEmpty();
-  }
-
-  public void displayAttr() {
-    // Profil
-    Log.i("name", this.name);
-    Log.i("nickName", this.nickName);
-    Log.i("state", this.state.toString());
-    Log.i("sex", this.sex.toString());
-    Log.i("currentCity", this.currentCity);
-    Log.i("currentDistrict", this.currentDistrict);
-    Log.i("currentProvince", this.currentProvince);
-    Log.i("birthDate", this.birthDate);
-    Log.i("birthCity", this.birthCity);
-    Log.i("birthDistrict", this.birthDistrict);
-    Log.i("birthProvince", this.birthProvince);
-
-    // Registration
-    Log.i("earTag", String.valueOf(this.earTag));
-    Log.i("eyeD", String.valueOf(this.eyeD));    Log.i("chips1", this.chips1);
-    Log.i("regID", this.regID);
-    Log.i("regCity", this.regCity);
-    Log.i("regDistrict", this.regDistrict);
-    Log.i("regProvince", this.regProvince);
-
-    // Description
-    Log.i("tusk", this.tusk);
-    Log.i("nails front left", this.nailsFrontLeft);
-    Log.i("nails front right", this.nailsFrontRight);
-    Log.i("nails rear left", this.nailsRearLeft);
-    Log.i("nails rear right", this.nailsRearRight);
-    Log.i("weight", this.weight);
-    Log.i("height", this.weight);
-
-    // Owners
-    Log.i("owners", owners);
-
-    // Parentage
-    Log.i("father", father);
-    Log.i("mother", mother);
-    Log.i("children", children);
   }
 
   public void addChildren(int elephantID) {

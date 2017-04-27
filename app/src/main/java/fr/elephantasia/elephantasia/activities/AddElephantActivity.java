@@ -266,7 +266,6 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     if (checkMandatoryFields()) {
       int result = state == ElephantInfo.State.DRAFT ? RESULT_DRAFT : RESULT_VALIDATE;
       elephantInfo.state = state;
-      elephantInfo.displayAttr();
       database.insert(elephantInfo);
       setResult(result);
       finish();

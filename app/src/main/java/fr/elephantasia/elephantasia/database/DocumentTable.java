@@ -9,40 +9,35 @@ public class DocumentTable {
 
     static final String TABLE_NAME = "Documents";
 
-    private static final String COL_ID = "ID";
-    private static final int NUM_COL_ID = 0;
-
-    private static final String COL_TITLE = "title";
-    private static final int NUM_COL_TITLE = 1;
-
-    private static final String COL_NAME = "name";
-    private static final int NUM_COL_NAME = 2;
+    private static final String ID = "ID";
+    private static final String TITLE = "title";
+    private static final String NAME = "name";
 
     static final String TABLE = "CREATE TABLE " + TABLE_NAME + " ("
-            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_TITLE + " TEXT NOT NULL, "
-            + COL_NAME + " TEXT NOT NULL);";
+            + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + TITLE + " TEXT NOT NULL, "
+            + NAME + " TEXT NOT NULL);";
 
     static long insert(SQLiteDatabase database, DocumentInfo document) {
         return (database.insert(TABLE_NAME, null, getContentValues(document)));
     }
 
     static int update(SQLiteDatabase database, DocumentInfo document) {
-        return (database.update(TABLE_NAME, getContentValues(document), COL_ID + " = " + document.id, null));
+        return (database.update(TABLE_NAME, getContentValues(document), ID + " = " + document.id, null));
     }
 
     /*static int delete(SQLiteDatabase database, DocumentInfo document) {
         ContentValues values = getContentValues(document);
-        values.put(ElephantTable.COL_STATE, ElephantInfo.State.DELETED.toString());
+        values.put(ElephantTable.STATE, ElephantInfo.State.DELETED.toString());
 
-        return (database.update(TABLE_NAME, values, COL_ID + " = " + elephant.id, null));
+        return (database.update(TABLE_NAME, values, ID + " = " + elephant.id, null));
     }*/
 
     private static ContentValues getContentValues(DocumentInfo document) {
         ContentValues values = new ContentValues();
 
-        values.put(COL_TITLE, document.title);
-        values.put(COL_NAME, document.name);
+        values.put(TITLE, document.title);
+        values.put(NAME, document.name);
 
         return (values);
     }
