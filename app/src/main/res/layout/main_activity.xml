@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
     >
 
     <android.support.v4.widget.DrawerLayout
@@ -12,21 +12,21 @@
         android:layout_height="fill_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <android.support.design.widget.AppBarLayout
-                android:background="@color/background_60"
                 android:id="@+id/appBarLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/background_60">
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/main_toolbar"
-                    android:background="@color/primary_grey_100"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize">
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/primary_grey_100">
 
                     <TextView
                         android:id="@+id/title"
@@ -34,7 +34,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/home_page"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"/>
 
                 </android.support.v7.widget.Toolbar>
 
@@ -53,23 +53,23 @@
                     android:id="@+id/home_page_fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
                     android:layout_margin="@dimen/fab_margin"
                     android:src="@mipmap/add"
-                    android:layout_gravity="bottom|end"
                     app:backgroundTint="@color/primary_grey_100"
                     app:borderWidth="0dp"
                     app:elevation="0dp"
                     app:pressedTranslationZ="12dp"
-                    app:rippleColor="@color/primary_dark_100" />
+                    app:rippleColor="@color/primary_dark_100"/>
 
             </FrameLayout>
 
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_gravity="start"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_gravity="start">
 
             <RelativeLayout
                 android:id="@+id/main_drawer_userinfo"
@@ -80,67 +80,67 @@
                     android:id="@+id/main_drawer_pic_profil_blurred"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
                     android:background="#f2f2f2"
-                    android:contentDescription="@null"/>
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"/>
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/main_drawer_pic_profil"
-                    android:src="@mipmap/splash_screen_background"
-                    android:layout_marginTop="38dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:layout_width="80dp"
-                    android:layout_height="80dp" />
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="38dp"
+                    android:src="@mipmap/splash_screen_background"/>
 
                 <TextView
-                    android:layout_marginTop="62dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp"
-                    android:textSize="16sp"
                     android:id="@+id/main_drawer_username"
-                    android:text="Finjin Dijang"
-                    android:textColor="@android:color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/main_drawer_pic_profil"
-                    android:layout_toEndOf="@id/main_drawer_pic_profil"/>
-
-                <TextView
                     android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
-                    android:textSize="16sp"
-                    android:id="@+id/main_drawer_speciality"
-                    android:text="Official Veterinarian"
+                    android:layout_marginTop="62dp"
+                    android:layout_toEndOf="@id/main_drawer_pic_profil"
+                    android:layout_toRightOf="@id/main_drawer_pic_profil"
+                    android:text="Finjin Dijang"
                     android:textColor="@android:color/white"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/main_drawer_speciality"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/main_drawer_username"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_toEndOf="@id/main_drawer_pic_profil"
                     android:layout_toRightOf="@id/main_drawer_pic_profil"
-                    android:layout_toEndOf="@id/main_drawer_pic_profil"/>
+                    android:text="Official Veterinarian"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"/>
 
                 <TextView
-                    android:layout_marginBottom="18dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignLeft="@id/main_drawer_pic_profil"
-                    android:layout_alignStart="@id/main_drawer_pic_profil"
-                    android:textColor="@android:color/white"
-                    android:text="Last Synchronization"
-                    android:textSize="16sp"
                     android:id="@+id/main_drawer_last_sync"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/main_drawer_pic_profil"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignStart="@id/main_drawer_pic_profil"
+                    android:layout_marginBottom="18dp"
+                    android:text="Last Synchronization"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"/>
 
             </RelativeLayout>
 
             <ListView
-                android:background="@android:color/white"
-                android:layout_below="@id/main_drawer_userinfo"
                 android:id="@+id/main_drawer_list"
-                android:dividerHeight="0dp"
-                android:divider="@null"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_below="@id/main_drawer_userinfo"
+                android:background="@android:color/white"
+                android:divider="@null"
+                android:dividerHeight="0dp"/>
 
         </RelativeLayout>
 

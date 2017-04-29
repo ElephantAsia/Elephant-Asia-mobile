@@ -31,7 +31,8 @@
         <item name="android:colorControlNormal" tools:targetApi="21">@color/grey_light_100</item>
 
         <item name="colorControlActivated">@color/primary_grey_100</item>
-        <item name="android:colorControlActivated" tools:targetApi="21">@color/primary_grey_100</item>
+        <item name="android:colorControlActivated" tools:targetApi="21">@color/primary_grey_100
+        </item>
 
         <item name="colorControlHighlight">@color/primary_50</item>
         <item name="android:colorControlHighlight" tools:targetApi="21">@color/primary_50</item>
@@ -48,9 +49,9 @@
         <item name="android:textColor">@color/primary_grey</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/primary_grey_100</item>

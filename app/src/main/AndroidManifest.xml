@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.elephantasia.elephantasia">
+          package="fr.elephantasia">
 
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".utils.BaseApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
-        android:largeHeap="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.SplashScreenActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.AddElephantActivity" />
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.SearchActivity" />
-        <activity android:name=".activities.SearchBrowserActivity" />
-        <activity android:name=".activities.ConsultationActivity" />
-        <activity android:name=".activities.SelectOwnerActivity" />
+        <activity android:name=".activities.AddElephantActivity"/>
+        <activity android:name=".activities.LoginActivity"/>
+        <activity android:name=".activities.MainActivity"/>
+        <activity android:name=".activities.SearchActivity"/>
+        <activity android:name=".activities.SearchBrowserActivity"/>
+        <activity android:name=".activities.ConsultationActivity"/>
+        <activity android:name=".activities.SelectOwnerActivity"/>
 
         <provider
-            android:authorities="${applicationId}.provider"
             android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -43,9 +43,10 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC03RrMCbPiC4W3loYhRvmnA9lZh4aHP5w" />
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="AIzaSyC03RrMCbPiC4W3loYhRvmnA9lZh4aHP5w"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
     </application>
 
 </manifest>

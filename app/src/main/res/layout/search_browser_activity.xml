@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/search_browser_activity"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:id="@+id/search_browser_activity"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/search_result"
                 android:textColor="@android:color/white"
-                android:textSize="20sp" />
+                android:textSize="20sp"/>
 
         </android.support.v7.widget.Toolbar>
 
@@ -30,19 +30,19 @@
 
     <ListView
         android:id="@+id/listViewSearch"
-        android:dividerHeight="0dp"
-        android:divider="@null"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"/>
 
     <TextView
-        android:visibility="gone"
-        android:textColor="@color/grey_light_100"
-        android:textSize="20sp"
-        android:text="@string/no_item_found"
-        android:gravity="center"
         android:id="@+id/search_browser_no_item"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/no_item_found"
+        android:textColor="@color/grey_light_100"
+        android:textSize="20sp"
+        android:visibility="gone"/>
 
 </LinearLayout>

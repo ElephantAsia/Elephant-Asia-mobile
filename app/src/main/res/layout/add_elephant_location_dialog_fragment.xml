@@ -1,12 +1,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:theme="@style/AppThemeWhiteBackground"
+        android:theme="@style/AppThemeWhiteBackground"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:focusableInTouchMode="true"
+        android:orientation="vertical"
         >
 
         <android.support.design.widget.TextInputLayout
@@ -18,9 +18,9 @@
 
             <EditText
                 android:id="@+id/province"
-                android:hint="@string/province"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/province"
                 android:inputType="text"
                 />
 
@@ -36,9 +36,9 @@
 
             <EditText
                 android:id="@+id/district"
-                android:hint="@string/district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/district"
                 android:inputType="text"
                 />
 
@@ -54,9 +54,9 @@
 
             <EditText
                 android:id="@+id/city"
-                android:hint="@string/city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/city"
                 android:inputType="text"
                 />
 

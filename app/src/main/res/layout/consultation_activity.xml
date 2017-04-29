@@ -2,11 +2,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:id="@+id/elephant_consultation_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.elephantasia.elephantasia.fr.elephantasia.elephantasia.activities.ConsultationActivity">
+    android:orientation="vertical"
+    tools:context="fr.elephantasia.fr.elephantasia.activities.ConsultationActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/add_elephant"
                 android:textColor="@android:color/white"
-                android:textSize="20sp" />
+                android:textSize="20sp"/>
 
         </android.support.v7.widget.Toolbar>
 

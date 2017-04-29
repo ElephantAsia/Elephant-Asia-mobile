@@ -5,7 +5,8 @@
         android:drawable="@color/primary_75"/>
 
     <item>
-        <bitmap android:gravity="center"
+        <bitmap
+            android:gravity="center"
             android:src="@drawable/new_logo"/>
     </item>
 

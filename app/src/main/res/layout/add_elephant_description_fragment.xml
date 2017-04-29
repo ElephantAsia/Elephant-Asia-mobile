@@ -1,10 +1,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/tools"
-    android:theme="@style/AppThemeWhiteBackground"
+        xmlns:bind="http://schemas.android.com/tools"
+        android:theme="@style/AppThemeWhiteBackground"
     >
 
     <data>
-        <variable name="e" type="fr.elephantasia.elephantasia.utils.ElephantInfo"/>
+
+        <variable
+            name="e"
+            type="fr.elephantasia.utils.ElephantInfo"/>
     </data>
 
     <ScrollView
@@ -12,11 +15,11 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusableInTouchMode="true"
+            android:orientation="vertical"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="16dp"
@@ -25,24 +28,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingBottom="16dp"
                 >
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/tusk"
                     android:layout_weight="0.7"
-                    android:textSize="@dimen/font_size_normal"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:text="@string/tusk"
+                    android:textSize="@dimen/font_size_normal"/>
 
                 <Spinner
                     android:id="@+id/elephant_tusks_spinner"
                     android:layout_width="0dp"
-                    android:layout_weight="0.3"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
                     android:entries="@array/tusks"
                     android:gravity="start"
                     bind:selectedValue="@={e.tusk}"
@@ -53,23 +56,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingBottom="16dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/nails_front_left"
                     android:layout_weight="0.7"
-                    android:textSize="@dimen/font_size_normal"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:text="@string/nails_front_left"
+                    android:textSize="@dimen/font_size_normal"/>
 
                 <Spinner
                     android:id="@+id/elephant_nails_front_left"
                     android:layout_width="0dp"
-                    android:layout_weight="0.3"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
                     android:gravity="start"
                     bind:selectedValue="@={e.nailsFrontLeft}"
                     />
@@ -78,24 +81,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingBottom="16dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/nails_front_right"
                     android:layout_weight="0.7"
                     android:padding="10dp"
+                    android:text="@string/nails_front_right"
                     android:textSize="@dimen/font_size_normal"
                     />
 
                 <Spinner
                     android:id="@+id/elephant_nails_front_right"
                     android:layout_width="0dp"
-                    android:layout_weight="0.3"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
                     android:gravity="start"
                     bind:selectedValue="@={e.nailsFrontRight}"
                     />
@@ -105,24 +108,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingBottom="16dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/nails_rear_left"
                     android:layout_weight="0.7"
                     android:padding="10dp"
+                    android:text="@string/nails_rear_left"
                     android:textSize="@dimen/font_size_normal"
                     />
 
                 <Spinner
                     android:id="@+id/elephant_nails_rear_left"
                     android:layout_width="0dp"
-                    android:layout_weight="0.3"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
                     android:gravity="start"
                     bind:selectedValue="@={e.nailsRearLeft}"
                     />
@@ -132,24 +135,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingBottom="16dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/nails_rear_right"
                     android:layout_weight="0.7"
                     android:padding="10dp"
+                    android:text="@string/nails_rear_right"
                     android:textSize="@dimen/font_size_normal"
                     />
 
                 <Spinner
                     android:id="@+id/elephant_nails_rear_right"
                     android:layout_width="0dp"
-                    android:layout_weight="0.3"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
                     android:gravity="start"
                     bind:selectedValue="@={e.nailsRearRight}"
                     />
@@ -158,8 +161,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingBottom="16dp">
 
                 <TextView
@@ -168,18 +171,18 @@
                     android:layout_weight="0.7"
                     android:padding="10dp"
                     android:text="@string/weight"
-                    android:textSize="@dimen/font_size_normal" />
+                    android:textSize="@dimen/font_size_normal"/>
 
                 <EditText
-                    android:text="@={e.weight}"
-                    android:clickable="true"
-                    android:focusable="false"
                     android:id="@+id/elephant_weight"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
+                    android:clickable="true"
+                    android:focusable="false"
                     android:gravity="center"
-                    android:inputType="numberSigned" />
+                    android:inputType="numberSigned"
+                    android:text="@={e.weight}"/>
 
             </LinearLayout>
 
@@ -187,8 +190,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingBottom="16dp">
 
                 <TextView
@@ -197,18 +200,18 @@
                     android:layout_weight="0.7"
                     android:padding="10dp"
                     android:text="@string/height"
-                    android:textSize="@dimen/font_size_normal" />
+                    android:textSize="@dimen/font_size_normal"/>
 
                 <EditText
-                    android:text="@={e.height}"
-                    android:clickable="true"
-                    android:focusable="false"
                     android:id="@+id/elephant_height"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
+                    android:clickable="true"
+                    android:focusable="false"
                     android:gravity="center"
-                    android:inputType="numberSigned" />
+                    android:inputType="numberSigned"
+                    android:text="@={e.height}"/>
 
             </LinearLayout>
 
@@ -219,6 +222,6 @@
                 android:layout_marginTop="60dp"/>
         </LinearLayout>
 
-        </ScrollView>
+    </ScrollView>
 </layout>
 

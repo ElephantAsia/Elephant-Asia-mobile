@@ -1,10 +1,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:theme="@style/AppThemeWhiteBackground"
+        android:theme="@style/AppThemeWhiteBackground"
     >
 
     <data>
-        <variable name="e" type="fr.elephantasia.elephantasia.utils.ElephantInfo"/>
-        <import type="fr.elephantasia.elephantasia.utils.ElephantInfo.Gender"/>
+
+        <variable
+            name="e"
+            type="fr.elephantasia.realm.Elephant"/>
     </data>
 
     <ScrollView
@@ -13,11 +15,11 @@
         android:fillViewport="true">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusableInTouchMode="true"
+            android:orientation="vertical"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="16dp"
@@ -32,11 +34,11 @@
 
                 <EditText
                     android:id="@+id/elephant_name"
-                    android:text="@={e.name}"
-                    android:hint="@string/elephant_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/elephant_name"
                     android:inputType="textPersonName"
+                    android:text="@={e.name}"
                     />
             </android.support.design.widget.TextInputLayout>
 
@@ -48,46 +50,46 @@
                 >
 
                 <EditText
-                    android:text="@={e.nickName}"
-                    android:hint="@string/elephant_nickname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/elephant_nickname"
                     android:inputType="textPersonName"
+                    android:text="@={e.nickName}"
                     />
 
             </android.support.design.widget.TextInputLayout>
 
 
             <RadioGroup
-            android:weightSum="2"
-            android:paddingBottom="16dp"
-            android:paddingTop="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/elephant_rg_sex"
-            >
+                android:id="@+id/elephant_rg_sex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp"
+                android:paddingTop="8dp"
+                android:weightSum="2"
+                >
 
-            <RadioButton
-            android:gravity="center"
-            android:text="@string/male"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:id="@+id/elephant_radio_male"
-            android:duplicateParentState="false"
-            android:onClick="@{() -> e.setSex(Gender.MALE)}"
-            />
+                <RadioButton
+                    android:id="@+id/elephant_radio_male"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:duplicateParentState="false"
+                    android:gravity="center"
+                    android:onClick="@{() -> e.sex.setSex(`male`)}"
+                    android:text="@string/male"
+                    />
 
-            <RadioButton
-            android:gravity="center"
-            android:text="@string/female"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:id="@+id/elephant_radio_female"
-            android:onClick="@{() -> e.setSex(Gender.FEMALE)}"
-            />
+                <RadioButton
+                    android:id="@+id/elephant_radio_female"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="@{() -> e.sex.setSex(`female`)}"
+                    android:text="@string/female"
+                    />
 
             </RadioGroup>
 
@@ -100,12 +102,12 @@
 
                 <EditText
                     android:id="@+id/elephant_current_location"
-                    android:hint="@string/current_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
                     android:clickable="true"
                     android:focusable="false"
+                    android:hint="@string/current_location"
+                    android:inputType="text"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -119,13 +121,13 @@
 
                 <EditText
                     android:id="@+id/elephant_birth_date"
-                    android:text="@={e.birthDate}"
-                    android:hint="@string/elephant_birthdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="datetime"
                     android:clickable="true"
                     android:focusable="false"
+                    android:hint="@string/elephant_birthdate"
+                    android:inputType="datetime"
+                    android:text="@={e.birthDate}"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -139,12 +141,12 @@
 
                 <EditText
                     android:id="@+id/elephant_birth_location"
-                    android:hint="@string/elephant_birth_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
                     android:clickable="true"
                     android:focusable="false"
+                    android:hint="@string/elephant_birth_location"
+                    android:inputType="text"
                     />
 
             </android.support.design.widget.TextInputLayout>

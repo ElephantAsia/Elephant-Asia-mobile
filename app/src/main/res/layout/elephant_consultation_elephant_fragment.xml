@@ -1,15 +1,25 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="e" type="fr.elephantasia.elephantasia.utils.ElephantInfo"/>
-        <variable name="mode" type="fr.elephantasia.elephantasia.fragment.ElephantConsultationFragment.State"/>
-        <import type="fr.elephantasia.elephantasia.utils.ElephantInfo.Gender"/>
-        <import type="fr.elephantasia.elephantasia.fragment.ElephantConsultationFragment.State"/>
-        <import type="android.view.View" />
+
+        <variable
+            name="e"
+            type="fr.elephantasia.utils.ElephantInfo"/>
+
+        <variable
+            name="mode"
+            type="fr.elephantasia.fragment.ElephantConsultationFragment.State"/>
+
+        <import type="fr.elephantasia.utils.ElephantInfo.Gender"/>
+
+        <import type="fr.elephantasia.fragment.ElephantConsultationFragment.State"/>
+
+        <import type="android.view.View"/>
     </data>
 
-    <RelativeLayout android:id="@+id/elephant_consultation_parent"
+    <RelativeLayout
+        android:id="@+id/elephant_consultation_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -19,9 +29,9 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:id="@+id/elephant_consultation_header"
@@ -31,56 +41,56 @@
 
                     <ImageView
                         android:id="@+id/elephant_consultation_background"
-                        android:src="@mipmap/stripe"
-                        android:scaleType="centerCrop"
-                        android:contentDescription="@null"
                         android:layout_width="match_parent"
-                        android:layout_height="160dp" />
+                        android:layout_height="160dp"
+                        android:contentDescription="@null"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/stripe"/>
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/elephant_consultation_photo"
-                        android:src="@mipmap/elephant"
-                        android:contentDescription="@null"
-                        android:layout_marginTop="17dp"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
                         android:layout_marginLeft="17dp"
                         android:layout_marginStart="17dp"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp" />
+                        android:layout_marginTop="17dp"
+                        android:contentDescription="@null"
+                        android:src="@mipmap/elephant"/>
 
                     <LinearLayout
-                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/elephant_consultation_photo"
                         android:layout_marginLeft="20dp"
                         android:layout_marginStart="20dp"
-                        android:layout_toRightOf="@id/elephant_consultation_photo"
                         android:layout_toEndOf="@id/elephant_consultation_photo"
-                        android:layout_alignTop="@id/elephant_consultation_photo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_toRightOf="@id/elephant_consultation_photo"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/elephant_consultation_header_name"
-                            android:text='@{e.name + " " + e.getSex()}'
-                            android:textSize="@dimen/font_size_normal"
-                            android:textStyle="bold"
-                            android:textColor="@android:color/white"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text='@{e.name + " " + e.getSex()}'
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/font_size_normal"
+                            android:textStyle="bold"/>
 
                         <TextView
-                            android:text="@={e.regID}"
                             android:id="@+id/elephant_consultation_header_registration"
-                            android:textSize="@dimen/font_size_normal"
-                            android:textColor="@android:color/white"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text="@={e.regID}"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/font_size_normal"/>
 
                         <TextView
                             android:id="@+id/elephant_consultation_header_location"
-                            android:text='@{e.regCity + " " + e.regDistrict + " " + e.regProvince}'
-                            android:textSize="@dimen/font_size_normal"
-                            android:textColor="@android:color/white"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text='@{e.regCity + " " + e.regDistrict + " " + e.regProvince}'
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/font_size_normal"/>
 
                     </LinearLayout>
 
@@ -88,22 +98,22 @@
 
                 <LinearLayout
                     android:id="@+id/elephant_consultation_content"
-                    android:layout_margin="24dp"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_margin="24dp"
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <TextView
-                            android:text="@string/name"
-                            android:textSize="14sp"
-                            android:textColor="@color/grey_light_100"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text="@string/name"
+                            android:textColor="@color/grey_light_100"
+                            android:textSize="14sp"/>
 
 
                         <FrameLayout
@@ -111,22 +121,22 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:text="@{e.name}"
-                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"
                                 android:id="@+id/elephant_consultation_name"
-                                android:textSize="18sp"
-                                android:textColor="@android:color/black"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:text="@{e.name}"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp"
+                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"/>
 
                             <EditText
-                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"
-                                android:text="@={e.name}"
                                 android:id="@+id/name"
-                                android:textSize="18sp"
-                                android:textColor="@android:color/black"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:text="@={e.name}"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp"
+                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"
                                 />
 
                         </FrameLayout>
@@ -135,17 +145,17 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="14dp"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="vertical">
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="@string/nickname"
                             android:textColor="@color/grey_light_100"
-                            android:textSize="14sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:textSize="14sp"/>
 
 
                         <FrameLayout
@@ -153,232 +163,232 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:text="@{e.nickName}"
-                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"
                                 android:id="@+id/elephant_consultation_nickname"
-                                android:textSize="18sp"
-                                android:textColor="@android:color/black"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:text="@{e.nickName}"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp"
+                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"/>
 
                             <EditText
-                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"
-                                android:text="@={e.nickName}"
                                 android:id="@+id/nickname"
-                                android:textSize="18sp"
-                                android:textColor="@android:color/black"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:text="@={e.nickName}"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp"
+                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"/>
 
                         </FrameLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="14dp"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="vertical">
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="@string/id_number"
                             android:textColor="@color/grey_light_100"
-                            android:textSize="14sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:textSize="14sp"/>
 
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:text="@{e.regID}"
-                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"
                                 android:id="@+id/identification_number"
-                                android:textSize="18sp"
-                                android:textColor="@android:color/black"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:text="@{e.regID}"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp"
+                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"/>
 
                             <EditText
-                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"
-                                android:text="@={e.regID}"
                                 android:id="@+id/id_number"
-                                android:textSize="18sp"
-                                android:textColor="@android:color/black"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:text="@={e.regID}"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp"
+                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"/>
 
                         </FrameLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="14dp"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="vertical">
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="@string/chip"
                             android:textColor="@color/grey_light_100"
-                            android:textSize="14sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:textSize="14sp"/>
 
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:text="@{e.chips1}"
-                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"
                                 android:id="@+id/elephant_consultation_chip"
-                                android:textSize="18sp"
-                                android:textColor="@android:color/black"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:text="@{e.chips1}"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp"
+                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"/>
 
                             <EditText
-                                android:text="@={e.chips1}"
-                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"
                                 android:id="@+id/chip"
-                                android:textSize="18sp"
-                                android:textColor="@android:color/black"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:text="@={e.chips1}"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp"
+                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"/>
 
                         </FrameLayout>
 
                     </LinearLayout>
 
                     <RadioGroup
-                        android:layout_marginTop="14dp"
-                        android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"
-                        android:weightSum="2"
+                        android:id="@+id/elephant_rg_sex"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
                         android:orientation="horizontal"
-                        android:id="@+id/elephant_rg_sex">
+                        android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"
+                        android:weightSum="2">
 
-                        <RadioButton
-                            android:checked='@{e.isMale()}'
-                            android:onClick="@{() -> e.setSex(Gender.MALE)}"
-                            android:gravity="center"
-                            android:text="@string/male"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/elephant_radio_male"
-                            android:duplicateParentState="false"
-                            />
+                        <!--<RadioButton-->
+                        <!--android:checked='@{e.isMale()}'-->
+                        <!--android:onClick="@{() -> e.sex.setSex(male)}"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="@string/male"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:id="@+id/elephant_radio_male"-->
+                        <!--android:duplicateParentState="false"-->
+                        <!--/>-->
 
-                        <RadioButton
-                            android:checked='@{e.isFemale()}'
-                            android:onClick="@{() -> e.setSex(Gender.FEMALE)}"
-                            android:gravity="center"
-                            android:text="@string/female"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/elephant_radio_female" />
+                        <!--<RadioButton-->
+                        <!--android:checked='@{e.isFemale()}'-->
+                        <!--android:onClick="@{() -> e.sex.setSex(female)}"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="@string/female"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:id="@+id/elephant_radio_female" />-->
 
                     </RadioGroup>
 
                     <LinearLayout
-                        android:layout_marginTop="14dp"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="vertical">
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="@string/birth_date"
                             android:textColor="@color/grey_light_100"
-                            android:textSize="14sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:textSize="14sp"/>
 
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:text="@{e.birthDate}"
-                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"
                                 android:id="@+id/elephant_consultation_birth_date"
-                                android:textSize="18sp"
-                                android:textColor="@android:color/black"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:text="@{e.birthDate}"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp"
+                                android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"/>
 
                             <EditText
-                                android:text="@={e.birthDate}"
-                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"
                                 android:id="@+id/birth_date"
-                                android:textSize="18sp"
-                                android:textColor="@android:color/black"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:text="@={e.birthDate}"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp"
+                                android:visibility="@{mode == State.EDITION ? View.VISIBLE : View.GONE}"/>
 
                         </FrameLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="14dp"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="vertical">
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="@string/elephantasia_db_number"
                             android:textColor="@color/grey_light_100"
-                            android:textSize="14sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:textSize="14sp"/>
 
                         <TextView
-                            android:text='@{String.format("%08d", e.id)}'
                             android:id="@+id/elephant_consultation_edn"
-                            android:textSize="18sp"
-                            android:textColor="@android:color/black"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text='@{String.format("%08d", e.id)}'
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"/>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="14dp"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="vertical">
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="@string/eartag"
                             android:textColor="@color/grey_light_100"
-                            android:textSize="14sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:textSize="14sp"/>
 
                         <TextView
-                            android:text='@{e.earTag ? @string/yes_enabled : @string/no_disabled}'
                             android:id="@+id/elephant_consultation_ear_tag"
-                            android:textSize="18sp"
-                            android:textColor="@android:color/black"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text='@{e.earTag ? @string/yes_enabled : @string/no_disabled}'
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"/>
 
                     </LinearLayout>
 
                     <Button
-                        android:textColor="@android:color/white"
-                        android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"
                         android:id="@+id/elephant_consultation_delete"
-                        android:layout_marginTop="22dp"
-                        android:layout_gravity="center"
-                        android:text="@string/delete"
                         android:layout_width="150dp"
-                        android:layout_height="50dp" />
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="22dp"
+                        android:text="@string/delete"
+                        android:textColor="@android:color/white"
+                        android:visibility="@{mode == State.EDITION ? View.GONE : View.VISIBLE}"/>
 
                 </LinearLayout>
 
@@ -391,15 +401,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_margin="@dimen/fab_margin"
             android:src="@android:drawable/ic_menu_edit"
             app:backgroundTint="@color/primary_grey_100"
             app:borderWidth="0dp"
             app:elevation="0dp"
             app:pressedTranslationZ="12dp"
-            app:rippleColor="#cd2014" />
+            app:rippleColor="#cd2014"/>
 
     </RelativeLayout>
 </layout>

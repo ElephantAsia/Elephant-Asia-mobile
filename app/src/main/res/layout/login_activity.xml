@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/login_activity_main_layout"
-    android:theme="@style/AppThemeWhiteBackground"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:paddingBottom="18dp"
+                android:id="@+id/login_activity_main_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF"
+                android:paddingBottom="18dp"
+                android:theme="@style/AppThemeWhiteBackground"
     >
 
-   <ImageView
+    <ImageView
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/splash_screen_background"
-        android:scaleType="fitXY"
         android:adjustViewBounds="false"
-        android:contentDescription="@null"/>
+        android:contentDescription="@null"
+        android:scaleType="fitXY"
+        android:src="@mipmap/splash_screen_background"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#66000000" />
+        android:background="#66000000"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,101 +29,101 @@
         android:weightSum="3">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1.30"
             android:gravity="center"
-            android:layout_weight="1.30">
+            android:orientation="vertical">
 
             <ImageView
-                android:adjustViewBounds="true"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/logo"
-                android:contentDescription="@null"/>
+                android:adjustViewBounds="true"
+                android:contentDescription="@null"
+                android:src="@drawable/logo"/>
 
             <LinearLayout
-                android:layout_marginTop="24dp"
-                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal">
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:textSize="18pt"
-                    android:textColor="#FFFFFF"
                     android:text="@string/elefant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="18pt"/>
 
                 <TextView
-                    android:textSize="18pt"
-                    android:textColor="@color/white_30"
-                    android:text="@string/asia"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@string/asia"
+                    android:textColor="@color/white_30"
+                    android:textSize="18pt"/>
 
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:paddingTop="12dp"
-            android:paddingRight="22dp"
-            android:paddingLeft="22dp"
-            android:background="#FFFFFF"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:gravity="center|top"
             android:layout_height="0dp"
-            android:layout_weight="1.70">
+            android:layout_weight="1.70"
+            android:background="#FFFFFF"
+            android:gravity="center|top"
+            android:orientation="vertical"
+            android:paddingLeft="22dp"
+            android:paddingRight="22dp"
+            android:paddingTop="12dp">
 
             <TextView
-                android:textSize="11pt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/login"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="11pt"
+                android:textStyle="bold"/>
 
             <TextView
-                android:layout_marginTop="4dp"
-                android:textSize="9pt"
-                android:text="@string/credential"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/credential"
+                android:textSize="9pt"/>
 
             <EditText
-                android:layout_marginTop="40dp"
                 android:id="@+id/login_id"
-                android:hint="@string/username"
-                android:inputType="text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:hint="@string/username"
+                android:inputType="text"/>
 
             <EditText
                 android:id="@+id/login_pwd"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/password"
+                android:inputType="textPassword"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
     <Button
-        android:textColor="@android:color/white"
         android:id="@+id/login_button"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:textSize="8pt"
+        android:gravity="center"
         android:text="@string/login"
         android:textAllCaps="true"
-        android:gravity="center"
-        android:layout_width="150dp"
-        android:layout_height="50dp" />
+        android:textColor="@android:color/white"
+        android:textSize="8pt"/>
 
 
 </RelativeLayout>
