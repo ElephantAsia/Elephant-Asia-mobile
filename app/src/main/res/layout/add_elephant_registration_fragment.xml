@@ -2,10 +2,9 @@
         android:theme="@style/AppThemeWhiteBackground">
 
     <data>
-
         <variable
             name="e"
-            type="fr.elephantasia.utils.ElephantInfo"/>
+            type="fr.elephantasia.realm.model.Elephant"/>
     </data>
 
     <ScrollView
@@ -68,7 +67,7 @@
                 >
 
                 <EditText
-                    android:id="@+id/registration_location"
+                    android:id="@+id/registrationLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"

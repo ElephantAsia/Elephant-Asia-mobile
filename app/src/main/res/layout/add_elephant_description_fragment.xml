@@ -4,10 +4,7 @@
     >
 
     <data>
-
-        <variable
-            name="e"
-            type="fr.elephantasia.utils.ElephantInfo"/>
+        <variable name="e" type="fr.elephantasia.realm.model.Elephant"/>
     </data>
 
     <ScrollView
@@ -69,7 +66,7 @@
                     android:textSize="@dimen/font_size_normal"/>
 
                 <Spinner
-                    android:id="@+id/elephant_nails_front_left"
+                    android:id="@+id/nailsFrontLeft"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
@@ -95,7 +92,7 @@
                     />
 
                 <Spinner
-                    android:id="@+id/elephant_nails_front_right"
+                    android:id="@+id/nailsFrontRight"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
@@ -122,7 +119,7 @@
                     />
 
                 <Spinner
-                    android:id="@+id/elephant_nails_rear_left"
+                    android:id="@+id/nailsRearLeft"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
@@ -149,7 +146,7 @@
                     />
 
                 <Spinner
-                    android:id="@+id/elephant_nails_rear_right"
+                    android:id="@+id/nailsRearRight"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
@@ -181,8 +178,7 @@
                     android:clickable="true"
                     android:focusable="false"
                     android:gravity="center"
-                    android:inputType="numberSigned"
-                    android:text="@={e.weight}"/>
+                    android:inputType="numberSigned"/>
 
             </LinearLayout>
 
@@ -203,15 +199,14 @@
                     android:textSize="@dimen/font_size_normal"/>
 
                 <EditText
-                    android:id="@+id/elephant_height"
+                    android:id="@+id/height"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
                     android:clickable="true"
                     android:focusable="false"
                     android:gravity="center"
-                    android:inputType="numberSigned"
-                    android:text="@={e.height}"/>
+                    android:inputType="numberSigned"/>
 
             </LinearLayout>
 

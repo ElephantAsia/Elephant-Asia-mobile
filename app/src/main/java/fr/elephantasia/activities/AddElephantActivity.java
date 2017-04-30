@@ -37,13 +37,12 @@ import fr.elephantasia.fragment.addElephant.ParentageFragment;
 import fr.elephantasia.fragment.addElephant.ProfilFragment;
 import fr.elephantasia.fragment.addElephant.RegistrationFragment;
 import fr.elephantasia.interfaces.AddElephantInterface;
-import fr.elephantasia.realm.Elephant;
+import fr.elephantasia.realm.model.Elephant;
 import fr.elephantasia.realm.RealmDB;
 import fr.elephantasia.utils.ElephantInfo;
 import fr.elephantasia.utils.ImageUtil;
-import fr.elephantasia.utils.StaticTools;
+import fr.elephantasia.utils.KeyboardHelpers;
 import fr.elephantasia.utils.UserInfo;
-import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class AddElephantActivity extends AppCompatActivity implements AddElephantInterface {
@@ -64,8 +63,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
   private static final int FRAGMENT_OWNERSHIP_IDX = 3;
   private static final int FRAGMENT_PARENTAGE_IDX = 4;
   private static final int FRAGMENT_DOCUMENTS_IDX = 5;
-  public String test;
-  Realm realm = Realm.getDefaultInstance();
+
   //Fragment
   private ProfilFragment profilFragment;
   private RegistrationFragment registrationFragment;
@@ -95,7 +93,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
       @Override
       public void onGlobalLayout() {
-        boolean keyboardIsUp = StaticTools.keyboardIsDisplay(activityRootView);
+        boolean keyboardIsUp = KeyboardHelpers.keyboardIsDisplay(activityRootView);
         FloatingActionButton button = (FloatingActionButton) findViewById(R.id.add_elephant_fab);
 
         if (button != null && keyboardIsUp) {
@@ -250,10 +248,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     if (checkMandatoryFields()) {
       setResult(result);
       RealmDB.copyOrUpdate(elephant);
-      eleResult = realm.where(Elephant.class).findAll();
-      test = eleResult.get(0).name;
       finish();
-
     }
   }
 

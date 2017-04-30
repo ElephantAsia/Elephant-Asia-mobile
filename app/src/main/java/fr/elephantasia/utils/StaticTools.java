@@ -114,57 +114,6 @@ public class StaticTools {
   }
 
   /**
-   * Hide keyboard
-   */
-  public static void hideSoftKeyboard(Activity activity) {
-    InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-
-    View currentFocus = activity.getCurrentFocus();
-    if (currentFocus != null) {
-      inputMethodManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
-    }
-  }
-
-  /**
-   * Attach a listener that hide keyboard to all View and nested View except EditText
-   * It allows the soft keyboard to get hidden automatically when EditText is not focus
-   *
-   * @param view     Current view
-   * @param activity Current activity
-   */
-  public static void setupHideKeyboardListener(View view, final Activity activity) {
-    // Set up touch listener for non-text box views to hide keyboard.
-    if (!(view instanceof EditText)) {
-      view.setOnTouchListener(new View.OnTouchListener() {
-        public boolean onTouch(View v, MotionEvent event) {
-          hideSoftKeyboard(activity);
-          return false;
-        }
-      });
-    }
-
-    //If a layout container, iterate over children and seed recursion.
-    if (view instanceof ViewGroup) {
-      for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-        View innerView = ((ViewGroup) view).getChildAt(i);
-        setupHideKeyboardListener(innerView, activity);
-      }
-    }
-  }
-
-  /**
-   * Check if keyboard is display.
-   * We compare the root view height with the current height.
-   * If the difference is higher than 200 we assume the keyboard is up.
-   *
-   * @param v Current view
-   */
-  public static boolean keyboardIsDisplay(View v) {
-    int heightDiff = v.getRootView().getHeight() - v.getHeight();
-    return heightDiff > StaticTools.dpToPx(v.getContext(), 200); // if more than 200 dp, keyboard is up
-  }
-
-  /**
    * Check if the the textview is empty
    *
    * @param ctx  Current context
@@ -177,17 +126,5 @@ public class StaticTools {
       view.setError(null);
     }
   }
-
-  /**
-   * Convert dp to pixel
-   *
-   * @param ctx       Current context
-   * @param valueInDp the dp value in float
-   */
-  public static float dpToPx(Context ctx, float valueInDp) {
-    DisplayMetrics metrics = ctx.getResources().getDisplayMetrics();
-    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
-  }
-
 
 }

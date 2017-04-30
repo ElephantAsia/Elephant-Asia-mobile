@@ -1,5 +1,6 @@
 package fr.elephantasia.realm;
 
+import fr.elephantasia.realm.model.Elephant;
 import io.realm.Realm;
 
 /**

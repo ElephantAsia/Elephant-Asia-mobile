@@ -13,7 +13,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 import fr.elephantasia.R;
-import fr.elephantasia.realm.Location;
+import fr.elephantasia.realm.model.Location;
 
 import static android.content.ContentValues.TAG;
 
@@ -22,7 +22,6 @@ import static android.content.ContentValues.TAG;
  */
 
 public class LocationDialog {
-
 
   private Activity activity;
   private Location loc;
@@ -42,8 +41,6 @@ public class LocationDialog {
 
   /**
    * Display dialog to allow user to set location either manually or from map
-   *
-   * @param type is used to set the right location attribute (current, birth, registration)
    */
   public void show() {
     new MaterialDialog.Builder(activity)
@@ -83,27 +80,3 @@ public class LocationDialog {
     }
   }
 }
-
-
-//  private String setupLocationInput(LocationType type) {
-//
-////    String title = "";
-////
-////    if (type == LocationType.BIRTH) {
-////
-////      title = activity.getString(R.string.set_birth_location);
-////    } else if (type == LocationType.CURRENT) {
-////      provinceET.setText(loc.provinceName);
-////      districtET.setText(loc.districtName);
-////      cityET.setText(loc.cityName);
-////      title = activity.getString(R.string.set_current_location);
-////    } else if (type == LocationType.REGISTRATION) {
-////      provinceET.setText(loc.provinceName);
-////      districtET.setText(loc.districtName);
-////      cityET.setText(loc.cityName);
-////      title = activity.getString(R.string.set_registration_location);
-////    }
-////
-////    return title;
-////  }
-//  }

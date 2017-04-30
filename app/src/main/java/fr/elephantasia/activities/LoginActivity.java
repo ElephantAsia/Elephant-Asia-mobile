@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import fr.elephantasia.R;
+import fr.elephantasia.utils.KeyboardHelpers;
 import fr.elephantasia.utils.Preferences;
 import fr.elephantasia.utils.StaticTools;
 
@@ -23,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.login_activity);
     final View activityRootView = findViewById(R.id.login_activity_main_layout);
-    StaticTools.setupHideKeyboardListener(activityRootView, this);
+    KeyboardHelpers.hideKeyboardListener(activityRootView, this);
 
     if (getSupportActionBar() != null) {
       getSupportActionBar().hide();

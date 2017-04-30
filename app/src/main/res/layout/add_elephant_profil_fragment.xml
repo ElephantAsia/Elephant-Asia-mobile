@@ -6,7 +6,7 @@
 
         <variable
             name="e"
-            type="fr.elephantasia.realm.Elephant"/>
+            type="fr.elephantasia.realm.model.Elephant"/>
     </data>
 
     <ScrollView
@@ -33,7 +33,7 @@
                 >
 
                 <EditText
-                    android:id="@+id/elephant_name"
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/elephant_name"
@@ -61,7 +61,7 @@
 
 
             <RadioGroup
-                android:id="@+id/elephant_rg_sex"
+                android:id="@+id/sex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -71,7 +71,7 @@
                 >
 
                 <RadioButton
-                    android:id="@+id/elephant_radio_male"
+                    android:id="@+id/male"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -82,7 +82,7 @@
                     />
 
                 <RadioButton
-                    android:id="@+id/elephant_radio_female"
+                    android:id="@+id/female"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -101,7 +101,7 @@
                 >
 
                 <EditText
-                    android:id="@+id/elephant_current_location"
+                    android:id="@+id/currentLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -120,7 +120,7 @@
                 >
 
                 <EditText
-                    android:id="@+id/elephant_birth_date"
+                    android:id="@+id/birthDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -140,7 +140,7 @@
                 >
 
                 <EditText
-                    android:id="@+id/elephant_birth_location"
+                    android:id="@+id/birthLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"

@@ -15,6 +15,7 @@ import fr.elephantasia.R;
 import fr.elephantasia.databinding.ElephantConsultationElephantFragmentBinding;
 import fr.elephantasia.interfaces.ConsultationInterface;
 import fr.elephantasia.utils.ElephantInfo;
+import fr.elephantasia.utils.KeyboardHelpers;
 import fr.elephantasia.utils.StaticTools;
 
 
@@ -65,7 +66,7 @@ public class ElephantConsultationFragment extends Fragment {
   @Override
   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    StaticTools.setupHideKeyboardListener(getView(), getActivity());
+    KeyboardHelpers.hideKeyboardListener(getView(), getActivity());
   }
 
   public enum State {

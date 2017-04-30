@@ -1,4 +1,4 @@
-package fr.elephantasia.realm;
+package fr.elephantasia.realm.model;
 
 import java.util.UUID;
 
@@ -12,6 +12,8 @@ import io.realm.annotations.PrimaryKey;
 
 
 public class Elephant extends RealmObject {
+  @PrimaryKey
+  private String id = UUID.randomUUID().toString();
   public State state = new State();
   //Profil
   public String name;
@@ -19,7 +21,7 @@ public class Elephant extends RealmObject {
   public Sex sex = new Sex();
   public Location currentLoc = new Location();
   public String birthDate;
-  public Location birthLoc;
+  public Location birthLoc = new Location();
   // Registration
   public boolean earTag = false;
   public boolean eyeD = false;
@@ -36,11 +38,11 @@ public class Elephant extends RealmObject {
   public String nailsRearRight;
   public String weight;
   public String height;
+  public String heightUnit;
+
   // Parentage
   public Elephant father;
   public Elephant mother;
-  @PrimaryKey
-  private String id = UUID.randomUUID().toString();
   private RealmList<Elephant> children;
 
   // Owner

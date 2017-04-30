@@ -1,4 +1,4 @@
-package fr.elephantasia.realm;
+package fr.elephantasia.realm.model;
 
 import io.realm.RealmObject;
 

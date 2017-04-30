@@ -14,6 +14,7 @@ import fr.elephantasia.R;
 import fr.elephantasia.databinding.SearchFragmentBinding;
 import fr.elephantasia.interfaces.SearchInterface;
 import fr.elephantasia.utils.ElephantInfo;
+import fr.elephantasia.utils.KeyboardHelpers;
 import fr.elephantasia.utils.StaticTools;
 
 
@@ -42,7 +43,7 @@ public class SearchFragment extends Fragment {
         sendData();
       }
     });
-    StaticTools.setupHideKeyboardListener(view, getActivity());
+    KeyboardHelpers.hideKeyboardListener(view, getActivity());
     return (view);
   }
 

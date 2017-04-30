@@ -2,7 +2,7 @@ package fr.elephantasia.utils;
 
 import android.text.TextUtils;
 
-import fr.elephantasia.realm.Location;
+import fr.elephantasia.realm.model.Location;
 
 /**
  * Created by seb on 29/04/2017.
@@ -11,8 +11,11 @@ import fr.elephantasia.realm.Location;
 public class LocationHelpers {
 
   public static String formatProvince(String p) {
-    p = TextUtils.isEmpty(p) && p.length() > 3 ? p : p.substring(0, 3);
-    return TextUtils.isEmpty(p) ? p : p.toUpperCase();
+    if (!TextUtils.isEmpty(p)) {
+      p = p.length() > 3 ? p : p.substring(0, 3);
+      p = p.toUpperCase();
+    }
+    return p;
   }
 
   public static String concat(Location loc) {

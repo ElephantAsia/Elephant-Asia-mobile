@@ -8,19 +8,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.AddElephantActivity;
 import fr.elephantasia.databinding.AddElephantRegistrationFragmentBinding;
-import fr.elephantasia.utils.ElephantInfo;
-import fr.elephantasia.utils.StaticTools;
-
+import fr.elephantasia.dialogs.LocationDialog;
+import fr.elephantasia.realm.model.Elephant;
+import fr.elephantasia.utils.KeyboardHelpers;
 
 public class RegistrationFragment extends Fragment {
 
-  private ElephantInfo elephant;
+  private Elephant elephant;
 
-  private EditText registrationLocationEditText;
+  @BindView(R.id.registrationLocation) EditText registrationLocation;
 
+  @OnClick(R.id.registrationLocation)
+  public void showLocationDialog(EditText editText) {
+    LocationDialog locationDialog = new LocationDialog(getActivity(),
+        elephant.registrationLoc,
+        getString(R.string.set_registration_location),
+        AddElephantActivity.REQUEST_CURRENT_LOCATION,
+        editText
+    );
+    locationDialog.show();
+  }
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -30,38 +43,16 @@ public class RegistrationFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     AddElephantRegistrationFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_elephant_registration_fragment, container, false);
-    elephant = ((AddElephantActivity) getActivity()).getElephantInfo();
+    elephant = ((AddElephantActivity) getActivity()).getElephant();
     View view = binding.getRoot();
     binding.setE(elephant);
-    registrationLocationEditText = (EditText) view.findViewById(R.id.registration_location);
-    registrationLocationEditText.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-//        ((AddElephantActivity) getActivity()).showLocationDialog(AddElephantActivity.LocationType.REGISTRATION);
-      }
-    });
-
-    StaticTools.setupHideKeyboardListener(view, getActivity());
+    ButterKnife.bind(this, view);
+    KeyboardHelpers.hideKeyboardListener(view, getActivity());
     return (view);
-  }
-
-  //TODO: Ameliorer l affichage si il n y a pas de tous les inputs de set (pas de truncage, pas de tiret)
-  public void setRegistrationLocation(String province, String district, String city) {
-    elephant.regProvince = province;
-    elephant.regDistrict = district;
-    elephant.regCity = city;
-
-    String prAbbr = province.length() > 3 ? province.substring(0, 3) : province;
-    String location = prAbbr.toUpperCase() + " - " + district + " - " + city;
-    registrationLocationEditText.setText(location);
   }
 
   //TODO: Extraire la province, le district et la ville du place picker
   public void setRegistrationLocation(String location) {
-//        elephant.regProvince = province;
-//        elephant.regDistrict = district;
-//        elephant.regCity = city;
-
-    registrationLocationEditText.setText(location);
+    registrationLocation.setText(location);
   }
 }
