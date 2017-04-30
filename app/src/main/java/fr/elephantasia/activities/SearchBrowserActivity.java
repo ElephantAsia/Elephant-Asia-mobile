@@ -21,18 +21,18 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
   public static final String EXTRA_MODE = "extra_mode";
 
   private final static int REQUEST_CONSULTATION = 1;
-  private SearchActivity.Mode mode;
+  private SearchElephantActivity.Mode mode;
   private ListView mListView;
   private Database database;
   private TextView noItem;
   private ElephantInfo toSearch;
   private SearchElephantAdapter adapter;
 
-  public static SearchActivity.Mode getMode(Intent intent) {
-    return (SearchActivity.Mode) intent.getSerializableExtra(EXTRA_MODE);
+  public static SearchElephantActivity.Mode getMode(Intent intent) {
+    return (SearchElephantActivity.Mode) intent.getSerializableExtra(EXTRA_MODE);
   }
 
-  public static void setMode(Intent intent, SearchActivity.Mode mode) {
+  public static void setMode(Intent intent, SearchElephantActivity.Mode mode) {
     intent.putExtra(EXTRA_MODE, mode);
   }
 
@@ -87,12 +87,12 @@ public class SearchBrowserActivity extends AppCompatActivity implements SearchEl
 
   @Override
   public void onItemClick(ElephantInfo info) {
-    if (mode == SearchActivity.Mode.CONSULTATION) {
+    if (mode == SearchElephantActivity.Mode.CONSULTATION) {
       Intent intent = new Intent(this, ConsultationActivity.class);
       ConsultationActivity.setElephant(intent, info);
       startActivityForResult(intent, REQUEST_CONSULTATION);
       overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-    } else if (mode == SearchActivity.Mode.PICK_RESULT) {
+    } else if (mode == SearchElephantActivity.Mode.PICK_RESULT) {
       Intent intent = new Intent();
       intent.putExtra(EXTRA_ELEPHANT, info);
       setResult(RESULT_OK, intent);

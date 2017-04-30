@@ -11,51 +11,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.elephantasia.R;
-import fr.elephantasia.interfaces.OwnershipListener;
-import fr.elephantasia.utils.UserInfo;
+import fr.elephantasia.interfaces.ContactListener;
+import fr.elephantasia.utils.Contact;
 
-public class OwnershipAdapter extends BaseAdapter {
+public class ContactAdapter extends BaseAdapter {
 
   private Context context;
   private boolean showFooter;
-  private OwnershipListener listener;
-  private List<UserInfo> users;
+  private ContactListener listener;
+  private List<Contact> contacts;
 
-  public OwnershipAdapter(Context context, boolean showFooter, OwnershipListener listener) {
+  public ContactAdapter(Context context, boolean showFooter, ContactListener listener) {
     this.context = context;
     this.showFooter = showFooter;
     this.listener = listener;
-
-    users = new ArrayList<>();
+    contacts = new ArrayList<>();
   }
 
-  public void setData(List<UserInfo> users) {
-    this.users = users;
-    notifyDataSetChanged();
+  public void setData(List<Contact> contacts) {
+//    this.contacts = contacts;
+//    notifyDataSetChanged();
   }
 
-  public void addItem(UserInfo user) {
-    users.add(user);
-    notifyDataSetChanged();
+  public void addItem(Contact contact) {
+//    contacts.add(contact);
+//    notifyDataSetChanged();
   }
 
   public void clear() {
-    this.users.clear();
+    this.contacts.clear();
   }
 
   @Override
   public int getCount() {
-    return (users.size() + ((showFooter) ? 1 : 0));
+    return (contacts.size() + ((showFooter) ? 1 : 0));
   }
 
   @Override
-  public UserInfo getItem(int index) {
-    UserInfo ret = null;
-
-    if (index < users.size()) {
-      ret = users.get(index);
-    }
-    return (ret);
+  public Contact getItem(int index) {
+//    Contact ret = null;
+//
+//    if (index < contacts.size()) {
+//      ret = contacts.get(index);
+//    }
+//    return (ret);
+    return null;
   }
 
   @Override
@@ -73,20 +73,20 @@ public class OwnershipAdapter extends BaseAdapter {
       view = old;
     } else {
       LayoutInflater inflater = LayoutInflater.from(context);
-      view = inflater.inflate(R.layout.ownership_preview, parent, false);
+      view = inflater.inflate(R.layout.contact_preview, parent, false);
     }
 
-    UserInfo user = getItem(index);
+    Contact contact = getItem(index);
 
-    refreshView(view, user, isFooter);
-    if (user != null) {
-      refreshUser(view, user);
+    refreshView(view, contact, isFooter);
+    if (contact != null) {
+      refreshUser(view, contact);
     }
 
     return view;
   }
 
-  private void refreshView(View view, final UserInfo userInfo, boolean footer) {
+  private void refreshView(View view, final Contact contact, boolean footer) {
     if (footer) {
       view.findViewById(R.id.footer_parent).setVisibility(View.VISIBLE);
       view.findViewById(R.id.owner_parent).setVisibility(View.GONE);
@@ -104,13 +104,13 @@ public class OwnershipAdapter extends BaseAdapter {
       view.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-          listener.onItemClick(userInfo);
+          listener.onItemClick(contact);
         }
       });
     }
   }
 
-  private void refreshUser(View view, UserInfo user) {
+  private void refreshUser(View view, Contact user) {
     ((TextView) view.findViewById(R.id.username)).setText(user.name);
     ((TextView) view.findViewById(R.id.address)).setText(user.address);
     ((TextView) view.findViewById(R.id.email)).setText(user.email);
@@ -118,6 +118,6 @@ public class OwnershipAdapter extends BaseAdapter {
   }
 
   private boolean isFooter(int index) {
-    return index > users.size() - 1 && showFooter;
+    return index > contacts.size() - 1 && showFooter;
   }
 }

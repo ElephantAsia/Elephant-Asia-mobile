@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.elephantasia.utils.UserInfo;
+import fr.elephantasia.utils.Contact;
 
 
 class UserTable {
@@ -27,9 +27,9 @@ class UserTable {
       + EMAIL + " TEXT NOT NULL, "
       + ADDRESS + " TEXT NOT NULL);";
 
-  static List<UserInfo> getUsers(SQLiteDatabase database) {
+  static List<Contact> getUsers(SQLiteDatabase database) {
     String query = "SELECT * FROM " + TABLE_NAME;
-    List<UserInfo> results = new ArrayList<>();
+    List<Contact> results = new ArrayList<>();
     Cursor cursor = database.rawQuery(query, null);
 
     if (cursor.getCount() > 0) {
@@ -44,7 +44,7 @@ class UserTable {
     return (results);
   }
 
-  static ContentValues getContentValues(UserInfo user) {
+  static ContentValues getContentValues(Contact user) {
     ContentValues values = new ContentValues();
     values.put(ID, user.id);
     values.put(NAME, user.name);
@@ -54,11 +54,11 @@ class UserTable {
     return (values);
   }
 
-  private static UserInfo cursorToValue(Cursor cursor) {
-    UserInfo user = new UserInfo();
+  private static Contact cursorToValue(Cursor cursor) {
+    Contact user = new Contact();
     user.id = cursor.getInt(cursor.getColumnIndex(ID));
     user.name = cursor.getString(cursor.getColumnIndex(NAME));
-    user.status = UserInfo.Status.valueOf(cursor.getString(cursor.getColumnIndex(STATUS)));
+    user.status = Contact.Status.valueOf(cursor.getString(cursor.getColumnIndex(STATUS)));
     user.email = cursor.getString(cursor.getColumnIndex(EMAIL));
     user.address = cursor.getString(cursor.getColumnIndex(ADDRESS));
     return (user);

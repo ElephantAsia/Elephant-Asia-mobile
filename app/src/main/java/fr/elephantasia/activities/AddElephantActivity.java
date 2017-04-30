@@ -32,17 +32,17 @@ import fr.elephantasia.dialogs.PickImageDialog;
 import fr.elephantasia.dialogs.PickImageDialogBuilder;
 import fr.elephantasia.fragment.addElephant.DescriptionFragment;
 import fr.elephantasia.fragment.addElephant.DocumentFragment;
-import fr.elephantasia.fragment.addElephant.OwnershipFragment;
+import fr.elephantasia.fragment.addElephant.ContactFragment;
 import fr.elephantasia.fragment.addElephant.ParentageFragment;
 import fr.elephantasia.fragment.addElephant.ProfilFragment;
 import fr.elephantasia.fragment.addElephant.RegistrationFragment;
 import fr.elephantasia.interfaces.AddElephantInterface;
+import fr.elephantasia.realm.model.Contact;
 import fr.elephantasia.realm.model.Elephant;
 import fr.elephantasia.realm.RealmDB;
 import fr.elephantasia.utils.ElephantInfo;
 import fr.elephantasia.utils.ImageUtil;
 import fr.elephantasia.utils.KeyboardHelpers;
-import fr.elephantasia.utils.UserInfo;
 import io.realm.RealmResults;
 
 public class AddElephantActivity extends AppCompatActivity implements AddElephantInterface {
@@ -58,7 +58,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
   public static final int REQUEST_CURRENT_LOCATION = 7;
   public static final int REQUEST_BIRTH_LOCATION = 8;
   public static final int REQUEST_REGISTRATION_LOCATION = 9;
-  private static final int REQUEST_ADD_OWNER = 1;
+  public static final int REQUEST_ADD_CONTACT = 1;
   // Fragment index
   private static final int FRAGMENT_OWNERSHIP_IDX = 3;
   private static final int FRAGMENT_PARENTAGE_IDX = 4;
@@ -125,8 +125,17 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     tabLayout = (TabLayout) findViewById(R.id.tabs);
     tabLayout.setupWithViewPager(viewPager);
 
-    database = new Database(this);
-    database.open();
+
+    Contact one = new Contact();
+
+    one.name = "sebastien saletes";
+    one.phone = "+33782992683";
+    one.email = "seb.saletes@gmail.com";
+    one.address.cityName = "Montpellier";
+    one.address.districtName = "herault";
+    one.address.provinceName = "langudeoc";
+    one.address.streetName = "35 bd jeu de paume";
+    RealmDB.copyOrUpdate(one);
   }
 
   @Override
@@ -148,14 +157,10 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode == RESULT_OK && data != null) {
-      ElephantInfo info = data.getParcelableExtra(SearchActivity.EXTRA_RESULT);
+      ElephantInfo info = data.getParcelableExtra(SearchElephantActivity.EXTRA_RESULT);
       Place selectedPlace = PlacePicker.getPlace(this, data);
 
       switch (requestCode) {
-        case REQUEST_ADD_OWNER:
-          UserInfo user = data.getParcelableExtra(SelectOwnerActivity.EXTRA_RESULT_USER_SELECTED);
-          refreshOwner(user);
-          break;
         case REQUEST_SET_FATHER:
           refreshFather(info);
           break;
@@ -317,30 +322,25 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     pickImageDialog.show();
   }
 
-  @Override
-  public void addOwner() {
-    Intent intent = new Intent(this, SelectOwnerActivity.class);
-    startActivityForResult(intent, REQUEST_ADD_OWNER);
-  }
 
   @Override
   public void setFather() {
-    Intent intent = new Intent(this, SearchActivity.class);
-    SearchActivity.setMode(intent, SearchActivity.Mode.PICK_RESULT);
+    Intent intent = new Intent(this, SearchElephantActivity.class);
+    SearchElephantActivity.setMode(intent, SearchElephantActivity.Mode.PICK_RESULT);
     startActivityForResult(intent, REQUEST_SET_FATHER);
   }
 
   @Override
   public void setMother() {
-    Intent intent = new Intent(this, SearchActivity.class);
-    SearchActivity.setMode(intent, SearchActivity.Mode.PICK_RESULT);
+    Intent intent = new Intent(this, SearchElephantActivity.class);
+    SearchElephantActivity.setMode(intent, SearchElephantActivity.Mode.PICK_RESULT);
     startActivityForResult(intent, REQUEST_SET_MOTHER);
   }
 
   @Override
   public void addChildren() {
-    Intent intent = new Intent(this, SearchActivity.class);
-    SearchActivity.setMode(intent, SearchActivity.Mode.PICK_RESULT);
+    Intent intent = new Intent(this, SearchElephantActivity.class);
+    SearchElephantActivity.setMode(intent, SearchElephantActivity.Mode.PICK_RESULT);
     startActivityForResult(intent, REQUEST_ADD_CHILDREN);
   }
 
@@ -350,13 +350,6 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     ConsultationActivity.setElephant(intent, elephant);
     startActivity(intent);
     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-  }
-
-  private void refreshOwner(UserInfo user) {
-    OwnershipFragment fragment = (OwnershipFragment) adapter.getItem(FRAGMENT_OWNERSHIP_IDX);
-
-    elephantInfo.addOwner(user.id);
-    fragment.refreshOwner(user);
   }
 
   private void refreshFather(ElephantInfo info) {
@@ -382,10 +375,10 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
   private void setupViewPager(ViewPager viewPager) {
     adapter = new ViewPagerAdapter(getSupportFragmentManager());
+    adapter.addFragment(new ContactFragment(), getString(R.string.contact));
     adapter.addFragment(profilFragment, getString(R.string.profil));
     adapter.addFragment(registrationFragment, getString(R.string.registration));
     adapter.addFragment(new DescriptionFragment(), getString(R.string.description));
-    adapter.addFragment(new OwnershipFragment(), getString(R.string.contact));
     adapter.addFragment(new ParentageFragment(), getString(R.string.parentage));
     adapter.addFragment(new DocumentFragment(), getString(R.string.documents));
     viewPager.setAdapter(adapter);

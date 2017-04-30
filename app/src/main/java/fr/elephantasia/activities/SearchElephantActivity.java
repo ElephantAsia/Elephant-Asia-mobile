@@ -7,11 +7,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import fr.elephantasia.R;
-import fr.elephantasia.fragment.SearchFragment;
+import fr.elephantasia.fragment.SearchElephantFragment;
 import fr.elephantasia.interfaces.SearchInterface;
 import fr.elephantasia.utils.ElephantInfo;
 
-public class SearchActivity extends AppCompatActivity implements SearchInterface {
+public class SearchElephantActivity extends AppCompatActivity implements SearchInterface {
 
   public static final String EXTRA_MODE = "mode";
   public static final String EXTRA_RESULT = "result";
@@ -31,7 +31,7 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.search_activity);
+    setContentView(R.layout.search_elephant_activity);
 
     mode = getMode(getIntent());
     Log.i("mode", mode + "");
@@ -78,10 +78,10 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
   }
 
   private void setSearchFragment() {
-    SearchFragment searchFragment = new SearchFragment();
+    SearchElephantFragment searchElephantFragment = new SearchElephantFragment();
     Bundle args = new Bundle();
-    searchFragment.setArguments(args);
-    getSupportFragmentManager().beginTransaction().replace(R.id.search_fragment, searchFragment).commit();
+    searchElephantFragment.setArguments(args);
+    getSupportFragmentManager().beginTransaction().replace(R.id.search_elephant_fragment , searchElephantFragment).commit();
   }
 
   enum Mode {

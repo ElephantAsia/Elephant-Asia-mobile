@@ -11,14 +11,13 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import fr.elephantasia.R;
-import fr.elephantasia.databinding.SearchFragmentBinding;
+import fr.elephantasia.databinding.SearchElephantFragmentBinding;
 import fr.elephantasia.interfaces.SearchInterface;
 import fr.elephantasia.utils.ElephantInfo;
 import fr.elephantasia.utils.KeyboardHelpers;
-import fr.elephantasia.utils.StaticTools;
 
 
-public class SearchFragment extends Fragment {
+public class SearchElephantFragment extends Fragment {
 
   private Spinner sexSpinner;
   private Spinner countrySpinner;
@@ -28,7 +27,7 @@ public class SearchFragment extends Fragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    SearchFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.search_fragment, container, false);
+    SearchElephantFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.search_elephant_fragment, container, false);
     View view = binding.getRoot();
     binding.setE(elephantInfo);
     searchButton = (Button) view.findViewById(R.id.search_button_search);

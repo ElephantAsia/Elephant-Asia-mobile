@@ -28,7 +28,7 @@ public class DocumentTable {
 
     /*static int delete(SQLiteDatabase database, DocumentInfo document) {
         ContentValues values = getContentValues(document);
-        values.put(ElephantTable.STATE, ElephantInfo.State.DELETED.toString());
+        values.put(ElephantTable.STATE, ElephantInfo.ElephantState.DELETED.toString());
 
         return (database.update(TABLE_NAME, values, ID + " = " + elephant.id, null));
     }*/

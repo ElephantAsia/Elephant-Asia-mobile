@@ -7,21 +7,21 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 
 import fr.elephantasia.R;
-import fr.elephantasia.adapter.OwnershipAdapter;
-import fr.elephantasia.interfaces.OwnershipListener;
-import fr.elephantasia.utils.UserInfo;
+import fr.elephantasia.adapter.ContactAdapter;
+import fr.elephantasia.interfaces.ContactListener;
+import fr.elephantasia.utils.Contact;
 
-public class SelectOwnerActivity extends AppCompatActivity {
+public class SelectContactActivity extends AppCompatActivity {
 
   public static final String EXTRA_RESULT_USER_SELECTED = "user_selected";
 
   private ListView list;
-  private OwnershipAdapter adapter;
+  private ContactAdapter adapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.select_owner_activity);
+    setContentView(R.layout.select_contact_activity);
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
@@ -31,23 +31,23 @@ public class SelectOwnerActivity extends AppCompatActivity {
     }
 
     list = (ListView) findViewById(R.id.list);
-    adapter = new OwnershipAdapter(this, false, new OwnershipListener() {
+    adapter = new ContactAdapter(this, false, new ContactListener() {
       @Override
       public void onAddClick() {
         // nothing to do
       }
 
       @Override
-      public void onItemClick(UserInfo userInfo) {
+      public void onItemClick(Contact contact) {
         Intent result = new Intent();
-        result.putExtra(EXTRA_RESULT_USER_SELECTED, userInfo);
+        result.putExtra(EXTRA_RESULT_USER_SELECTED, contact);
         setResult(RESULT_OK, result);
         finish();
       }
     });
 
     list.setAdapter(adapter);
-    adapter.setData(UserInfo.generateTestUser());
+    adapter.setData(Contact.generateTestUser());
   }
 
   @Override

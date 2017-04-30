@@ -10,18 +10,18 @@ import java.util.List;
  * Created by Stephane on 16/03/2017.
  */
 
-public class UserInfo implements Parcelable {
+public class Contact implements Parcelable {
 
-  public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {
+  public static final Parcelable.Creator<Contact> CREATOR = new Parcelable.Creator<Contact>() {
 
     @Override
-    public UserInfo createFromParcel(Parcel in) {
-      return new UserInfo(in);
+    public Contact createFromParcel(Parcel in) {
+      return new Contact(in);
     }
 
     @Override
-    public UserInfo[] newArray(int size) {
-      return new UserInfo[size];
+    public Contact[] newArray(int size) {
+      return new Contact[size];
     }
   };
   public int id;
@@ -30,7 +30,7 @@ public class UserInfo implements Parcelable {
   public String email;
   public String address;
 
-  public UserInfo() {
+  public Contact() {
     id = 0;
     name = "username";
     status = Status.DEFAULT;
@@ -38,7 +38,7 @@ public class UserInfo implements Parcelable {
     address = "address";
   }
 
-  private UserInfo(int id, String username, Status status, String email, String address) {
+  private Contact(int id, String username, Status status, String email, String address) {
     this.id = id;
     this.name = username;
     this.status = status;
@@ -46,7 +46,7 @@ public class UserInfo implements Parcelable {
     this.address = address;
   }
 
-  private UserInfo(Parcel in) {
+  private Contact(Parcel in) {
     id = in.readInt();
     name = in.readString();
     status = Status.valueOf(in.readString());
@@ -54,14 +54,14 @@ public class UserInfo implements Parcelable {
     address = in.readString();
   }
 
-  public static List<UserInfo> generateTestUser() {
-    List<UserInfo> list = new ArrayList<>();
+  public static List<Contact> generateTestUser() {
+    List<Contact> list = new ArrayList<>();
 
-    list.add(new UserInfo(1, "jean thierry", Status.Admin, "jeanthierry@gmail.com", "10 rue tartanpion"));
-    list.add(new UserInfo(2, "jean rachid", Status.Medic, "jeanrachid@gmail.com", "20 rue tartanpion"));
-    list.add(new UserInfo(3, "azerty", Status.Medic, "azerty@gmail.com", "30 rue tartanpion"));
-    list.add(new UserInfo(4, "admindu34", Status.Admin, "admindu34@gmail.com", "40 rue tartanpion"));
-    list.add(new UserInfo(5, "XoX--Th3D4rkK1ll3r--XoX", Status.Medic, "darkkiller@gmail.com", "50 rue tartanpion"));
+    list.add(new Contact(1, "jean thierry", Status.Admin, "jeanthierry@gmail.com", "10 rue tartanpion"));
+    list.add(new Contact(2, "jean rachid", Status.Medic, "jeanrachid@gmail.com", "20 rue tartanpion"));
+    list.add(new Contact(3, "azerty", Status.Medic, "azerty@gmail.com", "30 rue tartanpion"));
+    list.add(new Contact(4, "admindu34", Status.Admin, "admindu34@gmail.com", "40 rue tartanpion"));
+    list.add(new Contact(5, "XoX--Th3D4rkK1ll3r--XoX", Status.Medic, "darkkiller@gmail.com", "50 rue tartanpion"));
 
     return list;
   }

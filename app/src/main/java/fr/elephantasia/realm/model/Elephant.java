@@ -1,7 +1,10 @@
 package fr.elephantasia.realm.model;
 
+import org.parceler.Parcel;
+
 import java.util.UUID;
 
+import io.realm.ElephantRealmProxy;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -10,11 +13,11 @@ import io.realm.annotations.PrimaryKey;
  * Created by seb on 29/04/2017.
  */
 
-
+@Parcel(implementations = { ElephantRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { Elephant.class })
 public class Elephant extends RealmObject {
   @PrimaryKey
-  private String id = UUID.randomUUID().toString();
-  public State state = new State();
+  public String id = UUID.randomUUID().toString();
+  public ElephantState state = new ElephantState();
   //Profil
   public String name;
   public String nickName;
@@ -45,6 +48,6 @@ public class Elephant extends RealmObject {
   public Elephant mother;
   private RealmList<Elephant> children;
 
-  // Owner
-  private String owners;
+  // Contact
+  private RealmList<Contact> contacts;
 }

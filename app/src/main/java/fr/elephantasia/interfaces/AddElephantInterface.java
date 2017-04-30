@@ -10,8 +10,6 @@ public interface AddElephantInterface {
 
   void nextPage();
 
-  void addOwner();
-
   void setFather();
 
   void setMother();

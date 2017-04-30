@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.main_menu_search) {
-      Intent search = new Intent(this, SearchActivity.class);
+      Intent search = new Intent(this, SearchElephantActivity.class);
       startActivity(search);
       overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
       return true;

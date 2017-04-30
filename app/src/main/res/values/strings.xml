@@ -13,6 +13,7 @@
     <string name="no">No</string>
     <string name="elephant_birthdate">Birthdate</string>
     <string name="elephant_name">Elephant name *</string>
+    <string name="contact_name">Contact name</string>
     <string name="elephant_nickname">Nickname</string>
     <string name="elephant_registration_number">Registration ID</string>
     <string name="registration_location">Registration location</string>
@@ -37,6 +38,11 @@
     <string name="sex_required">Sex is required</string>
     <string name="elephant_draft_added">Elephant added to draft</string>
     <string name="elephant_local_added">Elephant added to local database</string>
+
+
+    <string name="owners">Owners</string>
+    <string name="cornacs">Cornacs</string>
+    <string name="vets">Vets</string>
 
 
     <string name="elephant_chip">Chip number #1</string>
@@ -158,7 +164,7 @@
 
     <string name="put_drafts">Put this elephant in drafts ?</string>
 
-    <string name="add_owner">Add Owner</string>
+    <string name="add_contact">Add Contact</string>
     <string name="select_owner">Select Owner</string>
 
     <string name="add_document">Add Document</string>
@@ -167,8 +173,11 @@
 
     <string name="error">Error</string>
     <string name="set_location_from_map">Set location from map ?</string>
+    <string name="add_existing_contact">Add existing contact ?</string>
     <string name="FROM_MAP">FROM MAP</string>
     <string name="MANUALLY">MANUALLY</string>
+    <string name="SEARCH">SEARCH</string>
+    <string name="CREATE">CREATE</string>
     <string name="set_birth_location">Set birth location</string>
     <string name="set_current_location">Set current location</string>
     <string name="set_registration_location">Set registration location</string>
