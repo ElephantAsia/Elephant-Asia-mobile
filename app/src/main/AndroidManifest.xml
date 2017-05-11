@@ -28,10 +28,9 @@
         <activity android:name=".activities.MainActivity"/>
         <activity android:name=".activities.SearchElephantActivity"/>
         <activity android:name=".activities.SearchContactActivity"/>
-        <activity android:name=".activities.ContactResultActivity"/>
+        <activity android:name=".activities.SearchContactResultActivity"/>
         <activity android:name=".activities.SearchBrowserActivity"/>
         <activity android:name=".activities.ConsultationActivity"/>
-        <activity android:name=".activities.SelectContactActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

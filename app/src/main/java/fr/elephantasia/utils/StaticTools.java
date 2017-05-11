@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import fr.elephantasia.R;
 
@@ -126,5 +127,13 @@ public class StaticTools {
       view.setError(null);
     }
   }
+
+  /**
+   * Used to set request code accross activities
+   */
+    private static final AtomicInteger seed = new AtomicInteger();
+    public static int getFreshInt() {
+      return seed.incrementAndGet();
+    }
 
 }

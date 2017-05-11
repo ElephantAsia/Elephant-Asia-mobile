@@ -3,13 +3,13 @@
     >
 
     <data>
-
         <variable
             name="e"
             type="fr.elephantasia.realm.model.Elephant"/>
     </data>
 
     <ScrollView
+        android:id="@+id/profil_fragment"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">

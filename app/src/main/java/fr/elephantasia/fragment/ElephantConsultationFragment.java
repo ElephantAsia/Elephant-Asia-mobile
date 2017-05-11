@@ -12,23 +12,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import fr.elephantasia.R;
-import fr.elephantasia.databinding.ElephantConsultationElephantFragmentBinding;
+import fr.elephantasia.databinding.ElephantConsultationFragmentBinding;
 import fr.elephantasia.interfaces.ConsultationInterface;
 import fr.elephantasia.utils.ElephantInfo;
 import fr.elephantasia.utils.KeyboardHelpers;
-import fr.elephantasia.utils.StaticTools;
 
 
 public class ElephantConsultationFragment extends Fragment {
 
-  ElephantConsultationElephantFragmentBinding binding;
+  ElephantConsultationFragmentBinding binding;
   private ElephantInfo info;
   private FloatingActionButton fab;
   private Button deleteButton;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    binding = DataBindingUtil.inflate(inflater, R.layout.elephant_consultation_elephant_fragment, container, false);
+    binding = DataBindingUtil.inflate(inflater, R.layout.elephant_consultation_fragment, container, false);
     View view = binding.getRoot();
 
     info = new ElephantInfo(((ConsultationInterface) getActivity()).getElephantInfo());

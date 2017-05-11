@@ -5,29 +5,27 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
-import fr.elephantasia.adapter.ContactResultAdapter;
-import fr.elephantasia.adapter.SearchElephantAdapter;
-import fr.elephantasia.database.Database;
-import fr.elephantasia.realm.Yolo;
+import fr.elephantasia.adapter.ListContactPreviewAdapter;
 import fr.elephantasia.realm.model.Contact;
-import fr.elephantasia.utils.ElephantInfo;
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
-public class ContactResultActivity extends AppCompatActivity {
+import static fr.elephantasia.activities.SearchContactActivity.EXTRA_SEARCH;
 
-  private ContactResultAdapter adapter;
+public class SearchContactResultActivity extends AppCompatActivity {
+  public static final String EXTRA_RESULT = "extra_result";
+
+  private ListContactPreviewAdapter adapter;
   private Realm realm;
 
   @BindView(R.id.list_view) ListView listView;
@@ -37,16 +35,28 @@ public class ContactResultActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.result_contacts_activity);
     ButterKnife.bind(this);
-    Contact contactFilters = Parcels.unwrap(getIntent().getParcelableExtra("test"));
+    Contact contactFilters = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH));
 
     //
     realm = Realm.getDefaultInstance();
 
-    RealmResults<Contact> contactsList = realm.where(Contact.class).findAllSorted("name");
-    adapter = new ContactResultAdapter(contactsList);
+    RealmResults<Contact> results = realm.where(Contact.class).findAllSorted("name");
+    RealmList<Contact> contacts = new RealmList<>();
+    contacts.addAll(results);
+
+    adapter = new ListContactPreviewAdapter(this, contacts, false);
     listView.setAdapter(adapter);
 
-    //
+    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Intent resultIntent = getIntent();
+        Contact contact = adapter.getItem(i);
+        resultIntent.putExtra(EXTRA_RESULT, Parcels.wrap(contact));
+        setResult(RESULT_OK, resultIntent);
+        finish();
+      }
+    });
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     TextView title = (TextView) toolbar.findViewById(R.id.title);
@@ -71,14 +81,14 @@ public class ContactResultActivity extends AppCompatActivity {
     return true;
   }
 
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//    if (requestCode == REQUEST_CONSULTATION) {
-//      if (resultCode == RESULT_OK) {
-////        refreshList();
-//      }
-//    }
-  }
+//  @Override
+//  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+////    if (requestCode == REQUEST_CONSULTATION) {
+////      if (resultCode == RESULT_OK) {
+//////        refreshList();
+////      }
+////    }
+//  }
 
 //  @Override
 //  public void onItemClick(ElephantInfo info) {

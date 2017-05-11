@@ -46,8 +46,8 @@ public class Elephant extends RealmObject {
   // Parentage
   public Elephant father;
   public Elephant mother;
-  private RealmList<Elephant> children;
+  public RealmList<Elephant> children;
 
   // Contact
-  private RealmList<Contact> contacts;
+  public RealmList<Contact> contacts;
 }

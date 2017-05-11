@@ -66,6 +66,7 @@
     <string name="close">Close</string>
 
     <string name="search">Search</string>
+    <string name="create">Create</string>
     <string name="current_animal">Current Animal</string>
     <string name="locations">Locations</string>
     <string name="reports">Reports</string>
@@ -178,6 +179,7 @@
     <string name="MANUALLY">MANUALLY</string>
     <string name="SEARCH">SEARCH</string>
     <string name="CREATE">CREATE</string>
+    <string name="remove_contact_from_list">remove contact from list</string>
     <string name="set_birth_location">Set birth location</string>
     <string name="set_current_location">Set current location</string>
     <string name="set_registration_location">Set registration location</string>

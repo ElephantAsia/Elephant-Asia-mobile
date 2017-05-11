@@ -25,8 +25,11 @@ import android.widget.Toast;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
+import org.parceler.Parcels;
+
 import fr.elephantasia.R;
 import fr.elephantasia.adapter.ViewPagerAdapter;
+import fr.elephantasia.constants.ActivityResult;
 import fr.elephantasia.database.Database;
 import fr.elephantasia.dialogs.PickImageDialog;
 import fr.elephantasia.dialogs.PickImageDialogBuilder;
@@ -44,6 +47,9 @@ import fr.elephantasia.utils.ElephantInfo;
 import fr.elephantasia.utils.ImageUtil;
 import fr.elephantasia.utils.KeyboardHelpers;
 import io.realm.RealmResults;
+
+import static fr.elephantasia.constants.ActivityResult.CONTACT_SELECTED;
+
 
 public class AddElephantActivity extends AppCompatActivity implements AddElephantInterface {
 
@@ -67,6 +73,9 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
   //Fragment
   private ProfilFragment profilFragment;
   private RegistrationFragment registrationFragment;
+  private ContactFragment contactFragment;
+
+
   private PickImageDialog pickImageDialog;
   private Database database;
   private TabLayout tabLayout;
@@ -81,6 +90,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
     elephantInfo = new ElephantInfo();
     profilFragment = new ProfilFragment();
     registrationFragment = new RegistrationFragment();
+    contactFragment = new ContactFragment();
   }
 
   @Override
@@ -161,6 +171,10 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
       Place selectedPlace = PlacePicker.getPlace(this, data);
 
       switch (requestCode) {
+        case CONTACT_SELECTED:
+          Contact contact = Parcels.unwrap(data.getParcelableExtra(SearchContactResultActivity.EXTRA_RESULT));
+          contactFragment.addContactTolist(contact);
+          break;
         case REQUEST_SET_FATHER:
           refreshFather(info);
           break;
@@ -375,7 +389,7 @@ public class AddElephantActivity extends AppCompatActivity implements AddElephan
 
   private void setupViewPager(ViewPager viewPager) {
     adapter = new ViewPagerAdapter(getSupportFragmentManager());
-    adapter.addFragment(new ContactFragment(), getString(R.string.contact));
+    adapter.addFragment(contactFragment, getString(R.string.contact));
     adapter.addFragment(profilFragment, getString(R.string.profil));
     adapter.addFragment(registrationFragment, getString(R.string.registration));
     adapter.addFragment(new DescriptionFragment(), getString(R.string.description));

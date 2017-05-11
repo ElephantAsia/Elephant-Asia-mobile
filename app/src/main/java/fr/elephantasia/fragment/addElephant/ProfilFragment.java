@@ -72,6 +72,7 @@ public class ProfilFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     AddElephantProfilFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_elephant_profil_fragment, container, false);
     elephant = ((AddElephantActivity) getActivity()).getElephant();
+    binding.setE(elephant);
     View view = binding.getRoot();
     ButterKnife.bind(this, view);
     KeyboardHelpers.hideKeyboardListener(view, getActivity());
