@@ -1,5 +1,6 @@
 package fr.elephantasia.realm.model;
 
+import org.apache.http.util.TextUtils;
 import org.parceler.Parcel;
 
 import io.realm.LocationRealmProxy;
@@ -15,4 +16,11 @@ public class Location extends RealmObject {
   public String districtName;
   public String provinceName;
   public String streetName;
+
+  public boolean isEmpty() {
+    return TextUtils.isEmpty(cityName)
+        && TextUtils.isEmpty(districtName)
+        && TextUtils.isEmpty(provinceName)
+        && TextUtils.isEmpty(streetName);
+  }
 }

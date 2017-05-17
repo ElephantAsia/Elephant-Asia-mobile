@@ -28,15 +28,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ListView
-        android:id="@+id/listViewSearch"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:dividerHeight="0dp"/>
-
     <TextView
-        android:id="@+id/search_browser_no_item"
+        android:id="@+id/no_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -44,5 +37,13 @@
         android:textColor="@color/grey_light_100"
         android:textSize="20sp"
         android:visibility="gone"/>
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"/>
+
 
 </LinearLayout>

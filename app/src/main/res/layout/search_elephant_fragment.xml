@@ -3,7 +3,6 @@
     >
 
     <data>
-
         <variable
             name="e"
             type="fr.elephantasia.utils.ElephantInfo"/>
@@ -98,26 +97,6 @@
                 android:inputType="text"
                 android:text="@={e.regCity}"
                 android:textSize="16sp"/>
-
-            <!--<EditText-->
-            <!--android:textSize="16sp"-->
-            <!--android:enabled="false"-->
-            <!--android:id="@+id/search_elephant_referent_name"-->
-            <!--android:inputType="numberDecimal"-->
-            <!--android:ems="10"-->
-            <!--android:hint="@string/referent_name"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
-
-            <!--<EditText-->
-            <!--android:textSize="16sp"-->
-            <!--android:enabled="false"-->
-            <!--android:id="@+id/search_elephant_referent_id"-->
-            <!--android:inputType="numberDecimal"-->
-            <!--android:ems="10"-->
-            <!--android:hint="@string/referent_id"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
 
         </LinearLayout>
 

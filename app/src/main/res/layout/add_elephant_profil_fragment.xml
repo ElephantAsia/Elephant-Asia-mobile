@@ -77,7 +77,7 @@
                     android:layout_weight="1"
                     android:duplicateParentState="false"
                     android:gravity="center"
-                    android:onClick="@{() -> e.sex.setSex(`male`)}"
+                    android:checked="@={e.male}"
                     android:text="@string/male"
                     />
 
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:onClick="@{() -> e.sex.setSex(`female`)}"
+                    android:checked="@={e.female}"
                     android:text="@string/female"
                     />
 

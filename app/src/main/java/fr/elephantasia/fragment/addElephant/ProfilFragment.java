@@ -11,7 +11,6 @@ import android.widget.RadioButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.AddElephantActivity;
@@ -27,10 +26,17 @@ public class ProfilFragment extends Fragment {
 
   @BindView(R.id.birthLocation) EditText birthLocation;
   @BindView(R.id.currentLocation) EditText currentLocation;
+
   // Mandatory fields
   @BindView(R.id.name) EditText name;
   @BindView(R.id.male) RadioButton male;
   @BindView(R.id.female) RadioButton female;
+
+  @OnClick({R.id.male, R.id.female})
+  public void removeSexError() {
+    male.setError(null);
+    female.setError(null);
+  }
 
   @OnClick(R.id.birthDate)
   public void showDatePicker(final EditText editText) {
@@ -41,13 +47,14 @@ public class ProfilFragment extends Fragment {
         editText.setText(getString(R.string.date, year, month, dayOfMonth));
       }
     });
-    ((AddElephantActivity) getActivity()).showDialogFragment(dialog);
+    dialog.show(getActivity().getSupportFragmentManager(), "Date");
   }
 
   @OnClick({R.id.birthLocation, R.id.currentLocation})
   public void showLocationDialog(EditText editText) {
     String currentTitle = getString(R.string.set_current_location);
     String birthTitle = getString(R.string.set_birth_location);
+
     LocationDialog locationDialog = new LocationDialog(getActivity(),
         editText.getId() == R.id.birthLocation ? elephant.birthLoc : elephant.currentLoc,
         editText.getId() == R.id.birthLocation ? birthTitle : currentTitle,
@@ -55,12 +62,6 @@ public class ProfilFragment extends Fragment {
         editText
     );
     locationDialog.show();
-  }
-
-  @OnCheckedChanged({R.id.male, R.id.female})
-  public void removeSexError() {
-    male.setError(null);
-    female.setError(null);
   }
 
   @Override

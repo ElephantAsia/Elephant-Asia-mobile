@@ -20,7 +20,7 @@ import fr.elephantasia.realm.model.Contact;
 import io.realm.RealmList;
 
 import static butterknife.ButterKnife.findById;
-import static fr.elephantasia.constants.ActivityResult.CONTACT_SELECTED;
+import static fr.elephantasia.activities.AddElephantActivity.REQUEST_CONTACT_SELECTED;
 
 public class ContactFragment extends Fragment {
 
@@ -37,7 +37,7 @@ public class ContactFragment extends Fragment {
     addButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         Intent intent = new Intent(getActivity(), SearchContactActivity.class);
-        getActivity().startActivityForResult(intent, CONTACT_SELECTED);
+        getActivity().startActivityForResult(intent, REQUEST_CONTACT_SELECTED);
       }
     });
 

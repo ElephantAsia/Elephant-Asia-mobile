@@ -9,5 +9,5 @@ import static fr.elephantasia.utils.StaticTools.getFreshInt;
  */
 
 public class ActivityResult {
-  public static final int CONTACT_SELECTED = 1;
+  public static final int CONTACT_CREATED = 25;
 }

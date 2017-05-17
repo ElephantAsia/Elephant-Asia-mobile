@@ -39,26 +39,4 @@ public class RealmDB {
     realm.close();
   }
 
-  // QUERY
-  static public RealmResults<Contact> searchContact(final Contact contact) {
-    Realm realm = Realm.getDefaultInstance();
-    RealmResults<Contact> res = realm.where(Contact.class)
-        .equalTo("name", contact.name)
-        .findAll();
-
-    if (contact.owner) {
-      res = res.where().equalTo("owner", true).findAll();
-    }
-
-    if (contact.cornac) {
-      res = res.where().equalTo("cornac", true).findAll();
-    }
-
-    if (contact.vet) {
-      res = res.where().equalTo("vet", true).findAll();
-    }
-
-    return res;
-  }
-
 }

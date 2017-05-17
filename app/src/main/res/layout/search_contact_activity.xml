@@ -28,9 +28,10 @@
                 android:background="@color/primary_grey_100">
 
                 <TextView
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_contact"
+                    android:text="@string/search"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"/>
 
@@ -47,87 +48,22 @@
             android:paddingRight="16dp"
             android:paddingTop="16dp">
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="72dp"
-                android:paddingBottom="16dp"
+                android:orientation="vertical"
                 >
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/firstname"
-                    android:inputType="textPersonName"
-                    android:text="@={c.firstName}"
-                    />
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="72dp"
-                android:paddingBottom="16dp"
-                >
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/lastname"
-                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:hint="@string/contact_name"
+                    android:inputType="text"
                     android:text="@={c.lastName}"
-                    />
-            </android.support.design.widget.TextInputLayout>
+                    android:textSize="16sp"/>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="72dp"
-                android:paddingBottom="16dp"
-                >
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/phone"
-                    android:inputType="phone"
-                    android:text="@={c.phone}"
-                    />
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="72dp"
-                android:paddingBottom="16dp"
-                >
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/email"
-                    android:inputType="textEmailAddress"
-                    android:text="@={c.email}"
-                    />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="72dp"
-                android:paddingBottom="16dp"
-                >
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/address"
-                    android:inputType="textPostalAddress"
-                    android:text=""
-                    />
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -143,7 +79,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/owners"
                     android:textSize="@dimen/font_size_normal"
-                    />
+                    tools:ignore="RelativeOverlap"/>
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -151,15 +87,16 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:checked="@={c.owner}" />
+                    android:checked="@={c.owner}"
+                    />
 
             </RelativeLayout>
+
 
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -169,7 +106,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/cornacs"
                     android:textSize="@dimen/font_size_normal"
-                    />
+                    tools:ignore="RelativeOverlap"/>
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -177,7 +114,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:checked="@={c.cornac}" />
+                    android:checked="@={c.cornac}"
+                    />
 
             </RelativeLayout>
 
@@ -195,7 +133,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/vets"
                     android:textSize="@dimen/font_size_normal"
-                    />
+                    tools:ignore="RelativeOverlap"/>
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -203,22 +141,43 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:checked="@={c.vet}" />
+                    android:checked="@={c.vet}"
+                    />
 
             </RelativeLayout>
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:paddingLeft="4.0dip"
+                android:paddingTop="5.0dip"
+                android:paddingRight="4.0dip"
+                android:paddingBottom="1.0dip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
             <Button
-                android:id="@+id/validate_button"
+                android:id="@+id/create_button"
                 android:layout_width="120dp"
                 android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_weight="1.0"
                 android:layout_marginTop="16dp"
-                android:text="@string/validate"
+                android:text="@string/create"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:textColor="@android:color/white"/>
 
-
+            <Button
+                android:id="@+id/search_button"
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/search"
+                android:layout_weight="1.0"
+                android:textColor="@android:color/white"/>
+            </LinearLayout>
         </LinearLayout>
+
+
     </LinearLayout>
 </layout>

@@ -1,49 +1,65 @@
 package fr.elephantasia.activities;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.Button;
 
+import org.parceler.Parcels;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import fr.elephantasia.R;
+import fr.elephantasia.databinding.SearchElephantActivityBinding;
 import fr.elephantasia.fragment.SearchElephantFragment;
 import fr.elephantasia.interfaces.SearchInterface;
+import fr.elephantasia.realm.model.Elephant;
 import fr.elephantasia.utils.ElephantInfo;
+import fr.elephantasia.utils.KeyboardHelpers;
 
-public class SearchElephantActivity extends AppCompatActivity implements SearchInterface {
+public class SearchElephantActivity extends AppCompatActivity {
 
-  public static final String EXTRA_MODE = "mode";
-  public static final String EXTRA_RESULT = "result";
+  // Extras
+  public static final String EXTRA_SEARCH_ELEPHANT = "extra_search_elephant";
 
-  private static final int REQUEST_SEARCH_BROWSER = 1;
-  private Mode mode;
+  // Request code
+  public static final int REQUEST_ELEPHANT_SELECTED = 1;
 
-  static public Mode getMode(Intent intent) {
-    int mode = intent.getIntExtra(EXTRA_MODE, Mode.CONSULTATION.ordinal());
-    return Mode.values()[mode];
+  // Attr
+  private Elephant elephant = new Elephant();
+
+  // Views Binding
+  @BindView(R.id.toolbar) Toolbar toolbar;
+
+  // Listeners Binding
+  @OnClick(R.id.search_button)
+  public void searchElephant() {
+    Intent intent = new Intent(this, SearchElephantResultActivity.class);
+    intent.putExtra(EXTRA_SEARCH_ELEPHANT, Parcels.wrap(elephant));
+    startActivityForResult(intent, REQUEST_ELEPHANT_SELECTED);
   }
 
-  static public void setMode(Intent intent, Mode mode) {
-    intent.putExtra(EXTRA_MODE, mode.ordinal());
+  public SearchElephantActivity() {
+    elephant.male = true;
+    elephant.female = true;
   }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.search_elephant_activity);
-
-    mode = getMode(getIntent());
-    Log.i("mode", mode + "");
-
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    SearchElephantActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.search_elephant_activity);
+    binding.setE(elephant);
+    ButterKnife.bind(this);
     setSupportActionBar(toolbar);
 
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
-    setSearchFragment();
+    KeyboardHelpers.hideKeyboardListener(binding.getRoot(), this);
   }
 
   @Override
@@ -55,38 +71,14 @@ public class SearchElephantActivity extends AppCompatActivity implements SearchI
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (requestCode == REQUEST_SEARCH_BROWSER) {
-      if (resultCode == RESULT_OK && mode == Mode.PICK_RESULT) {
-        ElephantInfo info = data.getParcelableExtra(SearchBrowserActivity.EXTRA_ELEPHANT);
-        Intent intent = new Intent();
-        intent.putExtra(EXTRA_RESULT, info);
-        setResult(RESULT_OK, intent);
-        finish();
-      }
-    }
+//    if (requestCode == REQUEST_SEARCH_BROWSER) {
+//      if (resultCode == RESULT_OK && mode == Mode.PICK_RESULT) {
+//        ElephantInfo info = data.getParcelableExtra(SearchElephantResultActivity.EXTRA_ELEPHANT);
+//        Intent intent = new Intent();
+//        intent.putExtra(EXTRA_RESULT, info);
+//        setResult(RESULT_OK, intent);
+//        finish();
+//      }
+//    }
   }
-
-  @Override
-  public void onClickSearch(ElephantInfo info) {
-    Intent intent = new Intent(this, SearchBrowserActivity.class);
-
-    SearchBrowserActivity.setMode(intent, mode);
-    SearchBrowserActivity.setElephant(intent, info);
-
-    startActivityForResult(intent, REQUEST_SEARCH_BROWSER);
-    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-  }
-
-  private void setSearchFragment() {
-    SearchElephantFragment searchElephantFragment = new SearchElephantFragment();
-    Bundle args = new Bundle();
-    searchElephantFragment.setArguments(args);
-    getSupportFragmentManager().beginTransaction().replace(R.id.search_elephant_fragment , searchElephantFragment).commit();
-  }
-
-  enum Mode {
-    PICK_RESULT,
-    CONSULTATION
-  }
-
 }

@@ -8,19 +8,47 @@ import android.support.v7.widget.Toolbar;
 
 import org.parceler.Parcels;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.constants.ActivityResult;
-import fr.elephantasia.databinding.AddContactActivityBinding;
+import fr.elephantasia.databinding.SearchContactActivityBinding;
 import fr.elephantasia.realm.model.Contact;
+import fr.elephantasia.utils.KeyboardHelpers;
 
-import static fr.elephantasia.constants.ActivityResult.CONTACT_SELECTED;
+import static fr.elephantasia.activities.AddContactActivity.EXTRA_CONTACT_CREATED;
+import static fr.elephantasia.activities.SearchContactResultActivity.EXTRA_CONTACT_SELECTED;
 
 public class SearchContactActivity extends AppCompatActivity {
-  public static final String EXTRA_SEARCH = "extra_search";
 
+  // Extra
+  public static final String EXTRA_SEARCH_FILTERS = "extra_search_filters";
+  public static final String EXTRA_SEARCH_RESULT = "extra_search_result";
+
+  // Request code
+  public static final int REQUEST_CONTACT_SELECTED = 1;
+  public static final int REQUEST_CONTACT_CREATED = 2;
+
+  // Attr
   private Contact contact = new Contact();
+
+
+  // Views Binding
+  @BindView(R.id.toolbar) Toolbar toolbar;
+
+  // Listeners Binding
+  @OnClick(R.id.search_button)
+  public void searchContact() {
+    Intent intent = new Intent(this, SearchContactResultActivity.class);
+    intent.putExtra(EXTRA_SEARCH_FILTERS, Parcels.wrap(contact));
+    startActivityForResult(intent, REQUEST_CONTACT_SELECTED);
+  }
+  @OnClick(R.id.create_button)
+  public void createContact() {
+    Intent intent = new Intent(this, AddContactActivity.class);
+    startActivityForResult(intent, REQUEST_CONTACT_CREATED);
+  }
+
 
   public SearchContactActivity() {
     contact.owner = true;
@@ -28,33 +56,18 @@ public class SearchContactActivity extends AppCompatActivity {
     contact.vet = true;
   }
 
-  @OnClick(R.id.search_button)
-  public void searchContact() {
-    Intent myIntent = new Intent(this, SearchContactResultActivity.class);
-    myIntent.putExtra(EXTRA_SEARCH, Parcels.wrap(contact));
-    startActivityForResult(myIntent, CONTACT_SELECTED);
-  }
-
-  @OnClick(R.id.create_button)
-  public void createContact() {
-    Intent myIntent = new Intent(this, SearchContactResultActivity.class);
-//    myIntent.putExtra("test", Parcels.wrap(contact));
-//    this.startActivity(myIntent);
-    finish();
-  }
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    AddContactActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.add_contact_activity);
+    SearchContactActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.search_contact_activity);
     binding.setC(contact);
     ButterKnife.bind(this);
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+    KeyboardHelpers.hideKeyboardListener(binding.getRoot(), this);
   }
 
   @Override
@@ -68,14 +81,20 @@ public class SearchContactActivity extends AppCompatActivity {
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
-    // TODO: check the code return here
-    if (resultCode == RESULT_OK) {
+    if (resultCode == RESULT_OK && data != null) {
+      Intent resultIntent = new Intent();
+
       switch(requestCode) {
-        case (CONTACT_SELECTED) : {
-          setResult(RESULT_OK, data);
+        case (REQUEST_CONTACT_SELECTED):
+          resultIntent.putExtra(EXTRA_SEARCH_RESULT, data.getParcelableExtra(EXTRA_CONTACT_SELECTED));
+          setResult(RESULT_OK, resultIntent);
           finish();
           break;
-        }
+        case (REQUEST_CONTACT_CREATED):
+          resultIntent.putExtra(EXTRA_SEARCH_RESULT, data.getParcelableExtra(EXTRA_CONTACT_CREATED));
+          setResult(RESULT_OK, resultIntent);
+          finish();
+          break;
       }
     }
   }
