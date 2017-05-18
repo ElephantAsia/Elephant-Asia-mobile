@@ -98,7 +98,8 @@
     <string name="no_item_found">No item found</string>
 
     <string name="elephant_registration">#%s</string>
-    <string name="elephant_location">%1$s, %2$s</string>
+
+    <string name="not_synchronized_yet">Not synchronized yet</string>
 
     <string name="elephant_microchip">Elephant microchip</string>
 

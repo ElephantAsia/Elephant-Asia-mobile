@@ -23,4 +23,26 @@ public class Location extends RealmObject {
         && TextUtils.isEmpty(provinceName)
         && TextUtils.isEmpty(streetName);
   }
+
+  public static String formatProvince(String p) {
+    if (!android.text.TextUtils.isEmpty(p)) {
+      p = p.length() > 3 ? p.substring(0, 3) : p;
+      p = p.toUpperCase();
+    }
+    return p;
+  }
+
+  public static String concat(Location loc) {
+    String p = formatProvince(loc.provinceName);
+    String d = loc.districtName;
+    String c = loc.cityName;
+
+    String res = android.text.TextUtils.isEmpty(p) ? "" : p + " - ";
+    res += android.text.TextUtils.isEmpty(d) ? "" : d + " - ";
+    res += android.text.TextUtils.isEmpty(c) ? "" : c + " - ";
+
+    res = res.length() > 3 ? res.substring(0, res.length() - 3) : res;
+
+    return res;
+  }
 }

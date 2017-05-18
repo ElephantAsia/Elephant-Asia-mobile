@@ -3,6 +3,7 @@ package fr.elephantasia.dialogs;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
@@ -10,10 +11,10 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.realm.model.Location;
 import fr.elephantasia.utils.KeyboardHelpers;
-import fr.elephantasia.utils.LocationHelpers;
 
 /**
  * Created by seb on 29/04/2017.
@@ -39,12 +40,20 @@ public class LocationInputDialog {
 
   public void show() {
     final View view = activity.getLayoutInflater().inflate(R.layout.add_elephant_location_dialog_fragment, null);
+    ButterKnife.bind(this, view);
 
-    provinceET.setText(loc.provinceName);
-    districtET.setText(loc.districtName);
-    cityET.setText(loc.cityName);
+    if (!TextUtils.isEmpty(loc.provinceName)) {
+      provinceET.setText(loc.provinceName);
+    }
+    if (!TextUtils.isEmpty(loc.districtName)) {
+      districtET.setText(loc.districtName);
+    }
+    if (!TextUtils.isEmpty(loc.cityName)) {
+        cityET.setText(loc.cityName);
+    }
 
     KeyboardHelpers.hideKeyboardListener(view, activity);
+
     new MaterialDialog.Builder(activity)
         .title(title)
         .positiveText(R.string.OK)
@@ -61,7 +70,7 @@ public class LocationInputDialog {
         .dismissListener(new DialogInterface.OnDismissListener() {
           @Override
           public void onDismiss(DialogInterface dialog) {
-            editTextTarget.setText(LocationHelpers.concat(loc));
+            editTextTarget.setText(Location.concat(loc));
           }
         })
         .customView(view, true)

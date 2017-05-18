@@ -2,7 +2,6 @@ package fr.elephantasia.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,19 +14,23 @@ import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.databinding.ElephantPreviewBinding;
 import fr.elephantasia.realm.model.Elephant;
+import fr.elephantasia.realm.model.Location;
 import io.realm.RealmList;
 
 
 public class ListElephantPreviewAdapter extends ArrayAdapter<Elephant> {
 
-  private RealmList<Elephant> elephants;
+  // Attr
+  private Elephant elephant;
 
   // Views Binding
   @BindView(R.id.profil) TextView profil;
+  @BindView(R.id.chip1) TextView chip1;
+  @BindView(R.id.location) TextView location;
+  @BindView(R.id.state_local) TextView stateLocal;
 
   public ListElephantPreviewAdapter(Context context, RealmList<Elephant> elephants) {
     super(context, R.layout.elephant_preview , elephants);
-    this.elephants = elephants;
   }
 
   public View getView(int position, View view, ViewGroup parent) {
@@ -42,20 +45,39 @@ public class ListElephantPreviewAdapter extends ArrayAdapter<Elephant> {
 
     ButterKnife.bind(this, view);
 
-    profil.setText(formatProfil(position));
+    elephant = this.getItem(position);
+    profil.setText(formatProfil());
+    chip1.setText(formatChip());
+    location.setText(Location.concat(elephant.currentLoc));
+
+    if (elephant.state.local || elephant.state.draft) {
+      stateLocal.setVisibility(View.VISIBLE);
+
+    }
 
     binding.setE(this.getItem(position));
     view.setTag(binding);
     return view;
   }
 
-  private String formatProfil(int pos) {
-    Elephant e = this.getItem(pos);
+  private String formatProfil() {
+    String res = elephant.name + ", " + elephant.getSex() + ", ";
 
-    String res = e.name + ", " + e.getSex();
+    if (!TextUtils.isEmpty(elephant.birthDate)) {
+      res += elephant.getAge() + " y/o";
+    } else {
+      res += "Age N/A";
+    }
+    return res;
+  }
 
-    if (!TextUtils.isEmpty(e.birthDate)) {
-      res += ", " + e.getAge() + " y/o";
+  private String formatChip() {
+    String res;
+
+    if (!TextUtils.isEmpty(elephant.chips1)) {
+      res = "#" + elephant.chips1;
+    } else {
+      res = "N/A";
     }
     return res;
   }

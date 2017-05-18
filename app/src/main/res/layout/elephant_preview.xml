@@ -52,22 +52,43 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
+                android:layout_marginBottom="5dp"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/search_overview_registration"
+                android:id="@+id/chip1"
+                android:drawableLeft="@mipmap/ic_sd_storage_white_24dp"
+                android:drawableStart="@mipmap/ic_sd_storage_white_24dp"
+                android:drawablePadding="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/elephant_registration"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/search_overview_location"
+                android:id="@+id/location"
+                android:drawableLeft="@mipmap/ic_near_me_white_24dp"
+                android:drawableStart="@mipmap/ic_near_me_white_24dp"
+                android:drawablePadding="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/elephant_location"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/state_local"
+                android:visibility="gone"
+                android:text="@string/not_synchronized_yet"
+                android:drawableLeft="@mipmap/ic_error_outline_white_24dp"
+                android:drawableStart="@mipmap/ic_error_outline_white_24dp"
+                android:drawableTint="@color/burma_orange"
+                android:drawablePadding="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"/>
 
