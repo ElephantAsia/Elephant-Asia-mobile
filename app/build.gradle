@@ -25,6 +25,7 @@ android {
             res.srcDirs = [
                 'src/main/res/layouts/add_contact',
                 'src/main/res/layouts/add_elephant',
+                'src/main/res/layouts/dialogs',
                 'src/main/res/layouts/main',
                 'src/main/res/layouts/refactor',
                 'src/main/res/layouts/search_contact',

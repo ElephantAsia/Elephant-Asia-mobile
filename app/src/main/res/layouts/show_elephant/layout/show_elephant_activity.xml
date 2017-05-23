@@ -37,331 +37,149 @@
 
             </android.support.v7.widget.Toolbar>
 
-        </android.support.design.widget.AppBarLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                app:tabIndicatorColor="@android:color/white"
+                app:tabMode="scrollable"
+                app:tabTextAppearance="@style/App_TabTextAppearance"/>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="140dp"
-                    android:paddingEnd="5dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingStart="5dp"
-                    android:paddingTop="5dp">
-
-                    <ImageView
-                        android:id="@+id/search_overview_background"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@null"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/stripe"/>
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/search_overview_photo"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="17dp"
-                        android:layout_marginStart="17dp"
-                        android:layout_marginTop="17dp"
-                        android:contentDescription="@null"
-                        android:src="@mipmap/elephant"/>
+        </android.support.design.widget.AppBarLayout>
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@id/search_overview_photo"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_toEndOf="@id/search_overview_photo"
-                        android:layout_toRightOf="@id/search_overview_photo"
-                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/profil"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/white"
-                            android:layout_marginBottom="5dp"
-                            android:textSize="16sp"
-                            android:textStyle="bold"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/chip1"
-                            android:drawableLeft="@mipmap/ic_sd_storage_white_24dp"
-                            android:drawableStart="@mipmap/ic_sd_storage_white_24dp"
-                            android:drawablePadding="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/white"
-                            android:textSize="16sp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:paddingEnd="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp">
 
-                        <TextView
-                            android:id="@+id/location"
-                            android:drawableLeft="@mipmap/ic_near_me_white_24dp"
-                            android:drawableStart="@mipmap/ic_near_me_white_24dp"
-                            android:drawablePadding="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/white"
-                            android:textSize="16sp"/>
-
-                        <TextView
-                            android:id="@+id/state_local"
-                            android:visibility="gone"
-                            android:text="@string/not_synchronized_yet"
-                            android:drawableLeft="@mipmap/ic_error_outline_white_24dp"
-                            android:drawableStart="@mipmap/ic_error_outline_white_24dp"
-                            android:drawablePadding="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/white"
-                            android:textSize="16sp"/>
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/elephant_consultation_content"
+                <ImageView
+                    android:id="@+id/search_overview_background"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="24dp"
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/stripe"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/search_overview_photo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginStart="17dp"
+                    android:layout_marginTop="17dp"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/elephant"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/search_overview_photo"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@id/search_overview_photo"
+                    android:layout_toRightOf="@id/search_overview_photo"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/profil"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:textColor="@android:color/white"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/name"
-                            android:textColor="@color/grey_light_100"
-                            android:textSize="14sp"/>
-
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/elephant_consultation_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{e.name}"
-                                android:textColor="@android:color/black"
-                                android:textSize="18sp"
-                                />
-
-                        </FrameLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/chip1"
+                        android:drawableLeft="@mipmap/ic_sd_storage_white_24dp"
+                        android:drawableStart="@mipmap/ic_sd_storage_white_24dp"
+                        android:drawablePadding="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="vertical">
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/nickname"
-                            android:textColor="@color/grey_light_100"
-                            android:textSize="14sp"/>
-
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/elephant_consultation_nickname"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{e.nickName}"
-                                android:textColor="@android:color/black"
-                                android:textSize="18sp"
-                                />
-
-                        </FrameLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/location"
+                        android:drawableLeft="@mipmap/ic_near_me_white_24dp"
+                        android:drawableStart="@mipmap/ic_near_me_white_24dp"
+                        android:drawablePadding="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="vertical">
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/id_number"
-                            android:textColor="@color/grey_light_100"
-                            android:textSize="14sp"/>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/identification_number"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{e.regID}"
-                                android:textColor="@android:color/black"
-                                android:textSize="18sp"/>
-
-                        </FrameLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/state_local"
+                        android:visibility="gone"
+                        android:text="@string/not_synchronized_yet"
+                        android:drawableLeft="@mipmap/ic_error_outline_white_24dp"
+                        android:drawableStart="@mipmap/ic_error_outline_white_24dp"
+                        android:drawablePadding="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/chip"
-                            android:textColor="@color/grey_light_100"
-                            android:textSize="14sp"/>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/elephant_consultation_chip"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{e.chips1}"
-                                android:textColor="@android:color/black"
-                                android:textSize="18sp"/>
-
-                        </FrameLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/birth_date"
-                            android:textColor="@color/grey_light_100"
-                            android:textSize="14sp"/>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/elephant_consultation_birth_date"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{e.birthDate}"
-                                android:textColor="@android:color/black"
-                                android:textSize="18sp"/>
-
-                        </FrameLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/elephantasia_db_number"
-                            android:textColor="@color/grey_light_100"
-                            android:textSize="14sp"/>
-
-                        <TextView
-                            android:id="@+id/elephant_consultation_edn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{e.id}"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/eartag"
-                            android:textColor="@color/grey_light_100"
-                            android:textSize="14sp"/>
-
-                        <TextView
-                            android:id="@+id/elephant_consultation_ear_tag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text='@{e.earTag ? @string/yes_enabled : @string/no_disabled}'
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"/>
-
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/delete_button"
-                        android:layout_width="150dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="22dp"
-                        android:text="@string/delete"
-                        android:textColor="@android:color/white"/>
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"/>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </RelativeLayout>
 
-        </ScrollView>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/elephant_consultation_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_menu_edit"
-            app:backgroundTint="@color/primary_grey_100"
-            app:borderWidth="0dp"
-            app:elevation="0dp"
-            app:pressedTranslationZ="12dp"
-            app:rippleColor="#cd2014"/>
+            <Button
+                android:id="@+id/delete_button"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="22dp"
+                android:text="@string/delete"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/edit_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@android:drawable/ic_menu_edit"
+                app:backgroundTint="@color/primary_grey_100"
+                app:borderWidth="0dp"
+                app:elevation="0dp"
+                app:fabSize="mini"
+                app:pressedTranslationZ="12dp"
+                app:rippleColor="@color/primary_grey_100"/>
+
+        </RelativeLayout>
+
+
 
     </LinearLayout>
 </layout>

@@ -1,9 +1,11 @@
-package fr.elephantasia.activities;
+package fr.elephantasia.activities.showElephant;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -18,6 +20,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.showElephant.fragment.ShowDescriptionFragment;
+import fr.elephantasia.activities.showElephant.fragment.ShowRegistrationFragment;
+import fr.elephantasia.adapter.ViewPagerAdapter;
 import fr.elephantasia.databinding.ShowElephantActivityBinding;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.KeyboardHelpers;
@@ -34,6 +39,10 @@ public class ShowElephantActivity extends AppCompatActivity {
 
   // View Binding
   @BindView(R.id.toolbar) Toolbar toolbar;
+  @BindView(R.id.tabs) TabLayout tabLayout;
+  @BindView(R.id.viewpager) ViewPager viewPager;
+
+
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
   @BindView(R.id.profil) TextView profil;
   @BindView(R.id.chip1) TextView chip1;
@@ -83,8 +92,8 @@ public class ShowElephantActivity extends AppCompatActivity {
     if (elephant.state.local || elephant.state.draft) {
       stateLocal.setVisibility(View.VISIBLE);
     }
-
-    KeyboardHelpers.hideKeyboardListener(binding.getRoot(), this);
+    setupViewPager(viewPager);
+    tabLayout.setupWithViewPager(viewPager);
   }
 
   @Override
@@ -101,6 +110,10 @@ public class ShowElephantActivity extends AppCompatActivity {
     return true;
   }
 
+  public Elephant getElephant() {
+    return elephant;
+  }
+
   private Elephant getExtraElephant() {
     Intent intent = getIntent();
     String id = intent.getStringExtra(EXTRA_ELEPHANT_SELECTED_ID);
@@ -108,6 +121,13 @@ public class ShowElephantActivity extends AppCompatActivity {
     Elephant el = realm.where(Elephant.class).equalTo(ID, id).findFirst();
 
     return el;
+  }
+
+  private void setupViewPager(ViewPager viewPager) {
+    ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+    adapter.addFragment(new ShowRegistrationFragment(), getString(R.string.registration));
+    adapter.addFragment(new ShowDescriptionFragment(), getString(R.string.description));
+    viewPager.setAdapter(adapter);
   }
 
   private String formatProfil() {

@@ -67,11 +67,11 @@ public class AddElephantActivity extends AppCompatActivity {
   private ViewPagerAdapter adapter;
   private Elephant elephant = new Elephant();
 
-  @BindView(R.id.toolbar) public Toolbar toolbar;
-  @BindView(R.id.tabs) public TabLayout tabLayout;
-  @BindView(R.id.viewpager) public ViewPager viewPager;
-  @BindView(R.id.add_elephant_activity) public View rootView;
-  @BindView(R.id.add_elephant_fab) public FloatingActionButton fab;
+  @BindView(R.id.toolbar) Toolbar toolbar;
+  @BindView(R.id.tabs) TabLayout tabLayout;
+  @BindView(R.id.viewpager) ViewPager viewPager;
+  @BindView(R.id.add_elephant_activity) View rootView;
+  @BindView(R.id.add_elephant_fab) FloatingActionButton fab;
 
   @OnClick(R.id.add_elephant_fab)
   public void nextPage() {

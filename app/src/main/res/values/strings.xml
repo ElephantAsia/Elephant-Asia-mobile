@@ -181,10 +181,12 @@
     <string name="set_location_from_map">Set location from map ?</string>
     <string name="delete_this_elephant_from_local_db">Delete this elephant from local database ?</string>
     <string name="add_existing_contact">Add existing contact ?</string>
-    <string name="FROM_MAP">FROM MAP</string>
-    <string name="MANUALLY">MANUALLY</string>
+    <string name="from_map">FROM MAP</string>
+    <string name="manually">MANUALLY</string>
     <string name="SEARCH">SEARCH</string>
     <string name="CREATE">CREATE</string>
+    <string name="show_full">SHOW_FULL</string>
+    <string name="edit">EDIT</string>
     <string name="remove_contact_from_list">remove contact from list</string>
     <string name="set_birth_location">Set birth location</string>
     <string name="set_current_location">Set current location</string>

@@ -45,14 +45,14 @@ public class LocationDialog {
   public void show() {
     new MaterialDialog.Builder(activity)
         .title(R.string.set_location_from_map)
-        .positiveText(R.string.FROM_MAP)
+        .positiveText(R.string.from_map)
         .onPositive(new MaterialDialog.SingleButtonCallback() {
           @Override
           public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
             showLocationPicker(resultCode);
           }
         })
-        .negativeText(R.string.MANUALLY)
+        .negativeText(R.string.manually)
         .onNegative(new MaterialDialog.SingleButtonCallback() {
           @Override
           public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

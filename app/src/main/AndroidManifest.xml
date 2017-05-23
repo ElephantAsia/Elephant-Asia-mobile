@@ -31,7 +31,7 @@
         <activity android:name=".activities.SearchContactResultActivity"/>
         <activity android:name=".activities.SearchElephantResultActivity"/>
         <activity android:name=".activities.AddContactActivity"/>
-        <activity android:name=".activities.ShowElephantActivity"/>
+        <activity android:name=".activities.showElephant.ShowElephantActivity"/>
 
 
         <provider

@@ -14,6 +14,7 @@ import org.parceler.Parcels;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.showElephant.ShowElephantActivity;
 import fr.elephantasia.adapter.ListElephantPreviewAdapter;
 import fr.elephantasia.database.model.Elephant;
 import io.realm.Case;
@@ -25,6 +26,7 @@ import io.realm.RealmResults;
 import static fr.elephantasia.activities.SearchElephantActivity.EXTRA_SEARCH_ELEPHANT;
 import static fr.elephantasia.database.model.Elephant.CHIPS1;
 import static fr.elephantasia.database.model.Elephant.FEMALE;
+import static fr.elephantasia.database.model.Elephant.ID;
 import static fr.elephantasia.database.model.Elephant.MALE;
 import static fr.elephantasia.database.model.Elephant.NAME;
 
@@ -47,6 +49,8 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     setContentView(R.layout.search_elephant_result_activity);
     ButterKnife.bind(this);
 
+
+    realm = Realm.getDefaultInstance();
     RealmList<Elephant> elephants = new RealmList<>();
     elephants.addAll(searchElephants());
 
@@ -62,9 +66,12 @@ public class SearchElephantResultActivity extends AppCompatActivity {
       @Override
       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(SearchElephantResultActivity.this, ShowElephantActivity.class);
-        String elephantId = adapter.getItem(i).id;
-        intent.putExtra(EXTRA_ELEPHANT_SELECTED_ID, elephantId);
-        startActivity(intent);
+        Elephant elephant = adapter.getItem(i);
+
+        if (elephant != null) {
+          intent.putExtra(EXTRA_ELEPHANT_SELECTED_ID, elephant.id);
+          startActivity(intent);
+        }
       }
     });
 
@@ -92,7 +99,6 @@ public class SearchElephantResultActivity extends AppCompatActivity {
 
   private RealmResults<Elephant> searchElephants() {
     Elephant e = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_ELEPHANT));
-    realm = Realm.getDefaultInstance();
     RealmQuery<Elephant> query = realm.where(Elephant.class);
 
     query.contains(NAME, e.name, Case.INSENSITIVE);
@@ -109,5 +115,9 @@ public class SearchElephantResultActivity extends AppCompatActivity {
       query.equalTo(FEMALE, false);
     }
     return query.findAll();
+  }
+
+  private Elephant getElephantById(String id) {
+    return realm.where(Elephant.class).equalTo(ID, id).findFirst();
   }
 }
