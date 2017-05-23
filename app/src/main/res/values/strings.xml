@@ -20,7 +20,7 @@
     <string name="registration_province">Registration province</string>
     <string name="registration_district">Registration district</string>
     <string name="registration_city">Registration city</string>
-
+    <string name="elephant_show_title">%1$s - Preview </string>
 
     <string name="elephant_birth_location">Birth location</string>
     <string name="current_location">Current location</string>
@@ -179,6 +179,7 @@
 
     <string name="error">Error</string>
     <string name="set_location_from_map">Set location from map ?</string>
+    <string name="delete_this_elephant_from_local_db">Delete this elephant from local database ?</string>
     <string name="add_existing_contact">Add existing contact ?</string>
     <string name="FROM_MAP">FROM MAP</string>
     <string name="MANUALLY">MANUALLY</string>

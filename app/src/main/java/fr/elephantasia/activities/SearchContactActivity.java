@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.databinding.SearchContactActivityBinding;
-import fr.elephantasia.realm.model.Contact;
+import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 import static fr.elephantasia.activities.AddContactActivity.EXTRA_CONTACT_CREATED;
@@ -31,7 +31,6 @@ public class SearchContactActivity extends AppCompatActivity {
 
   // Attr
   private Contact contact = new Contact();
-
 
   // Views Binding
   @BindView(R.id.toolbar) Toolbar toolbar;

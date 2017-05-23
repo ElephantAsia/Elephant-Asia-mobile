@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
-        android:name=".utils.BaseApplication"
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@drawable/logo"
@@ -23,15 +23,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.AddElephantActivity"/>
+        <activity android:name=".activities.addElephant.AddElephantActivity"/>
         <activity android:name=".activities.LoginActivity"/>
         <activity android:name=".activities.MainActivity"/>
         <activity android:name=".activities.SearchElephantActivity"/>
         <activity android:name=".activities.SearchContactActivity"/>
         <activity android:name=".activities.SearchContactResultActivity"/>
         <activity android:name=".activities.SearchElephantResultActivity"/>
-        <activity android:name=".activities.ConsultationActivity"/>
         <activity android:name=".activities.AddContactActivity"/>
+        <activity android:name=".activities.ShowElephantActivity"/>
 
 
         <provider

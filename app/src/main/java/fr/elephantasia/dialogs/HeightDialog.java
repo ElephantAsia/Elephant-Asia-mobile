@@ -18,7 +18,7 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
-import fr.elephantasia.realm.model.Elephant;
+import fr.elephantasia.database.model.Elephant;
 
 /**
  * Created by seb on 30/04/2017.
@@ -30,8 +30,8 @@ public class HeightDialog {
   private Elephant elephant;
   private EditText editTextTarget;
 
-  @BindView(R.id.editTextDialog) EditText editTextDialog;
-  @BindView(R.id.spinnerDialog) Spinner spinnerDialog;
+  @BindView(R.id.value) EditText value;
+  @BindView(R.id.unit) Spinner unit;
 
   public HeightDialog(Activity activity, Context ctx, final Elephant elephant, final EditText editText) {
     this.activity = activity;
@@ -43,16 +43,16 @@ public class HeightDialog {
   public void show() {
     final View view = activity.getLayoutInflater().inflate(R.layout.add_elephant_description_dialog_fragment, null);
     ButterKnife.bind(this, view);
-    spinnerDialog.setAdapter(spinnerUnits);
-    editTextDialog.setText(elephant.height);
+    unit.setAdapter(spinnerUnits);
+    value.setText(elephant.height);
     new MaterialDialog.Builder(activity)
         .title(R.string.set_weight)
         .positiveText(R.string.OK)
         .onPositive(new MaterialDialog.SingleButtonCallback() {
           @Override
           public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            elephant.height = editTextDialog.getText().toString();
-            elephant.heightUnit = spinnerDialog.getSelectedItem().toString();
+            elephant.height = value.getText().toString();
+            elephant.heightUnit = unit.getSelectedItem().toString();
           }
         })
         .dismissListener(new DialogInterface.OnDismissListener() {

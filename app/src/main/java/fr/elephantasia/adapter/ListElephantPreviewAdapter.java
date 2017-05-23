@@ -13,8 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.databinding.ElephantPreviewBinding;
-import fr.elephantasia.realm.model.Elephant;
-import fr.elephantasia.realm.model.Location;
+import fr.elephantasia.database.model.Elephant;
 import io.realm.RealmList;
 
 
@@ -48,11 +47,10 @@ public class ListElephantPreviewAdapter extends ArrayAdapter<Elephant> {
     elephant = this.getItem(position);
     profil.setText(formatProfil());
     chip1.setText(formatChip());
-    location.setText(Location.concat(elephant.currentLoc));
+    location.setText(elephant.currentLoc.format());
 
     if (elephant.state.local || elephant.state.draft) {
       stateLocal.setVisibility(View.VISIBLE);
-
     }
 
     binding.setE(this.getItem(position));

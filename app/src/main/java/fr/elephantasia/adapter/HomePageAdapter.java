@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import fr.elephantasia.R;
-import fr.elephantasia.interfaces.HomePageAdapterInterface;
+import fr.elephantasia.refactor.interfaces.HomePageAdapterInterface;
 
 /**
  * Created by Stephane on 15/03/2017.

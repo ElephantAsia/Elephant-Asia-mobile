@@ -13,8 +13,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.databinding.AddContactActivityBinding;
-import fr.elephantasia.realm.RealmDB;
-import fr.elephantasia.realm.model.Contact;
+import fr.elephantasia.database.RealmDB;
+import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.utils.KeyboardHelpers;
 import io.realm.Realm;
 

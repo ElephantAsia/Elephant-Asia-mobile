@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:theme="@style/AppThemeWhiteBackground"
+    >
+
+    <data>
+        <variable
+            name="e"
+            type="fr.elephantasia.database.model.Elephant"/>
+    </data>
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary_grey_100">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/search"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"/>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/search_elephant_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/elephant_name"
+                    android:inputType="text"
+                    android:text="@={e.name}"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/search_elephant_microchip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/elephant_microchip"
+                    android:inputType="numberDecimal"
+                    android:text="@={e.chips1}"
+                    android:textSize="16sp"/>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/female"
+                        android:textSize="@dimen/font_size_normal"/>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:checked="@={e.female}"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/male"
+                        android:textSize="@dimen/font_size_normal"/>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:checked="@={e.male}"/>
+
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/search_elephant_province"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/registration_province"
+                    android:inputType="text"
+                    android:text="@={e.registrationLoc.provinceName}"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/search_elephant_district"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/registration_district"
+                    android:inputType="text"
+                    android:text="@={e.registrationLoc.districtName}"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/search_elephant_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/registration_city"
+                    android:inputType="text"
+                    android:text="@={e.registrationLoc.cityName}"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/search_button"
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/search"
+                android:textColor="@android:color/white"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</layout>

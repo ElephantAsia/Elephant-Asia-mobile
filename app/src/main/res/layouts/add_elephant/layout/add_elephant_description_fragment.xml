@@ -1,0 +1,222 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/tools"
+        android:theme="@style/AppThemeWhiteBackground"
+    >
+
+    <data>
+        <variable name="e" type="fr.elephantasia.database.model.Elephant"/>
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:padding="10dp"
+                    android:text="@string/tusk"
+                    android:textSize="@dimen/font_size_normal"/>
+
+                <Spinner
+                    android:id="@+id/elephant_tusks_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:entries="@array/tusks"
+                    android:gravity="start"
+                    bind:selectedValue="@={e.tusk}"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:padding="10dp"
+                    android:text="@string/nails_front_left"
+                    android:textSize="@dimen/font_size_normal"/>
+
+                <Spinner
+                    android:id="@+id/nailsFrontLeft"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:gravity="start"
+                    bind:selectedValue="@={e.nailsFrontLeft}"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:padding="10dp"
+                    android:text="@string/nails_front_right"
+                    android:textSize="@dimen/font_size_normal"
+                    />
+
+                <Spinner
+                    android:id="@+id/nailsFrontRight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:gravity="start"
+                    bind:selectedValue="@={e.nailsFrontRight}"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:padding="10dp"
+                    android:text="@string/nails_rear_left"
+                    android:textSize="@dimen/font_size_normal"
+                    />
+
+                <Spinner
+                    android:id="@+id/nailsRearLeft"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:gravity="start"
+                    bind:selectedValue="@={e.nailsRearLeft}"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:padding="10dp"
+                    android:text="@string/nails_rear_right"
+                    android:textSize="@dimen/font_size_normal"
+                    />
+
+                <Spinner
+                    android:id="@+id/nailsRearRight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:gravity="start"
+                    bind:selectedValue="@={e.nailsRearRight}"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:padding="10dp"
+                    android:text="@string/weight"
+                    android:textSize="@dimen/font_size_normal"/>
+
+                <EditText
+                    android:id="@+id/weight"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="numberSigned"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:padding="10dp"
+                    android:text="@string/height"
+                    android:textSize="@dimen/font_size_normal"/>
+
+                <EditText
+                    android:id="@+id/height"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="numberSigned"/>
+
+            </LinearLayout>
+
+            <!--Used to prevent floating button to hide relevant field-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="60dp"/>
+        </LinearLayout>
+
+    </ScrollView>
+</layout>
+

@@ -1,0 +1,163 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:theme="@style/AppThemeWhiteBackground"
+    >
+
+    <data>
+        <variable
+            name="e"
+            type="fr.elephantasia.database.model.Elephant"/>
+    </data>
+
+    <ScrollView
+        android:id="@+id/profil_fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp"
+            >
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingBottom="16dp"
+                >
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/elephant_name"
+                    android:inputType="textPersonName"
+                    android:text="@={e.name}"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingBottom="16dp"
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/elephant_nickname"
+                    android:inputType="textPersonName"
+                    android:text="@={e.nickName}"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <RadioGroup
+                android:id="@+id/sex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp"
+                android:paddingTop="8dp"
+                android:weightSum="2"
+                >
+
+                <RadioButton
+                    android:id="@+id/male"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:duplicateParentState="false"
+                    android:gravity="center"
+                    android:checked="@={e.male}"
+                    android:text="@string/male"
+                    />
+
+                <RadioButton
+                    android:id="@+id/female"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:checked="@={e.female}"
+                    android:text="@string/female"
+                    />
+
+            </RadioGroup>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingBottom="16dp"
+                >
+
+                <EditText
+                    android:id="@+id/currentLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/current_location"
+                    android:inputType="text"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingBottom="16dp"
+                >
+
+                <EditText
+                    android:id="@+id/birthDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/elephant_birthdate"
+                    android:inputType="datetime"
+                    android:text="@={e.birthDate}"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingBottom="16dp"
+                >
+
+                <EditText
+                    android:id="@+id/birthLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/elephant_birth_location"
+                    android:inputType="text"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--Used to prevent floating button to hide relevant field-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="60dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

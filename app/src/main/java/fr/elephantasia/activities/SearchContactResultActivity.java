@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.adapter.ListContactPreviewAdapter;
-import fr.elephantasia.realm.model.Contact;
+import fr.elephantasia.database.model.Contact;
 import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -23,11 +23,11 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 import static fr.elephantasia.activities.SearchContactActivity.EXTRA_SEARCH_FILTERS;
-import static fr.elephantasia.realm.model.Contact.CORNAC;
-import static fr.elephantasia.realm.model.Contact.FIRSTNAME;
-import static fr.elephantasia.realm.model.Contact.LASTNAME;
-import static fr.elephantasia.realm.model.Contact.OWNER;
-import static fr.elephantasia.realm.model.Contact.VET;
+import static fr.elephantasia.database.model.Contact.CORNAC;
+import static fr.elephantasia.database.model.Contact.FIRSTNAME;
+import static fr.elephantasia.database.model.Contact.LASTNAME;
+import static fr.elephantasia.database.model.Contact.OWNER;
+import static fr.elephantasia.database.model.Contact.VET;
 
 public class SearchContactResultActivity extends AppCompatActivity {
   public static final String EXTRA_CONTACT_SELECTED = "extra_contact_selected";

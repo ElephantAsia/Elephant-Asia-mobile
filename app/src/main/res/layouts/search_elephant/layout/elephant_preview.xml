@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:theme="@style/AppThemeWhiteBackground">
+
+    <data>
+        <variable name="e" type="fr.elephantasia.database.model.Elephant"/>
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:paddingEnd="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:id="@+id/search_overview_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/stripe"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/search_overview_photo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="17dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/elephant"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/search_overview_photo"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/search_overview_photo"
+            android:layout_toRightOf="@id/search_overview_photo"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="5dp"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/chip1"
+                android:drawableLeft="@mipmap/ic_sd_storage_white_24dp"
+                android:drawableStart="@mipmap/ic_sd_storage_white_24dp"
+                android:drawablePadding="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/location"
+                android:drawableLeft="@mipmap/ic_near_me_white_24dp"
+                android:drawableStart="@mipmap/ic_near_me_white_24dp"
+                android:drawablePadding="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/state_local"
+                android:visibility="gone"
+                android:text="@string/not_synchronized_yet"
+                android:drawableLeft="@mipmap/ic_error_outline_white_24dp"
+                android:drawableStart="@mipmap/ic_error_outline_white_24dp"
+                android:drawablePadding="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>

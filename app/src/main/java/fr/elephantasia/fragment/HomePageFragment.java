@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import fr.elephantasia.R;
 import fr.elephantasia.adapter.HomePageAdapter;
-import fr.elephantasia.interfaces.HomePageAdapterInterface;
+import fr.elephantasia.refactor.interfaces.HomePageAdapterInterface;
 
 
 public class HomePageFragment extends Fragment {

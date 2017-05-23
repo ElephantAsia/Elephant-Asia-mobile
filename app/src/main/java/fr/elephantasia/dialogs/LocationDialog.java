@@ -13,7 +13,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 import fr.elephantasia.R;
-import fr.elephantasia.realm.model.Location;
+import fr.elephantasia.database.model.Location;
 
 import static android.content.ContentValues.TAG;
 

@@ -1,0 +1,146 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:theme="@style/AppThemeWhiteBackground">
+
+    <data>
+        <variable
+            name="e"
+            type="fr.elephantasia.database.model.Elephant"/>
+    </data>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/addView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp"
+            >
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingBottom="16dp"
+                >
+
+                <EditText
+                    android:id="@+id/chip1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/elephant_chip"
+                    android:inputType="numberDecimal"
+                    android:text="@={e.chips1}"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingBottom="16dp"
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/elephant_registration_number"
+                    android:inputType="text"
+                    android:text="@={e.regID}"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingBottom="16dp"
+                >
+
+                <EditText
+                    android:id="@+id/registrationLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/registration_location"
+                    android:inputType="text"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/ear_tag"
+                    android:textSize="@dimen/font_size_normal"
+                    />
+
+                <CheckBox
+                    android:id="@+id/ear_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:checked="@={e.earTag}"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/eyeD"
+                    android:textSize="@dimen/font_size_normal"
+                    />
+
+                <CheckBox
+                    android:id="@+id/eyeD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:checked="@={e.eyeD}"
+                    />
+
+            </RelativeLayout>
+
+            <!--Used to prevent floating button to hide relevant field-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="60dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

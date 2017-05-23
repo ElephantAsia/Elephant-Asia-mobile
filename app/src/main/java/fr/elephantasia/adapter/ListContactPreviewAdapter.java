@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.databinding.ContactPreviewBinding;
-import fr.elephantasia.realm.model.Contact;
+import fr.elephantasia.database.model.Contact;
 import io.realm.RealmList;
 
 

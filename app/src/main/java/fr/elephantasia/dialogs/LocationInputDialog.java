@@ -13,7 +13,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
-import fr.elephantasia.realm.model.Location;
+import fr.elephantasia.database.model.Location;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 /**
@@ -70,7 +70,7 @@ public class LocationInputDialog {
         .dismissListener(new DialogInterface.OnDismissListener() {
           @Override
           public void onDismiss(DialogInterface dialog) {
-            editTextTarget.setText(Location.concat(loc));
+            editTextTarget.setText(loc.format());
           }
         })
         .customView(view, true)
