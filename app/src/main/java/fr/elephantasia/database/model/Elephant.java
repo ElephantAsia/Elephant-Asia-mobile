@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
 import java.util.UUID;
@@ -104,6 +105,25 @@ public class Elephant extends RealmObject {
 
   public String getSex() {
     return male ? "Male" : "Female";
+  }
+
+  public String getHeight() {
+
+    if (!TextUtils.isEmpty(height)) {
+      return height + " " + heightUnit;
+    }
+
+    return "N/A";
+  }
+
+
+  public String getWeight() {
+
+    if (!TextUtils.isEmpty(weight)) {
+      return weight + " " + weightUnit;
+    }
+
+    return "N/A";
   }
 
   public String getAge() {

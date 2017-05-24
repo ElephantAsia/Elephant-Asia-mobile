@@ -192,7 +192,7 @@ public class AddElephantActivity extends AppCompatActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.add_elephant_more_menu, menu);
+    getMenuInflater().inflate(R.menu.add_elephant_options_menu, menu);
     return true;
   }
 

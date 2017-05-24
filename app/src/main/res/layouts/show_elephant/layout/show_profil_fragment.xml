@@ -12,6 +12,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/elephant_consultation_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
@@ -25,15 +26,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/elephant_chip"
+                    android:text="@string/name"
                     android:textColor="@color/grey_light_100"
                     android:textSize="14sp"/>
 
 
                 <TextView
+                    android:id="@+id/elephant_consultation_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{e.chips1}"
+                    android:text="@{e.name}"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     />
@@ -49,14 +51,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/elephant_registration_number"
+                    android:text="@string/nickname"
                     android:textColor="@color/grey_light_100"
                     android:textSize="14sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{e.regID}"
+                    android:text="@{e.nickName}"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     />
@@ -72,7 +74,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/registration_location"
+                    android:text="@string/sex"
                     android:textColor="@color/grey_light_100"
                     android:textSize="14sp"/>
 
@@ -80,7 +82,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{e.registrationLoc.format()}"
+                    android:text="@{e.getSex()}"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"/>
 
@@ -95,7 +97,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/ear_tag"
+                    android:text="@string/current_location"
                     android:textColor="@color/grey_light_100"
                     android:textSize="14sp"/>
 
@@ -103,7 +105,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text='@{e.earTag ? @string/yes : @string/no}'
+                    android:text="@{e.currentLoc.format()}"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"/>
 
@@ -118,14 +120,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/eyeD"
+                    android:text="@string/elephant_birth_location"
                     android:textColor="@color/grey_light_100"
                     android:textSize="14sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text='@{e.eyeD ? @string/yes : @string/no}'
+                    android:text="@{e.birthLoc.format()}"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"/>
 

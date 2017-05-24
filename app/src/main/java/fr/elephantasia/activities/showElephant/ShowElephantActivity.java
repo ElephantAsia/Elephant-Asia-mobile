@@ -9,6 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,11 +23,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.showElephant.fragment.ShowDescriptionFragment;
+import fr.elephantasia.activities.showElephant.fragment.ShowProfilFragment;
 import fr.elephantasia.activities.showElephant.fragment.ShowRegistrationFragment;
 import fr.elephantasia.adapter.ViewPagerAdapter;
 import fr.elephantasia.databinding.ShowElephantActivityBinding;
 import fr.elephantasia.database.model.Elephant;
-import fr.elephantasia.utils.KeyboardHelpers;
 import io.realm.Realm;
 
 import static fr.elephantasia.activities.SearchElephantResultActivity.EXTRA_ELEPHANT_SELECTED_ID;
@@ -44,33 +46,6 @@ public class ShowElephantActivity extends AppCompatActivity {
 
 
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.profil) TextView profil;
-  @BindView(R.id.chip1) TextView chip1;
-  @BindView(R.id.location) TextView location;
-  @BindView(R.id.state_local) TextView stateLocal;
-
-  @OnClick(R.id.delete_button)
-  public void deleteElephant() {
-    new MaterialDialog.Builder(this)
-        .title(R.string.delete_this_elephant_from_local_db)
-        .positiveText(R.string.yes)
-        .onPositive(new MaterialDialog.SingleButtonCallback() {
-          @Override
-          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            realm.executeTransaction(new Realm.Transaction() {
-              @Override
-              public void execute(Realm realm) {
-                elephant.deleteFromRealm();
-              }
-            });
-            finish();
-          }
-        })
-        .negativeText(R.string.no)
-        .stackingBehavior(StackingBehavior.ALWAYS)
-        .show();
-  }
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -85,13 +60,7 @@ public class ShowElephantActivity extends AppCompatActivity {
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    profil.setText(formatProfil());
-    chip1.setText(formatChip());
-    location.setText(elephant.currentLoc.format());
 
-    if (elephant.state.local || elephant.state.draft) {
-      stateLocal.setVisibility(View.VISIBLE);
-    }
     setupViewPager(viewPager);
     tabLayout.setupWithViewPager(viewPager);
   }
@@ -110,6 +79,44 @@ public class ShowElephantActivity extends AppCompatActivity {
     return true;
   }
 
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.show_elephant_options_menu, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == R.id.edit_elephant) {
+//      elephant.state.draft = true;
+//      setResult(RESULT_DRAFT);
+//      RealmDB.copyOrUpdate(elephant);
+//      finish();
+      return true;
+    } else if (item.getItemId() == R.id.delete_elephant) {
+      new MaterialDialog.Builder(this)
+          .title(R.string.delete_this_elephant_from_local_db)
+          .positiveText(R.string.yes)
+          .onPositive(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+              realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                  elephant.deleteFromRealm();
+                }
+              });
+              finish();
+            }
+          })
+          .negativeText(R.string.no)
+          .stackingBehavior(StackingBehavior.ALWAYS)
+          .show();
+      return true;
+    }
+    return false;
+  }
+
   public Elephant getElephant() {
     return elephant;
   }
@@ -125,31 +132,9 @@ public class ShowElephantActivity extends AppCompatActivity {
 
   private void setupViewPager(ViewPager viewPager) {
     ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+    adapter.addFragment(new ShowProfilFragment(), getString(R.string.profil));
     adapter.addFragment(new ShowRegistrationFragment(), getString(R.string.registration));
     adapter.addFragment(new ShowDescriptionFragment(), getString(R.string.description));
     viewPager.setAdapter(adapter);
   }
-
-  private String formatProfil() {
-    String res = elephant.name + ", " + elephant.getSex() + ", ";
-
-    if (!TextUtils.isEmpty(elephant.birthDate)) {
-      res += elephant.getAge() + " y/o";
-    } else {
-      res += "Age N/A";
-    }
-    return res;
-  }
-
-  private String formatChip() {
-    String res;
-
-    if (!TextUtils.isEmpty(elephant.chips1)) {
-      res = "#" + elephant.chips1;
-    } else {
-      res = "N/A";
-    }
-    return res;
-  }
-
 }
