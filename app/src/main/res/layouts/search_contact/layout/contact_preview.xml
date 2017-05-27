@@ -10,10 +10,6 @@
       type="fr.elephantasia.database.model.Contact"/>
   </data>
 
-  <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -64,7 +60,7 @@
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="status -> text"/>
+            android:text="@{c.getStatus()}"/>
 
         </LinearLayout>
 
@@ -85,5 +81,4 @@
 
       </RelativeLayout>
     </LinearLayout>
-  </FrameLayout>
 </layout>

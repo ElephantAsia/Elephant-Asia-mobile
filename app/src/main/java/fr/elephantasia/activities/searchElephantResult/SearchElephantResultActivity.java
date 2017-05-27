@@ -80,7 +80,7 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     RealmList<Elephant> elephants = new RealmList<>();
     elephants.addAll(searchElephants());
     if (!elephants.isEmpty()) {
-      adapter = new ListElephantPreviewAdapter(this, elephants);
+      adapter = new ListElephantPreviewAdapter(this, elephants, false, true);
       listView.setAdapter(adapter);
     } else {
       listView.setVisibility(View.GONE);

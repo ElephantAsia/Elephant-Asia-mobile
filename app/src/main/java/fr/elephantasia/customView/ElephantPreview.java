@@ -1,10 +1,12 @@
 package fr.elephantasia.customView;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -19,41 +21,34 @@ import fr.elephantasia.database.model.Elephant;
 public class ElephantPreview extends FrameLayout {
 
   // Views Binding
-  @BindView(R.id.profil)
-  TextView profil;
-  @BindView(R.id.chip1)
-  TextView chip1;
-  @BindView(R.id.location)
-  TextView location;
-  @BindView(R.id.state_local)
-  TextView stateLocal;
+  @BindView(R.id.profil) TextView profil;
+  @BindView(R.id.chip1) TextView chip1;
+  @BindView(R.id.location) TextView location;
+  @BindView(R.id.state_local) TextView stateLocal;
+  @BindView(R.id.remove_elephant) ImageButton removeButton;
+  @BindView(R.id.favorite_elephant_off) ImageButton favoriteButton;
+
   // Attr
   private Elephant elephant;
-  private Context context;
-
 
   public ElephantPreview(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
-    this.context = context;
     initView();
   }
 
   public ElephantPreview(Context context, AttributeSet attrs) {
     super(context, attrs);
-    this.context = context;
     initView();
   }
 
   public ElephantPreview(Context context) {
     super(context);
-    this.context = context;
     initView();
   }
 
   private void initView() {
     View view = inflate(getContext(), R.layout.elephant_preview, null);
     ButterKnife.bind(this, view);
-
     addView(view);
   }
 
@@ -70,6 +65,24 @@ public class ElephantPreview extends FrameLayout {
       }
     }
   }
+
+  public void setRemoveListener(View.OnClickListener listener) {
+    removeButton.setOnClickListener(listener);
+  }
+
+
+  public void setRemoveButtonVisibility(boolean show) {
+    if (show) {
+      removeButton.setVisibility(VISIBLE);
+    }
+  }
+
+  public void setFavoriteButtonVisibility(boolean show) {
+    if (show) {
+      favoriteButton.setVisibility(VISIBLE);
+    }
+  }
+
 
   private String formatProfil() {
     String res = elephant.name + ", " + elephant.getSex() + ", ";

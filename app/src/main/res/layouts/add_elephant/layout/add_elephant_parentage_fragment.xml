@@ -49,6 +49,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:visibility="gone"
+          app:removeButtonVisibility="@{true}"
           app:elephant="@{e.mother}">
 
         </fr.elephantasia.customView.ElephantPreview>
@@ -89,6 +90,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:visibility="gone"
+          app:removeButtonVisibility="@{true}"
           app:elephant="@{e.father}">
 
         </fr.elephantasia.customView.ElephantPreview>

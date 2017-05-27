@@ -194,6 +194,7 @@
   <string name="show_full">SHOW_FULL</string>
   <string name="edit">EDIT</string>
   <string name="remove_contact_from_list">remove contact from list</string>
+  <string name="remove_elephant_from_list">remove elephant from list</string>
   <string name="set_birth_location">Set birth location</string>
   <string name="set_current_location">Set current location</string>
   <string name="set_registration_location">Set registration location</string>

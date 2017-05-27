@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -67,6 +68,9 @@ public class ParentageFragment extends Fragment {
     binding.setE(elephant);
     View view = binding.getRoot();
     ButterKnife.bind(this, view);
+    motherPreview.setRemoveListener(unsetMother());
+    fatherPreview.setRemoveListener(unsetFather());
+
     setupChildrenList(inflater);
     return (view);
   }
@@ -82,7 +86,7 @@ public class ParentageFragment extends Fragment {
         getActivity().startActivityForResult(intent, REQUEST_CHILD_SELECTED);
       }
     });
-    adapter = new ListElephantPreviewAdapter(getContext(), elephant.children);
+    adapter = new ListElephantPreviewAdapter(getContext(), elephant.children, true, false);
     childrenList.addHeaderView(headerView);
     childrenList.setAdapter(adapter);
   }
@@ -108,4 +112,30 @@ public class ParentageFragment extends Fragment {
     Elephant child = realm.where(Elephant.class).equalTo(ID, id).findFirst();
     adapter.add(child);
   }
+
+  private View.OnClickListener unsetMother() {
+    return new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        elephant.mother = null;
+        motherPreview.setElephant(null);
+        motherPreview.setVisibility(View.GONE);
+        motherButton.setVisibility(View.VISIBLE);
+      }
+    };
+  }
+
+  private View.OnClickListener unsetFather() {
+    return new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        elephant.father = null;
+        fatherPreview.setElephant(null);
+        fatherPreview.setVisibility(View.GONE);
+        fatherButton.setVisibility(View.VISIBLE);
+      }
+    };
+  }
+
+
 }
