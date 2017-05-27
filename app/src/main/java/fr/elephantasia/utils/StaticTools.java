@@ -1,16 +1,8 @@
 package fr.elephantasia.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
@@ -29,6 +21,11 @@ import fr.elephantasia.R;
  */
 
 public class StaticTools {
+
+  /**
+   * Used to set request code accross activities
+   */
+  private static final AtomicInteger seed = new AtomicInteger();
 
   /**
    * Copie un flux de données entrant vers un flux de données sortant.
@@ -128,12 +125,8 @@ public class StaticTools {
     }
   }
 
-  /**
-   * Used to set request code accross activities
-   */
-    private static final AtomicInteger seed = new AtomicInteger();
-    public static int getFreshInt() {
-      return seed.incrementAndGet();
-    }
+  public static int getFreshInt() {
+    return seed.incrementAndGet();
+  }
 
 }

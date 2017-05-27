@@ -9,7 +9,7 @@ import io.realm.RealmObject;
  * Created by seb on 29/04/2017.
  */
 
-@Parcel(implementations = { ElephantStateRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { ElephantState.class })
+@Parcel(implementations = {ElephantStateRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {ElephantState.class})
 public class ElephantState extends RealmObject {
   public boolean pending = false;
   public boolean deleted = false;

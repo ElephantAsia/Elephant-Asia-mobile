@@ -8,10 +8,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -20,32 +18,29 @@ import com.afollestad.materialdialogs.StackingBehavior;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.showElephant.fragment.ShowDescriptionFragment;
-import fr.elephantasia.activities.showElephant.fragment.ShowProfilFragment;
-import fr.elephantasia.activities.showElephant.fragment.ShowRegistrationFragment;
+import fr.elephantasia.activities.showElephant.fragment.ShowDocumentFragment;
+import fr.elephantasia.activities.showElephant.fragment.ShowOverviewFragment;
+import fr.elephantasia.activities.showElephant.fragment.ShowParentageFragment;
 import fr.elephantasia.adapter.ViewPagerAdapter;
-import fr.elephantasia.databinding.ShowElephantActivityBinding;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.databinding.ShowElephantActivityBinding;
 import io.realm.Realm;
 
-import static fr.elephantasia.activities.SearchElephantResultActivity.EXTRA_ELEPHANT_SELECTED_ID;
+import static fr.elephantasia.activities.searchElephantResult.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
 import static fr.elephantasia.database.model.Elephant.ID;
 
 public class ShowElephantActivity extends AppCompatActivity {
-
-  // Attr
-  private Elephant elephant;
-  private Realm realm;
 
   // View Binding
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.tabs) TabLayout tabLayout;
   @BindView(R.id.viewpager) ViewPager viewPager;
-
-
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
+
+  // Attr
+  private Elephant elephant;
+  private Realm realm;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +118,7 @@ public class ShowElephantActivity extends AppCompatActivity {
 
   private Elephant getExtraElephant() {
     Intent intent = getIntent();
-    String id = intent.getStringExtra(EXTRA_ELEPHANT_SELECTED_ID);
+    String id = intent.getStringExtra(EXTRA_ELEPHANT_ID);
     realm = Realm.getDefaultInstance();
     Elephant el = realm.where(Elephant.class).equalTo(ID, id).findFirst();
 
@@ -132,9 +127,9 @@ public class ShowElephantActivity extends AppCompatActivity {
 
   private void setupViewPager(ViewPager viewPager) {
     ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-    adapter.addFragment(new ShowProfilFragment(), getString(R.string.profil));
-    adapter.addFragment(new ShowRegistrationFragment(), getString(R.string.registration));
-    adapter.addFragment(new ShowDescriptionFragment(), getString(R.string.description));
+    adapter.addFragment(new ShowOverviewFragment(), getString(R.string.overview));
+    adapter.addFragment(new ShowParentageFragment(), getString(R.string.parentage));
+    adapter.addFragment(new ShowDocumentFragment(), getString(R.string.documents));
     viewPager.setAdapter(adapter);
   }
 }

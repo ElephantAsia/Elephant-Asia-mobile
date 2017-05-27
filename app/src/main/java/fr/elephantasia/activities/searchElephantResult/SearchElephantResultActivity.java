@@ -1,4 +1,4 @@
-package fr.elephantasia.activities;
+package fr.elephantasia.activities.searchElephantResult;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,56 +24,35 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 import static fr.elephantasia.activities.SearchElephantActivity.EXTRA_SEARCH_ELEPHANT;
+import static fr.elephantasia.activities.addElephant.AddElephantActivity.SELECT_ELEPHANT;
 import static fr.elephantasia.database.model.Elephant.CHIPS1;
 import static fr.elephantasia.database.model.Elephant.FEMALE;
-import static fr.elephantasia.database.model.Elephant.ID;
 import static fr.elephantasia.database.model.Elephant.MALE;
 import static fr.elephantasia.database.model.Elephant.NAME;
 
 public class SearchElephantResultActivity extends AppCompatActivity {
 
-  public static final String EXTRA_ELEPHANT_SELECTED_ID = "extra_elephant_selected";
-
-  // Attr
-  private ListElephantPreviewAdapter adapter;
-  private Realm realm;
+  // Extra code
+  public static final String EXTRA_ELEPHANT_ID = "extra_elephant_selected";
 
   // View Binding
   @BindView(R.id.list_view) ListView listView;
   @BindView(R.id.no_result) TextView noResult;
   @BindView(R.id.toolbar) Toolbar toolbar;
 
+  // Attr
+  private ListElephantPreviewAdapter adapter;
+  private Realm realm;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.search_elephant_result_activity);
     ButterKnife.bind(this);
-
-
     realm = Realm.getDefaultInstance();
-    RealmList<Elephant> elephants = new RealmList<>();
-    elephants.addAll(searchElephants());
 
-    if (!elephants.isEmpty()) {
-      adapter = new ListElephantPreviewAdapter(this, elephants);
-      listView.setAdapter(adapter);
-    } else {
-      listView.setVisibility(View.GONE);
-      noResult.setVisibility(View.VISIBLE);
-    }
-
-    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-      @Override
-      public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Intent intent = new Intent(SearchElephantResultActivity.this, ShowElephantActivity.class);
-        Elephant elephant = adapter.getItem(i);
-
-        if (elephant != null) {
-          intent.putExtra(EXTRA_ELEPHANT_SELECTED_ID, elephant.id);
-          startActivity(intent);
-        }
-      }
-    });
+    displaySearchResult();
+    setListItemClickListener();
 
     TextView title = (TextView) toolbar.findViewById(R.id.title);
     title.setText(getString(R.string.search_result));
@@ -97,6 +76,18 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     return true;
   }
 
+  private void displaySearchResult() {
+    RealmList<Elephant> elephants = new RealmList<>();
+    elephants.addAll(searchElephants());
+    if (!elephants.isEmpty()) {
+      adapter = new ListElephantPreviewAdapter(this, elephants);
+      listView.setAdapter(adapter);
+    } else {
+      listView.setVisibility(View.GONE);
+      noResult.setVisibility(View.VISIBLE);
+    }
+  }
+
   private RealmResults<Elephant> searchElephants() {
     Elephant e = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_ELEPHANT));
     RealmQuery<Elephant> query = realm.where(Elephant.class);
@@ -117,7 +108,45 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     return query.findAll();
   }
 
-  private Elephant getElephantById(String id) {
-    return realm.where(Elephant.class).equalTo(ID, id).findFirst();
+  private void setListItemClickListener() {
+    String action = getIntent().getAction();
+
+    if (action != null && action.equals(SELECT_ELEPHANT)) {
+      listView.setOnItemClickListener(selectElephantListener());
+    } else {
+      listView.setOnItemClickListener(showElephantListener());
+    }
   }
+
+  AdapterView.OnItemClickListener selectElephantListener() {
+    return new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Intent resultIntent = getIntent();
+        Elephant elephant = adapter.getItem(i);
+
+        if (elephant != null) {
+          resultIntent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+          setResult(RESULT_OK, resultIntent);
+          finish();
+        }
+      }
+    };
+  }
+
+  AdapterView.OnItemClickListener showElephantListener() {
+    return new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Intent intent = new Intent(SearchElephantResultActivity.this, ShowElephantActivity.class);
+        Elephant elephant = adapter.getItem(i);
+
+        if (elephant != null) {
+          intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+          startActivity(intent);
+        }
+      }
+    };
+  }
+
 }

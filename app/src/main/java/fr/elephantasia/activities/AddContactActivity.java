@@ -12,21 +12,25 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.databinding.AddContactActivityBinding;
 import fr.elephantasia.database.RealmDB;
 import fr.elephantasia.database.model.Contact;
+import fr.elephantasia.databinding.AddContactActivityBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
 import io.realm.Realm;
 
-public class AddContactActivity extends AppCompatActivity  {
+public class AddContactActivity extends AppCompatActivity {
 
+  // Extra code
   public static final String EXTRA_CONTACT_CREATED = "extra_contact_created";
 
+  // View binding
+  @BindView(R.id.toolbar) Toolbar toolbar;
+
+  // Attr
   private Realm realm;
   private Contact contact = new Contact();
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-
+  // Listener binding
   @OnClick(R.id.validate_button)
   public void addNewContact() {
     RealmDB.copyOrUpdate(contact);

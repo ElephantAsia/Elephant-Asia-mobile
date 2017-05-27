@@ -14,24 +14,25 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.addElephant.AddElephantActivity;
+import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.AddElephantProfilFragmentBinding;
 import fr.elephantasia.dialogs.LocationDialog;
 import fr.elephantasia.fragment.DatePickerFragment;
-import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 public class ProfilFragment extends Fragment {
 
-  private Elephant elephant;
-
+  // View binding
   @BindView(R.id.birthLocation) EditText birthLocation;
   @BindView(R.id.currentLocation) EditText currentLocation;
+  @BindView(R.id.name) EditText name;   // Mandatory fields
+  @BindView(R.id.male) RadioButton male; // Mandatory fields
+  @BindView(R.id.female) RadioButton female; // Mandatory fields
 
-  // Mandatory fields
-  @BindView(R.id.name) EditText name;
-  @BindView(R.id.male) RadioButton male;
-  @BindView(R.id.female) RadioButton female;
+  // Attr
+  private Elephant elephant;
 
+  // Listener binding
   @OnClick({R.id.male, R.id.female})
   public void removeSexError() {
     male.setError(null);
@@ -62,11 +63,6 @@ public class ProfilFragment extends Fragment {
         editText
     );
     locationDialog.show();
-  }
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
   }
 
   @Override

@@ -21,14 +21,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import fr.elephantasia.activities.addElephant.AddElephantActivity;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.addElephant.AddElephantActivity;
 import fr.elephantasia.adapter.MainActivityDrawerListAdapter;
 import fr.elephantasia.fragment.HomePageFragment;
 import fr.elephantasia.utils.Preferences;
 import jp.wasabeef.blurry.Blurry;
 
 public class MainActivity extends AppCompatActivity {
+
+  //TODO: refactor using view binding
 
   public static final int REQUEST_ADD_ELEPHANT = 1;
   private static final String EXTRA_FRAGMENT = "main.fragment";

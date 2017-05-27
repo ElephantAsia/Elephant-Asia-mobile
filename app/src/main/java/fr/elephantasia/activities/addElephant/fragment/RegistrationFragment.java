@@ -13,16 +13,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.addElephant.AddElephantActivity;
+import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.AddElephantRegistrationFragmentBinding;
 import fr.elephantasia.dialogs.LocationDialog;
-import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 public class RegistrationFragment extends Fragment {
 
-  private Elephant elephant;
-
+  // View binding
   @BindView(R.id.registrationLocation) EditText registrationLocation;
+
+  // Attr
+  private Elephant elephant;
 
   @OnClick(R.id.registrationLocation)
   public void showLocationDialog(EditText editText) {

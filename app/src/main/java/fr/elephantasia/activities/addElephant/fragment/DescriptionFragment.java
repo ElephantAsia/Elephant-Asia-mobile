@@ -17,27 +17,30 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.addElephant.AddElephantActivity;
+import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.AddElephantDescriptionFragmentBinding;
 import fr.elephantasia.dialogs.HeightDialog;
 import fr.elephantasia.dialogs.WeightDialog;
-import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 
 public class DescriptionFragment extends Fragment {
+
+  // Attr
   private Elephant elephant;
 
+  // Listener binding
   @OnClick(R.id.height)
   public void showHeightDialog(EditText editText) {
-    HeightDialog dialog = new HeightDialog(getActivity(),getContext(), elephant, editText);
-    dialog.show();
-  }
-  @OnClick(R.id.weight)
-  public void showWeightDialog(EditText editText) {
-    WeightDialog dialog = new WeightDialog(getActivity(),getContext(), elephant, editText);
+    HeightDialog dialog = new HeightDialog(getActivity(), getContext(), elephant, editText);
     dialog.show();
   }
 
+  @OnClick(R.id.weight)
+  public void showWeightDialog(EditText editText) {
+    WeightDialog dialog = new WeightDialog(getActivity(), getContext(), elephant, editText);
+    dialog.show();
+  }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,

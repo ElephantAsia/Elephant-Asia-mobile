@@ -11,10 +11,10 @@ import android.widget.Toast;
 import fr.elephantasia.R;
 import fr.elephantasia.utils.KeyboardHelpers;
 import fr.elephantasia.utils.Preferences;
-import fr.elephantasia.utils.StaticTools;
 
 public class LoginActivity extends AppCompatActivity {
 
+  //TODO: refactor using view binding
   private EditText mUsernameEditText;
   private EditText mPasswordEditText;
   private Button mButton;

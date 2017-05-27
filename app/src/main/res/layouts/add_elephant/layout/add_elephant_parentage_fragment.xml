@@ -1,127 +1,122 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:theme="@style/AppThemeWhiteBackground">
+
+  <data>
+
+    <variable
+      name="e"
+      type="fr.elephantasia.database.model.Elephant"/>
+
+  </data>
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:theme="@style/AppThemeWhiteBackground">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    >
 
     <LinearLayout
-        android:layout_width="match_parent"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp"
+        android:layout_margin="5dp"
+        android:text="@string/mother"
+        android:textSize="18sp"/>
+
+      <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         >
 
-        <LinearLayout
-            android:id="@+id/father_parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <ImageView
+          android:id="@+id/mother_add_button"
+          android:layout_width="60dp"
+          android:layout_height="60dp"
+          android:layout_margin="5dp"
+          android:contentDescription="@null"
+          android:src="@drawable/add_picture"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Father"
-                android:textSize="18sp"/>
+        <fr.elephantasia.customView.ElephantPreview
+          android:id="@+id/mother_preview"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="gone"
+          app:elephant="@{e.mother}">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+        </fr.elephantasia.customView.ElephantPreview>
 
-                <ImageView
-                    android:id="@+id/father_add_button"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="5dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/add_picture"/>
-
-                <FrameLayout
-                    android:id="@+id/father_overview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <include layout="@layout/elephant_preview"/>
-
-                </FrameLayout>
-
-            </FrameLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/mother_parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Mother"
-                android:textSize="18sp"/>
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/mother_add_button"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="5dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/add_picture"/>
-
-                <FrameLayout
-                    android:id="@+id/mother_overview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <include layout="@layout/elephant_preview"/>
-
-                </FrameLayout>
-
-            </FrameLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Children"
-                android:textSize="18sp"/>
-
-            <!--<ListView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />-->
-
-            <LinearLayout
-                android:id="@+id/children_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"/>
-
-            <ImageView
-                android:id="@+id/children_add_button"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_margin="5dp"
-                android:contentDescription="@null"
-                android:src="@drawable/add_picture"/>
-
-        </LinearLayout>
+      </FrameLayout>
 
     </LinearLayout>
 
-</ScrollView>
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="14dp"
+      android:orientation="vertical">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/father"
+        android:textSize="18sp"/>
+
+      <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+          android:id="@+id/father_add_button"
+          android:layout_width="60dp"
+          android:layout_height="60dp"
+          android:layout_margin="5dp"
+          android:contentDescription="@null"
+          android:src="@drawable/add_picture"/>
+
+        <fr.elephantasia.customView.ElephantPreview
+          android:id="@+id/father_preview"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="gone"
+          app:elephant="@{e.father}">
+
+        </fr.elephantasia.customView.ElephantPreview>
+
+      </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="14dp"
+      android:orientation="vertical">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/children"
+        android:textSize="18sp"/>
+
+      <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</layout>

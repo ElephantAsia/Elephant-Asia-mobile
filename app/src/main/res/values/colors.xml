@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary_grey_100">#404040</color>
-    <color name="primary_75">#bf404040</color>
-    <color name="primary_50">#80404040</color>
-    <color name="primary_25">#40404040</color>
-    <color name="primary_10">#1a404040</color>
+  <color name="primary_grey_100">#404040</color>
+  <color name="primary_75">#bf404040</color>
+  <color name="primary_50">#80404040</color>
+  <color name="primary_25">#40404040</color>
+  <color name="primary_10">#1a404040</color>
 
-    <color name="white_30">#4DFFFFFF</color>
+  <color name="white_30">#4DFFFFFF</color>
 
-    <color name="background_100">#EFEFEF</color>
-    <color name="background_60">#99EFEFEF</color>
+  <color name="background_100">#EFEFEF</color>
+  <color name="background_60">#99EFEFEF</color>
 
-    <color name="primary_dark_100">#404040</color>
-    <!--<color name="colorAccent">#66000000</color>-->
+  <color name="primary_dark_100">#404040</color>
+  <!--<color name="colorAccent">#66000000</color>-->
 
-    <color name="list_selection">#4285f4</color>
-    <color name="list_indice">#8e8e8e</color>
+  <color name="list_selection">#4285f4</color>
+  <color name="list_indice">#8e8e8e</color>
 
-    <color name="grey_light_100">#FF929292</color>
-    <color name="grey_light_50">#88929292</color>
-    <color name="grey_light_12">#22929292</color>
-    <color name="grey_light_7">#22ABABAB</color>
+  <color name="grey_light_100">#FF929292</color>
+  <color name="grey_light_50">#88929292</color>
+  <color name="grey_light_12">#22929292</color>
+  <color name="grey_light_7">#22ABABAB</color>
 
-    <color name="black_transparant">#66000000</color>
-    <color name="transparent">#00000000</color>
+  <color name="black_transparant">#66000000</color>
+  <color name="transparent">#00000000</color>
 
-    <color name="navigationBarColor">#000000</color>
+  <color name="navigationBarColor">#000000</color>
 
-    <color name="black100">#FF000000</color>
-    <color name="black75">#BF000000</color>
-    <color name="black60">#96000000</color>
-    <color name="black50">#80000000</color>
-    <!--Graphic chart-->
-    <color name="primary_grey">#303030</color>
-    <color name="burma_orange">#C1864E</color>
+  <color name="black100">#FF000000</color>
+  <color name="black75">#BF000000</color>
+  <color name="black60">#96000000</color>
+  <color name="black50">#80000000</color>
+  <!--Graphic chart-->
+  <color name="primary_grey">#303030</color>
+  <color name="burma_orange">#C1864E</color>
 
 </resources>

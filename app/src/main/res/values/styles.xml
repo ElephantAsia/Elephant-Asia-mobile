@@ -1,94 +1,94 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowActivityTransitions" tools:targetApi="21">true</item>
+  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="android:windowActivityTransitions" tools:targetApi="21">true</item>
 
-        <item name="colorPrimary">@color/primary_grey_100</item>
-        <item name="android:colorPrimary" tools:targetApi="21">@color/primary_grey_100</item>
+    <item name="colorPrimary">@color/primary_grey_100</item>
+    <item name="android:colorPrimary" tools:targetApi="21">@color/primary_grey_100</item>
 
-        <item name="colorPrimaryDark">@color/primary_dark_100</item>
-        <item name="android:colorPrimaryDark" tools:targetApi="21">@color/primary_dark_100</item>
+    <item name="colorPrimaryDark">@color/primary_dark_100</item>
+    <item name="android:colorPrimaryDark" tools:targetApi="21">@color/primary_dark_100</item>
 
-        <item name="colorAccent">@color/primary_grey_100</item>
-        <item name="android:colorAccent" tools:targetApi="21">@color/primary_grey_100</item>
+    <item name="colorAccent">@color/primary_grey_100</item>
+    <item name="android:colorAccent" tools:targetApi="21">@color/primary_grey_100</item>
 
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="windowActionBar">false</item>
 
-        <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowContentOverlay">@null</item>
 
-        <!-- Window background color -->
-        <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:popupBackground">@android:color/white</item>
+    <!-- Window background color -->
+    <item name="android:windowBackground">@android:color/white</item>
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:popupBackground">@android:color/white</item>
 
-        <!-- Widgets style -->
-        <item name="android:editTextStyle">@style/App_EditTextStyle</item>
-        <item name="android:buttonStyle">@style/App_ButtonStyle</item>
-        <item name="android:listViewStyle">@style/App_ListViewStyle</item>
+    <!-- Widgets style -->
+    <item name="android:editTextStyle">@style/App_EditTextStyle</item>
+    <item name="android:buttonStyle">@style/App_ButtonStyle</item>
+    <item name="android:listViewStyle">@style/App_ListViewStyle</item>
 
-        <item name="colorControlNormal">@color/grey_light_100</item>
-        <item name="android:colorControlNormal" tools:targetApi="21">@color/grey_light_100</item>
+    <item name="colorControlNormal">@color/grey_light_100</item>
+    <item name="android:colorControlNormal" tools:targetApi="21">@color/grey_light_100</item>
 
-        <item name="colorControlActivated">@color/primary_grey_100</item>
-        <item name="android:colorControlActivated" tools:targetApi="21">@color/primary_grey_100
-        </item>
+    <item name="colorControlActivated">@color/primary_grey_100</item>
+    <item name="android:colorControlActivated" tools:targetApi="21">@color/primary_grey_100
+    </item>
 
-        <item name="colorControlHighlight">@color/primary_50</item>
-        <item name="android:colorControlHighlight" tools:targetApi="21">@color/primary_50</item>
+    <item name="colorControlHighlight">@color/primary_50</item>
+    <item name="android:colorControlHighlight" tools:targetApi="21">@color/primary_50</item>
 
-        <!--Material desgin dialog-->
-        <item name="md_positive_color">@color/burma_orange</item>
-        <item name="md_negative_color">@color/burma_orange</item>
-        <item name="md_title_color">@color/primary_grey</item>
+    <!--Material desgin dialog-->
+    <item name="md_positive_color">@color/burma_orange</item>
+    <item name="md_negative_color">@color/burma_orange</item>
+    <item name="md_title_color">@color/primary_grey</item>
 
-    </style>
+  </style>
 
-    <!--App theme White background-->
-    <style name="AppThemeWhiteBackground" parent="AppTheme">
-        <item name="android:textColor">@color/primary_grey</item>
-    </style>
+  <!--App theme White background-->
+  <style name="AppThemeWhiteBackground" parent="AppTheme">
+    <item name="android:textColor">@color/primary_grey</item>
+  </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+  <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+  <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
-    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/primary_grey_100</item>
-        <item name="colorPrimaryDark">@color/primary_dark_100</item>
-        <item name="android:windowBackground">@drawable/splash_screen</item>
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
-    </style>
+  <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+    <item name="colorPrimary">@color/primary_grey_100</item>
+    <item name="colorPrimaryDark">@color/primary_dark_100</item>
+    <item name="android:windowBackground">@drawable/splash_screen</item>
+    <!--<item name="colorAccent">@color/colorAccent</item>-->
+  </style>
 
-    <style name="App_EditTextStyle" parent="@android:style/Widget.EditText">
-        <item name="android:textColor">#000000</item>
-        <item name="android:textColorHint">@color/grey_light_100</item>
-        <item name="android:textSize">16sp</item>
-    </style>
+  <style name="App_EditTextStyle" parent="@android:style/Widget.EditText">
+    <item name="android:textColor">#000000</item>
+    <item name="android:textColorHint">@color/grey_light_100</item>
+    <item name="android:textSize">16sp</item>
+  </style>
 
-    <style name="App_ButtonStyle" parent="@android:style/Widget.Button">
-        <item name="android:background">@drawable/button_primary</item>
-        <item name="android:textColor">@android:color/white</item>
-    </style>
+  <style name="App_ButtonStyle" parent="@android:style/Widget.Button">
+    <item name="android:background">@drawable/button_primary</item>
+    <item name="android:textColor">@android:color/white</item>
+  </style>
 
-    <style name="App_ListViewStyle" parent="android:style/Widget.ListView">
-        <item name="android:divider">@color/grey_light_50</item>
-        <item name="android:dividerHeight">1px</item>
-        <item name="android:drawSelectorOnTop">false</item>
-        <item name="android:listSelector">@color/listitem</item>
-        <item name="android:cacheColorHint">#00000000</item>
-    </style>
+  <style name="App_ListViewStyle" parent="android:style/Widget.ListView">
+    <item name="android:divider">@color/grey_light_50</item>
+    <item name="android:dividerHeight">1px</item>
+    <item name="android:drawSelectorOnTop">false</item>
+    <item name="android:listSelector">@color/listitem</item>
+    <item name="android:cacheColorHint">#00000000</item>
+  </style>
 
-    <style name="App_TabTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="textAllCaps">false</item>
-        <item name="android:textAllCaps">false</item>
-    </style>
+  <style name="App_TabTextAppearance" parent="TextAppearance.Design.Tab">
+    <item name="textAllCaps">false</item>
+    <item name="android:textAllCaps">false</item>
+  </style>
 
-    <style name="spinnerItemStyle">
-        <item name="android:gravity">center</item>
-    </style>
+  <style name="spinnerItemStyle">
+    <item name="android:gravity">center</item>
+  </style>
 
-    <style name="spinnerDropDownItemStyle">
-        <item name="android:gravity">center</item>
-    </style>
+  <style name="spinnerDropDownItemStyle">
+    <item name="android:gravity">center</item>
+  </style>
 </resources>

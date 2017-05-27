@@ -10,11 +10,11 @@ import android.widget.BaseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.elephantasia.refactor.AsyncTasks.LoadBitmapAsyncTask;
 import fr.elephantasia.R;
+import fr.elephantasia.customView.RoundedImageView;
+import fr.elephantasia.refactor.AsyncTasks.LoadBitmapAsyncTask;
 import fr.elephantasia.refactor.interfaces.DocumentInterface;
 import fr.elephantasia.refactor.interfaces.LoadBitmapInterface;
-import fr.elephantasia.view.RoundedImageView;
 
 
 public class DocumentAdapter extends BaseAdapter {

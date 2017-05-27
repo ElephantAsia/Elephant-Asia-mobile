@@ -1,163 +1,111 @@
 package fr.elephantasia.activities.addElephant.fragment;
 
 
+import android.content.Intent;
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import fr.elephantasia.R;
+import fr.elephantasia.activities.SearchElephantActivity;
+import fr.elephantasia.activities.addElephant.AddElephantActivity;
+import fr.elephantasia.adapter.ListElephantPreviewAdapter;
+import fr.elephantasia.customView.ElephantPreview;
+import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.databinding.AddElephantParentageFragmentBinding;
+import io.realm.Realm;
+
+import static butterknife.ButterKnife.findById;
+import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_CHILD_SELECTED;
+import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_FATHER_SELECTED;
+import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_MOTHER_SELECTED;
+import static fr.elephantasia.activities.addElephant.AddElephantActivity.SELECT_ELEPHANT;
+import static fr.elephantasia.database.model.Elephant.ID;
 
 public class ParentageFragment extends Fragment {
 
-//  private View fatherParent;
-//  private View motherParent;
-//
-//  private View fatherOverview;
-//  private View motherOverview;
-//
-//  private View fatherAddButton;
-//  private View motherAddButton;
-//
-//  private ViewGroup childrenContainer;
-//  private View childrenAddButton;
-//
-//  private ElephantInfo father;
-//  private ElephantInfo mother;
-//  private List<ElephantInfo> children;
-//
-//  @Override
-//  public void onCreate(Bundle savedInstanceState) {
-//    super.onCreate(savedInstanceState);
-//    children = new ArrayList<>();
-//  }
-//
-//  @Override
-//  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//    View view = inflater.inflate(R.layout.add_elephant_parentage_fragment, container, false);
-//
-//    fatherParent = view.findViewById(R.id.father_parent);
-//    motherParent = view.findViewById(R.id.mother_parent);
-//
-//    fatherOverview = view.findViewById(R.id.father_overview);
-//    motherOverview = view.findViewById(R.id.mother_overview);
-//
-//    fatherAddButton = view.findViewById(R.id.father_add_button);
-//    motherAddButton = view.findViewById(R.id.mother_add_button);
-//    childrenAddButton = view.findViewById(R.id.children_add_button);
-//
-//    childrenContainer = (ViewGroup) view.findViewById(R.id.children_list);
-//
-//    if (father == null) {
-//      fatherOverview.setVisibility(View.GONE);
-//      fatherAddButton.setVisibility(View.VISIBLE);
-//    } else {
-//      fatherOverview.setVisibility(View.VISIBLE);
-//      fatherAddButton.setVisibility(View.GONE);
-//      refreshFather(father);
-//    }
-//
-//    if (mother == null) {
-//      motherOverview.setVisibility(View.GONE);
-//      motherAddButton.setVisibility(View.VISIBLE);
-//    } else {
-//      motherOverview.setVisibility(View.VISIBLE);
-//      motherAddButton.setVisibility(View.GONE);
-//      refreshMother(mother);
-//    }
-//
-//    fatherAddButton.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        ((AddElephantInterface) getActivity()).setFather();
-//      }
-//    });
-//
-//    motherAddButton.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        ((AddElephantInterface) getActivity()).setMother();
-//      }
-//    });
-//
-//    childrenAddButton.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        ((AddElephantInterface) getActivity()).addChildren();
-//      }
-//    });
-//
-//    fatherOverview.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        if (father != null) {
-//          ((AddElephantInterface) getActivity()).onElephantClick(father);
-//        }
-//      }
-//    });
-//
-//    motherOverview.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        if (mother != null) {
-//          ((AddElephantInterface) getActivity()).onElephantClick(mother);
-//        }
-//      }
-//    });
-//
-//    refreshChildrenList();
-//
-//    return (view);
-//  }
-//
-//  public void refreshFather(ElephantInfo info) {
-//    Log.i("father", info.name);
-//    father = info;
-//    fatherAddButton.setVisibility(View.GONE);
-//    fatherOverview.setVisibility(View.VISIBLE);
-//    RefreshElephantPreview.refresh(getContext(), fatherOverview, info);
-//  }
-//
-//  public void refreshMother(ElephantInfo info) {
-//    Log.i("mother", info.name);
-//    mother = info;
-//    motherAddButton.setVisibility(View.GONE);
-//    motherOverview.setVisibility(View.VISIBLE);
-//    RefreshElephantPreview.refresh(getContext(), motherOverview, info);
-//  }
-//
-//  public void refreshChildren(final ElephantInfo info) {
-//    Log.i("children", "add: " + info.name);
-//    children.add(info);
-//
-//    LayoutInflater inflater = LayoutInflater.from(getActivity());
-//    View view = inflater.inflate(R.layout.elephant_preview, childrenContainer, false);
-//
-//    RefreshElephantPreview.refresh(getContext(), view, info);
-//
-//    view.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        ((AddElephantInterface) getActivity()).onElephantClick(info);
-//      }
-//    });
-//
-//    childrenContainer.addView(view);
-//  }
-//
-//  private void refreshChildrenList() {
-//    childrenContainer.removeAllViews();
-//
-//    LayoutInflater inflater = LayoutInflater.from(getActivity());
-//    for (final ElephantInfo info : children) {
-//      View view = inflater.inflate(R.layout.elephant_preview, childrenContainer, false);
-//
-//      RefreshElephantPreview.refresh(getContext(), view, info);
-//
-//      view.setOnClickListener(new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//          ((AddElephantInterface) getActivity()).onElephantClick(info);
-//        }
-//      });
-//
-//      childrenContainer.addView(view);
-//    }
-//  }
+  // View binding
+  @BindView(R.id.mother_add_button) ImageView motherButton;
+  @BindView(R.id.mother_preview) ElephantPreview motherPreview;
+  @BindView(R.id.father_add_button) ImageView fatherButton;
+  @BindView(R.id.father_preview) ElephantPreview fatherPreview;
+  @BindView(R.id.list) ListView childrenList;
 
+  // Attr
+  private Elephant elephant;
+  private AddElephantParentageFragmentBinding binding;
+  private ListElephantPreviewAdapter adapter;
+
+  // Listener binding
+  @OnClick(R.id.mother_add_button)
+  public void searchMother() {
+    Intent intent = new Intent(getActivity(), SearchElephantActivity.class);
+    intent.setAction(SELECT_ELEPHANT);
+    getActivity().startActivityForResult(intent, REQUEST_MOTHER_SELECTED);
+  }
+
+  @OnClick(R.id.father_add_button)
+  public void searchFather() {
+    Intent intent = new Intent(getActivity(), SearchElephantActivity.class);
+    intent.setAction(SELECT_ELEPHANT);
+    getActivity().startActivityForResult(intent, REQUEST_FATHER_SELECTED);
+  }
+
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    binding = DataBindingUtil.inflate(inflater, R.layout.add_elephant_parentage_fragment, container, false);
+    elephant = ((AddElephantActivity) getActivity()).getElephant();
+    binding.setE(elephant);
+    View view = binding.getRoot();
+    ButterKnife.bind(this, view);
+    setupChildrenList(inflater);
+    return (view);
+  }
+
+  private void setupChildrenList(LayoutInflater inflater) {
+    View headerView = inflater.inflate(R.layout.add_button_footer_list, childrenList, false);
+    TextView addChildButton = findById(headerView, R.id.add_button_footer);
+    addChildButton.setHint(getString(R.string.add_child));
+    addChildButton.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        Intent intent = new Intent(getActivity(), SearchElephantActivity.class);
+        intent.setAction(SELECT_ELEPHANT);
+        getActivity().startActivityForResult(intent, REQUEST_CHILD_SELECTED);
+      }
+    });
+    adapter = new ListElephantPreviewAdapter(getContext(), elephant.children);
+    childrenList.addHeaderView(headerView);
+    childrenList.setAdapter(adapter);
+  }
+
+  public void setMother(String id) {
+    Realm realm = ((AddElephantActivity) getActivity()).getRealm();
+    elephant.mother = realm.where(Elephant.class).equalTo(ID, id).findFirst();
+    motherButton.setVisibility(View.GONE);
+    motherPreview.setElephant(elephant.mother);
+    motherPreview.setVisibility(View.VISIBLE);
+  }
+
+  public void setFather(String id) {
+    Realm realm = ((AddElephantActivity) getActivity()).getRealm();
+    elephant.father = realm.where(Elephant.class).equalTo(ID, id).findFirst();
+    fatherButton.setVisibility(View.GONE);
+    fatherPreview.setElephant(elephant.father);
+    fatherPreview.setVisibility(View.VISIBLE);
+  }
+
+  public void setChild(String id) {
+    Realm realm = ((AddElephantActivity) getActivity()).getRealm();
+    Elephant child = realm.where(Elephant.class).equalTo(ID, id).findFirst();
+    adapter.add(child);
+  }
 }

@@ -22,16 +22,18 @@ import fr.elephantasia.utils.KeyboardHelpers;
 
 public class LocationInputDialog {
 
+  // View binding
+  @BindView(R.id.province) EditText provinceET;
+  @BindView(R.id.district)  EditText districtET;
+  @BindView(R.id.city)  EditText cityET;
+
+  // Attr
   private Activity activity;
   private Location loc;
   private String title;
   private EditText editTextTarget;
 
-  @BindView(R.id.province) EditText provinceET;
-  @BindView(R.id.district) EditText districtET;
-  @BindView(R.id.city) EditText cityET;
-
-  public LocationInputDialog(Activity activity, final Location loc, final String title, final EditText editText) {
+  LocationInputDialog(Activity activity, final Location loc, final String title, final EditText editText) {
     this.activity = activity;
     this.loc = loc;
     this.title = title;
@@ -49,7 +51,7 @@ public class LocationInputDialog {
       districtET.setText(loc.districtName);
     }
     if (!TextUtils.isEmpty(loc.cityName)) {
-        cityET.setText(loc.cityName);
+      cityET.setText(loc.cityName);
     }
 
     KeyboardHelpers.hideKeyboardListener(view, activity);

@@ -12,8 +12,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.databinding.SearchContactActivityBinding;
 import fr.elephantasia.database.model.Contact;
+import fr.elephantasia.databinding.SearchContactActivityBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 import static fr.elephantasia.activities.AddContactActivity.EXTRA_CONTACT_CREATED;
@@ -23,17 +23,23 @@ public class SearchContactActivity extends AppCompatActivity {
 
   // Extra
   public static final String EXTRA_SEARCH_FILTERS = "extra_search_filters";
-  public static final String EXTRA_SEARCH_RESULT = "extra_search_result";
+  public static final String EXTRA_SEARCH_CONTACT = "extra_search_contact";
 
   // Request code
   public static final int REQUEST_CONTACT_SELECTED = 1;
   public static final int REQUEST_CONTACT_CREATED = 2;
 
+  // Views Binding
+  @BindView(R.id.toolbar) Toolbar toolbar;
+
   // Attr
   private Contact contact = new Contact();
 
-  // Views Binding
-  @BindView(R.id.toolbar) Toolbar toolbar;
+  public SearchContactActivity() {
+    contact.owner = true;
+    contact.cornac = true;
+    contact.vet = true;
+  }
 
   // Listeners Binding
   @OnClick(R.id.search_button)
@@ -42,17 +48,11 @@ public class SearchContactActivity extends AppCompatActivity {
     intent.putExtra(EXTRA_SEARCH_FILTERS, Parcels.wrap(contact));
     startActivityForResult(intent, REQUEST_CONTACT_SELECTED);
   }
+
   @OnClick(R.id.create_button)
   public void createContact() {
     Intent intent = new Intent(this, AddContactActivity.class);
     startActivityForResult(intent, REQUEST_CONTACT_CREATED);
-  }
-
-
-  public SearchContactActivity() {
-    contact.owner = true;
-    contact.cornac = true;
-    contact.vet = true;
   }
 
   @Override
@@ -66,6 +66,7 @@ public class SearchContactActivity extends AppCompatActivity {
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
     KeyboardHelpers.hideKeyboardListener(binding.getRoot(), this);
   }
 
@@ -83,14 +84,14 @@ public class SearchContactActivity extends AppCompatActivity {
     if (resultCode == RESULT_OK && data != null) {
       Intent resultIntent = new Intent();
 
-      switch(requestCode) {
+      switch (requestCode) {
         case (REQUEST_CONTACT_SELECTED):
-          resultIntent.putExtra(EXTRA_SEARCH_RESULT, data.getParcelableExtra(EXTRA_CONTACT_SELECTED));
+          resultIntent.putExtra(EXTRA_SEARCH_CONTACT, data.getParcelableExtra(EXTRA_CONTACT_SELECTED));
           setResult(RESULT_OK, resultIntent);
           finish();
           break;
         case (REQUEST_CONTACT_CREATED):
-          resultIntent.putExtra(EXTRA_SEARCH_RESULT, data.getParcelableExtra(EXTRA_CONTACT_CREATED));
+          resultIntent.putExtra(EXTRA_SEARCH_CONTACT, data.getParcelableExtra(EXTRA_CONTACT_CREATED));
           setResult(RESULT_OK, resultIntent);
           finish();
           break;

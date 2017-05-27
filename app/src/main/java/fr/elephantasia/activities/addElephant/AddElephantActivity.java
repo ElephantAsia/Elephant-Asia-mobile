@@ -24,18 +24,21 @@ import org.parceler.Parcels;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import fr.elephantasia.R;
 import fr.elephantasia.activities.addElephant.fragment.ContactFragment;
 import fr.elephantasia.activities.addElephant.fragment.DescriptionFragment;
+import fr.elephantasia.activities.addElephant.fragment.ParentageFragment;
 import fr.elephantasia.activities.addElephant.fragment.ProfilFragment;
 import fr.elephantasia.activities.addElephant.fragment.RegistrationFragment;
-import fr.elephantasia.R;
 import fr.elephantasia.adapter.ViewPagerAdapter;
 import fr.elephantasia.database.RealmDB;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.KeyboardHelpers;
+import io.realm.Realm;
 
-import static fr.elephantasia.activities.SearchContactActivity.EXTRA_SEARCH_RESULT;
+import static fr.elephantasia.activities.SearchContactActivity.EXTRA_SEARCH_CONTACT;
+import static fr.elephantasia.activities.searchElephantResult.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
 
 public class AddElephantActivity extends AppCompatActivity {
 
@@ -43,36 +46,44 @@ public class AddElephantActivity extends AppCompatActivity {
   public static final int RESULT_DRAFT = 2;
   public static final int RESULT_VALIDATE = 3;
 
+  // Request codes
   public static final int REQUEST_CURRENT_LOCATION = 1;
   public static final int REQUEST_BIRTH_LOCATION = 2;
   public static final int REQUEST_REGISTRATION_LOCATION = 3;
   public static final int REQUEST_CONTACT_SELECTED = 4;
-  public static final int REQUEST_SET_FATHER = 5;
-  public static final int REQUEST_SET_MOTHER = 6;
-  public static final int REQUEST_ADD_CHILDREN = 7;
-  public static final int REQUEST_CAPTURE_PHOTO = 8;
-  public static final int REQUEST_IMPORT_PHOTO = 9;
+  public static final int REQUEST_FATHER_SELECTED = 5;
+  public static final int REQUEST_MOTHER_SELECTED = 6;
+  public static final int REQUEST_CHILD_SELECTED = 7;
 
-  //TODO: remove useless index
-  // Fragment index
-//  private static final int FRAGMENT_PARENTAGE_IDX = 4;
-//  private static final int FRAGMENT_DOCUMENTS_IDX = 5;
-//  private PickImageDialog pickImageDialog;
+  // Action code
+  public static final String SELECT_ELEPHANT = "select_elephant";
 
-  //Fragment
-  private ProfilFragment profilFragment;
-  private RegistrationFragment registrationFragment;
-  private ContactFragment contactFragment;
-
-  private ViewPagerAdapter adapter;
-  private Elephant elephant = new Elephant();
-
+  // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.tabs) TabLayout tabLayout;
   @BindView(R.id.viewpager) ViewPager viewPager;
   @BindView(R.id.add_elephant_activity) View rootView;
   @BindView(R.id.add_elephant_fab) FloatingActionButton fab;
 
+  //Fragment
+  private ProfilFragment profilFragment;
+  private RegistrationFragment registrationFragment;
+  private ContactFragment contactFragment;
+  private ParentageFragment parentageFragment;
+  private ViewPagerAdapter adapter;
+
+  //Attr
+  private Elephant elephant = new Elephant();
+  private Realm realm;
+
+  public AddElephantActivity() {
+    profilFragment = new ProfilFragment();
+    registrationFragment = new RegistrationFragment();
+    contactFragment = new ContactFragment();
+    parentageFragment = new ParentageFragment();
+  }
+
+  // Listener binding
   @OnClick(R.id.add_elephant_fab)
   public void nextPage() {
     if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1) {
@@ -80,12 +91,6 @@ public class AddElephantActivity extends AppCompatActivity {
     } else {
       viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
     }
-  }
-
-  public AddElephantActivity() {
-    profilFragment = new ProfilFragment();
-    registrationFragment = new RegistrationFragment();
-    contactFragment = new ContactFragment();
   }
 
   @Override
@@ -114,6 +119,7 @@ public class AddElephantActivity extends AppCompatActivity {
 
     setupViewPager(viewPager);
     tabLayout.setupWithViewPager(viewPager);
+    realm = Realm.getDefaultInstance();
   }
 
 
@@ -123,13 +129,17 @@ public class AddElephantActivity extends AppCompatActivity {
     adapter.addFragment(registrationFragment, getString(R.string.registration));
     adapter.addFragment(new DescriptionFragment(), getString(R.string.description));
     adapter.addFragment(contactFragment, getString(R.string.contact));
-//    adapter.addFragment(new ParentageFragment(), getString(R.string.parentage));
+    adapter.addFragment(parentageFragment, getString(R.string.parentage));
 //    adapter.addFragment(new DocumentFragment(), getString(R.string.documents));
     viewPager.setAdapter(adapter);
   }
 
   public Elephant getElephant() {
     return this.elephant;
+  }
+
+  public Realm getRealm() {
+    return this.realm;
   }
 
   @Override
@@ -146,6 +156,7 @@ public class AddElephantActivity extends AppCompatActivity {
   @Override
   public void onDestroy() {
     super.onDestroy();
+    realm.close();
   }
 
   @Override
@@ -154,7 +165,6 @@ public class AddElephantActivity extends AppCompatActivity {
 
     if (resultCode == RESULT_OK && data != null) {
       Contact contact;
-//      ElephantInfo info = data.getParcelableExtra(SearchElephantActivity.EXTRA_RESULT);
       Place selectedPlace = PlacePicker.getPlace(this, data);
 
       switch (requestCode) {
@@ -168,25 +178,19 @@ public class AddElephantActivity extends AppCompatActivity {
           registrationFragment.setRegistrationLocation(selectedPlace.getAddress().toString());
           break;
         case REQUEST_CONTACT_SELECTED:
-          contact = Parcels.unwrap(data.getParcelableExtra(EXTRA_SEARCH_RESULT));
+          contact = Parcels.unwrap(data.getParcelableExtra(EXTRA_SEARCH_CONTACT));
           contactFragment.addContactTolist(contact);
           break;
-//        case REQUEST_SET_FATHER:
-//          refreshFather(info);
-//          break;
-//        case REQUEST_SET_MOTHER:
-//          refreshMother(info);
-//          break;
-//        case REQUEST_ADD_CHILDREN:
-//          refreshChildren(info);
-//          break;
-//        case REQUEST_CAPTURE_PHOTO:
-//          addDocument(Uri.fromFile(ImageUtil.getCapturePhotoFile(this)));
-//          break;
-//        case REQUEST_IMPORT_PHOTO:
-//          addDocument(data.getData());
-//          break;
-       }
+        case REQUEST_MOTHER_SELECTED:
+          parentageFragment.setMother(data.getStringExtra(EXTRA_ELEPHANT_ID));
+          break;
+        case REQUEST_FATHER_SELECTED:
+          parentageFragment.setFather(data.getStringExtra(EXTRA_ELEPHANT_ID));
+          break;
+        case REQUEST_CHILD_SELECTED:
+          parentageFragment.setChild(data.getStringExtra(EXTRA_ELEPHANT_ID));
+          break;
+      }
     }
   }
 
@@ -214,6 +218,9 @@ public class AddElephantActivity extends AppCompatActivity {
     return false;
   }
 
+  /**
+   * @return true if at least the name and sex are set
+   */
   private boolean checkMandatoryFields() {
     if (TextUtils.isEmpty(elephant.name)) {
       profilFragment.setNameError();
@@ -261,96 +268,4 @@ public class AddElephantActivity extends AppCompatActivity {
           .show();
     }
   }
-
-//  @Override
-//  public void onAddDocumentClick() {
-//    buildPickDocumentDialog();
-//  }
-//
-//  private void addDocument(Uri uri) {
-//    DocumentFragment fragment = (DocumentFragment) adapter.getItem(FRAGMENT_DOCUMENTS_IDX);
-//    String path = ImageUtil.createImageFileFromUri(this, uri);
-//
-//    if (path != null) {
-//      Log.i("add_photo", "aucune erreur");
-//      fragment.addDocument(path);
-//    } else {
-//      Toast.makeText(getApplicationContext(), "Error on adding document", Toast.LENGTH_SHORT).show();
-//    }
-//  }
-//
-//  private void buildPickDocumentDialog() {
-//    pickImageDialog = new PickImageDialogBuilder(this)
-//        .build()
-//        .setListener(new PickImageDialog.Listener() {
-//          @Override
-//          public void execute(Intent intent, int requestCode) {
-//            if (requestCode == REQUEST_CAPTURE_PHOTO) {
-//              if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//                ActivityCompat.requestPermissions(AddElephantActivity.this, new String[]{Manifest.permission.CAMERA}, 0);
-//              } else {
-//                startActivityForResult(intent, requestCode);
-//              }
-//            } else {
-//              startActivityForResult(intent, requestCode);
-//            }
-//          }
-//        })
-//        .setCaptureCode(REQUEST_CAPTURE_PHOTO)
-//        .setImportCode(REQUEST_IMPORT_PHOTO)
-//        .load();
-//    pickImageDialog.show();
-//  }
-//
-//
-//  @Override
-//  public void setFather() {
-//    Intent intent = new Intent(this, SearchElephantActivity.class);
-//    SearchElephantActivity.setMode(intent, SearchElephantActivity.Mode.PICK_RESULT);
-//    startActivityForResult(intent, REQUEST_SET_FATHER);
-//  }
-//
-//  @Override
-//  public void setMother() {
-//    Intent intent = new Intent(this, SearchElephantActivity.class);
-//    SearchElephantActivity.setMode(intent, SearchElephantActivity.Mode.PICK_RESULT);
-//    startActivityForResult(intent, REQUEST_SET_MOTHER);
-//  }
-//
-//  @Override
-//  public void addChildren() {
-//    Intent intent = new Intent(this, SearchElephantActivity.class);
-//    SearchElephantActivity.setMode(intent, SearchElephantActivity.Mode.PICK_RESULT);
-//    startActivityForResult(intent, REQUEST_ADD_CHILDREN);
-//  }
-//
-//  @Override
-//  public void onElephantClick(ElephantInfo elephant) {
-//    Intent intent = new Intent(this, ConsultationActivity.class);
-//    ConsultationActivity.setElephant(intent, elephant);
-//    startActivity(intent);
-//    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-//  }
-//
-//  private void refreshFather(ElephantInfo info) {
-//    ParentageFragment fragment = (ParentageFragment) adapter.getItem(FRAGMENT_PARENTAGE_IDX);
-//
-//    elephantInfo.father = info.id.toString();
-//    fragment.refreshFather(info);
-//  }
-//
-//  private void refreshMother(ElephantInfo info) {
-//    ParentageFragment fragment = (ParentageFragment) adapter.getItem(FRAGMENT_PARENTAGE_IDX);
-//
-//    elephantInfo.mother = info.id.toString();
-//    fragment.refreshMother(info);
-//  }
-//
-//  private void refreshChildren(ElephantInfo info) {
-//    ParentageFragment fragment = (ParentageFragment) adapter.getItem(FRAGMENT_PARENTAGE_IDX);
-//
-//    elephantInfo.addChildren(info.id);
-//    fragment.refreshChildren(info);
-//  }
-
 }

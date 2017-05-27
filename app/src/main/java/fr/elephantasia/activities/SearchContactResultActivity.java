@@ -30,13 +30,17 @@ import static fr.elephantasia.database.model.Contact.OWNER;
 import static fr.elephantasia.database.model.Contact.VET;
 
 public class SearchContactResultActivity extends AppCompatActivity {
+
+  // Extra code
   public static final String EXTRA_CONTACT_SELECTED = "extra_contact_selected";
 
-  private ListContactPreviewAdapter adapter;
-  private Realm realm;
-
+  // View binding
   @BindView(R.id.list_view) ListView listView;
   @BindView(R.id.toolbar) Toolbar toolbar;
+
+  // Attr
+  private ListContactPreviewAdapter adapter;
+  private Realm realm;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

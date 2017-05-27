@@ -1,4 +1,4 @@
-package fr.elephantasia.view;
+package fr.elephantasia.customView;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -23,12 +23,12 @@ import static android.content.ContentValues.TAG;
 
 public class LocationDialog {
 
+  // Attr
   private Activity activity;
   private Location loc;
   private String title;
   private int resultCode;
   private EditText editText;
-
   private LocationInputDialog inputDialog;
 
   public LocationDialog(Activity activity, final Location loc, final String title, final int resultCode, final EditText editText) {

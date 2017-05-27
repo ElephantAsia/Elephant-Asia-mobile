@@ -1,0 +1,484 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:theme="@style/AppThemeWhiteBackground"
+  >
+
+  <data>
+
+    <variable
+      name="e"
+      type="fr.elephantasia.database.model.Elephant"/>
+  </data>
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:divider="?android:dividerHorizontal"
+      android:orientation="vertical"
+      android:showDividers="middle">
+
+      <!--Profil -->
+      <LinearLayout
+        android:id="@+id/elephant_consultation_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:orientation="vertical">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:height="48dp"
+          android:gravity="center_vertical"
+          android:text="@string/profil"
+          android:textColor="@color/burma_orange"
+          android:textSize="18sp"
+          android:textStyle="bold"/>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+
+          <TextView
+            android:id="@+id/elephant_consultation_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.name}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nickname"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.nickName}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sex"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.getSex()}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/current_location"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.currentLoc.format()}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/elephant_birth_location"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.birthLoc.format()}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"/>
+
+        </LinearLayout>
+
+      </LinearLayout>
+
+      <!--Registration -->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:orientation="vertical">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:height="48dp"
+          android:gravity="center_vertical"
+          android:text="@string/registration"
+          android:textColor="@color/burma_orange"
+          android:textSize="18sp"
+          android:textStyle="bold"/>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/elephant_chip"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.chips1}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/elephant_registration_number"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.regID}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registration_location"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.registrationLoc.format()}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ear_tag"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{e.earTag ? @string/yes : @string/no}'
+            android:textColor="@android:color/black"
+            android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/eyeD"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{e.eyeD ? @string/yes : @string/no}'
+            android:textColor="@android:color/black"
+            android:textSize="18sp"/>
+
+        </LinearLayout>
+
+      </LinearLayout>
+
+      <!--Description -->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:orientation="vertical">
+
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:height="48dp"
+          android:gravity="center_vertical"
+          android:text="@string/description"
+          android:textColor="@color/burma_orange"
+          android:textSize="18sp"
+          android:textStyle="bold"/>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tusk"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.tusk}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/height"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.getHeight()}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/weight"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.getWeight()}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nails_front_left"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.nailsFrontLeft}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nails_front_right"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.nailsFrontRight}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nails_rear_left"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.nailsRearLeft}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nails_rear_right"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+          <TextView
+            android:id="@+id/elephant_consultation_birth_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.nailsRearRight}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"/>
+
+        </LinearLayout>
+
+      </LinearLayout>
+
+    </LinearLayout>
+  </ScrollView>
+</layout>

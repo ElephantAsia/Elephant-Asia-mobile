@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
-import org.w3c.dom.Text;
 
 import java.util.Calendar;
 import java.util.UUID;
@@ -21,15 +20,21 @@ import io.realm.annotations.PrimaryKey;
  * Created by seb on 29/04/2017.
  */
 
-@Parcel(implementations = { ElephantRealmProxy.class })
+@Parcel(implementations = {ElephantRealmProxy.class})
 public class Elephant extends RealmObject {
   //Columns' names must match attributes' names
-  @Ignore public static final String ID = "id";
-  @Ignore public static final String NAME = "name";
-  @Ignore public static final String CHIPS1 = "chips1";
-  @Ignore public static final String MALE = "male";
-  @Ignore public static final String FEMALE = "female";
-  @Ignore public static final String REGISTRATION_LOC = "registrationLoc";
+  @Ignore
+  public static final String ID = "id";
+  @Ignore
+  public static final String NAME = "name";
+  @Ignore
+  public static final String CHIPS1 = "chips1";
+  @Ignore
+  public static final String MALE = "male";
+  @Ignore
+  public static final String FEMALE = "female";
+  @Ignore
+  public static final String REGISTRATION_LOC = "registrationLoc";
 
   @PrimaryKey
   public String id = UUID.randomUUID().toString();
@@ -69,7 +74,7 @@ public class Elephant extends RealmObject {
   public Elephant mother;
 
   @ParcelPropertyConverter(ElephantParcelConverter.class)
-  public RealmList<Elephant> children;
+  public RealmList<Elephant> children = new RealmList<>();
 
   // Contact
   @ParcelPropertyConverter(ContactParcelConverter.class)

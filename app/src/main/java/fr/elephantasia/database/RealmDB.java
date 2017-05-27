@@ -11,7 +11,7 @@ import io.realm.Realm;
 //https://realm.io/docs/java/latest/
 public class RealmDB {
 
-   // CRUD
+  // CRUD
   static public void copyOrUpdate(final Elephant elephant) {
     Realm realm = Realm.getDefaultInstance();
 

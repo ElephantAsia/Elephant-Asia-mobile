@@ -23,16 +23,19 @@ import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST
 
 public class ContactFragment extends Fragment {
 
+  // View binding
   @BindView(R.id.list) ListView list;
 
+  // Attr
   private ListContactPreviewAdapter adapter;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.add_elephant_contact_fragment, container, false);
-    View footerView = inflater.inflate(R.layout.add_contact_list_footer, list, false);
-    TextView addButton = findById(footerView, R.id.add_contact);
+    View footerView = inflater.inflate(R.layout.add_button_footer_list, list, false);
 
+    TextView addButton = findById(footerView, R.id.add_button_footer);
+    addButton.setHint(getString(R.string.add_contact));
     addButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         Intent intent = new Intent(getActivity(), SearchContactActivity.class);

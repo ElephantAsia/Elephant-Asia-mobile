@@ -25,13 +25,16 @@ import fr.elephantasia.database.model.Elephant;
  */
 
 public class HeightDialog {
+
+  // View binding
+  @BindView(R.id.value)  EditText value;
+  @BindView(R.id.unit)  Spinner unit;
+
+  // Attr
   private Activity activity;
   private ArrayAdapter<String> spinnerUnits;
   private Elephant elephant;
   private EditText editTextTarget;
-
-  @BindView(R.id.value) EditText value;
-  @BindView(R.id.unit) Spinner unit;
 
   public HeightDialog(Activity activity, Context ctx, final Elephant elephant, final EditText editText) {
     this.activity = activity;
@@ -41,7 +44,7 @@ public class HeightDialog {
   }
 
   public void show() {
-    final View view = activity.getLayoutInflater().inflate(R.layout.add_elephant_description_dialog_fragment, null);
+    final View view = activity.getLayoutInflater().inflate(R.layout.measurement_dialog_fragment, null);
     ButterKnife.bind(this, view);
     unit.setAdapter(spinnerUnits);
     value.setText(elephant.height);
