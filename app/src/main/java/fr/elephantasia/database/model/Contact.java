@@ -45,8 +45,8 @@ public class Contact extends RealmObject {
     String res = "";
 
     res += owner ? "Owner " : "";
-    res +=  cornac ? "Cornac " : "";
-    res +=  vet ? "Vet" : "";
+    res += cornac ? "Cornac " : "";
+    res += vet ? "Vet" : "";
 
     // Add separator between status
     res = res.replace("r C", "r / C");

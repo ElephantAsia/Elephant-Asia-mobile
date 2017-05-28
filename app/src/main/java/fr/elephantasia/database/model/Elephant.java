@@ -78,7 +78,7 @@ public class Elephant extends RealmObject {
 
   // Contact
   @ParcelPropertyConverter(ContactParcelConverter.class)
-  public RealmList<Contact> contacts;
+  public RealmList<Contact> contacts = new RealmList<>();
 
   /**
    * Used to check if an elephant should be saved as draft before
@@ -95,17 +95,12 @@ public class Elephant extends RealmObject {
         && TextUtils.isEmpty(chips1)
         && TextUtils.isEmpty(regID)
         && registrationLoc.isEmpty()
-        && TextUtils.isEmpty(tusk)
-        && TextUtils.isEmpty(nailsFrontLeft)
-        && TextUtils.isEmpty(nailsFrontRight)
-        && TextUtils.isEmpty(nailsRearLeft)
-        && TextUtils.isEmpty(nailsRearRight)
         && TextUtils.isEmpty(weight)
         && TextUtils.isEmpty(height)
-        && contacts == null
+        && contacts.isEmpty()
         && father == null
         && mother == null
-        && children == null;
+        && children.isEmpty();
   }
 
   public String getSex() {
@@ -120,7 +115,6 @@ public class Elephant extends RealmObject {
 
     return "N/A";
   }
-
 
   public String getWeight() {
 

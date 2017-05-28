@@ -19,8 +19,10 @@ import io.realm.RealmList;
 
 public class ListContactPreviewAdapter extends ArrayAdapter<Contact> {
 
-  @BindView(R.id.remove_contact)
-  ImageButton removeButton;
+  // View binding
+  @BindView(R.id.remove_contact) ImageButton removeButton;
+
+  // Attr
   private RealmList<Contact> contacts;
   private boolean isRemovable;
 

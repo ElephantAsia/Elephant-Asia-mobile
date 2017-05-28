@@ -10,75 +10,76 @@
       type="fr.elephantasia.database.model.Contact"/>
   </data>
 
-    <LinearLayout
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+      android:id="@+id/circleImageView"
+      android:layout_width="60dp"
+      android:layout_height="60dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginRight="16dp"
+      android:src="@drawable/profile_pic_placeholder"/>
+
+    <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="center_vertical"
-      android:orientation="horizontal"
-      android:padding="16dp">
+      android:orientation="horizontal">
 
-      <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:src="@drawable/profile_pic_placeholder"/>
-
-      <RelativeLayout
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <LinearLayout
-          android:layout_width="match_parent"
+
+        <TextView
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_alignParentLeft="true"
-          android:layout_alignParentStart="true"
-          android:layout_alignParentTop="true"
-          android:gravity="center_vertical"
-          android:orientation="vertical">
+          android:text="@{c.getFullName()}"/>
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@{c.address.cityName}"/>
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@{c.email}"/>
+
+        <TextView
+          android:id="@+id/status"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@{c.getStatus()}"/>
+
+      </LinearLayout>
 
 
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{c.getFullName()}"/>
+      <ImageButton
+        android:id="@+id/remove_contact"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/transparent"
+        android:contentDescription="@string/remove_contact_from_list"
+        android:src="@mipmap/ic_cancel_black_24dp"
+        android:tint="@color/grey_light_100"
+        android:visibility="invisible"/>
 
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{c.address.cityName}"/>
-
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{c.email}"/>
-
-          <TextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{c.getStatus()}"/>
-
-        </LinearLayout>
-
-
-        <ImageButton
-          android:id="@+id/remove_contact"
-          android:layout_width="20dp"
-          android:layout_height="20dp"
-          android:layout_alignParentEnd="true"
-          android:layout_alignParentRight="true"
-          android:layout_centerVertical="true"
-          android:layout_marginEnd="20dp"
-          android:layout_marginRight="20dp"
-          android:contentDescription="@string/remove_contact_from_list"
-          android:src="@mipmap/ic_cancel_black_24dp"
-          android:tint="@color/grey_light_100"
-          android:visibility="invisible"/>
-
-      </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
+  </LinearLayout>
 </layout>

@@ -8,6 +8,8 @@
       name="e"
       type="fr.elephantasia.database.model.Elephant"/>
 
+    <import type="android.view.View"/>
+
   </data>
 
   <LinearLayout
@@ -42,15 +44,17 @@
           android:layout_height="60dp"
           android:layout_margin="5dp"
           android:contentDescription="@null"
-          android:src="@drawable/add_picture"/>
+          android:src="@drawable/add_picture"
+          android:visibility="@{e.mother != null ? View.GONE : View.VISIBLE}"/>
 
         <fr.elephantasia.customView.ElephantPreview
+
           android:id="@+id/mother_preview"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:visibility="gone"
-          app:removeButtonVisibility="@{true}"
-          app:elephant="@{e.mother}">
+          android:visibility="@{e.mother != null ? View.VISIBLE : View.GONE}"
+          app:elephant="@{e.mother}"
+          app:removeButtonVisibility="@{true}">
 
         </fr.elephantasia.customView.ElephantPreview>
 
@@ -83,15 +87,16 @@
           android:layout_height="60dp"
           android:layout_margin="5dp"
           android:contentDescription="@null"
-          android:src="@drawable/add_picture"/>
+          android:src="@drawable/add_picture"
+          android:visibility="@{e.father != null ? View.GONE : View.VISIBLE}"/>
 
         <fr.elephantasia.customView.ElephantPreview
           android:id="@+id/father_preview"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:visibility="gone"
-          app:removeButtonVisibility="@{true}"
-          app:elephant="@{e.father}">
+          android:visibility="@{e.father != null ? View.VISIBLE : View.GONE}"
+          app:elephant="@{e.father}"
+          app:removeButtonVisibility="@{true}">
 
         </fr.elephantasia.customView.ElephantPreview>
 

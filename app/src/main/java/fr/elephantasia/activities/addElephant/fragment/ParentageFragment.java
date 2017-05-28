@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -61,16 +60,22 @@ public class ParentageFragment extends Fragment {
     getActivity().startActivityForResult(intent, REQUEST_FATHER_SELECTED);
   }
 
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    elephant = ((AddElephantActivity) getActivity()).getElephant();
+    adapter = new ListElephantPreviewAdapter(getContext(), elephant.children, true, false);
+  }
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     binding = DataBindingUtil.inflate(inflater, R.layout.add_elephant_parentage_fragment, container, false);
-    elephant = ((AddElephantActivity) getActivity()).getElephant();
     binding.setE(elephant);
     View view = binding.getRoot();
     ButterKnife.bind(this, view);
     motherPreview.setRemoveListener(unsetMother());
     fatherPreview.setRemoveListener(unsetFather());
-
     setupChildrenList(inflater);
     return (view);
   }
@@ -86,7 +91,6 @@ public class ParentageFragment extends Fragment {
         getActivity().startActivityForResult(intent, REQUEST_CHILD_SELECTED);
       }
     });
-    adapter = new ListElephantPreviewAdapter(getContext(), elephant.children, true, false);
     childrenList.addHeaderView(headerView);
     childrenList.setAdapter(adapter);
   }

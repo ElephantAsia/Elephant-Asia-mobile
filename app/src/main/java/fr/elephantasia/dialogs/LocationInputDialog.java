@@ -24,8 +24,8 @@ public class LocationInputDialog {
 
   // View binding
   @BindView(R.id.province) EditText provinceET;
-  @BindView(R.id.district)  EditText districtET;
-  @BindView(R.id.city)  EditText cityET;
+  @BindView(R.id.district) EditText districtET;
+  @BindView(R.id.city) EditText cityET;
 
   // Attr
   private Activity activity;

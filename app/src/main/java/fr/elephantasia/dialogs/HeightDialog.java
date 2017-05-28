@@ -27,8 +27,8 @@ import fr.elephantasia.database.model.Elephant;
 public class HeightDialog {
 
   // View binding
-  @BindView(R.id.value)  EditText value;
-  @BindView(R.id.unit)  Spinner unit;
+  @BindView(R.id.value) EditText value;
+  @BindView(R.id.unit) Spinner unit;
 
   // Attr
   private Activity activity;
