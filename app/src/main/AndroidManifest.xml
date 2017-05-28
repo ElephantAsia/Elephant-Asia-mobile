@@ -25,7 +25,6 @@
       </intent-filter>
     </activity>
 
-    <!--<activity android:name=".activities.SplashScreenActivity"/>-->
     <activity android:name=".activities.addElephant.AddElephantActivity"/>
     <activity android:name=".activities.LoginActivity"/>
     <activity android:name=".activities.MainActivity"/>

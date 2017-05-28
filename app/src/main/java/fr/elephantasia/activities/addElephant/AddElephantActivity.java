@@ -1,22 +1,28 @@
 package fr.elephantasia.activities.addElephant;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
-import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import org.parceler.Parcels;
@@ -27,13 +33,18 @@ import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.addElephant.fragment.ContactFragment;
 import fr.elephantasia.activities.addElephant.fragment.DescriptionFragment;
+import fr.elephantasia.activities.addElephant.fragment.DocumentFragment;
 import fr.elephantasia.activities.addElephant.fragment.ParentageFragment;
 import fr.elephantasia.activities.addElephant.fragment.ProfilFragment;
 import fr.elephantasia.activities.addElephant.fragment.RegistrationFragment;
 import fr.elephantasia.adapter.ViewPagerAdapter;
 import fr.elephantasia.database.RealmDB;
 import fr.elephantasia.database.model.Contact;
+import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.dialogs.PickImageDialog;
+import fr.elephantasia.dialogs.PickImageDialogBuilder;
+import fr.elephantasia.utils.ImageUtil;
 import fr.elephantasia.utils.KeyboardHelpers;
 import io.realm.Realm;
 
@@ -54,6 +65,8 @@ public class AddElephantActivity extends AppCompatActivity {
   public static final int REQUEST_FATHER_SELECTED = 5;
   public static final int REQUEST_MOTHER_SELECTED = 6;
   public static final int REQUEST_CHILD_SELECTED = 7;
+  public static final int REQUEST_CAPTURE_PHOTO = 8;
+  public static final int REQUEST_IMPORT_PHOTO = 9;
 
   // Action code
   public static final String SELECT_ELEPHANT = "select_elephant";
@@ -65,22 +78,25 @@ public class AddElephantActivity extends AppCompatActivity {
   @BindView(R.id.add_elephant_activity) View rootView;
   @BindView(R.id.add_elephant_fab) FloatingActionButton fab;
 
-  //Fragment
+  // Fragment
   private ProfilFragment profilFragment;
   private RegistrationFragment registrationFragment;
   private ContactFragment contactFragment;
   private ParentageFragment parentageFragment;
-  private ViewPagerAdapter adapter;
+  private DocumentFragment docFragment;
 
-  //Attr
+  // Attr
   private Elephant elephant = new Elephant();
   private Realm realm;
+  private ViewPagerAdapter adapter;
+  private PickImageDialog pickImageDialog;
 
   public AddElephantActivity() {
     profilFragment = new ProfilFragment();
     registrationFragment = new RegistrationFragment();
     contactFragment = new ContactFragment();
     parentageFragment = new ParentageFragment();
+    docFragment = new DocumentFragment();
   }
 
   // Listener binding
@@ -130,7 +146,7 @@ public class AddElephantActivity extends AppCompatActivity {
     adapter.addFragment(new DescriptionFragment(), getString(R.string.description));
     adapter.addFragment(contactFragment, getString(R.string.contact));
     adapter.addFragment(parentageFragment, getString(R.string.parentage));
-//    adapter.addFragment(new DocumentFragment(), getString(R.string.documents));
+    adapter.addFragment(docFragment, getString(R.string.documents));
     viewPager.setAdapter(adapter);
   }
 
@@ -163,22 +179,19 @@ public class AddElephantActivity extends AppCompatActivity {
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
-    if (resultCode == RESULT_OK && data != null) {
-      Contact contact;
-      Place selectedPlace = PlacePicker.getPlace(this, data);
-
+    if (resultCode == RESULT_OK) {
       switch (requestCode) {
         case REQUEST_CURRENT_LOCATION:
-          profilFragment.setCurrentLocation(selectedPlace.getAddress().toString());
+          profilFragment.setCurrentLocation(PlacePicker.getPlace(this, data).getAddress().toString());
           break;
         case REQUEST_BIRTH_LOCATION:
-          profilFragment.setBirthLocation(selectedPlace.getAddress().toString());
+          profilFragment.setBirthLocation(PlacePicker.getPlace(this, data).getAddress().toString());
           break;
         case REQUEST_REGISTRATION_LOCATION:
-          registrationFragment.setRegistrationLocation(selectedPlace.getAddress().toString());
+          registrationFragment.setRegistrationLocation(PlacePicker.getPlace(this, data).getAddress().toString());
           break;
         case REQUEST_CONTACT_SELECTED:
-          contact = Parcels.unwrap(data.getParcelableExtra(EXTRA_SEARCH_CONTACT));
+          Contact contact = Parcels.unwrap(data.getParcelableExtra(EXTRA_SEARCH_CONTACT));
           contactFragment.addContactTolist(contact);
           break;
         case REQUEST_MOTHER_SELECTED:
@@ -190,7 +203,13 @@ public class AddElephantActivity extends AppCompatActivity {
         case REQUEST_CHILD_SELECTED:
           parentageFragment.setChild(data.getStringExtra(EXTRA_ELEPHANT_ID));
           break;
-      }
+        case REQUEST_CAPTURE_PHOTO:
+          addDocument(Uri.fromFile(ImageUtil.getCapturePhotoFile(this)));
+          break;
+        case REQUEST_IMPORT_PHOTO:
+          addDocument(data.getData());
+          break;
+       }
     }
   }
 
@@ -217,6 +236,13 @@ public class AddElephantActivity extends AppCompatActivity {
     }
     return false;
   }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            startActivityForResult(pickImageDialog.getIntent(0), pickImageDialog.getRequestCode(0));
+        }
+    }
 
   /**
    * @return true if at least the name and sex are set
@@ -268,4 +294,41 @@ public class AddElephantActivity extends AppCompatActivity {
           .show();
     }
   }
+
+  public void onAddDocumentClick() {
+        pickImageDialog = new PickImageDialogBuilder(this)
+        .build()
+        .setListener(new PickImageDialog.Listener() {
+          @Override
+          public void execute(Intent intent, int requestCode) {
+            if (requestCode == REQUEST_CAPTURE_PHOTO) {
+              if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(AddElephantActivity.this, new String[]{Manifest.permission.CAMERA}, 0);
+              } else {
+                startActivityForResult(intent, requestCode);
+              }
+            } else {
+              startActivityForResult(intent, requestCode);
+            }
+          }
+        })
+        .setCaptureCode(REQUEST_CAPTURE_PHOTO)
+        .setImportCode(REQUEST_IMPORT_PHOTO)
+        .load();
+    pickImageDialog.show();
+  }
+
+  private void addDocument(Uri uri) {
+    String path = ImageUtil.createImageFileFromUri(this, uri);
+
+    if (path != null) {
+      Log.i("add_photo", "aucune erreur");
+        Document doc = new Document();
+        doc.path = path;
+        docFragment.addDocument(doc);
+    } else {
+      Toast.makeText(getApplicationContext(), "Error on adding document", Toast.LENGTH_SHORT).show();
+    }
+  }
+
 }

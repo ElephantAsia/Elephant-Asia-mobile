@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Elephant-Asia-mobile.iml" filepath="$PROJECT_DIR$/Elephant-Asia-mobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ElefantAsia-mobile.iml" filepath="$PROJECT_DIR$/ElefantAsia-mobile.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

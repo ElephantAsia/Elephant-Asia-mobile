@@ -1,6 +1,7 @@
 package fr.elephantasia.database;
 
 import fr.elephantasia.database.model.Contact;
+import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
 import io.realm.Realm;
 
@@ -31,6 +32,18 @@ public class RealmDB {
       @Override
       public void execute(Realm realm) {
         realm.copyToRealmOrUpdate(contact);
+      }
+    });
+    realm.close();
+  }
+
+  static public void copyOrUpdate(final Document document) {
+    Realm realm = Realm.getDefaultInstance();
+
+    realm.executeTransactionAsync(new Realm.Transaction() {
+      @Override
+      public void execute(Realm realm) {
+        realm.copyToRealmOrUpdate(document);
       }
     });
     realm.close();

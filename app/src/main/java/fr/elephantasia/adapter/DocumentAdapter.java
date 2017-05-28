@@ -5,72 +5,30 @@ import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.ArrayAdapter;
 
 import fr.elephantasia.R;
 import fr.elephantasia.customView.RoundedImageView;
+import fr.elephantasia.database.model.Document;
 import fr.elephantasia.refactor.AsyncTasks.LoadBitmapAsyncTask;
-import fr.elephantasia.refactor.interfaces.DocumentInterface;
 import fr.elephantasia.refactor.interfaces.LoadBitmapInterface;
+import io.realm.RealmList;
 
-
-public class DocumentAdapter extends BaseAdapter {
+public class DocumentAdapter extends ArrayAdapter<Document> {
 
   private Context context;
-  private boolean showFooter;
-  private DocumentInterface listener;
-  private List<String> photos;
+  private RealmList<Document> docs;
 
-  public DocumentAdapter(Context context, boolean showFooter, DocumentInterface listener) {
-    this.context = context;
-    this.showFooter = showFooter;
-    this.listener = listener;
-
-    photos = new ArrayList<>();
-  }
-
-  public void setData(List<String> users) {
-    this.photos = users;
-    notifyDataSetChanged();
-  }
-
-  public void addItem(String photo) {
-    photos.add(photo);
-    notifyDataSetChanged();
-  }
-
-  public void clear() {
-    this.photos.clear();
-  }
-
-  @Override
-  public int getCount() {
-    return (photos.size() + ((showFooter) ? 1 : 0));
-  }
-
-  @Override
-  public String getItem(int index) {
-    String ret = null;
-
-    if (index < photos.size()) {
-      ret = photos.get(index);
-    }
-    return (ret);
-  }
-
-  @Override
-  public long getItemId(int index) {
-    return index;
+  public DocumentAdapter(Context context, RealmList<Document> docs) {
+      super(context, R.layout.document_overview, docs);
+      this.context = context;
+      this.docs = docs;
   }
 
   @Override
   public View getView(final int index, View old, ViewGroup parent) {
     View view;
     boolean creation = (old == null);
-    boolean isFooter = isFooter(index);
 
     if (!creation) {
       view = old;
@@ -79,9 +37,9 @@ public class DocumentAdapter extends BaseAdapter {
       view = inflater.inflate(R.layout.document_overview, parent, false);
     }
 
-    String photo = getItem(index);
+    String photo = getItem(index).path;
 
-    refreshView(view, photo, isFooter);
+    refreshView(view, photo);
     if (photo != null) {
       refreshImage(view, photo);
     }
@@ -89,28 +47,8 @@ public class DocumentAdapter extends BaseAdapter {
     return view;
   }
 
-  private void refreshView(View view, final String photo, boolean footer) {
-    if (footer) {
-      view.findViewById(R.id.footer_parent).setVisibility(View.VISIBLE);
-      view.findViewById(R.id.document_parent).setVisibility(View.GONE);
+  private void refreshView(View view, final String photo) {
 
-      view.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-          listener.onAddClick();
-        }
-      });
-    } else {
-      view.findViewById(R.id.footer_parent).setVisibility(View.GONE);
-      view.findViewById(R.id.document_parent).setVisibility(View.VISIBLE);
-
-      view.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-          //listener.onDocumentClick(userInfo);
-        }
-      });
-    }
   }
 
   private void refreshImage(View view, String photo) {
@@ -124,10 +62,6 @@ public class DocumentAdapter extends BaseAdapter {
       }
     }).execute();
 
-  }
-
-  private boolean isFooter(int index) {
-    return index > photos.size() - 1 && showFooter;
   }
 
 }
