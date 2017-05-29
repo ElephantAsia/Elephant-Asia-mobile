@@ -23,18 +23,18 @@ android {
     sourceSets {
         main {
             res.srcDirs = [
-                'src/main/res/layouts/add_contact',
-                'src/main/res/layouts/add_elephant',
-                'src/main/res/layouts/custom_view',
-                'src/main/res/layouts/dialogs',
-                'src/main/res/layouts/main',
-                'src/main/res/layouts/refactor',
-                'src/main/res/layouts/search_contact',
-                'src/main/res/layouts/search_elephant',
-                'src/main/res/layouts/search_elephant_result',
-                'src/main/res/layouts/show_elephant',
-                'src/main/res/layouts/ui_element',
-                'src/main/res'
+                    'src/main/res/layouts/add_contact',
+                    'src/main/res/layouts/add_elephant',
+                    'src/main/res/layouts/custom_view',
+                    'src/main/res/layouts/dialogs',
+                    'src/main/res/layouts/main',
+                    'src/main/res/layouts/refactor',
+                    'src/main/res/layouts/search_contact',
+                    'src/main/res/layouts/search_elephant',
+                    'src/main/res/layouts/search_elephant_result',
+                    'src/main/res/layouts/show_elephant',
+                    'src/main/res/layouts/ui_element',
+                    'src/main/res'
             ]
         }
     }
@@ -52,6 +52,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+
 
     compile 'com.android.support:design:25.3.0'
     compile 'com.android.support:appcompat-v7:25.3.0'

@@ -54,9 +54,7 @@
           android:layout_height="wrap_content"
           android:visibility="@{e.mother != null ? View.VISIBLE : View.GONE}"
           app:elephant="@{e.mother}"
-          app:removeButtonVisibility="@{true}">
-
-        </fr.elephantasia.customView.ElephantPreview>
+          app:removeButtonVisibility="@{true}"/>
 
       </FrameLayout>
 
@@ -96,9 +94,7 @@
           android:layout_height="wrap_content"
           android:visibility="@{e.father != null ? View.VISIBLE : View.GONE}"
           app:elephant="@{e.father}"
-          app:removeButtonVisibility="@{true}">
-
-        </fr.elephantasia.customView.ElephantPreview>
+          app:removeButtonVisibility="@{true}"/>
 
       </FrameLayout>
 

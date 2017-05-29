@@ -39,6 +39,7 @@ import fr.elephantasia.activities.addElephant.fragment.ProfilFragment;
 import fr.elephantasia.activities.addElephant.fragment.RegistrationFragment;
 import fr.elephantasia.adapter.ViewPagerAdapter;
 import fr.elephantasia.database.RealmDB;
+import fr.elephantasia.database.RealmManager;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
@@ -50,6 +51,8 @@ import io.realm.Realm;
 
 import static fr.elephantasia.activities.SearchContactActivity.EXTRA_SEARCH_CONTACT;
 import static fr.elephantasia.activities.searchElephantResult.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
+import static fr.elephantasia.database.model.Elephant.ID;
+import static fr.elephantasia.database.model.Elephant.NAME;
 
 public class AddElephantActivity extends AppCompatActivity {
 
@@ -87,9 +90,9 @@ public class AddElephantActivity extends AppCompatActivity {
 
   // Attr
   private Elephant elephant = new Elephant();
-  private Realm realm;
   private ViewPagerAdapter adapter;
   private PickImageDialog pickImageDialog;
+  private Realm realm;
 
   public AddElephantActivity() {
     profilFragment = new ProfilFragment();
@@ -153,7 +156,6 @@ public class AddElephantActivity extends AppCompatActivity {
   public Elephant getElephant() {
     return this.elephant;
   }
-
   public Realm getRealm() {
     return this.realm;
   }
@@ -175,6 +177,8 @@ public class AddElephantActivity extends AppCompatActivity {
     realm.close();
   }
 
+  static String motherId;
+
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
@@ -195,6 +199,7 @@ public class AddElephantActivity extends AppCompatActivity {
           contactFragment.addContactTolist(contact);
           break;
         case REQUEST_MOTHER_SELECTED:
+          motherId = data.getStringExtra(EXTRA_ELEPHANT_ID);
           parentageFragment.setMother(data.getStringExtra(EXTRA_ELEPHANT_ID));
           break;
         case REQUEST_FATHER_SELECTED:
@@ -209,9 +214,20 @@ public class AddElephantActivity extends AppCompatActivity {
         case REQUEST_IMPORT_PHOTO:
           addDocument(data.getData());
           break;
-       }
+      }
     }
   }
+
+  public void saveTest() {
+    realm.executeTransactionAsync(new Realm.Transaction() {
+      @Override
+      public void execute(Realm realm) {
+        elephant.mother = realm.where(Elephant.class).equalTo(ID, motherId).findFirst();
+        realm.copyToRealmOrUpdate(elephant);
+      }
+    });
+  }
+
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -237,12 +253,12 @@ public class AddElephantActivity extends AppCompatActivity {
     return false;
   }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            startActivityForResult(pickImageDialog.getIntent(0), pickImageDialog.getRequestCode(0));
-        }
+  @Override
+  public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+      startActivityForResult(pickImageDialog.getIntent(0), pickImageDialog.getRequestCode(0));
     }
+  }
 
   /**
    * @return true if at least the name and sex are set
@@ -296,7 +312,7 @@ public class AddElephantActivity extends AppCompatActivity {
   }
 
   public void onAddDocumentClick() {
-        pickImageDialog = new PickImageDialogBuilder(this)
+    pickImageDialog = new PickImageDialogBuilder(this)
         .build()
         .setListener(new PickImageDialog.Listener() {
           @Override
@@ -323,9 +339,9 @@ public class AddElephantActivity extends AppCompatActivity {
 
     if (path != null) {
       Log.i("add_photo", "aucune erreur");
-        Document doc = new Document();
-        doc.path = path;
-        docFragment.addDocument(doc);
+      Document doc = new Document();
+      doc.path = path;
+      docFragment.addDocument(doc);
     } else {
       Toast.makeText(getApplicationContext(), "Error on adding document", Toast.LENGTH_SHORT).show();
     }

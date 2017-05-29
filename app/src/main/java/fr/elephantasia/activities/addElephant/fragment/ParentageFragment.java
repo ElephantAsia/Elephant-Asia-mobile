@@ -20,8 +20,10 @@ import fr.elephantasia.activities.SearchElephantActivity;
 import fr.elephantasia.activities.addElephant.AddElephantActivity;
 import fr.elephantasia.adapter.ListElephantPreviewAdapter;
 import fr.elephantasia.customView.ElephantPreview;
+import fr.elephantasia.database.RealmManager;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.AddElephantParentageFragmentBinding;
+import fr.elephantasia.utils.KeyboardHelpers;
 import io.realm.Realm;
 
 import static butterknife.ButterKnife.findById;
@@ -44,6 +46,7 @@ public class ParentageFragment extends Fragment {
   private Elephant elephant;
   private AddElephantParentageFragmentBinding binding;
   private ListElephantPreviewAdapter adapter;
+  private RealmManager realmManager = RealmManager.getInstance();
 
   // Listener binding
   @OnClick(R.id.mother_add_button)
@@ -77,6 +80,7 @@ public class ParentageFragment extends Fragment {
     motherPreview.setRemoveListener(unsetMother());
     fatherPreview.setRemoveListener(unsetFather());
     setupChildrenList(inflater);
+    KeyboardHelpers.hideKeyboardListener(view, getActivity());
     return (view);
   }
 
@@ -95,26 +99,31 @@ public class ParentageFragment extends Fragment {
     childrenList.setAdapter(adapter);
   }
 
-  public void setMother(String id) {
-    Realm realm = ((AddElephantActivity) getActivity()).getRealm();
+  public void setMother(final String id) {
+    Realm realm = Realm.getDefaultInstance();
     elephant.mother = realm.where(Elephant.class).equalTo(ID, id).findFirst();
+    elephant.mother = realm.copyFromRealm(elephant.mother);
     motherButton.setVisibility(View.GONE);
     motherPreview.setElephant(elephant.mother);
     motherPreview.setVisibility(View.VISIBLE);
+    realm.close();
   }
 
   public void setFather(String id) {
-    Realm realm = ((AddElephantActivity) getActivity()).getRealm();
+    Realm realm = Realm.getDefaultInstance();
     elephant.father = realm.where(Elephant.class).equalTo(ID, id).findFirst();
+    elephant.father = realm.copyFromRealm(elephant.father);
     fatherButton.setVisibility(View.GONE);
     fatherPreview.setElephant(elephant.father);
     fatherPreview.setVisibility(View.VISIBLE);
+    realm.close();
   }
 
   public void setChild(String id) {
-    Realm realm = ((AddElephantActivity) getActivity()).getRealm();
+    Realm realm = Realm.getDefaultInstance();
     Elephant child = realm.where(Elephant.class).equalTo(ID, id).findFirst();
-    adapter.add(child);
+    adapter.add(realm.copyFromRealm(child));
+    realm.close();
   }
 
   private View.OnClickListener unsetMother() {
@@ -140,6 +149,4 @@ public class ParentageFragment extends Fragment {
       }
     };
   }
-
-
 }

@@ -46,6 +46,7 @@ public class ShowElephantActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     ShowElephantActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.show_elephant_activity);
+    realm = Realm.getDefaultInstance();
     elephant = getExtraElephant();
     binding.setE(elephant);
     ButterKnife.bind(this);
@@ -119,9 +120,7 @@ public class ShowElephantActivity extends AppCompatActivity {
   private Elephant getExtraElephant() {
     Intent intent = getIntent();
     String id = intent.getStringExtra(EXTRA_ELEPHANT_ID);
-    realm = Realm.getDefaultInstance();
     Elephant el = realm.where(Elephant.class).equalTo(ID, id).findFirst();
-
     return el;
   }
 
