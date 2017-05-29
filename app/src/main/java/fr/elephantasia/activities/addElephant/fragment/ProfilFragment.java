@@ -1,6 +1,9 @@
 package fr.elephantasia.activities.addElephant.fragment;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
+
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
+import java.io.IOException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +28,9 @@ import fr.elephantasia.databinding.AddElephantProfilFragmentBinding;
 import fr.elephantasia.dialogs.LocationDialog;
 import fr.elephantasia.fragment.DatePickerFragment;
 import fr.elephantasia.utils.KeyboardHelpers;
+
+import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_BIRTH_LOCATION;
+import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_CURRENT_LOCATION;
 
 public class ProfilFragment extends Fragment {
 
@@ -59,7 +71,7 @@ public class ProfilFragment extends Fragment {
     LocationDialog locationDialog = new LocationDialog(getActivity(),
         editText.getId() == R.id.birthLocation ? elephant.birthLoc : elephant.currentLoc,
         editText.getId() == R.id.birthLocation ? birthTitle : currentTitle,
-        AddElephantActivity.REQUEST_CURRENT_LOCATION,
+        editText.getId() == R.id.birthLocation ? REQUEST_BIRTH_LOCATION : REQUEST_CURRENT_LOCATION,
         editText
     );
     locationDialog.show();
@@ -93,12 +105,26 @@ public class ProfilFragment extends Fragment {
 
   /**
    * Set current location from map
-   * TODO: Extraire la province, le district et la ville du place picker
+   * TODO: Faire mieux la difference entre une location exacte et une
    *
    * @param location the location returned from the map picker
    */
-  public void setCurrentLocation(String location) {
-    currentLocation.setText(location);
+  public void setCurrentLocation(Intent data) {
+    final Place place = PlacePicker.getPlace(getActivity(), data);
+    Geocoder geocoder = new Geocoder(getActivity());
+
+    try {
+      List<Address> addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
+      elephant.currentLoc.cityName = addresses.get(0).getAddressLine(0);
+      if (!addresses.get(0).getAddressLine(0).equals(addresses.get(0).getSubAdminArea())) {
+        elephant.currentLoc.districtName = addresses.get(0).getSubAdminArea();
+      }
+      elephant.currentLoc.provinceName = addresses.get(0).getAdminArea();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    currentLocation.setText(elephant.currentLoc.format());
   }
 
   //TODO: Extraire la province, le district et la ville du place picker
@@ -108,7 +134,21 @@ public class ProfilFragment extends Fragment {
    *
    * @param location the location returned from the map picker
    */
-  public void setBirthLocation(String location) {
-    birthLocation.setText(location);
+  public void setBirthLocation(Intent data) {
+    final Place place = PlacePicker.getPlace(getActivity(), data);
+    Geocoder geocoder = new Geocoder(getActivity());
+
+    try {
+      List<Address> addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
+      elephant.birthLoc.cityName = addresses.get(0).getAddressLine(0);
+      if (!addresses.get(0).getAddressLine(0).equals(addresses.get(0).getSubAdminArea())) {
+        elephant.birthLoc.districtName = addresses.get(0).getSubAdminArea();
+      }
+      elephant.birthLoc.provinceName = addresses.get(0).getAdminArea();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    birthLocation.setText(elephant.birthLoc.format());
   }
 }

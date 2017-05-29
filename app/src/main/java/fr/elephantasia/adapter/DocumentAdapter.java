@@ -20,9 +20,9 @@ public class DocumentAdapter extends ArrayAdapter<Document> {
   private RealmList<Document> docs;
 
   public DocumentAdapter(Context context, RealmList<Document> docs) {
-      super(context, R.layout.document_overview, docs);
-      this.context = context;
-      this.docs = docs;
+    super(context, R.layout.document_overview, docs);
+    this.context = context;
+    this.docs = docs;
   }
 
   @Override

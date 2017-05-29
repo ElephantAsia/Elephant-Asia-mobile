@@ -15,10 +15,11 @@ public class ViewHelpers {
    * Used when  we need to nest a ListView inside a ScrollView.
    * eg: ShowParentageFragment.
    * more info: https://stackoverflow.com/questions/27646209/disable-scrolling-for-listview-and-enable-for-whole-layout
+   *
    * @param listView the listView that we want to extends
    */
   public static void extendListView(ListView listView) {
-    ListAdapter listAdapter =  listView.getAdapter();
+    ListAdapter listAdapter = listView.getAdapter();
 
     if (listAdapter == null) return;
 

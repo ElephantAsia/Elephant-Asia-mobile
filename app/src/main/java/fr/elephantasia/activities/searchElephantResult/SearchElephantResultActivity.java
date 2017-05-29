@@ -15,11 +15,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.showElephant.ShowElephantActivity;
-import fr.elephantasia.adapter.ListElephantPreviewAdapter;
+import fr.elephantasia.adapter.RealmElephantListAdapter;
 import fr.elephantasia.database.model.Elephant;
 import io.realm.Case;
+import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
@@ -41,7 +41,7 @@ public class SearchElephantResultActivity extends AppCompatActivity {
   @BindView(R.id.toolbar) Toolbar toolbar;
 
   // Attr
-  private ListElephantPreviewAdapter adapter;
+  private RealmElephantListAdapter adapter;
   private Realm realm;
 
   @Override
@@ -77,10 +77,9 @@ public class SearchElephantResultActivity extends AppCompatActivity {
   }
 
   private void displaySearchResult() {
-    RealmList<Elephant> elephants = new RealmList<>();
-    elephants.addAll(searchElephants());
-    if (!elephants.isEmpty()) {
-      adapter = new ListElephantPreviewAdapter(this, elephants, false, true);
+    OrderedRealmCollection<Elephant> realmResults = searchElephants();
+    if (!realmResults.isEmpty()) {
+      adapter = new RealmElephantListAdapter(realmResults, this, false, true);
       listView.setAdapter(adapter);
     } else {
       listView.setVisibility(View.GONE);

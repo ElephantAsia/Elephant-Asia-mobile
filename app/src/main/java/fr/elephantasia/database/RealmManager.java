@@ -8,15 +8,14 @@ import io.realm.Realm;
 
 public class RealmManager {
   private static final RealmManager ourInstance = new RealmManager();
-
-  public static RealmManager getInstance() {
-    return ourInstance;
-  }
-
   private ThreadLocal<Realm> realms;
 
   public RealmManager() {
     realms = new ThreadLocal<>();
+  }
+
+  public static RealmManager getInstance() {
+    return ourInstance;
   }
 
   public Realm openRealm() {

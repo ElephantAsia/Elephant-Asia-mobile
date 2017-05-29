@@ -42,6 +42,7 @@ public class ParentageFragment extends Fragment {
   @BindView(R.id.father_preview) ElephantPreview fatherPreview;
   @BindView(R.id.list) ListView childrenList;
 
+
   // Attr
   private Elephant elephant;
   private AddElephantParentageFragmentBinding binding;

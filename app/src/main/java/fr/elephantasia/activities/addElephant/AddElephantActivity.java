@@ -23,8 +23,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
-import com.google.android.gms.location.places.ui.PlacePicker;
-
 import org.parceler.Parcels;
 
 import butterknife.BindView;
@@ -39,7 +37,6 @@ import fr.elephantasia.activities.addElephant.fragment.ProfilFragment;
 import fr.elephantasia.activities.addElephant.fragment.RegistrationFragment;
 import fr.elephantasia.adapter.ViewPagerAdapter;
 import fr.elephantasia.database.RealmDB;
-import fr.elephantasia.database.RealmManager;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
@@ -51,8 +48,6 @@ import io.realm.Realm;
 
 import static fr.elephantasia.activities.SearchContactActivity.EXTRA_SEARCH_CONTACT;
 import static fr.elephantasia.activities.searchElephantResult.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
-import static fr.elephantasia.database.model.Elephant.ID;
-import static fr.elephantasia.database.model.Elephant.NAME;
 
 public class AddElephantActivity extends AppCompatActivity {
 
@@ -73,21 +68,19 @@ public class AddElephantActivity extends AppCompatActivity {
 
   // Action code
   public static final String SELECT_ELEPHANT = "select_elephant";
-
+  static String motherId;
   // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.tabs) TabLayout tabLayout;
   @BindView(R.id.viewpager) ViewPager viewPager;
   @BindView(R.id.add_elephant_activity) View rootView;
   @BindView(R.id.add_elephant_fab) FloatingActionButton fab;
-
   // Fragment
   private ProfilFragment profilFragment;
   private RegistrationFragment registrationFragment;
   private ContactFragment contactFragment;
   private ParentageFragment parentageFragment;
   private DocumentFragment docFragment;
-
   // Attr
   private Elephant elephant = new Elephant();
   private ViewPagerAdapter adapter;
@@ -141,7 +134,6 @@ public class AddElephantActivity extends AppCompatActivity {
     realm = Realm.getDefaultInstance();
   }
 
-
   private void setupViewPager(ViewPager viewPager) {
     adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(profilFragment, getString(R.string.profil));
@@ -156,6 +148,7 @@ public class AddElephantActivity extends AppCompatActivity {
   public Elephant getElephant() {
     return this.elephant;
   }
+
   public Realm getRealm() {
     return this.realm;
   }
@@ -177,8 +170,6 @@ public class AddElephantActivity extends AppCompatActivity {
     realm.close();
   }
 
-  static String motherId;
-
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
@@ -186,13 +177,13 @@ public class AddElephantActivity extends AppCompatActivity {
     if (resultCode == RESULT_OK) {
       switch (requestCode) {
         case REQUEST_CURRENT_LOCATION:
-          profilFragment.setCurrentLocation(PlacePicker.getPlace(this, data).getAddress().toString());
+          profilFragment.setCurrentLocation(data);
           break;
         case REQUEST_BIRTH_LOCATION:
-          profilFragment.setBirthLocation(PlacePicker.getPlace(this, data).getAddress().toString());
+          profilFragment.setBirthLocation(data);
           break;
         case REQUEST_REGISTRATION_LOCATION:
-          registrationFragment.setRegistrationLocation(PlacePicker.getPlace(this, data).getAddress().toString());
+          registrationFragment.setRegistrationLocation(data);
           break;
         case REQUEST_CONTACT_SELECTED:
           Contact contact = Parcels.unwrap(data.getParcelableExtra(EXTRA_SEARCH_CONTACT));
@@ -217,17 +208,6 @@ public class AddElephantActivity extends AppCompatActivity {
       }
     }
   }
-
-  public void saveTest() {
-    realm.executeTransactionAsync(new Realm.Transaction() {
-      @Override
-      public void execute(Realm realm) {
-        elephant.mother = realm.where(Elephant.class).equalTo(ID, motherId).findFirst();
-        realm.copyToRealmOrUpdate(elephant);
-      }
-    });
-  }
-
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {

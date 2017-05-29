@@ -40,7 +40,9 @@ public class Location extends RealmObject {
     String p = provinceName;
 
     if (!android.text.TextUtils.isEmpty(provinceName)) {
-
+      if (android.text.TextUtils.isEmpty(districtName) || android.text.TextUtils.isEmpty(cityName)) {
+        return p;
+      }
       p = p.length() > 3 ? p.substring(0, 3) : p;
       p = p.toUpperCase();
     }
