@@ -26,6 +26,7 @@
     </activity>
 
     <activity android:name=".activities.addElephant.AddElephantActivity"/>
+    <activity android:name=".activities.editElephant.EditElephantActivity"/>
     <activity android:name=".activities.LoginActivity"/>
     <activity android:name=".activities.MainActivity"/>
     <activity android:name=".activities.SearchElephantActivity"/>

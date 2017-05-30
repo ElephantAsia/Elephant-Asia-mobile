@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.addElephant.fragment;
+package fr.elephantasia.activities.editElephant.fragment;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -21,13 +21,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.addElephant.AddElephantActivity;
+import fr.elephantasia.activities.editElephant.EditElephantActivity;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.AddElephantRegistrationFragmentBinding;
 import fr.elephantasia.dialogs.LocationDialog;
 import fr.elephantasia.utils.KeyboardHelpers;
 
-public class RegistrationFragment extends Fragment {
+public class EditRegistrationFragment extends Fragment {
 
   // View binding
   @BindView(R.id.registrationLocation) EditText registrationLocation;
@@ -40,7 +40,7 @@ public class RegistrationFragment extends Fragment {
     LocationDialog locationDialog = new LocationDialog(getActivity(),
         elephant.registrationLoc,
         getString(R.string.set_registration_location),
-        AddElephantActivity.REQUEST_CURRENT_LOCATION,
+        EditElephantActivity.REQUEST_CURRENT_LOCATION,
         editText
     );
     locationDialog.show();
@@ -54,7 +54,7 @@ public class RegistrationFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     AddElephantRegistrationFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_elephant_registration_fragment, container, false);
-    elephant = ((AddElephantActivity) getActivity()).getElephant();
+    elephant = ((EditElephantActivity) getActivity()).getElephant();
     View view = binding.getRoot();
     binding.setE(elephant);
     ButterKnife.bind(this, view);

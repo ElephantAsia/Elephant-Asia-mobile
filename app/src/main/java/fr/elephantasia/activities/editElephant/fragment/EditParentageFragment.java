@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.addElephant.fragment;
+package fr.elephantasia.activities.editElephant.fragment;
 
 
 import android.content.Intent;
@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.SearchElephantActivity;
-import fr.elephantasia.activities.addElephant.AddElephantActivity;
+import fr.elephantasia.activities.editElephant.EditElephantActivity;
 import fr.elephantasia.adapter.ListElephantPreviewAdapter;
 import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.RealmManager;
@@ -33,7 +33,7 @@ import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST
 import static fr.elephantasia.activities.addElephant.AddElephantActivity.SELECT_ELEPHANT;
 import static fr.elephantasia.database.model.Elephant.ID;
 
-public class ParentageFragment extends Fragment {
+public class EditParentageFragment extends Fragment {
 
   // View binding
   @BindView(R.id.mother_add_button) ImageView motherButton;
@@ -68,7 +68,7 @@ public class ParentageFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    elephant = ((AddElephantActivity) getActivity()).getElephant();
+    elephant = ((EditElephantActivity) getActivity()).getElephant();
     adapter = new ListElephantPreviewAdapter(getContext(), elephant.children, true, false);
   }
 

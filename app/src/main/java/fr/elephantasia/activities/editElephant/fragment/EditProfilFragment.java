@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.addElephant.fragment;
+package fr.elephantasia.activities.editElephant.fragment;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -22,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.addElephant.AddElephantActivity;
+import fr.elephantasia.activities.editElephant.EditElephantActivity;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.AddElephantProfilFragmentBinding;
 import fr.elephantasia.dialogs.LocationDialog;
@@ -32,7 +32,7 @@ import fr.elephantasia.utils.KeyboardHelpers;
 import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_BIRTH_LOCATION;
 import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_CURRENT_LOCATION;
 
-public class ProfilFragment extends Fragment {
+public class EditProfilFragment extends Fragment {
 
   // View binding
   @BindView(R.id.birthLocation) EditText birthLocation;
@@ -80,7 +80,7 @@ public class ProfilFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     AddElephantProfilFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_elephant_profil_fragment, container, false);
-    elephant = ((AddElephantActivity) getActivity()).getElephant();
+    elephant = ((EditElephantActivity) getActivity()).getElephant();
     binding.setE(elephant);
     View view = binding.getRoot();
     ButterKnife.bind(this, view);
@@ -89,14 +89,14 @@ public class ProfilFragment extends Fragment {
   }
 
   /**
-   * Used by AddElephantActivity to set error
+   * Used by EditElephantActivity to set error
    */
   public void setNameError() {
     name.setError(getText(R.string.name_required));
   }
 
   /**
-   * Used by AddElephantActivity to set error
+   * Used by EditElephantActivity to set error
    */
   public void setSexError() {
     male.setError(getText(R.string.sex_required));

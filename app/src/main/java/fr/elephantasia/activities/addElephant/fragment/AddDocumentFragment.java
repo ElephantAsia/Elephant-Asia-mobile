@@ -20,7 +20,7 @@ import io.realm.RealmList;
 
 import static butterknife.ButterKnife.findById;
 
-public class DocumentFragment extends Fragment {
+public class AddDocumentFragment extends Fragment {
 
 //  private ListView list;
 //  private DocumentAdapter adapter;

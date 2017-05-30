@@ -144,6 +144,7 @@
   </string-array>
 
   <string name="elephant_consultation_title">%1$s - #%2$s</string>
+  <string name="edit_elephant_title">Edit elephant - %1$s</string>
 
   <string name="tusk">Tusks</string>
   <string name="nails_front_left">Nails front left</string>

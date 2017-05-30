@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.addElephant;
+package fr.elephantasia.activities.editElephant;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.parceler.Parcels;
@@ -29,12 +30,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.addElephant.fragment.AddContactFragment;
-import fr.elephantasia.activities.addElephant.fragment.AddDescriptionFragment;
-import fr.elephantasia.activities.addElephant.fragment.AddDocumentFragment;
-import fr.elephantasia.activities.addElephant.fragment.AddParentageFragment;
-import fr.elephantasia.activities.addElephant.fragment.AddProfilFragment;
-import fr.elephantasia.activities.addElephant.fragment.AddRegistrationFragment;
+import fr.elephantasia.activities.editElephant.fragment.EditContactFragment;
+import fr.elephantasia.activities.editElephant.fragment.EditDescriptionFragment;
+import fr.elephantasia.activities.editElephant.fragment.EditDocumentFragment;
+import fr.elephantasia.activities.editElephant.fragment.EditParentageFragment;
+import fr.elephantasia.activities.editElephant.fragment.EditProfilFragment;
+import fr.elephantasia.activities.editElephant.fragment.EditRegistrationFragment;
 import fr.elephantasia.adapter.ViewPagerAdapter;
 import fr.elephantasia.database.RealmDB;
 import fr.elephantasia.database.model.Contact;
@@ -48,8 +49,10 @@ import io.realm.Realm;
 
 import static fr.elephantasia.activities.SearchContactActivity.EXTRA_SEARCH_CONTACT;
 import static fr.elephantasia.activities.searchElephantResult.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
+import static fr.elephantasia.activities.showElephant.ShowElephantActivity.EXTRA_EDIT_ELEPHANT_ID;
+import static fr.elephantasia.database.model.Elephant.ID;
 
-public class AddElephantActivity extends AppCompatActivity {
+public class EditElephantActivity extends AppCompatActivity {
 
   // Result code
   public static final int RESULT_DRAFT = 2;
@@ -66,33 +69,33 @@ public class AddElephantActivity extends AppCompatActivity {
   public static final int REQUEST_CAPTURE_PHOTO = 8;
   public static final int REQUEST_IMPORT_PHOTO = 9;
 
-  // Action code
-  public static final String SELECT_ELEPHANT = "select_elephant";
-  static String motherId;
   // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
+  @BindView(R.id.title) TextView toolbarTitle;
   @BindView(R.id.tabs) TabLayout tabLayout;
   @BindView(R.id.viewpager) ViewPager viewPager;
   @BindView(R.id.add_elephant_activity) View rootView;
   @BindView(R.id.add_elephant_fab) FloatingActionButton fab;
+
   // Fragment
-  private AddProfilFragment profilFragment;
-  private AddRegistrationFragment addRegistrationFragment;
-  private AddContactFragment contactFragment;
-  private AddParentageFragment parentageFragment;
-  private AddDocumentFragment docFragment;
+  private EditProfilFragment profilFragment;
+  private EditRegistrationFragment registrationFragment;
+  private EditContactFragment contactFragment;
+  private EditParentageFragment parentageFragment;
+  private EditDocumentFragment docFragment;
+
   // Attr
   private Elephant elephant = new Elephant();
   private ViewPagerAdapter adapter;
   private PickImageDialog pickImageDialog;
   private Realm realm;
 
-  public AddElephantActivity() {
-    profilFragment = new AddProfilFragment();
-    addRegistrationFragment = new AddRegistrationFragment();
-    contactFragment = new AddContactFragment();
-    parentageFragment = new AddParentageFragment();
-    docFragment = new AddDocumentFragment();
+  public EditElephantActivity() {
+    profilFragment = new EditProfilFragment();
+    registrationFragment = new EditRegistrationFragment();
+    contactFragment = new EditContactFragment();
+    parentageFragment = new EditParentageFragment();
+    docFragment = new EditDocumentFragment();
   }
 
   // Listener binding
@@ -132,13 +135,16 @@ public class AddElephantActivity extends AppCompatActivity {
     setupViewPager(viewPager);
     tabLayout.setupWithViewPager(viewPager);
     realm = Realm.getDefaultInstance();
+    String id = getIntent().getStringExtra(EXTRA_EDIT_ELEPHANT_ID);
+    elephant = realm.copyFromRealm(realm.where(Elephant.class).equalTo(ID, id).findFirst());
+    toolbarTitle.setText(String.format(getString(R.string.edit_elephant_title), elephant.name));
   }
 
   private void setupViewPager(ViewPager viewPager) {
     adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(profilFragment, getString(R.string.profil));
-    adapter.addFragment(addRegistrationFragment, getString(R.string.registration));
-    adapter.addFragment(new AddDescriptionFragment(), getString(R.string.description));
+    adapter.addFragment(registrationFragment, getString(R.string.registration));
+    adapter.addFragment(new EditDescriptionFragment(), getString(R.string.description));
     adapter.addFragment(contactFragment, getString(R.string.contact));
     adapter.addFragment(parentageFragment, getString(R.string.parentage));
     adapter.addFragment(docFragment, getString(R.string.documents));
@@ -183,14 +189,13 @@ public class AddElephantActivity extends AppCompatActivity {
           profilFragment.setBirthLocation(data);
           break;
         case REQUEST_REGISTRATION_LOCATION:
-          addRegistrationFragment.setRegistrationLocation(data);
+          registrationFragment.setRegistrationLocation(data);
           break;
         case REQUEST_CONTACT_SELECTED:
           Contact contact = Parcels.unwrap(data.getParcelableExtra(EXTRA_SEARCH_CONTACT));
           contactFragment.addContactTolist(contact);
           break;
         case REQUEST_MOTHER_SELECTED:
-          motherId = data.getStringExtra(EXTRA_ELEPHANT_ID);
           parentageFragment.setMother(data.getStringExtra(EXTRA_ELEPHANT_ID));
           break;
         case REQUEST_FATHER_SELECTED:
@@ -219,13 +224,13 @@ public class AddElephantActivity extends AppCompatActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.add_elephant_menu_draft && checkMandatoryFields()) {
       elephant.state.draft = true;
-      setResult(RESULT_DRAFT);
+      setResult(RESULT_OK);
       RealmDB.copyOrUpdate(elephant);
       finish();
       return true;
     } else if (item.getItemId() == R.id.add_elephant_menu_validate && checkMandatoryFields()) {
       elephant.state.local = true;
-      setResult(RESULT_VALIDATE);
+      setResult(RESULT_OK);
       RealmDB.copyOrUpdate(elephant);
       finish();
       return true;
@@ -299,7 +304,7 @@ public class AddElephantActivity extends AppCompatActivity {
           public void execute(Intent intent, int requestCode) {
             if (requestCode == REQUEST_CAPTURE_PHOTO) {
               if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(AddElephantActivity.this, new String[]{Manifest.permission.CAMERA}, 0);
+                ActivityCompat.requestPermissions(EditElephantActivity.this, new String[]{Manifest.permission.CAMERA}, 0);
               } else {
                 startActivityForResult(intent, requestCode);
               }

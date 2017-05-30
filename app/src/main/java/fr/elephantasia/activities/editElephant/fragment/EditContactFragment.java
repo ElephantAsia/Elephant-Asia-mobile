@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.addElephant.fragment;
+package fr.elephantasia.activities.editElephant.fragment;
 
 
 import android.content.Intent;
@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.SearchContactActivity;
-import fr.elephantasia.activities.addElephant.AddElephantActivity;
+import fr.elephantasia.activities.editElephant.EditElephantActivity;
 import fr.elephantasia.adapter.ListContactPreviewAdapter;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Elephant;
@@ -23,7 +23,7 @@ import fr.elephantasia.database.model.Elephant;
 import static butterknife.ButterKnife.findById;
 import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_CONTACT_SELECTED;
 
-public class ContactFragment extends Fragment {
+public class EditContactFragment extends Fragment {
 
   // View binding
   @BindView(R.id.list) ListView list;
@@ -36,7 +36,7 @@ public class ContactFragment extends Fragment {
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    elephant = ((AddElephantActivity) getActivity()).getElephant();
+    elephant = ((EditElephantActivity) getActivity()).getElephant();
     adapter = new ListContactPreviewAdapter(getContext(), elephant.contacts, true);
   }
 

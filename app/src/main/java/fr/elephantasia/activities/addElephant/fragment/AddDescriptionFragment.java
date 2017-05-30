@@ -24,7 +24,7 @@ import fr.elephantasia.dialogs.WeightDialog;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 
-public class DescriptionFragment extends Fragment {
+public class AddDescriptionFragment extends Fragment {
 
   // Attr
   private Elephant elephant;

@@ -82,7 +82,7 @@ public class Elephant extends RealmObject {
 
   /**
    * Used to check if an elephant should be saved as draft before
-   * the end of AddElephantActivity.
+   * the end of EditElephantActivity.
    *
    * @return true if all relevant fields are empty.
    */

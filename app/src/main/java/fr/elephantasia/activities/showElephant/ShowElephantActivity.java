@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -19,6 +21,7 @@ import com.afollestad.materialdialogs.StackingBehavior;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.editElephant.EditElephantActivity;
 import fr.elephantasia.activities.showElephant.fragment.ShowDocumentFragment;
 import fr.elephantasia.activities.showElephant.fragment.ShowOverviewFragment;
 import fr.elephantasia.activities.showElephant.fragment.ShowParentageFragment;
@@ -32,8 +35,12 @@ import static fr.elephantasia.database.model.Elephant.ID;
 
 public class ShowElephantActivity extends AppCompatActivity {
 
+  public static final String EXTRA_EDIT_ELEPHANT_ID = "extra_edit_elephant_id";
+  private static final int REQUEST_ELEPHANT_EDITED = 0;
+
   // View Binding
   @BindView(R.id.toolbar) Toolbar toolbar;
+  @BindView(R.id.parent_layout) LinearLayout parentLayout;
   @BindView(R.id.tabs) TabLayout tabLayout;
   @BindView(R.id.viewpager) ViewPager viewPager;
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
@@ -84,10 +91,9 @@ public class ShowElephantActivity extends AppCompatActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.edit_elephant) {
-//      elephant.state.draft = true;
-//      setResult(RESULT_DRAFT);
-//      RealmDB.copyOrUpdate(elephant);
-//      finish();
+      Intent intent = new Intent(this, EditElephantActivity.class);
+      intent.putExtra(EXTRA_EDIT_ELEPHANT_ID, elephant.id);
+      startActivityForResult(intent, REQUEST_ELEPHANT_EDITED);
       return true;
     } else if (item.getItemId() == R.id.delete_elephant) {
       new MaterialDialog.Builder(this)
@@ -111,6 +117,22 @@ public class ShowElephantActivity extends AppCompatActivity {
       return true;
     }
     return false;
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+
+    if (resultCode == RESULT_OK) {
+      switch (requestCode) {
+        case REQUEST_ELEPHANT_EDITED:
+          Intent intent = getIntent();
+          intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+          finish();
+          startActivity(intent);
+          break;
+      }
+    }
   }
 
   public Elephant getElephant() {
