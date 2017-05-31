@@ -22,6 +22,7 @@ public class RealmElephantListAdapter extends RealmBaseAdapter<Elephant> impleme
   private boolean favorite;
   private boolean remove;
   private Context context;
+
   public RealmElephantListAdapter(OrderedRealmCollection<Elephant> realmResults, Context context, boolean remove, boolean favorite) {
     super(realmResults);
     this.context = context;

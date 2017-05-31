@@ -52,6 +52,8 @@ public class Elephant extends RealmObject {
   // Registration
   public boolean earTag = false;
   public boolean eyeD = false;
+  public boolean mteOwner = false;
+  public String mteNumber;
   public String chips1;
   public String chips2;
   public String chips3;
@@ -65,6 +67,7 @@ public class Elephant extends RealmObject {
   public String nailsRearLeft;
   public String nailsRearRight;
   public String weight;
+  public String girth;
   public String weightUnit;
   public String height;
   public String heightUnit;
@@ -119,10 +122,28 @@ public class Elephant extends RealmObject {
   public String getWeight() {
 
     if (!TextUtils.isEmpty(weight)) {
-      return weight + " " + weightUnit;
+      return weight + " kg";
     }
 
     return "N/A";
+  }
+
+  /**
+   * BW =  (21.11 x G ) – 4,425
+   * http://www.asianelephantresearch.com/about-elephant-health-care-p2.php
+   *
+   * @param newGirth
+   */
+  public void setWeight(String newGirth) {
+
+    if (girth != null) {
+      if (girth.isEmpty()) {
+        weight = null;
+        girth = null;
+      } else {
+        weight = Integer.toString((18 * Integer.parseInt(newGirth)) - 3336);
+      }
+    }
   }
 
   public String getAge() {

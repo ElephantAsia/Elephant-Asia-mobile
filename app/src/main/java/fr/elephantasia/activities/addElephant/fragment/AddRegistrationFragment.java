@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +31,24 @@ import fr.elephantasia.utils.KeyboardHelpers;
 public class AddRegistrationFragment extends Fragment {
 
   // View binding
-  @BindView(R.id.registrationLocation) EditText registrationLocation;
+  @BindView(R.id.registration_location) EditText registrationLocation;
+  @BindView(R.id.mte_input) TextInputLayout mteInput;
 
   // Attr
   private Elephant elephant;
 
-  @OnClick(R.id.registrationLocation)
+
+  // Listener
+  @OnClick(R.id.mte_checkbox)
+  void displayMteInput() {
+    if (elephant.mteOwner) {
+      mteInput.setVisibility(View.VISIBLE);
+    } else {
+      mteInput.setVisibility(View.GONE);
+    }
+  }
+
+  @OnClick(R.id.registration_location)
   public void showLocationDialog(EditText editText) {
     LocationDialog locationDialog = new LocationDialog(getActivity(),
         elephant.registrationLoc,

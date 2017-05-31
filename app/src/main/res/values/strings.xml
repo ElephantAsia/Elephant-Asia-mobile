@@ -21,6 +21,7 @@
   <string name="elephant_nickname">Nickname</string>
   <string name="elephant_registration_number">Registration ID</string>
   <string name="registration_location">Registration location</string>
+  <string name="mte_registration_number">MTE registration number</string>
   <string name="registration_province">Registration province</string>
   <string name="registration_district">Registration district</string>
   <string name="registration_city">Registration city</string>
@@ -52,6 +53,7 @@
   <string name="elephant_chip">Chip number #1</string>
   <string name="ear_tag">Ear tag</string>
   <string name="eyeD">EyeD</string>
+  <string name="mte_owner">MTE - Ownership</string>
   <string name="sex">Sex</string>
 
   <string name="elefant">ELEPHANT</string>
@@ -152,6 +154,7 @@
   <string name="nails_rear_right">Nails rear right</string>
   <string name="nails_rear_left">Nails rear left</string>
   <string name="weight">Weight</string>
+  <string name="girth">Girth</string>
   <string name="height">Height</string>
   <string name="phone">Phone</string>
   <string name="email">Email</string>
@@ -199,7 +202,7 @@
   <string name="set_birth_location">Set birth location</string>
   <string name="set_current_location">Set current location</string>
   <string name="set_registration_location">Set registration location</string>
-  <string name="set_weight">Set weight</string>
+  <string name="set_girth">Set girth in cm</string>
   <string name="set_height">Set height</string>
 
 </resources>

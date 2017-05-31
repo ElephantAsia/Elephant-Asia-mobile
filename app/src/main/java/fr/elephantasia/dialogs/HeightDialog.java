@@ -49,7 +49,7 @@ public class HeightDialog {
     unit.setAdapter(spinnerUnits);
     value.setText(elephant.height);
     new MaterialDialog.Builder(activity)
-        .title(R.string.set_weight)
+        .title(R.string.set_girth)
         .positiveText(R.string.OK)
         .onPositive(new MaterialDialog.SingleButtonCallback() {
           @Override
@@ -61,8 +61,10 @@ public class HeightDialog {
         .dismissListener(new DialogInterface.OnDismissListener() {
           @Override
           public void onDismiss(DialogInterface dialog) {
-            elephant.heightUnit = TextUtils.isEmpty(elephant.height) ? "" : elephant.heightUnit;
-            editTextTarget.setText(elephant.height + " " + elephant.heightUnit);
+            if (elephant.height != null) {
+              elephant.heightUnit = TextUtils.isEmpty(elephant.height) ? "" : elephant.heightUnit;
+              editTextTarget.setText(elephant.height + " " + elephant.heightUnit);
+            }
           }
         })
         .negativeText(R.string.CANCEL)

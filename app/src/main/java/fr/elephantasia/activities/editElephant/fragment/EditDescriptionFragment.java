@@ -10,21 +10,26 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.Arrays;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.editElephant.EditElephantActivity;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.AddElephantDescriptionFragmentBinding;
+import fr.elephantasia.dialogs.GirthDialog;
 import fr.elephantasia.dialogs.HeightDialog;
-import fr.elephantasia.dialogs.WeightDialog;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 
 public class EditDescriptionFragment extends Fragment {
+
+  // View binding
+  @BindView(R.id.weight) TextView weightView;
 
   // Attr
   private Elephant elephant;
@@ -36,9 +41,9 @@ public class EditDescriptionFragment extends Fragment {
     dialog.show();
   }
 
-  @OnClick(R.id.weight)
-  public void showWeightDialog(EditText editText) {
-    WeightDialog dialog = new WeightDialog(getActivity(), getContext(), elephant, editText);
+  @OnClick(R.id.girth)
+  public void showWeightDialog(EditText girthView) {
+    GirthDialog dialog = new GirthDialog(getActivity(), getContext(), elephant, weightView, girthView);
     dialog.show();
   }
 

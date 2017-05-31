@@ -6,6 +6,8 @@
     <variable
       name="e"
       type="fr.elephantasia.database.model.Elephant"/>
+
+    <import type="android.view.View"/>
   </data>
 
   <ScrollView
@@ -68,7 +70,7 @@
         >
 
         <EditText
-          android:id="@+id/registrationLocation"
+          android:id="@+id/registration_location"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:clickable="true"
@@ -78,6 +80,57 @@
           />
 
       </android.support.design.widget.TextInputLayout>
+
+
+      <!--Mte owner checkbox-->
+      <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true"
+          android:layout_centerVertical="true"
+          android:text="@string/mte_owner"
+          android:textSize="@dimen/font_size_normal"
+          />
+
+        <CheckBox
+          android:id="@+id/mte_checkbox"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:checked="@={e.mteOwner}"
+          />
+
+      </RelativeLayout>
+
+      <!--Mte owner number-->
+      <android.support.design.widget.TextInputLayout
+        android:id="@+id/mte_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="72dp"
+        android:paddingBottom="16dp"
+        android:visibility="@{e.mteOwner ? View.VISIBLE : View.GONE}"
+        >
+
+        <EditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="@string/mte_registration_number"
+          android:inputType="text"
+          android:text="@={e.mteNumber}"
+          />
+
+      </android.support.design.widget.TextInputLayout>
+
 
       <RelativeLayout
         android:layout_width="fill_parent"
@@ -96,7 +149,6 @@
           />
 
         <CheckBox
-          android:id="@+id/ear_tag"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentEnd="true"
@@ -124,7 +176,6 @@
           />
 
         <CheckBox
-          android:id="@+id/eyeD"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentEnd="true"
@@ -134,6 +185,7 @@
           />
 
       </RelativeLayout>
+
 
       <!--Used to prevent floating button to hide relevant field-->
       <View
