@@ -56,11 +56,11 @@
           android:layout_gravity="bottom|end"
           android:layout_margin="@dimen/fab_margin"
           android:src="@mipmap/add"
-          app:backgroundTint="@color/primary_grey_100"
+          app:backgroundTint="@color/secondary"
           app:borderWidth="0dp"
           app:elevation="0dp"
           app:pressedTranslationZ="12dp"
-          app:rippleColor="@color/primary_dark_100"/>
+          app:rippleColor="@color/secondary"/>
 
       </FrameLayout>
 

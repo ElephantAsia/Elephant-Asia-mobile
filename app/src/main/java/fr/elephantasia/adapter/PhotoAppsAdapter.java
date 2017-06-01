@@ -158,7 +158,7 @@ public class PhotoAppsAdapter extends BaseAdapter {
     }
     TextView itemLabel = (TextView) itemView.findViewById(R.id.listitem_label);
     itemLabel.setText(getItem(itemIndex));
-    itemLabel.setTextColor(ContextCompat.getColor(context, R.color.primary_dark_100));
+    itemLabel.setTextColor(ContextCompat.getColor(context, R.color.primary_grey_100));
     return itemView;
   }
 }

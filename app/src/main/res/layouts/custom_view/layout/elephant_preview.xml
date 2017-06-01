@@ -10,6 +10,7 @@
   android:paddingRight="5dp"
   android:paddingStart="5dp"
   android:paddingTop="5dp"
+  android:background="@android:drawable/dialog_holo_light_frame"
   android:theme="@style/AppThemeWhiteBackground">
 
   <ImageView
@@ -22,10 +23,11 @@
 
   <de.hdodenhof.circleimageview.CircleImageView
     android:id="@+id/search_overview_photo"
-    android:layout_width="100dp"
-    android:layout_height="100dp"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
     android:layout_marginLeft="17dp"
     android:layout_marginStart="17dp"
+    android:layout_centerVertical="true"
     android:layout_marginTop="17dp"
     android:contentDescription="@null"
     android:src="@mipmap/elephant"/>

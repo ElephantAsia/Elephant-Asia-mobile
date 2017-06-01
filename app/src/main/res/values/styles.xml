@@ -3,14 +3,14 @@
   <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
     <item name="android:windowActivityTransitions" tools:targetApi="21">true</item>
 
-    <item name="colorPrimary">@color/primary_grey_100</item>
-    <item name="android:colorPrimary" tools:targetApi="21">@color/primary_grey_100</item>
+    <item name="colorPrimary">@color/primary</item>
+    <item name="android:colorPrimary" tools:targetApi="21">@color/primary</item>
 
-    <item name="colorPrimaryDark">@color/primary_dark_100</item>
-    <item name="android:colorPrimaryDark" tools:targetApi="21">@color/primary_dark_100</item>
+    <item name="colorPrimaryDark">@color/primary_dark</item>
+    <item name="android:colorPrimaryDark" tools:targetApi="21">@color/primary_dark</item>
 
-    <item name="colorAccent">@color/primary_grey_100</item>
-    <item name="android:colorAccent" tools:targetApi="21">@color/primary_grey_100</item>
+    <item name="colorAccent">@color/secondary</item>
+    <item name="android:colorAccent" tools:targetApi="21">@color/secondary</item>
 
     <item name="windowNoTitle">true</item>
     <item name="windowActionBar">false</item>
@@ -38,9 +38,9 @@
     <item name="android:colorControlHighlight" tools:targetApi="21">@color/primary_50</item>
 
     <!--Material desgin dialog-->
-    <item name="md_positive_color">@color/burma_orange</item>
-    <item name="md_negative_color">@color/burma_orange</item>
-    <item name="md_title_color">@color/primary_grey</item>
+    <item name="md_positive_color">@color/secondary</item>
+    <item name="md_negative_color">@color/secondary</item>
+    <item name="md_title_color">@color/primary</item>
 
   </style>
 
@@ -55,7 +55,7 @@
 
   <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
     <item name="colorPrimary">@color/primary_grey_100</item>
-    <item name="colorPrimaryDark">@color/primary_dark_100</item>
+    <item name="colorPrimaryDark">@color/primary_grey_100</item>
     <item name="android:windowBackground">@drawable/splash_screen</item>
     <!--<item name="colorAccent">@color/colorAccent</item>-->
   </style>
