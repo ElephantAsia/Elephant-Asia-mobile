@@ -1,4 +1,4 @@
-package fr.elephantasia.refactor.AsyncTasks;
+package fr.elephantasia.AsyncTasks;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

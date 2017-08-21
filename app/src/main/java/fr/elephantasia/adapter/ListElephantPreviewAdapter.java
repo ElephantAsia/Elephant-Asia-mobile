@@ -17,7 +17,6 @@ public class ListElephantPreviewAdapter extends ArrayAdapter<Elephant> {
   private boolean favorite;
   private boolean remove;
 
-
   public ListElephantPreviewAdapter(Context context, RealmList<Elephant> elephants, boolean remove, boolean favorite) {
     super(context, R.layout.elephant_preview, elephants);
     this.favorite = favorite;
@@ -36,7 +35,6 @@ public class ListElephantPreviewAdapter extends ArrayAdapter<Elephant> {
     return view;
   }
 
-
   private View.OnClickListener removeListener(final int pos) {
     return new View.OnClickListener() {
       @Override
@@ -47,5 +45,3 @@ public class ListElephantPreviewAdapter extends ArrayAdapter<Elephant> {
   }
 
 }
-
-

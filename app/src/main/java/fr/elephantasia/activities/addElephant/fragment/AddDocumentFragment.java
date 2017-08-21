@@ -22,72 +22,39 @@ import static butterknife.ButterKnife.findById;
 
 public class AddDocumentFragment extends Fragment {
 
-//  private ListView list;
-//  private DocumentAdapter adapter;
-//
-//  @Override
-//  public void onCreate(Bundle savedInstanceState) {
-//    super.onCreate(savedInstanceState);
-//    adapter = new DocumentAdapter(getContext(), true, new DocumentInterface() {
-//      @Override
-//      public void onAddClick() {
-//        ((AddElephantInterface) getActivity()).onAddDocumentClick();
-//      }
-//
-//      @Override
-//      public void onDocumentClick() {
-//
-//      }
-//    });
-//  }
-//
-//  @Override
-//  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//    View view = inflater.inflate(R.layout.add_elephant_document_fragment, container, false);
-//
-//    list = (ListView) view.findViewById(R.id.list);
-//    list.setAdapter(adapter);
-//
-//    return (view);
-//  }
-//
-//  public void addDocument(@NonNull String path) {
-//    adapter.addItem(path);
-//  }
+    @BindView(R.id.list)
+    ListView list;
 
-  @BindView(R.id.list)
-  ListView list;
+    private DocumentAdapter adapter;
 
-  private DocumentAdapter adapter;
+      @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        adapter = new DocumentAdapter(getContext() , new RealmList<Document>());
+    }
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    adapter = new DocumentAdapter(getContext(), new RealmList<Document>());
-  }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.add_elephant_document_fragment, container, false);
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.add_elephant_document_fragment, container, false);
+        ButterKnife.bind(this, view);
+        setupFooter(inflater);
+        list.setAdapter(adapter);
+        return (view);
+    }
 
-    ButterKnife.bind(this, view);
-    setupFooter(inflater);
-    list.setAdapter(adapter);
-    return (view);
-  }
+    public void setupFooter(LayoutInflater inflater) {
+        View footerView = inflater.inflate(R.layout.add_document_footer, list, false);
+        TextView addButton = findById(footerView, R.id.add_contact);
 
-  public void setupFooter(LayoutInflater inflater) {
-    View footerView = inflater.inflate(R.layout.add_document_footer, list, false);
-    TextView addButton = findById(footerView, R.id.add_contact);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ((AddElephantActivity) getActivity()).onAddDocumentClick();
+            }
+        });
 
-    addButton.setOnClickListener(new View.OnClickListener() {
-      public void onClick(View v) {
-        ((AddElephantActivity) getActivity()).onAddDocumentClick();
-      }
-    });
-
-    list.addFooterView(footerView);
-  }
+        list.addFooterView(footerView);
+    }
 
   public void addDocument(@NonNull Document doc) {
     adapter.add(doc);

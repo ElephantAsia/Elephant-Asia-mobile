@@ -1,13 +1,16 @@
-package fr.elephantasia.refactor.AsyncTasks;
+package fr.elephantasia.AsyncTasks;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import fr.elephantasia.refactor.interfaces.LoadBitmapInterface;
+import fr.elephantasia.utils.BitmapCache;
 import fr.elephantasia.utils.ImageUtil;
 
 public class LoadBitmapAsyncTask extends AsyncTask {
+
+  private static final String TAG = "thumb";
 
   private LoadBitmapInterface listener;
   private String path;
@@ -21,8 +24,12 @@ public class LoadBitmapAsyncTask extends AsyncTask {
 
   @Override
   protected Void doInBackground(Void... params) {
-    byte[] bytes = ImageUtil.resizeImage(path, 1440, 1440);
-    bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    bitmap = BitmapCache.getInCache(path + TAG);
+    if (bitmap == null) {
+      byte[] bytes = ImageUtil.resizeImage(path, 1440, 1440);
+      bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+      BitmapCache.putInCache(path + TAG, bitmap);
+    }
     return null;
   }
 

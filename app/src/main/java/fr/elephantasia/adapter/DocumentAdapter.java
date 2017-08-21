@@ -6,11 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
+import fr.elephantasia.AsyncTasks.LoadBitmapAsyncTask;
 import fr.elephantasia.R;
 import fr.elephantasia.customView.RoundedImageView;
 import fr.elephantasia.database.model.Document;
-import fr.elephantasia.refactor.AsyncTasks.LoadBitmapAsyncTask;
 import fr.elephantasia.refactor.interfaces.LoadBitmapInterface;
 import io.realm.RealmList;
 
@@ -37,18 +38,18 @@ public class DocumentAdapter extends ArrayAdapter<Document> {
       view = inflater.inflate(R.layout.document_overview, parent, false);
     }
 
-    String photo = getItem(index).path;
-
-    refreshView(view, photo);
-    if (photo != null) {
-      refreshImage(view, photo);
+    Document document = getItem(index);
+    if (document == null) {
+        return view;
     }
 
+    if (document.path != null) {
+      refreshImage(view, document.path);
+    }
+    refreshTitle(view, document.title);
+    refreshType(view, document.type);
+
     return view;
-  }
-
-  private void refreshView(View view, final String photo) {
-
   }
 
   private void refreshImage(View view, String photo) {
@@ -62,6 +63,14 @@ public class DocumentAdapter extends ArrayAdapter<Document> {
       }
     }).execute();
 
+  }
+
+  private void refreshTitle(View view, String title) {
+      ((TextView)view.findViewById(R.id.title)).setText(title);
+  }
+
+  private void refreshType(View view, String type) {
+      ((TextView)view.findViewById(R.id.type)).setText(type);
   }
 
 }

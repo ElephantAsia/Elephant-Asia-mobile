@@ -13,13 +13,25 @@ import io.realm.annotations.PrimaryKey;
  * Created by Stephane on 26/05/2017.
  */
 
-@Parcel(implementations = {DocumentRealmProxy.class})
+@Parcel(implementations = { DocumentRealmProxy.class })
 public class Document extends RealmObject {
-  @Ignore public static final String PATH = "path";
-  @Ignore public static final String ID_ELEPHANT = "id_elephant";
+    @Ignore public static final String ID_ELEPHANT = "id_elephant";
+    @Ignore public static final String PATH = "path";
+    @Ignore public static final String TITLE = "title";
+    @Ignore public static final String TYPE = "type";
 
-  @PrimaryKey
-  public String id = UUID.randomUUID().toString();
-  public String id_elephant;
-  public String path;
+    @PrimaryKey
+    public String id = UUID.randomUUID().toString();
+    public String id_elephant;
+    public String path;
+    public String title;
+    public String type;
+
+    public Document() {}
+
+    public Document(String path, String title, String type) {
+        this.path = path;
+        this.title = title;
+        this.type = type;
+    }
 }

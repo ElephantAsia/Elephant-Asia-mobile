@@ -16,7 +16,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.addDocument.AddDocumentActivity;
 import fr.elephantasia.activities.addElephant.fragment.AddContactFragment;
 import fr.elephantasia.activities.addElephant.fragment.AddDescriptionFragment;
 import fr.elephantasia.activities.addElephant.fragment.AddDocumentFragment;
@@ -65,6 +65,7 @@ public class AddElephantActivity extends AppCompatActivity {
   public static final int REQUEST_CHILD_SELECTED = 7;
   public static final int REQUEST_CAPTURE_PHOTO = 8;
   public static final int REQUEST_IMPORT_PHOTO = 9;
+  public static final int REQUEST_ADD_DOCUMENT = 10;
 
   // Action code
   public static final String SELECT_ELEPHANT = "select_elephant";
@@ -75,12 +76,14 @@ public class AddElephantActivity extends AppCompatActivity {
   @BindView(R.id.viewpager) ViewPager viewPager;
   @BindView(R.id.add_elephant_activity) View rootView;
   @BindView(R.id.add_elephant_fab) FloatingActionButton fab;
+
   // Fragment
   private AddProfilFragment profilFragment;
-  private AddRegistrationFragment addRegistrationFragment;
+  private AddRegistrationFragment registrationFragment;
   private AddContactFragment contactFragment;
   private AddParentageFragment parentageFragment;
   private AddDocumentFragment docFragment;
+
   // Attr
   private Elephant elephant = new Elephant();
   private ViewPagerAdapter adapter;
@@ -89,7 +92,7 @@ public class AddElephantActivity extends AppCompatActivity {
 
   public AddElephantActivity() {
     profilFragment = new AddProfilFragment();
-    addRegistrationFragment = new AddRegistrationFragment();
+    registrationFragment = new AddRegistrationFragment();
     contactFragment = new AddContactFragment();
     parentageFragment = new AddParentageFragment();
     docFragment = new AddDocumentFragment();
@@ -137,7 +140,7 @@ public class AddElephantActivity extends AppCompatActivity {
   private void setupViewPager(ViewPager viewPager) {
     adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(profilFragment, getString(R.string.profil));
-    adapter.addFragment(addRegistrationFragment, getString(R.string.registration));
+    adapter.addFragment(registrationFragment, getString(R.string.registration));
     adapter.addFragment(new AddDescriptionFragment(), getString(R.string.description));
     adapter.addFragment(contactFragment, getString(R.string.contact));
     adapter.addFragment(parentageFragment, getString(R.string.parentage));
@@ -183,7 +186,7 @@ public class AddElephantActivity extends AppCompatActivity {
           profilFragment.setBirthLocation(data);
           break;
         case REQUEST_REGISTRATION_LOCATION:
-          addRegistrationFragment.setRegistrationLocation(data);
+          registrationFragment.setRegistrationLocation(data);
           break;
         case REQUEST_CONTACT_SELECTED:
           Contact contact = Parcels.unwrap(data.getParcelableExtra(EXTRA_SEARCH_CONTACT));
@@ -205,7 +208,13 @@ public class AddElephantActivity extends AppCompatActivity {
         case REQUEST_IMPORT_PHOTO:
           addDocument(data.getData());
           break;
-      }
+        case REQUEST_ADD_DOCUMENT:
+            String photo = AddDocumentActivity.photo;
+            String title = AddDocumentActivity.getExtraTitle(data);
+            String type = AddDocumentActivity.getExtraType(data);
+            docFragment.addDocument(new Document(photo, title, type));
+            break;
+       }
     }
   }
 
@@ -318,12 +327,11 @@ public class AddElephantActivity extends AppCompatActivity {
     String path = ImageUtil.createImageFileFromUri(this, uri);
 
     if (path != null) {
-      Log.i("add_photo", "aucune erreur");
-      Document doc = new Document();
-      doc.path = path;
-      docFragment.addDocument(doc);
+        Intent intent = new Intent(this, AddDocumentActivity.class);
+        AddDocumentActivity.photo = path;
+        startActivityForResult(intent, REQUEST_ADD_DOCUMENT);
     } else {
-      Toast.makeText(getApplicationContext(), "Error on adding document", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Error on adding document", Toast.LENGTH_SHORT).show();
     }
   }
 
