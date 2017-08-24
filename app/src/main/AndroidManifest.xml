@@ -32,6 +32,7 @@
         <activity android:name=".activities.AddContactActivity" />
         <activity android:name=".activities.showElephant.ShowElephantActivity" />
         <activity android:name=".activities.addDocument.AddDocumentActivity" />
+        <activity android:name=".activities.editElephant.EditElephantActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

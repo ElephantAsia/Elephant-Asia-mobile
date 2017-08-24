@@ -140,9 +140,11 @@ public class ShowElephantActivity extends AppCompatActivity {
 
   private Elephant getExtraElephant() {
     Intent intent = getIntent();
-    String id = intent.getStringExtra(EXTRA_ELEPHANT_ID);
-    Elephant el = realm.where(Elephant.class).equalTo(ID, id).findFirst();
-    return el;
+    Integer id = intent.getIntExtra(EXTRA_ELEPHANT_ID, -1);
+    if (id != -1) {
+      return realm.where(Elephant.class).equalTo(ID, id).findFirst();
+    }
+		throw new RuntimeException("ShowElephantActivity:148: ID incorrect");
   }
 
   private void setupViewPager(ViewPager viewPager) {

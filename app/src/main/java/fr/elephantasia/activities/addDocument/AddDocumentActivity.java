@@ -14,10 +14,13 @@ import fr.elephantasia.R;
 
 public class AddDocumentActivity extends AppCompatActivity {
 
+    private static final String EXTRA_PATH = "path";
     private static final String EXTRA_TITLE = "title";
     private static final String EXTRA_TYPE = "rtype";
 
-    public static String photo;
+    public static void setExtraPath(Intent intent, String path) {
+        intent.putExtra(EXTRA_PATH, path);
+    }
 
     public static void setExtraTitle(Intent intent, String title) {
         intent.putExtra(EXTRA_TITLE, title);
@@ -26,6 +29,8 @@ public class AddDocumentActivity extends AppCompatActivity {
     public static void setExtraType(Intent intent, String type) {
         intent.putExtra(EXTRA_TYPE, type);
     }
+
+    public static String getExtraPath(Intent intent) { return intent.getStringExtra(EXTRA_PATH); }
 
     public static String getExtraTitle(Intent intent) {
         return intent.getStringExtra(EXTRA_TITLE);
@@ -74,7 +79,24 @@ public class AddDocumentActivity extends AppCompatActivity {
     }
 
     private void validate() {
+        /* Document document = new Document();
+
+        document.path = getExtraPath(getIntent());
+        document.title = title.getText().toString();
+        document.type = type.getText().toString(); */
+        // document.elephant_id = getExtraIdElephant(getIntent());
+        // Document test = RealmDB.copyOrUpdate(document);
+        // Log.i("test", test.toString());
+        // RealmDB.copyOrUpdate(new Document(photo, title.getText().toString(), type.getText().toString()));
+
+        /* Intent data = new Intent();
+        setExtraTitle(data, title.getText().toString());
+        setExtraType(data, type.getText().toString());
+        setResult(RESULT_OK, data);
+        finish(); */
+
         Intent data = new Intent();
+        setExtraPath(data, getExtraPath(getIntent()));
         setExtraTitle(data, title.getText().toString());
         setExtraType(data, type.getText().toString());
         setResult(RESULT_OK, data);

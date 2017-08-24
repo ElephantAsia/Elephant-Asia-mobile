@@ -24,6 +24,9 @@ import android.widget.Toast;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -70,6 +73,7 @@ public class AddElephantActivity extends AppCompatActivity {
   // Action code
   public static final String SELECT_ELEPHANT = "select_elephant";
   static String motherId;
+
   // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.tabs) TabLayout tabLayout;
@@ -89,6 +93,8 @@ public class AddElephantActivity extends AppCompatActivity {
   private ViewPagerAdapter adapter;
   private PickImageDialog pickImageDialog;
   private Realm realm;
+  private List<Document> documents = new ArrayList<>();
+
 
   public AddElephantActivity() {
     profilFragment = new AddProfilFragment();
@@ -209,11 +215,13 @@ public class AddElephantActivity extends AppCompatActivity {
           addDocument(data.getData());
           break;
         case REQUEST_ADD_DOCUMENT:
-            String photo = AddDocumentActivity.photo;
-            String title = AddDocumentActivity.getExtraTitle(data);
-            String type = AddDocumentActivity.getExtraType(data);
-            docFragment.addDocument(new Document(photo, title, type));
-            break;
+					Document doc = new Document();
+					doc.path = AddDocumentActivity.getExtraPath(data);
+					doc.title = AddDocumentActivity.getExtraTitle(data);
+					doc.type = AddDocumentActivity.getExtraType(data);
+					documents.add(doc);
+					docFragment.addDocument(doc);
+					break;
        }
     }
   }
@@ -228,14 +236,14 @@ public class AddElephantActivity extends AppCompatActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.add_elephant_menu_draft && checkMandatoryFields()) {
       elephant.state.draft = true;
+      saveToDb();
       setResult(RESULT_DRAFT);
-      RealmDB.copyOrUpdate(elephant);
       finish();
       return true;
     } else if (item.getItemId() == R.id.add_elephant_menu_validate && checkMandatoryFields()) {
       elephant.state.local = true;
+      saveToDb();
       setResult(RESULT_VALIDATE);
-      RealmDB.copyOrUpdate(elephant);
       finish();
       return true;
     }
@@ -290,7 +298,7 @@ public class AddElephantActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
               if (checkMandatoryFields()) {
                 elephant.state.draft = true;
-                RealmDB.copyOrUpdate(elephant);
+                saveToDb();
                 setResult(RESULT_DRAFT);
                 finish();
               }
@@ -328,11 +336,16 @@ public class AddElephantActivity extends AppCompatActivity {
 
     if (path != null) {
         Intent intent = new Intent(this, AddDocumentActivity.class);
-        AddDocumentActivity.photo = path;
+        AddDocumentActivity.setExtraPath(intent, path);
         startActivityForResult(intent, REQUEST_ADD_DOCUMENT);
     } else {
         Toast.makeText(getApplicationContext(), "Error on adding document", Toast.LENGTH_SHORT).show();
     }
+  }
+
+  private void saveToDb() {
+		RealmDB.insertElephant(elephant, documents);
+		// TODO: add popup 'saving ...'
   }
 
 }

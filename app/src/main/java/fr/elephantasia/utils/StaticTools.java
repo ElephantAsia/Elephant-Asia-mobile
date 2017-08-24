@@ -129,4 +129,14 @@ public class StaticTools {
     return seed.incrementAndGet();
   }
 
+  @NonNull
+  public static Integer increment(@Nullable Integer value) {
+		return (value == null) ? 1 : value + 1;
+	}
+
+	@NonNull
+	public static Integer increment(@Nullable Number value) {
+		return (value == null) ? 1 : value.intValue() + 1;
+	}
+
 }

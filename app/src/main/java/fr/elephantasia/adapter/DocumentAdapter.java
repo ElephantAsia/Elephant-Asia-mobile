@@ -2,6 +2,7 @@ package fr.elephantasia.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,8 @@ public class DocumentAdapter extends ArrayAdapter<Document> {
   }
 
   @Override
-  public View getView(final int index, View old, ViewGroup parent) {
+  @NonNull
+  public View getView(final int index, View old, @NonNull ViewGroup parent) {
     View view;
     boolean creation = (old == null);
 

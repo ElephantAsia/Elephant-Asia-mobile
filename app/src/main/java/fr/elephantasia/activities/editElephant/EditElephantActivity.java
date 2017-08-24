@@ -135,8 +135,13 @@ public class EditElephantActivity extends AppCompatActivity {
     setupViewPager(viewPager);
     tabLayout.setupWithViewPager(viewPager);
     realm = Realm.getDefaultInstance();
-    String id = getIntent().getStringExtra(EXTRA_EDIT_ELEPHANT_ID);
+
+    Integer id = getIntent().getIntExtra(EXTRA_EDIT_ELEPHANT_ID, -1);
+		if (id == -1) {
+			throw new RuntimeException("EditElephantActivity:141: incorrect ID");
+		}
     elephant = realm.copyFromRealm(realm.where(Elephant.class).equalTo(ID, id).findFirst());
+
     toolbarTitle.setText(String.format(getString(R.string.edit_elephant_title), elephant.name));
   }
 

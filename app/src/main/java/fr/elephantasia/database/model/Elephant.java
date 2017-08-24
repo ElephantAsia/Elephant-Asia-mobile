@@ -6,7 +6,6 @@ import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
 import java.util.Calendar;
-import java.util.UUID;
 
 import fr.elephantasia.database.parceler.ContactParcelConverter;
 import fr.elephantasia.database.parceler.ElephantParcelConverter;
@@ -22,7 +21,7 @@ import io.realm.annotations.PrimaryKey;
 
 @Parcel(implementations = {ElephantRealmProxy.class})
 public class Elephant extends RealmObject {
-  //Columns' names must match attributes' names
+  // Columns' names must match attributes' names
   @Ignore
   public static final String ID = "id";
   @Ignore
@@ -37,7 +36,7 @@ public class Elephant extends RealmObject {
   public static final String REGISTRATION_LOC = "registrationLoc";
 
   @PrimaryKey
-  public String id = UUID.randomUUID().toString();
+  public Integer id = -1;
   public ElephantState state = new ElephantState();
 
   //Profil

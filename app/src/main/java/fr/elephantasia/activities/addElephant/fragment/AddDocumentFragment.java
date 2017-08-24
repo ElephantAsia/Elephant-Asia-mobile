@@ -1,6 +1,5 @@
 package fr.elephantasia.activities.addElephant.fragment;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -24,7 +23,6 @@ public class AddDocumentFragment extends Fragment {
 
     @BindView(R.id.list)
     ListView list;
-
     private DocumentAdapter adapter;
 
       @Override
@@ -57,7 +55,7 @@ public class AddDocumentFragment extends Fragment {
     }
 
   public void addDocument(@NonNull Document doc) {
-    adapter.add(doc);
+      adapter.add(doc);
   }
 
 }
