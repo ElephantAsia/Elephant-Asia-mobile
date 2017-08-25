@@ -279,7 +279,6 @@ public class AddElephantActivity extends AppCompatActivity {
    * Happens only if some data have been set.
    */
   private void confirmFinish() {
-
     if (elephant.isEmpty()) {
       setResult(RESULT_CANCELED);
       finish();
@@ -344,7 +343,7 @@ public class AddElephantActivity extends AppCompatActivity {
   }
 
   private void saveToDb() {
-		RealmDB.insertElephant(elephant, documents);
+		RealmDB.insertOrUpdateElephant(elephant, documents);
 		// TODO: add popup 'saving ...'
   }
 

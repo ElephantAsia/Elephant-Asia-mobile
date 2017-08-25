@@ -9,19 +9,20 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.List;
+
 import fr.elephantasia.AsyncTasks.LoadBitmapAsyncTask;
 import fr.elephantasia.R;
 import fr.elephantasia.customView.RoundedImageView;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.refactor.interfaces.LoadBitmapInterface;
-import io.realm.RealmList;
 
 public class DocumentAdapter extends ArrayAdapter<Document> {
 
   private Context context;
-  private RealmList<Document> docs;
+  private List<Document> docs;
 
-  public DocumentAdapter(Context context, RealmList<Document> docs) {
+  public DocumentAdapter(Context context, List<Document> docs) {
     super(context, R.layout.document_overview, docs);
     this.context = context;
     this.docs = docs;

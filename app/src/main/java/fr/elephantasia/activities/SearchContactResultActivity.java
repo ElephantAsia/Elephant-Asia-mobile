@@ -14,7 +14,7 @@ import org.parceler.Parcels;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
-import fr.elephantasia.adapter.ListContactPreviewAdapter;
+import fr.elephantasia.adapter.ContactPreviewAdapter;
 import fr.elephantasia.database.model.Contact;
 import io.realm.Case;
 import io.realm.Realm;
@@ -39,7 +39,7 @@ public class SearchContactResultActivity extends AppCompatActivity {
   @BindView(R.id.toolbar) Toolbar toolbar;
 
   // Attr
-  private ListContactPreviewAdapter adapter;
+  private ContactPreviewAdapter adapter;
   private Realm realm;
 
   @Override
@@ -50,7 +50,7 @@ public class SearchContactResultActivity extends AppCompatActivity {
 
     RealmList<Contact> contacts = new RealmList<>();
     contacts.addAll(searchContacts());
-    adapter = new ListContactPreviewAdapter(this, contacts, false);
+    adapter = new ContactPreviewAdapter(this, contacts, false);
     listView.setAdapter(adapter);
 
     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

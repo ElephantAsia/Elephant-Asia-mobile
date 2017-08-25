@@ -2,6 +2,7 @@ package fr.elephantasia.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ import fr.elephantasia.databinding.ContactPreviewBinding;
 import io.realm.RealmList;
 
 
-public class ListContactPreviewAdapter extends ArrayAdapter<Contact> {
+public class ContactPreviewAdapter extends ArrayAdapter<Contact> {
 
   // View binding
   @BindView(R.id.remove_contact) ImageButton removeButton;
@@ -26,7 +27,7 @@ public class ListContactPreviewAdapter extends ArrayAdapter<Contact> {
   private RealmList<Contact> contacts;
   private boolean isRemovable;
 
-  public ListContactPreviewAdapter(Context context, RealmList<Contact> contacts, boolean isRemovable) {
+  public ContactPreviewAdapter(Context context, RealmList<Contact> contacts, boolean isRemovable) {
     super(context, R.layout.contact_preview, contacts);
     this.contacts = contacts;
     this.isRemovable = isRemovable;
@@ -39,7 +40,8 @@ public class ListContactPreviewAdapter extends ArrayAdapter<Contact> {
     notifyDataSetChanged();
   }
 
-  public View getView(int position, View view, ViewGroup parent) {
+  @NonNull
+  public View getView(int position, View view, @NonNull ViewGroup parent) {
     ContactPreviewBinding binding;
 
     if (view == null) {

@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.SearchContactActivity;
 import fr.elephantasia.activities.addElephant.AddElephantActivity;
-import fr.elephantasia.adapter.ListContactPreviewAdapter;
+import fr.elephantasia.adapter.ContactPreviewAdapter;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Elephant;
 
@@ -29,7 +29,7 @@ public class AddContactFragment extends Fragment {
   @BindView(R.id.list) ListView list;
 
   // Attr
-  private ListContactPreviewAdapter adapter;
+  private ContactPreviewAdapter adapter;
   private Elephant elephant;
 
 
@@ -37,7 +37,7 @@ public class AddContactFragment extends Fragment {
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     elephant = ((AddElephantActivity) getActivity()).getElephant();
-    adapter = new ListContactPreviewAdapter(getContext(), elephant.contacts, true);
+    adapter = new ContactPreviewAdapter(getContext(), elephant.contacts, true);
   }
 
   @Override

@@ -154,4 +154,5 @@ public class ShowElephantActivity extends AppCompatActivity {
     adapter.addFragment(new ShowDocumentFragment(), getString(R.string.documents));
     viewPager.setAdapter(adapter);
   }
+
 }

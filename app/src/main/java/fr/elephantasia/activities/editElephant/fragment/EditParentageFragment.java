@@ -18,7 +18,7 @@ import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.SearchElephantActivity;
 import fr.elephantasia.activities.editElephant.EditElephantActivity;
-import fr.elephantasia.adapter.ListElephantPreviewAdapter;
+import fr.elephantasia.adapter.ElephantPreviewAdapter;
 import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.RealmManager;
 import fr.elephantasia.database.model.Elephant;
@@ -46,7 +46,7 @@ public class EditParentageFragment extends Fragment {
   // Attr
   private Elephant elephant;
   private AddElephantParentageFragmentBinding binding;
-  private ListElephantPreviewAdapter adapter;
+  private ElephantPreviewAdapter adapter;
   private RealmManager realmManager = RealmManager.getInstance();
 
   // Listener binding
@@ -69,7 +69,7 @@ public class EditParentageFragment extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     elephant = ((EditElephantActivity) getActivity()).getElephant();
-    adapter = new ListElephantPreviewAdapter(getContext(), elephant.children, true, false);
+    adapter = new ElephantPreviewAdapter(getContext(), elephant.children, true, false);
   }
 
   @Override

@@ -16,7 +16,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,10 +25,14 @@ import android.widget.Toast;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.addDocument.AddDocumentActivity;
 import fr.elephantasia.activities.editElephant.fragment.EditContactFragment;
 import fr.elephantasia.activities.editElephant.fragment.EditDescriptionFragment;
 import fr.elephantasia.activities.editElephant.fragment.EditDocumentFragment;
@@ -68,6 +71,7 @@ public class EditElephantActivity extends AppCompatActivity {
   public static final int REQUEST_CHILD_SELECTED = 7;
   public static final int REQUEST_CAPTURE_PHOTO = 8;
   public static final int REQUEST_IMPORT_PHOTO = 9;
+	public static final int REQUEST_ADD_DOCUMENT = 10;
 
   // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
@@ -89,6 +93,7 @@ public class EditElephantActivity extends AppCompatActivity {
   private ViewPagerAdapter adapter;
   private PickImageDialog pickImageDialog;
   private Realm realm;
+  private List<Document> documents = new ArrayList<>();
 
   public EditElephantActivity() {
     profilFragment = new EditProfilFragment();
@@ -141,8 +146,10 @@ public class EditElephantActivity extends AppCompatActivity {
 			throw new RuntimeException("EditElephantActivity:141: incorrect ID");
 		}
     elephant = realm.copyFromRealm(realm.where(Elephant.class).equalTo(ID, id).findFirst());
+		documents = realm.copyFromRealm(realm.where(Document.class).equalTo(Document.ELEPHANT_ID, id).findAll());
 
     toolbarTitle.setText(String.format(getString(R.string.edit_elephant_title), elephant.name));
+		docFragment.addDocuments(documents);
   }
 
   private void setupViewPager(ViewPager viewPager) {
@@ -215,6 +222,14 @@ public class EditElephantActivity extends AppCompatActivity {
         case REQUEST_IMPORT_PHOTO:
           addDocument(data.getData());
           break;
+				case REQUEST_ADD_DOCUMENT:
+					Document doc = new Document();
+					doc.path = AddDocumentActivity.getExtraPath(data);
+					doc.title = AddDocumentActivity.getExtraTitle(data);
+					doc.type = AddDocumentActivity.getExtraType(data);
+					documents.add(doc);
+					docFragment.addDocument(doc);
+					break;
       }
     }
   }
@@ -229,112 +244,115 @@ public class EditElephantActivity extends AppCompatActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.add_elephant_menu_draft && checkMandatoryFields()) {
       elephant.state.draft = true;
-      setResult(RESULT_OK);
-      RealmDB.copyOrUpdate(elephant);
+      saveToDb();
+			setResult(RESULT_OK);
       finish();
       return true;
     } else if (item.getItemId() == R.id.add_elephant_menu_validate && checkMandatoryFields()) {
       elephant.state.local = true;
-      setResult(RESULT_OK);
-      RealmDB.copyOrUpdate(elephant);
+      saveToDb();
+			setResult(RESULT_OK);
       finish();
       return true;
     }
     return false;
   }
 
-  @Override
-  public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-      startActivityForResult(pickImageDialog.getIntent(0), pickImageDialog.getRequestCode(0));
-    }
-  }
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+		if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+			startActivityForResult(pickImageDialog.getIntent(0), pickImageDialog.getRequestCode(0));
+		}
+	}
 
   /**
    * @return true if at least the name and sex are set
    */
-  private boolean checkMandatoryFields() {
-    if (TextUtils.isEmpty(elephant.name)) {
-      profilFragment.setNameError();
-      Toast.makeText(this, R.string.name_required, Toast.LENGTH_SHORT).show();
-      return false;
-    }
-    if (!elephant.male && !elephant.female) {
-      profilFragment.setSexError();
-      Toast.makeText(this, R.string.sex_required, Toast.LENGTH_SHORT).show();
-      return false;
-    }
-    return true;
-  }
+	private boolean checkMandatoryFields() {
+		if (TextUtils.isEmpty(elephant.name)) {
+			profilFragment.setNameError();
+			Toast.makeText(this, R.string.name_required, Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (!elephant.male && !elephant.female) {
+			profilFragment.setSexError();
+			Toast.makeText(this, R.string.sex_required, Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		return true;
+	}
 
   /**
    * Prevent user to cancel activity without saving his current Elephant.
    * Happens only if some data have been set.
    */
-  private void confirmFinish() {
+	private void confirmFinish() {
+		if (elephant.isEmpty()) {
+			setResult(RESULT_CANCELED);
+			finish();
+		} else {
+			new AlertDialog.Builder(this)
+				.setMessage(R.string.put_drafts)
+				.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialogInterface, int i) {
+						setResult(RESULT_CANCELED);
+						finish();
+					}
+				})
+				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						if (checkMandatoryFields()) {
+							elephant.state.draft = true;
+							saveToDb();
+							setResult(RESULT_DRAFT);
+							finish();
+						}
+					}
+				})
+				.show();
+		}
+	}
 
-    if (elephant.isEmpty()) {
-      setResult(RESULT_CANCELED);
-      finish();
-    } else {
-      new AlertDialog.Builder(this)
-          .setMessage(R.string.put_drafts)
-          .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-              setResult(RESULT_CANCELED);
-              finish();
-            }
-          })
-          .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-              if (checkMandatoryFields()) {
-                elephant.state.draft = true;
-                RealmDB.copyOrUpdate(elephant);
-                setResult(RESULT_DRAFT);
-                finish();
-              }
-            }
-          })
-          .show();
-    }
-  }
+	public void onAddDocumentClick() {
+		pickImageDialog = new PickImageDialogBuilder(this)
+			.build()
+			.setListener(new PickImageDialog.Listener() {
+				@Override
+				public void execute(Intent intent, int requestCode) {
+					if (requestCode == REQUEST_CAPTURE_PHOTO) {
+						if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+							ActivityCompat.requestPermissions(EditElephantActivity.this, new String[]{Manifest.permission.CAMERA}, 0);
+						} else {
+							startActivityForResult(intent, requestCode);
+						}
+					} else {
+						startActivityForResult(intent, requestCode);
+					}
+				}
+			})
+			.setCaptureCode(REQUEST_CAPTURE_PHOTO)
+			.setImportCode(REQUEST_IMPORT_PHOTO)
+			.load();
+		pickImageDialog.show();
+	}
 
-  public void onAddDocumentClick() {
-    pickImageDialog = new PickImageDialogBuilder(this)
-        .build()
-        .setListener(new PickImageDialog.Listener() {
-          @Override
-          public void execute(Intent intent, int requestCode) {
-            if (requestCode == REQUEST_CAPTURE_PHOTO) {
-              if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(EditElephantActivity.this, new String[]{Manifest.permission.CAMERA}, 0);
-              } else {
-                startActivityForResult(intent, requestCode);
-              }
-            } else {
-              startActivityForResult(intent, requestCode);
-            }
-          }
-        })
-        .setCaptureCode(REQUEST_CAPTURE_PHOTO)
-        .setImportCode(REQUEST_IMPORT_PHOTO)
-        .load();
-    pickImageDialog.show();
-  }
+	private void addDocument(Uri uri) {
+		String path = ImageUtil.createImageFileFromUri(this, uri);
 
-  private void addDocument(Uri uri) {
-    String path = ImageUtil.createImageFileFromUri(this, uri);
+		if (path != null) {
+			Intent intent = new Intent(this, AddDocumentActivity.class);
+			AddDocumentActivity.setExtraPath(intent, path);
+			startActivityForResult(intent, REQUEST_ADD_DOCUMENT);
+		} else {
+			Toast.makeText(getApplicationContext(), "Error on adding document", Toast.LENGTH_SHORT).show();
+		}
+	}
 
-    if (path != null) {
-      Log.i("add_photo", "aucune erreur");
-      Document doc = new Document();
-      doc.path = path;
-      docFragment.addDocument(doc);
-    } else {
-      Toast.makeText(getApplicationContext(), "Error on adding document", Toast.LENGTH_SHORT).show();
-    }
-  }
+	private void saveToDb() {
+		RealmDB.insertOrUpdateElephant(elephant, documents);
+		// TODO: add popup 'saving ...'
+	}
 
 }

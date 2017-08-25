@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.elephantasia">
+          package="fr.elephantasia">
 
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".BaseApplication"
@@ -17,22 +17,26 @@
             android:name=".activities.SplashScreenActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.addElephant.AddElephantActivity" />
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.SearchElephantActivity" />
-        <activity android:name=".activities.SearchContactActivity" />
-        <activity android:name=".activities.SearchContactResultActivity" />
-        <activity android:name=".activities.searchElephantResult.SearchElephantResultActivity" />
-        <activity android:name=".activities.AddContactActivity" />
-        <activity android:name=".activities.showElephant.ShowElephantActivity" />
-        <activity android:name=".activities.addDocument.AddDocumentActivity" />
-        <activity android:name=".activities.editElephant.EditElephantActivity" />
+        <activity android:name=".activities.addElephant.AddElephantActivity"/>
+        <activity android:name=".activities.LoginActivity"/>
+        <activity android:name=".activities.MainActivity"/>
+        <activity android:name=".activities.SearchElephantActivity"/>
+        <activity android:name=".activities.SearchContactActivity"/>
+        <activity android:name=".activities.SearchContactResultActivity"/>
+        <activity android:name=".activities.searchElephantResult.SearchElephantResultActivity"/>
+        <activity android:name=".activities.AddContactActivity"/>
+        <activity android:name=".activities.showElephant.ShowElephantActivity"/>
+        <activity android:name=".activities.showDocument.ShowDocumentActivity" />
+
+        <activity
+            android:name=".activities.addDocument.AddDocumentActivity"
+            android:windowSoftInputMode="stateVisible"/>
+        <activity android:name=".activities.editElephant.EditElephantActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -41,15 +45,15 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
+                android:resource="@xml/provider_paths"/>
         </provider>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC03RrMCbPiC4W3loYhRvmnA9lZh4aHP5w" />
+            android:value="AIzaSyC03RrMCbPiC4W3loYhRvmnA9lZh4aHP5w"/>
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
 
     </application>
 

@@ -11,13 +11,13 @@ import fr.elephantasia.database.model.Elephant;
 import io.realm.RealmList;
 
 
-public class ListElephantPreviewAdapter extends ArrayAdapter<Elephant> {
+public class ElephantPreviewAdapter extends ArrayAdapter<Elephant> {
 
   // Attr
   private boolean favorite;
   private boolean remove;
 
-  public ListElephantPreviewAdapter(Context context, RealmList<Elephant> elephants, boolean remove, boolean favorite) {
+  public ElephantPreviewAdapter(Context context, RealmList<Elephant> elephants, boolean remove, boolean favorite) {
     super(context, R.layout.elephant_preview, elephants);
     this.favorite = favorite;
     this.remove = remove;

@@ -1,6 +1,7 @@
 package fr.elephantasia.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,11 @@ public class KeyboardHelpers {
     if (currentFocus != null) {
       inputMethodManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
     }
+  }
+
+  public static void showSoftKeyboard(Context context, View view) {
+    InputMethodManager inputMethodManager = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+    inputMethodManager.toggleSoftInputFromWindow(view.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
   }
 
   /**

@@ -12,7 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.showElephant.ShowElephantActivity;
-import fr.elephantasia.adapter.ListElephantPreviewAdapter;
+import fr.elephantasia.adapter.ElephantPreviewAdapter;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ShowParentageFragmentBinding;
 import fr.elephantasia.utils.ViewHelpers;
@@ -23,14 +23,14 @@ public class ShowParentageFragment extends Fragment {
   @BindView(R.id.list) ListView children;
 
   // Attr
-  private ListElephantPreviewAdapter adapter;
+  private ElephantPreviewAdapter adapter;
   private Elephant elephant;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     elephant = ((ShowElephantActivity) getActivity()).getElephant();
-    adapter = new ListElephantPreviewAdapter(getContext(), elephant.children, false, false);
+    adapter = new ElephantPreviewAdapter(getContext(), elephant.children, false, false);
   }
 
   @Override

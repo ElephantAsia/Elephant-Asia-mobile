@@ -14,97 +14,81 @@ import fr.elephantasia.R;
 
 public class AddDocumentActivity extends AppCompatActivity {
 
-    private static final String EXTRA_PATH = "path";
-    private static final String EXTRA_TITLE = "title";
-    private static final String EXTRA_TYPE = "rtype";
+	private static final String EXTRA_PATH = "path";
+	private static final String EXTRA_TITLE = "title";
+	private static final String EXTRA_TYPE = "rtype";
 
-    public static void setExtraPath(Intent intent, String path) {
-        intent.putExtra(EXTRA_PATH, path);
-    }
+	public static void setExtraPath(Intent intent, String path) {
+		intent.putExtra(EXTRA_PATH, path);
+	}
 
-    public static void setExtraTitle(Intent intent, String title) {
-        intent.putExtra(EXTRA_TITLE, title);
-    }
+	public static void setExtraTitle(Intent intent, String title) {
+		intent.putExtra(EXTRA_TITLE, title);
+	}
 
-    public static void setExtraType(Intent intent, String type) {
-        intent.putExtra(EXTRA_TYPE, type);
-    }
+	public static void setExtraType(Intent intent, String type) {
+		intent.putExtra(EXTRA_TYPE, type);
+	}
 
-    public static String getExtraPath(Intent intent) { return intent.getStringExtra(EXTRA_PATH); }
+	public static String getExtraPath(Intent intent) { return intent.getStringExtra(EXTRA_PATH); }
 
-    public static String getExtraTitle(Intent intent) {
-        return intent.getStringExtra(EXTRA_TITLE);
-    }
+	public static String getExtraTitle(Intent intent) {
+			return intent.getStringExtra(EXTRA_TITLE);
+	}
 
-    public static String getExtraType(Intent intent) {
-        return intent.getStringExtra(EXTRA_TYPE);
-    }
+	public static String getExtraType(Intent intent) {
+			return intent.getStringExtra(EXTRA_TYPE);
+	}
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.title) EditText title;
-    @BindView(R.id.type) EditText type;
+	@BindView(R.id.toolbar) Toolbar toolbar;
+	@BindView(R.id.title) EditText title;
+	@BindView(R.id.type) EditText type;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_document_activity);
-        ButterKnife.bind(this);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.add_document_activity);
+		ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }
+		setSupportActionBar(toolbar);
+		if (getSupportActionBar() != null) {
+				getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		}
+	}
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        setResult(RESULT_CANCELED);
-        finish();
-        return true;
-    }
+	@Override
+	public boolean onSupportNavigateUp() {
+		setResult(RESULT_CANCELED);
+		finish();
+		return true;
+	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_document_menu, menu);
-        return true;
-    }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.add_document_menu, menu);
+		return true;
+	}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.validate && checkMandatoryFields()) {
-            validate();
-            return true;
-        }
-        return false;
-    }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.validate && checkMandatoryFields()) {
+				validate();
+				return true;
+		}
+		return false;
+	}
 
-    private void validate() {
-        /* Document document = new Document();
+	private void validate() {
+		Intent data = new Intent();
+		setExtraPath(data, getExtraPath(getIntent()));
+		setExtraTitle(data, title.getText().toString());
+		setExtraType(data, type.getText().toString());
+		setResult(RESULT_OK, data);
+		finish();
+	}
 
-        document.path = getExtraPath(getIntent());
-        document.title = title.getText().toString();
-        document.type = type.getText().toString(); */
-        // document.elephant_id = getExtraIdElephant(getIntent());
-        // Document test = RealmDB.copyOrUpdate(document);
-        // Log.i("test", test.toString());
-        // RealmDB.copyOrUpdate(new Document(photo, title.getText().toString(), type.getText().toString()));
-
-        /* Intent data = new Intent();
-        setExtraTitle(data, title.getText().toString());
-        setExtraType(data, type.getText().toString());
-        setResult(RESULT_OK, data);
-        finish(); */
-
-        Intent data = new Intent();
-        setExtraPath(data, getExtraPath(getIntent()));
-        setExtraTitle(data, title.getText().toString());
-        setExtraType(data, type.getText().toString());
-        setResult(RESULT_OK, data);
-        finish();
-    }
-
-    private boolean checkMandatoryFields() {
-        return title.getText().toString().trim().length() > 0
-                && type.getText().toString().trim().length() > 0;
-    }
+	private boolean checkMandatoryFields() {
+		return title.getText().toString().trim().length() > 0
+						&& type.getText().toString().trim().length() > 0;
+	}
 }

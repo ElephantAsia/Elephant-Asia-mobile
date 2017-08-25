@@ -34,6 +34,7 @@ public class Document extends RealmObject {
 
 	@PrimaryKey
 	public Integer id = -1;
+
 	public String path;
 	public String title;
 	public String type;
