@@ -208,13 +208,13 @@ public class EditElephantActivity extends AppCompatActivity {
           contactFragment.addContactTolist(contact);
           break;
         case REQUEST_MOTHER_SELECTED:
-          parentageFragment.setMother(data.getStringExtra(EXTRA_ELEPHANT_ID));
+          parentageFragment.setMother(data.getStringExtra(EXTRA_ELEPHANT_ID)); // TODO: getIntExtra
           break;
         case REQUEST_FATHER_SELECTED:
-          parentageFragment.setFather(data.getStringExtra(EXTRA_ELEPHANT_ID));
+          parentageFragment.setFather(data.getStringExtra(EXTRA_ELEPHANT_ID)); // TODO: getIntExtra
           break;
         case REQUEST_CHILD_SELECTED:
-          parentageFragment.setChild(data.getStringExtra(EXTRA_ELEPHANT_ID));
+          parentageFragment.setChild(data.getStringExtra(EXTRA_ELEPHANT_ID)); // TODO: getIntExtra
           break;
         case REQUEST_CAPTURE_PHOTO:
           addDocument(Uri.fromFile(ImageUtil.getCapturePhotoFile(this)));
@@ -352,7 +352,7 @@ public class EditElephantActivity extends AppCompatActivity {
 
 	private void saveToDb() {
 		RealmDB.insertOrUpdateElephant(elephant, documents);
-		// TODO: add popup 'saving ...'
+		// TODO: add popup 'saving to db...' if it worth it, that might be cool
 	}
 
 }

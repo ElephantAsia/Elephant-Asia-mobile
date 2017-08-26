@@ -3,6 +3,7 @@ package fr.elephantasia.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,13 @@ public class DocumentAdapter extends ArrayAdapter<Document> {
 
   private Context context;
   private List<Document> docs;
+  private Listener listener;
 
-  public DocumentAdapter(Context context, List<Document> docs) {
+  public DocumentAdapter(Context context, List<Document> docs, @Nullable Listener listener) {
     super(context, R.layout.document_overview, docs);
     this.context = context;
     this.docs = docs;
+    this.listener = listener;
   }
 
   @Override
@@ -47,7 +50,7 @@ public class DocumentAdapter extends ArrayAdapter<Document> {
     }
 
     if (document.path != null) {
-      refreshImage(view, document.path);
+      refreshImage(view, document);
     }
     refreshTitle(view, document.title);
     refreshType(view, document.type);
@@ -55,14 +58,23 @@ public class DocumentAdapter extends ArrayAdapter<Document> {
     return view;
   }
 
-  private void refreshImage(View view, String photo) {
+  private void refreshImage(View view, final Document document) {
     final RoundedImageView image = (RoundedImageView) view.findViewById(R.id.document_image);
 
     image.setImageResource(R.drawable.placeholder);
-    new LoadBitmapAsyncTask(context, photo, new LoadBitmapInterface() {
+    image.setOnClickListener(null);
+    new LoadBitmapAsyncTask(context, document.path, new LoadBitmapInterface() {
       @Override
       public void onFinish(Bitmap bitmap) {
         image.setImageBitmap(bitmap);
+        if (listener != null) {
+          image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              listener.onDocumentClick(document);
+            }
+          });
+        }
       }
     }).execute();
 
@@ -74,6 +86,10 @@ public class DocumentAdapter extends ArrayAdapter<Document> {
 
   private void refreshType(View view, String type) {
       ((TextView)view.findViewById(R.id.type)).setText(type);
+  }
+
+  public interface Listener {
+    void onDocumentClick(Document document);
   }
 
 }

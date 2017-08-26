@@ -26,6 +26,8 @@ import fr.elephantasia.R;
 public class ImageUtil {
 
   private static final String TEMP_FOLDER = "temp";
+  private static final String ORIGIN_FOLDER = "original";
+	private static final String THUMB_FOLDER = "thumb";
 
   private final static String PHOTO_PREFIX = "photo";
   private final static String PHOTO_SUFFIX = ".jpg";
@@ -53,7 +55,7 @@ public class ImageUtil {
         Bitmap bitmap = BitmapFactory.decodeFile(photo);
         Bitmap scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         FileOutputStream out = new FileOutputStream(file);
-        scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
+        scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
         scaledBitmap.recycle();
         bitmap.recycle();
       }
@@ -62,7 +64,25 @@ public class ImageUtil {
     }
   }
 
-  public static File getCapturePhotoFile(Context context) {
+  /* public static File getCapturePhotoFile(Context context) {
+		File dir = getOriginalPhotoDir(context);
+		if (dir != null) {
+			dir.mkdirs();
+			return new File(dir, PHOTO_PREFIX + PHOTO_SUFFIX);
+		}
+		return null;
+	} */
+
+	@Nullable
+	private static File getOriginalPhotoDir(Context context) {
+		File dir = context.getExternalCacheDir();
+		if (dir != null) {
+			return new File(dir.getAbsolutePath() + File.separator + ORIGIN_FOLDER);
+		}
+		return null;
+	}
+
+	public static File getCapturePhotoFile(Context context) {
     File dir = getTempPhotoDir(context);
     if (dir != null) {
       dir.mkdirs();
@@ -71,8 +91,8 @@ public class ImageUtil {
     return null;
   }
 
-  @Nullable
-  private static File getTempPhotoDir(Context context) {
+   @Nullable
+  	private static File getTempPhotoDir(Context context) {
     File dir = context.getExternalCacheDir();
     if (dir != null) {
       String path = dir.getAbsolutePath();
@@ -82,7 +102,7 @@ public class ImageUtil {
     return null;
   }
 
-  private static File createTempPhotoFile(Context context) {
+  /* private static File createTempPhotoFile(Context context) {
     File dir = getTempPhotoDir(context);
     if (dir != null) {
       dir.mkdirs();
@@ -93,7 +113,21 @@ public class ImageUtil {
       }
     }
     return null;
-  }
+  } */
+
+  private static File createOriginalFile(Context context) {
+		// File dir = getTempPhotoDir(context);
+		File originalDir = getOriginalPhotoDir(context);
+		if (originalDir != null) {
+			originalDir.mkdirs();
+			try {
+				return File.createTempFile(PHOTO_PREFIX, PHOTO_SUFFIX, originalDir);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 
   @Nullable
   public static String createImageFileFromUri(Context context, Uri uri) {
@@ -114,7 +148,7 @@ public class ImageUtil {
     }
 
     if (isInGalerie || ACCEPTED_EXTENSIONS.contains(extension)) {
-      file = createTempPhotoFile(context);
+			file = createOriginalFile(context);
     }
 
     if (file == null) {
@@ -125,6 +159,11 @@ public class ImageUtil {
     if (!copied) {
       return null;
     }
+
+    File temp = getCapturePhotoFile(context);
+		if (temp != null) {
+			temp.delete();
+		}
 
     String photoToUpload = file.getAbsolutePath();
     rotateImage(photoToUpload);

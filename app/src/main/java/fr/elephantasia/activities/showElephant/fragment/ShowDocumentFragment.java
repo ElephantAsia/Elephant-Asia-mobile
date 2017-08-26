@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
@@ -24,10 +26,7 @@ public class ShowDocumentFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-		Realm realm = Realm.getDefaultInstance();
-		Integer id = ((ShowElephantActivity)getActivity()).getElephant().id;
-    adapter = new DocumentAdapter(getContext(), realm.copyFromRealm(realm.where(Document.class).equalTo(Document.ELEPHANT_ID, id).findAll()));
+		loadDocuments();
   }
 
   @Override
@@ -40,4 +39,16 @@ public class ShowDocumentFragment extends Fragment {
     list.setAdapter(adapter);
     return (view);
   }
+
+  private void loadDocuments() {
+		Realm realm = Realm.getDefaultInstance();
+		Integer id = ((ShowElephantActivity)getActivity()).getElephant().id;
+		List<Document> results = realm.copyFromRealm(realm.where(Document.class).equalTo(Document.ELEPHANT_ID, id).findAll());
+		adapter = new DocumentAdapter(getContext(), results, new DocumentAdapter.Listener() {
+			@Override
+			public void onDocumentClick(Document document) {
+				((ShowElephantActivity)getActivity()).onDocumentClick(document);
+			}
+		});
+	}
 }

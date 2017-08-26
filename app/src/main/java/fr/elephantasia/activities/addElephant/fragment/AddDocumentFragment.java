@@ -28,7 +28,7 @@ public class AddDocumentFragment extends Fragment {
       @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new DocumentAdapter(getContext() , new RealmList<Document>());
+        adapter = new DocumentAdapter(getContext() , new RealmList<Document>(), null);
     }
 
     @Override

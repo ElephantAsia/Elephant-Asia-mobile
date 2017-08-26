@@ -7,6 +7,7 @@ import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.StaticTools;
 import io.realm.Realm;
+import io.realm.RealmObject;
 
 /**
  * Created by seb on 29/04/2017.
@@ -21,19 +22,23 @@ public class RealmDB {
     dog.mother = realm.where(Elephant.class).equalTo(ID, id).findFirst();
   } */
 
+  static private Integer getNextId(Realm realm, Class<? extends RealmObject> cls, String columnIdName) {
+		return StaticTools.increment(realm.where(cls).max(columnIdName));
+	}
+
   static public void insertOrUpdateElephant(final Elephant elephant, final List<Document> documents) {
 		Realm realm = Realm.getDefaultInstance();
 		realm.executeTransactionAsync(new Realm.Transaction() {
 			@Override
 			public void execute(Realm bgRealm) {
 				if (elephant.id == -1) {
-					elephant.id = StaticTools.increment(bgRealm.where(Elephant.class).max(Elephant.ID));
+					elephant.id = getNextId(bgRealm, Elephant.class, Elephant.ID);
 				}
 				bgRealm.insertOrUpdate(elephant);
 
 				for (Document document : documents) {
 					if (document.id == -1) {
-						document.id = StaticTools.increment(bgRealm.where(Document.class).max(Document.ID));
+						document.id = getNextId(bgRealm, Document.class, Document.ID);
 					}
 					document.elephant_id = elephant.id;
 					bgRealm.insertOrUpdate(document);

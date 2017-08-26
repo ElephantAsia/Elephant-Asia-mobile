@@ -21,10 +21,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.editElephant.EditElephantActivity;
+import fr.elephantasia.activities.showDocument.ShowDocumentActivity;
 import fr.elephantasia.activities.showElephant.fragment.ShowDocumentFragment;
 import fr.elephantasia.activities.showElephant.fragment.ShowOverviewFragment;
 import fr.elephantasia.activities.showElephant.fragment.ShowParentageFragment;
+import fr.elephantasia.adapter.DocumentAdapter;
 import fr.elephantasia.adapter.ViewPagerAdapter;
+import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ShowElephantActivityBinding;
 import io.realm.Realm;
@@ -32,7 +35,7 @@ import io.realm.Realm;
 import static fr.elephantasia.activities.searchElephantResult.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
 import static fr.elephantasia.database.model.Elephant.ID;
 
-public class ShowElephantActivity extends AppCompatActivity {
+public class ShowElephantActivity extends AppCompatActivity implements DocumentAdapter.Listener {
 
   public static final String EXTRA_EDIT_ELEPHANT_ID = "extra_edit_elephant_id";
   private static final int REQUEST_ELEPHANT_EDITED = 0;
@@ -153,6 +156,15 @@ public class ShowElephantActivity extends AppCompatActivity {
     adapter.addFragment(new ShowParentageFragment(), getString(R.string.parentage));
     adapter.addFragment(new ShowDocumentFragment(), getString(R.string.documents));
     viewPager.setAdapter(adapter);
+  }
+
+  @Override
+  public void onDocumentClick(Document document) {
+		Intent intent = new Intent(this, ShowDocumentActivity.class);
+		ShowDocumentActivity.setExtraTitle(intent, document.title);
+		ShowDocumentActivity.setExtraPath(intent, document.path);
+		startActivity(intent);
+		overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
   }
 
 }

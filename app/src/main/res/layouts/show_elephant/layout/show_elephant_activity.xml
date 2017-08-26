@@ -2,11 +2,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <data>
-
     <variable
       name="e"
       type="fr.elephantasia.database.model.Elephant"/>
-
     <import type="fr.elephantasia.database.model.Location"/>
   </data>
 
@@ -14,11 +12,9 @@
     android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
-      xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
