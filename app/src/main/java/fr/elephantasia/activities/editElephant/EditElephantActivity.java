@@ -62,9 +62,6 @@ public class EditElephantActivity extends AppCompatActivity {
   public static final int RESULT_VALIDATE = 3;
 
   // Request codes
-  public static final int REQUEST_CURRENT_LOCATION = 1;
-  public static final int REQUEST_BIRTH_LOCATION = 2;
-  public static final int REQUEST_REGISTRATION_LOCATION = 3;
   public static final int REQUEST_CONTACT_SELECTED = 4;
   public static final int REQUEST_FATHER_SELECTED = 5;
   public static final int REQUEST_MOTHER_SELECTED = 6;
@@ -194,15 +191,6 @@ public class EditElephantActivity extends AppCompatActivity {
 
     if (resultCode == RESULT_OK) {
       switch (requestCode) {
-        case REQUEST_CURRENT_LOCATION:
-          profilFragment.setCurrentLocation(data);
-          break;
-        case REQUEST_BIRTH_LOCATION:
-          profilFragment.setBirthLocation(data);
-          break;
-        case REQUEST_REGISTRATION_LOCATION:
-          registrationFragment.setRegistrationLocation(data);
-          break;
         case REQUEST_CONTACT_SELECTED:
           Contact contact = Parcels.unwrap(data.getParcelableExtra(EXTRA_SEARCH_CONTACT));
           contactFragment.addContactTolist(contact);

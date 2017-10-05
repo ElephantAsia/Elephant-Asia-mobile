@@ -102,25 +102,6 @@
         >
 
         <EditText
-          android:id="@+id/currentLocation"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:clickable="true"
-          android:focusable="false"
-          android:hint="@string/current_location"
-          android:inputType="text"
-          />
-
-      </android.support.design.widget.TextInputLayout>
-
-      <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="72dp"
-        android:paddingBottom="16dp"
-        >
-
-        <EditText
           android:id="@+id/birthDate"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"

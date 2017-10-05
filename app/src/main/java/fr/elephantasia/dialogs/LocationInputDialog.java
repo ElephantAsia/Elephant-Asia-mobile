@@ -33,7 +33,7 @@ public class LocationInputDialog {
   private String title;
   private EditText editTextTarget;
 
-  LocationInputDialog(Activity activity, final Location loc, final String title, final EditText editText) {
+  public LocationInputDialog(Activity activity, final Location loc, final String title, final EditText editText) {
     this.activity = activity;
     this.loc = loc;
     this.title = title;

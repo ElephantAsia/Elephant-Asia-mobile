@@ -59,9 +59,6 @@ public class AddElephantActivity extends AppCompatActivity {
   public static final int RESULT_VALIDATE = 3;
 
   // Request codes
-  public static final int REQUEST_CURRENT_LOCATION = 1;
-  public static final int REQUEST_BIRTH_LOCATION = 2;
-  public static final int REQUEST_REGISTRATION_LOCATION = 3;
   public static final int REQUEST_CONTACT_SELECTED = 4;
   public static final int REQUEST_FATHER_SELECTED = 5;
   public static final int REQUEST_MOTHER_SELECTED = 6;
@@ -147,10 +144,9 @@ public class AddElephantActivity extends AppCompatActivity {
     adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(profilFragment, getString(R.string.profil));
     adapter.addFragment(registrationFragment, getString(R.string.registration));
-    adapter.addFragment(new AddDescriptionFragment(), getString(R.string.description));
     adapter.addFragment(contactFragment, getString(R.string.contact));
+    adapter.addFragment(new AddDescriptionFragment(), getString(R.string.description));
     adapter.addFragment(parentageFragment, getString(R.string.parentage));
-    adapter.addFragment(docFragment, getString(R.string.documents));
     viewPager.setAdapter(adapter);
   }
 
@@ -185,15 +181,6 @@ public class AddElephantActivity extends AppCompatActivity {
 
     if (resultCode == RESULT_OK) {
       switch (requestCode) {
-        case REQUEST_CURRENT_LOCATION:
-          profilFragment.setCurrentLocation(data);
-          break;
-        case REQUEST_BIRTH_LOCATION:
-          profilFragment.setBirthLocation(data);
-          break;
-        case REQUEST_REGISTRATION_LOCATION:
-          registrationFragment.setRegistrationLocation(data);
-          break;
         case REQUEST_CONTACT_SELECTED:
           Contact contact = Parcels.unwrap(data.getParcelableExtra(EXTRA_SEARCH_CONTACT));
           contactFragment.addContactTolist(contact);

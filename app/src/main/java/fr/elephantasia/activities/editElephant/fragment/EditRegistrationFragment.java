@@ -27,6 +27,7 @@ import fr.elephantasia.activities.editElephant.EditElephantActivity;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.AddElephantRegistrationFragmentBinding;
 import fr.elephantasia.dialogs.LocationDialog;
+import fr.elephantasia.dialogs.LocationInputDialog;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 public class EditRegistrationFragment extends Fragment {
@@ -51,10 +52,10 @@ public class EditRegistrationFragment extends Fragment {
 
   @OnClick(R.id.registration_location)
   public void showLocationDialog(EditText editText) {
-    LocationDialog locationDialog = new LocationDialog(getActivity(),
+    LocationInputDialog locationDialog = new LocationInputDialog(
+        getActivity(),
         elephant.registrationLoc,
         getString(R.string.set_registration_location),
-        AddElephantActivity.REQUEST_CURRENT_LOCATION,
         editText
     );
     locationDialog.show();
@@ -74,25 +75,5 @@ public class EditRegistrationFragment extends Fragment {
     ButterKnife.bind(this, view);
     KeyboardHelpers.hideKeyboardListener(view, getActivity());
     return (view);
-  }
-
-  //TODO: Extraire la province, le district et la ville du place picker
-  public void setRegistrationLocation(Intent data) {
-
-    final Place place = PlacePicker.getPlace(getActivity(), data);
-    Geocoder geocoder = new Geocoder(getActivity());
-
-    try {
-      List<Address> addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
-      elephant.registrationLoc.cityName = addresses.get(0).getAddressLine(0);
-      if (!addresses.get(0).getAddressLine(0).equals(addresses.get(0).getSubAdminArea())) {
-        elephant.registrationLoc.districtName = addresses.get(0).getSubAdminArea();
-      }
-      elephant.registrationLoc.provinceName = addresses.get(0).getAdminArea();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    registrationLocation.setText(elephant.registrationLoc.format());
   }
 }
