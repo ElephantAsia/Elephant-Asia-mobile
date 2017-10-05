@@ -56,8 +56,8 @@ public class AddDescriptionFragment extends Fragment {
     binding.setE(elephant);
     ButterKnife.bind(this, view);
 
-    ArrayAdapter<String> adapterFront = new ArrayAdapter<>(getContext(), R.layout.ea_spinner, Arrays.asList("0", "1", "2", "3", "4"));
-    ArrayAdapter<String> adapterRear = new ArrayAdapter<>(getContext(), R.layout.ea_spinner, Arrays.asList("0", "1", "2", "3", "4", "5"));
+    ArrayAdapter<String> adapterFront = new ArrayAdapter<>(getContext(), R.layout.ea_spinner, Arrays.asList("0", "1", "2", "3", "4", "5"));
+    ArrayAdapter<String> adapterRear = new ArrayAdapter<>(getContext(), R.layout.ea_spinner, Arrays.asList("0", "1", "2", "3", "4"));
 
     ((Spinner) view.findViewById(R.id.nailsFrontLeft)).setAdapter(adapterFront);
     ((Spinner) view.findViewById(R.id.nailsFrontRight)).setAdapter(adapterFront);
