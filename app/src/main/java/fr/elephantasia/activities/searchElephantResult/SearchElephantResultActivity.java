@@ -33,7 +33,7 @@ import static fr.elephantasia.database.model.Elephant.NAME;
 public class SearchElephantResultActivity extends AppCompatActivity {
 
   // Extra code
-  public static final String EXTRA_ELEPHANT_ID = "extra_elephant_selected";
+  public static final String EXTRA_ELEPHANT_ID = "EXTRA_ELEPHANT_ID";
 
   // View Binding
   @BindView(R.id.list_view) ListView listView;
@@ -54,7 +54,7 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     displaySearchResult();
     setListItemClickListener();
 
-    TextView title = (TextView) toolbar.findViewById(R.id.title);
+    TextView title = toolbar.findViewById(R.id.title);
     title.setText(getString(R.string.search_result));
 
     setSupportActionBar(toolbar);

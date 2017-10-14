@@ -6,14 +6,12 @@
 
   <item
     android:id="@+id/add_elephant_menu_draft"
-    android:icon="@mipmap/ic_archive_white_24dp"
-    android:title=""
+    android:title="@string/draft"
     app:showAsAction="ifRoom|collapseActionView"/>
 
   <item
     android:id="@+id/add_elephant_menu_validate"
-    android:icon="@mipmap/ic_done_white_24dp"
-    android:title=""
+    android:title="@string/save"
     app:showAsAction="ifRoom|collapseActionView"/>
 
 </menu>

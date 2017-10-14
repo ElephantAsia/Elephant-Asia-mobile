@@ -55,21 +55,5 @@
 
     </RelativeLayout>
 
-    <android.support.design.widget.FloatingActionButton
-      android:id="@+id/add_elephant_fab"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentRight="true"
-      android:layout_margin="@dimen/fab_margin"
-      android:src="@mipmap/ic_chevron_right_white_24dp"
-      app:backgroundTint="@color/primary_grey_100"
-      app:borderWidth="0dp"
-      app:elevation="0dp"
-      app:fabSize="mini"
-      app:pressedTranslationZ="12dp"
-      app:rippleColor="@color/primary_grey_100"/>
-
   </LinearLayout>
 </layout>

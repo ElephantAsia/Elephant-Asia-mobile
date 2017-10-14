@@ -41,7 +41,6 @@ public class AddParentageFragment extends Fragment {
   @BindView(R.id.father_preview) ElephantPreview fatherPreview;
   @BindView(R.id.list) ListView childrenList;
 
-
   // Attr
   private Elephant elephant;
   private AddElephantParentageFragmentBinding binding;
@@ -99,7 +98,7 @@ public class AddParentageFragment extends Fragment {
     childrenList.setAdapter(adapter);
   }
 
-  public void setMother(final String id) {
+  public void setMother(final int id) {
     Realm realm = Realm.getDefaultInstance();
     elephant.mother = realm.where(Elephant.class).equalTo(ID, id).findFirst();
     elephant.mother = realm.copyFromRealm(elephant.mother);
@@ -109,7 +108,7 @@ public class AddParentageFragment extends Fragment {
     realm.close();
   }
 
-  public void setFather(String id) {
+  public void setFather(final int id) {
     Realm realm = Realm.getDefaultInstance();
     elephant.father = realm.where(Elephant.class).equalTo(ID, id).findFirst();
     elephant.father = realm.copyFromRealm(elephant.father);
@@ -119,7 +118,7 @@ public class AddParentageFragment extends Fragment {
     realm.close();
   }
 
-  public void setChild(String id) {
+  public void setChild(final int id) {
     Realm realm = Realm.getDefaultInstance();
     Elephant child = realm.where(Elephant.class).equalTo(ID, id).findFirst();
     adapter.add(realm.copyFromRealm(child));

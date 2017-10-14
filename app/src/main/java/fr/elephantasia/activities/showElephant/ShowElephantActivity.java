@@ -2,6 +2,8 @@ package fr.elephantasia.activities.showElephant;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -16,6 +18,8 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.StackingBehavior;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +55,11 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   private Elephant elephant;
   private Realm realm;
 
+  // Icons
+  Drawable deleteIcon;
+  Drawable editIcon;
+
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -60,6 +69,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
     binding.setE(elephant);
     ButterKnife.bind(this);
 
+    initIcon();
     setSupportActionBar(toolbar);
     toolbarTitle.setText(String.format(getString(R.string.elephant_show_title), elephant.name));
     if (getSupportActionBar() != null) {
@@ -68,6 +78,13 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 
     setupViewPager(viewPager);
     tabLayout.setupWithViewPager(viewPager);
+  }
+
+  private void initIcon() {
+    deleteIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_archive)
+        .color(Color.WHITE).sizeDp(24);
+    editIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_check)
+        .color(Color.WHITE).sizeDp(24);
   }
 
   @Override
@@ -87,6 +104,8 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.show_elephant_options_menu, menu);
+    menu.findItem(R.id.edit_elephant).setIcon(editIcon);
+    menu.findItem(R.id.delete_elephant).setIcon(deleteIcon);
     return true;
   }
 

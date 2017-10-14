@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +23,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Toast;
+
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
 import org.parceler.Parcels;
 
@@ -79,26 +84,25 @@ public class AddElephantActivity extends AppCompatActivity {
   @BindView(R.id.add_elephant_fab) FloatingActionButton fab;
 
   // Fragment
-  private AddProfilFragment profilFragment;
-  private AddRegistrationFragment registrationFragment;
-  private AddContactFragment contactFragment;
-  private AddParentageFragment parentageFragment;
-  private AddDocumentFragment docFragment;
+  private AddProfilFragment profilFragment = new AddProfilFragment();
+  private AddRegistrationFragment registrationFragment = new AddRegistrationFragment();;
+  private AddContactFragment contactFragment = new AddContactFragment();
+  private AddParentageFragment parentageFragment = new AddParentageFragment();
+  private AddDocumentFragment docFragment = new AddDocumentFragment();
 
   // Attr
   private Elephant elephant = new Elephant();
-  private ViewPagerAdapter adapter;
   private PickImageDialog pickImageDialog;
   private Realm realm;
   private List<Document> documents = new ArrayList<>();
 
+  // Icons
+  Drawable draftIcon;
+  Drawable validateIcon;
+  Drawable nextStepIcon;
 
   public AddElephantActivity() {
-    profilFragment = new AddProfilFragment();
-    registrationFragment = new AddRegistrationFragment();
-    contactFragment = new AddContactFragment();
-    parentageFragment = new AddParentageFragment();
-    docFragment = new AddDocumentFragment();
+
   }
 
   // Listener binding
@@ -116,6 +120,7 @@ public class AddElephantActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.add_elephant_activity);
     ButterKnife.bind(this);
+    initIcon();
 
     rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
       @Override
@@ -140,8 +145,18 @@ public class AddElephantActivity extends AppCompatActivity {
     realm = Realm.getDefaultInstance();
   }
 
+  private void initIcon() {
+    draftIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_archive)
+        .color(Color.WHITE).sizeDp(24);
+    validateIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_check)
+        .color(Color.WHITE).sizeDp(24);
+    nextStepIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_chevron_right)
+        .color(Color.WHITE).sizeDp(24);
+    fab.setImageDrawable(nextStepIcon);
+  }
+
   private void setupViewPager(ViewPager viewPager) {
-    adapter = new ViewPagerAdapter(getSupportFragmentManager());
+    ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(profilFragment, getString(R.string.profil));
     adapter.addFragment(registrationFragment, getString(R.string.registration));
     adapter.addFragment(contactFragment, getString(R.string.contact));
@@ -186,14 +201,13 @@ public class AddElephantActivity extends AppCompatActivity {
           contactFragment.addContactTolist(contact);
           break;
         case REQUEST_MOTHER_SELECTED:
-          motherId = data.getStringExtra(EXTRA_ELEPHANT_ID);
-          parentageFragment.setMother(data.getStringExtra(EXTRA_ELEPHANT_ID));
+          parentageFragment.setMother(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
         case REQUEST_FATHER_SELECTED:
-          parentageFragment.setFather(data.getStringExtra(EXTRA_ELEPHANT_ID));
+          parentageFragment.setFather(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
         case REQUEST_CHILD_SELECTED:
-          parentageFragment.setChild(data.getStringExtra(EXTRA_ELEPHANT_ID));
+          parentageFragment.setChild(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
         case REQUEST_CAPTURE_PHOTO:
           addDocument(Uri.fromFile(ImageUtil.getCapturePhotoFile(this)));
@@ -216,6 +230,8 @@ public class AddElephantActivity extends AppCompatActivity {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.add_elephant_options_menu, menu);
+    menu.findItem(R.id.add_elephant_menu_draft).setIcon(draftIcon);
+    menu.findItem(R.id.add_elephant_menu_validate).setIcon(validateIcon);
     return true;
   }
 

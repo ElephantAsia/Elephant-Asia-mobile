@@ -2,17 +2,12 @@
 
   <string name="app_name">Elephant Asia</string>
 
-  <string name="next">next</string>
   <string name="female">Female</string>
   <string name="father">Father</string>
   <string name="mother">Mother</string>
   <string name="children">Children</string>
   <string name="add_child">Add child</string>
   <string name="male">Male</string>
-  <string name="_00_00_0000">00/00/0000</string>
-  <string name="db_number">DB Number</string>
-  <string name="mixxx">MIXXX</string>
-  <string name="legally_registered">Legally Registered</string>
   <string name="yes">Yes</string>
   <string name="no">No</string>
   <string name="elephant_birthdate">Birthdate</string>
@@ -34,8 +29,6 @@
   <string name="city">City</string>
 
   <string name="validate">Validate</string>
-  <string name="save_as_draft">Save as a draft</string>
-  <string name="cancel">Cancel</string>
   <string name="OK">OK</string>
   <string name="CANCEL">CANCEL</string>
 
@@ -49,6 +42,8 @@
   <string name="cornacs">Cornacs</string>
   <string name="vets">Vets</string>
 
+  <string name="draft">draft</string>
+  <string name="save">save</string>
 
   <string name="elephant_chip">Chip number #1</string>
   <string name="ear_tag">Ear tag</string>
@@ -89,38 +84,14 @@
   <string name="description">Description</string>
   <string name="parentage">Parentage</string>
 
-  <string name="consultations">Consultations</string>
   <string name="documents">Documents</string>
-  <string name="location">Location</string>
-
-  <string name="name_empty">Name empty</string>
-  <string name="nickname_empty">Nickname empty</string>
-  <string name="id_number_empty">ID empty</string>
-  <string name="chip_number_empty">Chip empty</string>
-  <string name="sex_empty">Sex empty</string>
-  <string name="birthdate_empty">Birthdate empty</string>
 
   <string name="search_result">Result(s)</string>
   <string name="no_item_found">No item found</string>
 
-  <string name="elephant_registration">#%s</string>
-
   <string name="not_synchronized_yet">Not synchronized yet</string>
 
   <string name="elephant_microchip">Elephant microchip</string>
-
-  <string-array name="elephant_sex">
-    <item>All</item>
-    <item>Male</item>
-    <item>Female</item>
-  </string-array>
-
-  <string-array name="search_country">
-    <item>Burma</item>
-    <item>Thailand</item>
-    <item>India</item>
-    <item>All</item>
-  </string-array>
 
   <string-array name="tusks">
     <item>None</item>
@@ -129,23 +100,7 @@
     <item>Both</item>
   </string-array>
 
-  <string-array name="weight_unit">
-    <item>kg</item>
-    <item>pounds</item>
-  </string-array>
 
-  <string-array name="height_unit">
-    <item>cm</item>
-    <item>inches</item>
-  </string-array>
-
-
-  <string-array name="location_choices">
-    <item>Set from map</item>
-    <item>Set manually</item>
-  </string-array>
-
-  <string name="elephant_consultation_title">%1$s - #%2$s</string>
   <string name="edit_elephant_title">Edit elephant - %1$s</string>
 
   <string name="tusk">Tusks</string>
@@ -166,22 +121,14 @@
   <string name="firstname">Firstname</string>
   <string name="lastname">Lastname</string>
   <string name="nickname">Nickname</string>
-  <string name="id_number">Identification number</string>
-  <string name="chip">Chip number #1</string>
-  <string name="birth_date">Birthdate</string>
-  <string name="elephantasia_db_number">Elephant Data Number (EDN)</string>
-  <string name="eartag">EARtag</string>
+  <string name="delete">delete</string>
+  <string name="edit">edit</string>
 
-  <string name="yes_enabled">Yes - Enabled</string>
-  <string name="no_disabled">No - Disabled</string>
-  <string name="delete">Delete</string>
-  <string name="comming_soon">comming soon...</string>
   <string name="date">%1$04d/%2$02d/%3$02d</string>
 
   <string name="put_drafts">Put this elephant in drafts ?</string>
 
   <string name="add_contact">Add Contact</string>
-  <string name="select_owner">Select Owner</string>
 
   <string name="add_document">Add Document</string>
   <string name="get_photo">Capture</string>
@@ -190,19 +137,13 @@
   <string name="error">Error</string>
   <string name="set_location_from_map">Set location from map ?</string>
   <string name="delete_this_elephant_from_local_db">Delete this elephant from local database ?</string>
-  <string name="add_existing_contact">Add existing contact ?</string>
   <string name="from_map">FROM MAP</string>
   <string name="manually">MANUALLY</string>
-  <string name="SEARCH">SEARCH</string>
-  <string name="CREATE">CREATE</string>
-  <string name="show_full">SHOW_FULL</string>
-  <string name="edit">EDIT</string>
   <string name="remove_contact_from_list">remove contact from list</string>
   <string name="remove_elephant_from_list">remove elephant from list</string>
+  <string name="add_elephant_to_favorite">add elephant to favorite</string>
   <string name="set_birth_location">Set birth location</string>
-  <string name="set_current_location">Set current location</string>
   <string name="set_registration_location">Set registration location</string>
   <string name="set_girth">Set girth in cm</string>
-  <string name="set_height">Set height</string>
 
 </resources>

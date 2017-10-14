@@ -34,10 +34,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignTop="@id/search_overview_photo"
-    android:layout_marginLeft="20dp"
     android:layout_marginStart="20dp"
     android:layout_toEndOf="@id/search_overview_photo"
-    android:layout_toRightOf="@id/search_overview_photo"
     android:orientation="vertical">
 
     <TextView
@@ -55,7 +53,6 @@
       android:layout_height="wrap_content"
       android:layout_marginBottom="5dp"
       android:drawablePadding="5dp"
-      android:drawableStart="@mipmap/ic_sd_storage_white_24dp"
       android:textColor="@android:color/white"
       android:textSize="16sp"/>
 
@@ -65,7 +62,6 @@
       android:layout_height="wrap_content"
       android:layout_marginBottom="5dp"
       android:drawablePadding="5dp"
-      android:drawableStart="@mipmap/ic_near_me_white_24dp"
       android:textColor="@android:color/white"
       android:textSize="16sp"/>
 
@@ -75,7 +71,6 @@
       android:layout_height="wrap_content"
       android:layout_marginBottom="5dp"
       android:drawablePadding="5dp"
-      android:drawableStart="@mipmap/ic_error_outline_white_24dp"
       android:text="@string/not_synchronized_yet"
       android:textColor="@android:color/white"
       android:textSize="16sp"
@@ -92,8 +87,7 @@
     android:layout_centerVertical="true"
     android:layout_marginEnd="20dp"
     android:background="@color/transparent"
-    android:contentDescription="@string/remove_contact_from_list"
-    android:src="@mipmap/ic_cancel_white_24dp"
+    android:contentDescription="@string/remove_elephant_from_list"
     android:visibility="gone"/>
 
   <ImageButton
@@ -104,8 +98,7 @@
     android:layout_centerVertical="true"
     android:layout_marginEnd="20dp"
     android:background="@color/transparent"
-    android:contentDescription="@string/remove_elephant_from_list"
-    android:src="@mipmap/ic_star_border_white_24dp"
+    android:contentDescription="@string/add_elephant_to_favorite"
     android:visibility="gone"/>
 
 </RelativeLayout>

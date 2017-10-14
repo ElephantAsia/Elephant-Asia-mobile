@@ -131,7 +131,7 @@ public class Elephant extends RealmObject {
    * BW =  (21.11 x G ) – 4,425
    * http://www.asianelephantresearch.com/about-elephant-health-care-p2.php
    *
-   * @param newGirth
+   * @param newGirth the new girth set
    */
   public void setWeight(String newGirth) {
 

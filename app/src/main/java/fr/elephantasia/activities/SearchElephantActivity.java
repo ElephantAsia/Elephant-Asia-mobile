@@ -77,7 +77,7 @@ public class SearchElephantActivity extends AppCompatActivity {
 
       switch (requestCode) {
         case (REQUEST_ELEPHANT_SELECTED):
-          resultIntent.putExtra(EXTRA_ELEPHANT_ID, data.getStringExtra(EXTRA_ELEPHANT_ID));
+          resultIntent.putExtra(EXTRA_ELEPHANT_ID, data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           setResult(RESULT_OK, resultIntent);
           finish();
           break;

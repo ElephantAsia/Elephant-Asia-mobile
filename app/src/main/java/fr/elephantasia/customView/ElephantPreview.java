@@ -1,6 +1,8 @@
 package fr.elephantasia.customView;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -8,9 +10,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
+import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Elephant;
 
 /**
@@ -32,23 +38,48 @@ public class ElephantPreview extends FrameLayout {
 
   public ElephantPreview(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
-    initView();
+    initView(context);
   }
 
   public ElephantPreview(Context context, AttributeSet attrs) {
     super(context, attrs);
-    initView();
+    initView(context);
   }
 
   public ElephantPreview(Context context) {
     super(context);
-    initView();
+    initView(context);
   }
 
-  private void initView() {
+  private void initView(Context context) {
     View view = inflate(getContext(), R.layout.elephant_preview, null);
     ButterKnife.bind(this, view);
+    initIcon(context);
     addView(view);
+  }
+
+  private void initIcon(Context context) {
+    favoriteButton.setImageDrawable(
+        new IconicsDrawable(context)
+        .icon(MaterialDesignIconic.Icon.gmi_favorite_outline)
+        .color(Color.WHITE).sizeDp(22));
+
+    removeButton.setImageDrawable(new IconicsDrawable(context)
+        .icon(MaterialDesignIconic.Icon.gmi_close_circle)
+        .color(Color.WHITE).sizeDp(22));
+
+    chip1.setCompoundDrawables(new IconicsDrawable(context)
+        .icon(MaterialDesignIconic.Icon.gmi_card_sd)
+        .color(Color.WHITE).sizeDp(20), null, null, null);
+
+    location.setCompoundDrawables(new IconicsDrawable(context)
+        .icon(MaterialDesignIconic.Icon.gmi_pin)
+        .color(Color.WHITE).sizeDp(20), null, null, null);
+
+    stateLocal.setCompoundDrawables(new IconicsDrawable(context)
+        .icon(MaterialDesignIconic.Icon.gmi_info_outline)
+        .color(Color.WHITE).sizeDp(20), null, null, null);
+
   }
 
   public void setElephant(Elephant elephant) {
