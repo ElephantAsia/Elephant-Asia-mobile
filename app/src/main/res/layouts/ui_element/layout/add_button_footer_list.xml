@@ -5,11 +5,12 @@
               android:orientation="vertical">
 
   <TextView
+    android:drawablePadding="10dp"
+    android:padding="10dp"
+    android:textColor="@color/primary_light"
     android:id="@+id/add_button_footer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:drawableLeft="@drawable/add"
-    android:drawableStart="@drawable/add"
     android:gravity="center_vertical"
     android:textSize="18sp"/>
 </LinearLayout>

@@ -22,7 +22,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary_grey_100">
+        android:background="@color/primary">
 
         <TextView
           android:id="@+id/title"
@@ -38,7 +38,7 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorColor="@android:color/white"
+        app:tabIndicatorColor="@color/accent"
         app:tabMode="scrollable"
         app:tabTextAppearance="@style/App_TabTextAppearance"/>
 
@@ -60,11 +60,11 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/primary_grey_100"
+        app:backgroundTint="@color/accent"
         app:elevation="0dp"
         app:fabSize="normal"
         app:pressedTranslationZ="12dp"
-        app:rippleColor="@color/primary_grey_100"/>
+        app:rippleColor="@color/accent"/>
 
     </RelativeLayout>
 

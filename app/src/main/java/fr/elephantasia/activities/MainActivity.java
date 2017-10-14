@@ -3,6 +3,7 @@ package fr.elephantasia.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.main_drawer_pic_profil) CircleImageView profilPic;
   @BindView(R.id.main_drawer) DrawerLayout drawer;
   @BindView(R.id.main_drawer_list) ListView drawerList;
+  @BindView(R.id.home_page_fab) FloatingActionButton fab;
 
   // Listeners Binding
   @OnClick(R.id.home_page_fab)
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
   // Attr
   private MainActivityDrawerListAdapter drawerListAdapter;
-  private Menu menu;
+
 
   public static int getFragment(Intent intent) {
     return intent.getIntExtra(EXTRA_FRAGMENT, FRAGMENT_HOME_PAGE);
@@ -84,8 +86,13 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.main_activity);
     ButterKnife.bind(this);
 
-    setSupportActionBar(toolbar);
 
+    fab.setImageDrawable(new IconicsDrawable(this)
+        .icon(MaterialDesignIconic.Icon.gmi_plus)
+        .color(Color.WHITE)
+        .sizeDp(24));
+
+    setSupportActionBar(toolbar);
     initActionBarDrawer();
     initActionBarDrawerList();
 

@@ -3,14 +3,19 @@ package fr.elephantasia.activities.addElephant.fragment;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,6 +91,12 @@ public class AddParentageFragment extends Fragment {
   private void setupChildrenList(LayoutInflater inflater) {
     View headerView = inflater.inflate(R.layout.add_button_footer_list, childrenList, false);
     TextView addChildButton = findById(headerView, R.id.add_button_footer);
+
+    int color = ResourcesCompat.getColor(getResources(), R.color.primary_50, null);
+    addChildButton.setCompoundDrawables(new IconicsDrawable(getActivity())
+        .icon(MaterialDesignIconic.Icon.gmi_plus)
+        .color(color).sizeDp(40), null, null, null);
+
     addChildButton.setHint(getString(R.string.add_child));
     addChildButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {

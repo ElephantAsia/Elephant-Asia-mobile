@@ -38,7 +38,7 @@
           android:height="48dp"
           android:gravity="center_vertical"
           android:text="@string/profil"
-          android:textColor="@color/burma_orange"
+          android:textColor="@color/accent"
           android:textSize="18sp"
           android:textStyle="bold"/>
 
@@ -174,7 +174,7 @@
           android:height="48dp"
           android:gravity="center_vertical"
           android:text="@string/registration"
-          android:textColor="@color/burma_orange"
+          android:textColor="@color/accent"
           android:textSize="18sp"
           android:textStyle="bold"/>
 
@@ -358,7 +358,7 @@
           android:height="48dp"
           android:gravity="center_vertical"
           android:text="@string/description"
-          android:textColor="@color/burma_orange"
+          android:textColor="@color/accent"
           android:textSize="18sp"
           android:textStyle="bold"/>
 

@@ -4,11 +4,15 @@ package fr.elephantasia.activities.editElephant.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +58,11 @@ public class EditDocumentFragment extends Fragment {
   public void setupFooter(LayoutInflater inflater) {
     View footerView = inflater.inflate(R.layout.add_document_footer, list, false);
     TextView addButton = findById(footerView, R.id.add_contact);
+
+    int color = ResourcesCompat.getColor(getResources(), R.color.primary_50, null);
+    addButton.setCompoundDrawables(new IconicsDrawable(getActivity())
+        .icon(MaterialDesignIconic.Icon.gmi_plus)
+        .color(color).sizeDp(40), null, null, null);
 
     addButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {

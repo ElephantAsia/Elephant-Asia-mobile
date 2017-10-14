@@ -143,7 +143,7 @@ public class PhotoAppsAdapter extends BaseAdapter {
     if (itemView == null) {
       itemView = inflater.inflate(R.layout.listitem_image, parentView, false);
     }
-    ImageView itemImage = (ImageView) itemView.findViewById(R.id.listitem_image);
+    ImageView itemImage = itemView.findViewById(R.id.listitem_image);
     itemImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
     if (page == 1)
       itemImage.setImageDrawable(getIcon(itemIndex));
@@ -156,9 +156,9 @@ public class PhotoAppsAdapter extends BaseAdapter {
     } else if (page == 2) {
       itemImage.setImageDrawable(getIcon(itemIndex));
     }
-    TextView itemLabel = (TextView) itemView.findViewById(R.id.listitem_label);
+    TextView itemLabel = itemView.findViewById(R.id.listitem_label);
     itemLabel.setText(getItem(itemIndex));
-    itemLabel.setTextColor(ContextCompat.getColor(context, R.color.primary_dark_100));
+    itemLabel.setTextColor(ContextCompat.getColor(context, R.color.primary));
     return itemView;
   }
 }

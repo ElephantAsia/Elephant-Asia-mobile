@@ -8,10 +8,10 @@
     android:id="@+id/add_contact"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:drawableLeft="@drawable/add"
-    android:drawableStart="@drawable/add"
+    android:drawablePadding="10dp"
     android:gravity="center_vertical"
     android:hint="@string/add_document"
+    android:padding="10dp"
     android:textSize="18sp"/>
 
 </LinearLayout>

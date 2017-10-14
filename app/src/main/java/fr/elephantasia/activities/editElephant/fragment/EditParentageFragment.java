@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,6 +92,12 @@ public class EditParentageFragment extends Fragment {
   private void setupChildrenList(LayoutInflater inflater) {
     View headerView = inflater.inflate(R.layout.add_button_footer_list, childrenList, false);
     TextView addChildButton = findById(headerView, R.id.add_button_footer);
+
+    int color = ResourcesCompat.getColor(getResources(), R.color.primary_50, null);
+    addChildButton.setCompoundDrawables(new IconicsDrawable(getActivity())
+        .icon(MaterialDesignIconic.Icon.gmi_plus)
+        .color(color).sizeDp(40), null, null, null);
+
     addChildButton.setHint(getString(R.string.add_child));
     addChildButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
@@ -100,7 +110,7 @@ public class EditParentageFragment extends Fragment {
     childrenList.setAdapter(adapter);
   }
 
-  public void setMother(final String id) {
+  public void setMother(final int id) {
     Realm realm = Realm.getDefaultInstance();
     elephant.mother = realm.where(Elephant.class).equalTo(ID, id).findFirst();
     elephant.mother = realm.copyFromRealm(elephant.mother);
@@ -110,7 +120,7 @@ public class EditParentageFragment extends Fragment {
     realm.close();
   }
 
-  public void setFather(String id) {
+  public void setFather(final int id) {
     Realm realm = Realm.getDefaultInstance();
     elephant.father = realm.where(Elephant.class).equalTo(ID, id).findFirst();
     elephant.father = realm.copyFromRealm(elephant.father);
@@ -120,7 +130,7 @@ public class EditParentageFragment extends Fragment {
     realm.close();
   }
 
-  public void setChild(String id) {
+  public void setChild(final int id) {
     Realm realm = Realm.getDefaultInstance();
     Elephant child = realm.where(Elephant.class).equalTo(ID, id).findFirst();
     adapter.add(realm.copyFromRealm(child));

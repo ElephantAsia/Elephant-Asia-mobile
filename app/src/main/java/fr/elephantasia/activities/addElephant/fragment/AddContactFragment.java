@@ -2,14 +2,19 @@ package fr.elephantasia.activities.addElephant.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +51,11 @@ public class AddContactFragment extends Fragment {
     View footerView = inflater.inflate(R.layout.add_button_footer_list, list, false);
 
     TextView addButton = findById(footerView, R.id.add_button_footer);
+    int color = ResourcesCompat.getColor(getResources(), R.color.primary_50, null);
+    addButton.setCompoundDrawables(new IconicsDrawable(getActivity())
+        .icon(MaterialDesignIconic.Icon.gmi_plus)
+        .color(color).sizeDp(40), null, null, null);
+
     addButton.setHint(getString(R.string.add_contact));
     addButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {

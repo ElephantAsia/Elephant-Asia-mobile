@@ -196,13 +196,13 @@ public class EditElephantActivity extends AppCompatActivity {
           contactFragment.addContactTolist(contact);
           break;
         case REQUEST_MOTHER_SELECTED:
-          parentageFragment.setMother(data.getStringExtra(EXTRA_ELEPHANT_ID)); // TODO: getIntExtra
+          parentageFragment.setMother(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
         case REQUEST_FATHER_SELECTED:
-          parentageFragment.setFather(data.getStringExtra(EXTRA_ELEPHANT_ID)); // TODO: getIntExtra
+          parentageFragment.setFather(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
         case REQUEST_CHILD_SELECTED:
-          parentageFragment.setChild(data.getStringExtra(EXTRA_ELEPHANT_ID)); // TODO: getIntExtra
+          parentageFragment.setChild(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
         case REQUEST_CAPTURE_PHOTO:
           addDocument(Uri.fromFile(ImageUtil.getCapturePhotoFile(this)));
