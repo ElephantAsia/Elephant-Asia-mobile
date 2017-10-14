@@ -85,4 +85,8 @@ dependencies {
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     annotationProcessor 'org.parceler:parceler:1.1.6'
+
+    //the core iconcis library (without any widgets)
+    compile "com.mikepenz:iconics-core:2.9.3@aar"
+    compile 'com.mikepenz:material-design-iconic-typeface:2.2.0.3@aar'
 }

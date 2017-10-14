@@ -1,9 +1,10 @@
 package fr.elephantasia.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +18,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.iconics.context.IconicsLayoutInflater2;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.addElephant.AddElephantActivity;
@@ -29,8 +37,6 @@ import fr.elephantasia.utils.Preferences;
 import jp.wasabeef.blurry.Blurry;
 
 public class MainActivity extends AppCompatActivity {
-
-  //TODO: refactor using view binding
 
   public static final int REQUEST_ADD_ELEPHANT = 1;
   private static final String EXTRA_FRAGMENT = "main.fragment";
@@ -44,16 +50,24 @@ public class MainActivity extends AppCompatActivity {
   private static final int FRAGMENT_OFFICIALS = 6;
   private static final int FRAGMENT_SUPPORT = 7;
   private static final int FRAGMENT_DISCONNECT = 8;
-  private ActionBarDrawerToggle toggle;
-  private DrawerLayout drawer;
 
-  private ImageView profilPicBlurred;
-  private CircleImageView profilPic;
+  // View binding
+  @BindView(R.id.toolbar) Toolbar toolbar;
+  @BindView(R.id.main_drawer_pic_profil_blurred) ImageView profilPicBlurred;
+  @BindView(R.id.main_drawer_pic_profil) CircleImageView profilPic;
+  @BindView(R.id.main_drawer) DrawerLayout drawer;
+  @BindView(R.id.main_drawer_list) ListView drawerList;
 
-  private FloatingActionButton addFab;
+  // Listeners Binding
+  @OnClick(R.id.home_page_fab)
+  public void addElephant() {
+    Intent intent = new Intent(this, AddElephantActivity.class);
+    startActivityForResult(intent, REQUEST_ADD_ELEPHANT);
+  }
 
-  private ListView drawerList;
+  // Attr
   private MainActivityDrawerListAdapter drawerListAdapter;
+  private Menu menu;
 
   public static int getFragment(Intent intent) {
     return intent.getIntExtra(EXTRA_FRAGMENT, FRAGMENT_HOME_PAGE);
@@ -63,28 +77,33 @@ public class MainActivity extends AppCompatActivity {
     intent.putExtra(EXTRA_FRAGMENT, value);
   }
 
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main_activity);
-
-    Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-    profilPicBlurred = (ImageView) findViewById(R.id.main_drawer_pic_profil_blurred);
-    profilPic = (CircleImageView) findViewById(R.id.main_drawer_pic_profil);
+    ButterKnife.bind(this);
 
     setSupportActionBar(toolbar);
 
-    drawer = (DrawerLayout) findViewById(R.id.main_drawer);
-    toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close);
-    toggle.setDrawerIndicatorEnabled(false);
-    toggle.setHomeAsUpIndicator(R.mipmap.ic_menu_white_24dp);
-    toggle.syncState();
+    initActionBarDrawer();
+    initActionBarDrawerList();
 
-    toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+    refreshFragment();
+  }
+
+  private void initActionBarDrawer() {
+    ActionBarDrawerToggle actionBarDrawer = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close);
+    actionBarDrawer.setDrawerIndicatorEnabled(false);
+    actionBarDrawer.setHomeAsUpIndicator(
+        new IconicsDrawable(this)
+            .icon(MaterialDesignIconic.Icon.gmi_menu)
+            .color(Color.WHITE)
+            .sizeDp(24));
+    actionBarDrawer.syncState();
+    actionBarDrawer.setToolbarNavigationClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
           drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -94,8 +113,9 @@ public class MainActivity extends AppCompatActivity {
         refreshProfilPicBlurred();
       }
     });
+  }
 
-    drawerList = (ListView) findViewById(R.id.main_drawer_list);
+  private void initActionBarDrawerList() {
     drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -111,22 +131,18 @@ public class MainActivity extends AppCompatActivity {
 
     drawerListAdapter = new MainActivityDrawerListAdapter(getApplicationContext());
     drawerList.setAdapter(drawerListAdapter);
-
-    addFab = (FloatingActionButton) findViewById(R.id.home_page_fab);
-    addFab.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        addElephant();
-      }
-    });
-
-    refreshFragment();
   }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.main_menu, menu);
+    menu.findItem(R.id.main_menu_search).setIcon(
+        new IconicsDrawable(this)
+            .icon(MaterialDesignIconic.Icon.gmi_search)
+            .color(Color.WHITE)
+            .sizeDp(22)
+    );
     return true;
   }
 
@@ -205,10 +221,5 @@ public class MainActivity extends AppCompatActivity {
     Intent intent = new Intent(this, LoginActivity.class);
     startActivity(intent);
     finish();
-  }
-
-  public void addElephant() {
-    Intent intent = new Intent(this, AddElephantActivity.class);
-    startActivityForResult(intent, REQUEST_ADD_ELEPHANT);
   }
 }
