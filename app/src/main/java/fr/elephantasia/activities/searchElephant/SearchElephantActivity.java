@@ -16,12 +16,12 @@ import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.SearchElephantActivityBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
 
-import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
-
 public class SearchElephantActivity extends AppCompatActivity {
 
   // Extras
   public static final String EXTRA_SEARCH_ELEPHANT = "extra_search_elephant";
+  public static final String EXTRA_ELEPHANT_ID = "EXTRA_ELEPHANT_ID";
+
 
   // Request code
   public static final int REQUEST_ELEPHANT_SELECTED = 1;

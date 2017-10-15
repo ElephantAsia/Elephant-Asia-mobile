@@ -14,8 +14,8 @@ import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.adapter.ElephantRecentAdapter;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.utils.DateHelpers;
 import io.realm.Realm;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -27,21 +27,13 @@ public class HomePageFragment extends Fragment {
   @BindView(R.id.recent_list) RecyclerView recentList;
   @BindView(R.id.no_recent_items) TextView noItemsYet;
 
-  // Attr
-  private RecyclerView.Adapter mAdapter;
-  private RecyclerView.LayoutManager mLayoutManager;
-
-  private Realm realm;
-
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
     View view = inflater.inflate(R.layout.home_page_fragment, container, false);
     ButterKnife.bind(this, view);
 
-//    recentList.setHasFixedSize(true);
-    mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-    recentList.setLayoutManager(mLayoutManager);
+    recentList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
     setLastVisitedElephant();
 
@@ -55,16 +47,16 @@ public class HomePageFragment extends Fragment {
   }
 
   public void setLastVisitedElephant() {
-    realm = Realm.getDefaultInstance();
-    RealmResults<Elephant> elephants = realm.where(Elephant.class).findAllSorted(LAST_VISITED, Sort.DESCENDING);
-    RealmResults<Elephant> elephantsall = realm.where(Elephant.class).findAll();
+    Realm realm = ((HomeActivity) getActivity()).getRealm();
+    RealmResults<Elephant> elephants = realm.where(Elephant.class)
+        .greaterThan(LAST_VISITED, DateHelpers.getLastWeek())
+        .findAllSorted(LAST_VISITED, Sort.DESCENDING);
 
     if (elephants.size() == 0) {
       noItemsYet.setVisibility(View.VISIBLE);
     } else {
       noItemsYet.setVisibility(View.GONE);
-      mAdapter = new ElephantRecentAdapter(elephants);
-      recentList.setAdapter(mAdapter);
+      recentList.setAdapter(new ElephantRecentAdapter(elephants));
     }
   }
 }

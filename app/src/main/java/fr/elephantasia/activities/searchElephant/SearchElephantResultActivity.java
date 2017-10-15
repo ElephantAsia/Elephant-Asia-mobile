@@ -23,6 +23,7 @@ import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
+import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
 import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_SEARCH_ELEPHANT;
 import static fr.elephantasia.activities.addElephant.AddElephantActivity.SELECT_ELEPHANT;
 import static fr.elephantasia.database.model.Elephant.CHIPS1;
@@ -31,9 +32,6 @@ import static fr.elephantasia.database.model.Elephant.MALE;
 import static fr.elephantasia.database.model.Elephant.NAME;
 
 public class SearchElephantResultActivity extends AppCompatActivity {
-
-  // Extra code
-  public static final String EXTRA_ELEPHANT_ID = "EXTRA_ELEPHANT_ID";
 
   // View Binding
   @BindView(R.id.list_view) ListView listView;

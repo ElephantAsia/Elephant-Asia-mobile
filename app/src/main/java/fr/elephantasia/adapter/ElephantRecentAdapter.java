@@ -8,11 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import fr.elephantasia.R;
-import fr.elephantasia.activities.searchElephant.SearchElephantResultActivity;
 import fr.elephantasia.activities.showElephant.ShowElephantActivity;
 import fr.elephantasia.database.model.Elephant;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
+
+import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
 
 /**
  * Created by seb on 15/10/2017.
@@ -20,9 +21,8 @@ import io.realm.RealmRecyclerViewAdapter;
  */
 
 public class ElephantRecentAdapter extends RealmRecyclerViewAdapter<Elephant, ElephantRecentAdapter.ViewHolder> {
-  // Extra code
-  public static final String EXTRA_ELEPHANT_ID = "EXTRA_ELEPHANT_ID";
 
+  // ViewHolder inner class
   class ViewHolder extends RecyclerView.ViewHolder {
     public View cardView;
     public TextView name;

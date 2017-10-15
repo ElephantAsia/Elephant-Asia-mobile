@@ -36,6 +36,7 @@ import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.activities.addElephant.AddElephantActivity;
 import fr.elephantasia.adapter.MainActivityDrawerListAdapter;
 import fr.elephantasia.utils.Preferences;
+import io.realm.Realm;
 import jp.wasabeef.blurry.Blurry;
 
 public class HomeActivity extends AppCompatActivity {
@@ -70,6 +71,8 @@ public class HomeActivity extends AppCompatActivity {
 
   // Attr
   private MainActivityDrawerListAdapter drawerListAdapter;
+  private Realm realm;
+
 
   public static int getFragment(Intent intent) {
     return intent.getIntExtra(EXTRA_FRAGMENT, FRAGMENT_HOME_PAGE);
@@ -96,7 +99,15 @@ public class HomeActivity extends AppCompatActivity {
     initActionBarDrawerList();
 
     refreshFragment();
+    realm = Realm.getDefaultInstance();
   }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    realm.close();
+  }
+
 
   private void initActionBarDrawer() {
     ActionBarDrawerToggle actionBarDrawer = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close);
@@ -227,5 +238,9 @@ public class HomeActivity extends AppCompatActivity {
     Intent intent = new Intent(this, LoginActivity.class);
     startActivity(intent);
     finish();
+  }
+
+  public Realm getRealm() {
+    return this.realm;
   }
 }

@@ -14,6 +14,7 @@ import io.realm.ElephantRealmProxy;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
+import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -86,6 +87,7 @@ public class Elephant extends RealmObject {
   public RealmList<Contact> contacts = new RealmList<>();
 
   // Metadata
+  @Index
   public Date lastVisited;
 
   /**
