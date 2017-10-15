@@ -6,6 +6,7 @@ import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import fr.elephantasia.database.parceler.ContactParcelConverter;
 import fr.elephantasia.database.parceler.ElephantParcelConverter;
@@ -34,6 +35,8 @@ public class Elephant extends RealmObject {
   public static final String FEMALE = "female";
   @Ignore
   public static final String REGISTRATION_LOC = "registrationLoc";
+  @Ignore
+  public static final String LAST_VISITED = "lastVisited";
 
   @PrimaryKey
   public Integer id = -1;
@@ -82,6 +85,9 @@ public class Elephant extends RealmObject {
   @ParcelPropertyConverter(ContactParcelConverter.class)
   public RealmList<Contact> contacts = new RealmList<>();
 
+  // Metadata
+  public Date lastVisited;
+
   /**
    * Used to check if an elephant should be saved as draft before
    * the end of EditElephantActivity.
@@ -105,28 +111,6 @@ public class Elephant extends RealmObject {
         && children.isEmpty();
   }
 
-  public String getSex() {
-    return male ? "Male" : "Female";
-  }
-
-  public String getHeight() {
-
-    if (!TextUtils.isEmpty(height)) {
-      return height + " " + heightUnit;
-    }
-
-    return "N/A";
-  }
-
-  public String getWeight() {
-
-    if (!TextUtils.isEmpty(weight)) {
-      return weight + " kg";
-    }
-
-    return "N/A";
-  }
-
   /**
    * BW =  (21.11 x G ) – 4,425
    * http://www.asianelephantresearch.com/about-elephant-health-care-p2.php
@@ -145,7 +129,29 @@ public class Elephant extends RealmObject {
     }
   }
 
-  public String getAge() {
+  public String getGenderText() {
+    return male ? "Male" : "Female";
+  }
+
+  public String getHeightText() {
+
+    if (!TextUtils.isEmpty(height)) {
+      return height + " " + heightUnit;
+    }
+
+    return "N/A";
+  }
+
+  public String getWeightText() {
+
+    if (!TextUtils.isEmpty(weight)) {
+      return weight + " kg";
+    }
+
+    return "N/A";
+  }
+
+  public String getAgeText() {
     String res = null;
 
     if (!TextUtils.isEmpty(birthDate)) {
@@ -154,5 +160,25 @@ public class Elephant extends RealmObject {
       res = age.toString();
     }
     return res;
+  }
+
+  public String getRegIDText() {
+    if (!TextUtils.isEmpty(regID)) {
+      return regID;
+    }
+    return "N/A";
+  }
+
+  public String getStateText() {
+    if (state.pending) {
+      return "sync pending";
+    } else if (state.draft) {
+      return "draft";
+    } else if (state.local) {
+      return "not sync";
+    } else if (state.refused) {
+      return "sync refused";
+    }
+    return "synced";
   }
 }

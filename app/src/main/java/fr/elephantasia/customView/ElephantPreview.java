@@ -2,7 +2,6 @@ package fr.elephantasia.customView;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
-import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Elephant;
 
 /**
@@ -115,10 +113,10 @@ public class ElephantPreview extends FrameLayout {
 
 
   private String formatProfil() {
-    String res = elephant.name + ", " + elephant.getSex() + ", ";
+    String res = elephant.name + ", " + elephant.getGenderText() + ", ";
 
     if (!TextUtils.isEmpty(elephant.birthDate)) {
-      res += elephant.getAge() + " y/o";
+      res += elephant.getAgeText() + " y/o";
     } else {
       res += "Age N/A";
     }

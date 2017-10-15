@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.searchElephantResult;
+package fr.elephantasia.activities.searchElephant;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +23,7 @@ import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
-import static fr.elephantasia.activities.SearchElephantActivity.EXTRA_SEARCH_ELEPHANT;
+import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_SEARCH_ELEPHANT;
 import static fr.elephantasia.activities.addElephant.AddElephantActivity.SELECT_ELEPHANT;
 import static fr.elephantasia.database.model.Elephant.CHIPS1;
 import static fr.elephantasia.database.model.Elephant.FEMALE;

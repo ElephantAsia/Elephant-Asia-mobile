@@ -3,7 +3,6 @@ package fr.elephantasia.activities.addElephant.fragment;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
@@ -21,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.SearchElephantActivity;
+import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.activities.addElephant.AddElephantActivity;
 import fr.elephantasia.adapter.ElephantPreviewAdapter;
 import fr.elephantasia.customView.ElephantPreview;

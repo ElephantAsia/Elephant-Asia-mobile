@@ -1,9 +1,6 @@
 package fr.elephantasia.activities.addElephant.fragment;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,12 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
-
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
-
-import java.io.IOException;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +17,7 @@ import fr.elephantasia.activities.addElephant.AddElephantActivity;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.AddElephantProfilFragmentBinding;
 import fr.elephantasia.dialogs.LocationInputDialog;
-import fr.elephantasia.fragment.DatePickerFragment;
+import fr.elephantasia.dialogs.DatePickerDialog;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 public class AddProfilFragment extends Fragment {
@@ -49,8 +40,8 @@ public class AddProfilFragment extends Fragment {
 
   @OnClick(R.id.birthDate)
   public void showDatePicker(final EditText editText) {
-    DatePickerFragment dialog = new DatePickerFragment();
-    dialog.setListener(new DatePickerFragment.Listener() {
+    DatePickerDialog dialog = new DatePickerDialog();
+    dialog.setListener(new DatePickerDialog.Listener() {
       @Override
       public void onDateSet(int year, int month, int dayOfMonth) {
         editText.setText(getString(R.string.date, year, month, dayOfMonth));

@@ -14,9 +14,9 @@ import java.util.List;
 
 import fr.elephantasia.AsyncTasks.LoadBitmapAsyncTask;
 import fr.elephantasia.R;
-import fr.elephantasia.customView.RoundedImageView;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.refactor.interfaces.LoadBitmapInterface;
+import fr.elephantasia.customView.RoundedImageView;
 
 public class DocumentAdapter extends ArrayAdapter<Document> {
 
@@ -59,7 +59,7 @@ public class DocumentAdapter extends ArrayAdapter<Document> {
   }
 
   private void refreshImage(View view, final Document document) {
-    final RoundedImageView image = (RoundedImageView) view.findViewById(R.id.document_image);
+    final RoundedImageView image = view.findViewById(R.id.document_image);
 
     image.setImageResource(R.drawable.placeholder);
     image.setOnClickListener(null);

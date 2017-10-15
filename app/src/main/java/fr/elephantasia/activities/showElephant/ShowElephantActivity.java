@@ -31,17 +31,18 @@ import fr.elephantasia.activities.showElephant.fragment.ShowOverviewFragment;
 import fr.elephantasia.activities.showElephant.fragment.ShowParentageFragment;
 import fr.elephantasia.adapter.DocumentAdapter;
 import fr.elephantasia.adapter.ViewPagerAdapter;
+import fr.elephantasia.database.RealmDB;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ShowElephantActivityBinding;
 import io.realm.Realm;
 
-import static fr.elephantasia.activities.searchElephantResult.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
+import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
 import static fr.elephantasia.database.model.Elephant.ID;
 
 public class ShowElephantActivity extends AppCompatActivity implements DocumentAdapter.Listener {
 
-  public static final String EXTRA_EDIT_ELEPHANT_ID = "extra_edit_elephant_id";
+  public static final String EXTRA_EDIT_ELEPHANT_ID = "EXTRA_EDIT_ELEPHANT_ID";
   private static final int REQUEST_ELEPHANT_EDITED = 0;
 
   // View Binding
@@ -66,6 +67,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
     ShowElephantActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.show_elephant_activity);
     realm = Realm.getDefaultInstance();
     elephant = getExtraElephant();
+    RealmDB.updateLastVisitedDate(elephant.id);
     binding.setE(elephant);
     ButterKnife.bind(this);
 
@@ -81,9 +83,9 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   }
 
   private void initIcon() {
-    deleteIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_archive)
+    deleteIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_delete)
         .color(Color.WHITE).sizeDp(24);
-    editIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_check)
+    editIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_edit)
         .color(Color.WHITE).sizeDp(24);
   }
 

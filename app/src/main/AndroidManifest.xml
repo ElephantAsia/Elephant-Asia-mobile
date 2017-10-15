@@ -24,11 +24,11 @@
         </activity>
         <activity android:name=".activities.addElephant.AddElephantActivity"/>
         <activity android:name=".activities.LoginActivity"/>
-        <activity android:name=".activities.MainActivity"/>
-        <activity android:name=".activities.SearchElephantActivity"/>
+        <activity android:name=".activities.home.HomeActivity"/>
+        <activity android:name=".activities.searchElephant.SearchElephantActivity"/>
         <activity android:name=".activities.SearchContactActivity"/>
         <activity android:name=".activities.SearchContactResultActivity"/>
-        <activity android:name=".activities.searchElephantResult.SearchElephantResultActivity"/>
+        <activity android:name=".activities.searchElephant.SearchElephantResultActivity"/>
         <activity android:name=".activities.AddContactActivity"/>
         <activity android:name=".activities.showElephant.ShowElephantActivity"/>
         <activity android:name=".activities.showDocument.ShowDocumentActivity" />

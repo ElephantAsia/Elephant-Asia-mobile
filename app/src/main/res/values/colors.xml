@@ -4,8 +4,6 @@
   <color name="primary">#303030</color>
   <color name="primary_dark">#070707</color>
   <color name="primary_light">#595959</color>
-
-  <!--TODO: improve accent and secondary color-->
   <color name="accent">#C1864E</color>
   <color name="primary_text">#bf070707</color>
   <color name="secondary_text">#ffffff</color>

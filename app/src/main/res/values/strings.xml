@@ -43,7 +43,9 @@
   <string name="vets">Vets</string>
 
   <string name="draft">draft</string>
+  <string name="Draft">Draft</string>
   <string name="save">save</string>
+  <string name="no_recent_item">no recent items</string>
 
   <string name="elephant_chip">Chip number #1</string>
   <string name="ear_tag">Ear tag</string>
@@ -123,6 +125,7 @@
   <string name="nickname">Nickname</string>
   <string name="delete">delete</string>
   <string name="edit">edit</string>
+  <string name="recent">Recent</string>
 
   <string name="date">%1$04d/%2$02d/%3$02d</string>
 

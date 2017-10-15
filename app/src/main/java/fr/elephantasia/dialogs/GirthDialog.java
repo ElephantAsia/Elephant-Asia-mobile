@@ -60,7 +60,7 @@ public class GirthDialog {
             if (elephant.girth != null) {
               String res = elephant.girth.isEmpty() ? "" : elephant.girth + " cm";
               elephant.setWeight(elephant.girth);
-              weightView.setText(elephant.getWeight());
+              weightView.setText(elephant.getWeightText());
               girthView.setText(res);
             }
 

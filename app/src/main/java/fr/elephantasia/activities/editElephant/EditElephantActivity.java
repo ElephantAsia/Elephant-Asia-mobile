@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +24,9 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
 import org.parceler.Parcels;
 
@@ -51,7 +56,7 @@ import fr.elephantasia.utils.KeyboardHelpers;
 import io.realm.Realm;
 
 import static fr.elephantasia.activities.SearchContactActivity.EXTRA_SEARCH_CONTACT;
-import static fr.elephantasia.activities.searchElephantResult.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
+import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
 import static fr.elephantasia.activities.showElephant.ShowElephantActivity.EXTRA_EDIT_ELEPHANT_ID;
 import static fr.elephantasia.database.model.Elephant.ID;
 
@@ -91,6 +96,11 @@ public class EditElephantActivity extends AppCompatActivity {
   private PickImageDialog pickImageDialog;
   private Realm realm;
   private List<Document> documents = new ArrayList<>();
+
+  // Icons
+  Drawable draftIcon;
+  Drawable validateIcon;
+  Drawable nextStepIcon;
 
   public EditElephantActivity() {
     profilFragment = new EditProfilFragment();
@@ -134,19 +144,28 @@ public class EditElephantActivity extends AppCompatActivity {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    initIcon();
+
     setupViewPager(viewPager);
     tabLayout.setupWithViewPager(viewPager);
     realm = Realm.getDefaultInstance();
 
-    Integer id = getIntent().getIntExtra(EXTRA_EDIT_ELEPHANT_ID, -1);
-		if (id == -1) {
-			throw new RuntimeException("EditElephantActivity:141: incorrect ID");
-		}
+    int id = getIntent().getIntExtra(EXTRA_EDIT_ELEPHANT_ID, -1);
     elephant = realm.copyFromRealm(realm.where(Elephant.class).equalTo(ID, id).findFirst());
-		documents = realm.copyFromRealm(realm.where(Document.class).equalTo(Document.ELEPHANT_ID, id).findAll());
+    documents = realm.copyFromRealm(realm.where(Document.class).equalTo(Document.ELEPHANT_ID, id).findAll());
 
     toolbarTitle.setText(String.format(getString(R.string.edit_elephant_title), elephant.name));
-		docFragment.addDocuments(documents);
+    docFragment.addDocuments(documents);
+  }
+
+  private void initIcon() {
+    draftIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_archive)
+        .color(Color.WHITE).sizeDp(24);
+    validateIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_check)
+        .color(Color.WHITE).sizeDp(24);
+    nextStepIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_chevron_right)
+        .color(Color.WHITE).sizeDp(24);
+    fab.setImageDrawable(nextStepIcon);
   }
 
   private void setupViewPager(ViewPager viewPager) {
@@ -225,6 +244,8 @@ public class EditElephantActivity extends AppCompatActivity {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.add_elephant_options_menu, menu);
+    menu.findItem(R.id.add_elephant_menu_draft).setIcon(draftIcon);
+    menu.findItem(R.id.add_elephant_menu_validate).setIcon(validateIcon);
     return true;
   }
 

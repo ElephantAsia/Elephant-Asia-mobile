@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import fr.elephantasia.R;
+import fr.elephantasia.activities.home.HomeActivity;
 import fr.elephantasia.utils.KeyboardHelpers;
 import fr.elephantasia.utils.Preferences;
 
@@ -30,9 +31,9 @@ public class LoginActivity extends AppCompatActivity {
       getSupportActionBar().hide();
     }
 
-    mButton = (Button) findViewById(R.id.login_button);
-    mUsernameEditText = (EditText) findViewById(R.id.login_id);
-    mPasswordEditText = (EditText) findViewById(R.id.login_pwd);
+    mButton = findViewById(R.id.login_button);
+    mUsernameEditText = findViewById(R.id.login_id);
+    mPasswordEditText = findViewById(R.id.login_pwd);
 
     mUsernameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
       @Override
@@ -88,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
       Preferences.setUsername(getApplicationContext(), mUsernameEditText.getText().toString());
       Preferences.setPassword(getApplicationContext(), mPasswordEditText.getText().toString());
 
-      Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+      Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
       LoginActivity.this.startActivity(intent);
       LoginActivity.this.finish();
 

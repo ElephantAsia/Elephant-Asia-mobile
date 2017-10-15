@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.SearchElephantActivity;
+import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.activities.editElephant.EditElephantActivity;
 import fr.elephantasia.adapter.ElephantPreviewAdapter;
 import fr.elephantasia.customView.ElephantPreview;

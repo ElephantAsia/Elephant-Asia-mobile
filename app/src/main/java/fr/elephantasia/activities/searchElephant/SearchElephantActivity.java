@@ -1,4 +1,4 @@
-package fr.elephantasia.activities;
+package fr.elephantasia.activities.searchElephant;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -12,12 +12,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.searchElephantResult.SearchElephantResultActivity;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.SearchElephantActivityBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
 
-import static fr.elephantasia.activities.searchElephantResult.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
+import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
 
 public class SearchElephantActivity extends AppCompatActivity {
 

@@ -55,7 +55,7 @@ import fr.elephantasia.utils.KeyboardHelpers;
 import io.realm.Realm;
 
 import static fr.elephantasia.activities.SearchContactActivity.EXTRA_SEARCH_CONTACT;
-import static fr.elephantasia.activities.searchElephantResult.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
+import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.EXTRA_ELEPHANT_ID;
 
 public class AddElephantActivity extends AppCompatActivity {
 

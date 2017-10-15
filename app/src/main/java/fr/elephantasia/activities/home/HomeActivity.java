@@ -1,4 +1,4 @@
-package fr.elephantasia.activities;
+package fr.elephantasia.activities.home;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -31,13 +31,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.LoginActivity;
+import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.activities.addElephant.AddElephantActivity;
 import fr.elephantasia.adapter.MainActivityDrawerListAdapter;
-import fr.elephantasia.fragment.HomePageFragment;
 import fr.elephantasia.utils.Preferences;
 import jp.wasabeef.blurry.Blurry;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
   public static final int REQUEST_ADD_ELEPHANT = 1;
   private static final String EXTRA_FRAGMENT = "main.fragment";
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
   // Attr
   private MainActivityDrawerListAdapter drawerListAdapter;
 
-
   public static int getFragment(Intent intent) {
     return intent.getIntExtra(EXTRA_FRAGMENT, FRAGMENT_HOME_PAGE);
   }
@@ -83,9 +83,8 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.main_activity);
+    setContentView(R.layout.home_activity);
     ButterKnife.bind(this);
-
 
     fab.setImageDrawable(new IconicsDrawable(this)
         .icon(MaterialDesignIconic.Icon.gmi_plus)
@@ -192,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
           @Override
           public void run() {
             try {
-              Blurry.with(MainActivity.this).radius(25).sampling(2).capture(profilPic).into(profilPicBlurred);
+              Blurry.with(HomeActivity.this).radius(25).sampling(2).capture(profilPic).into(profilPicBlurred);
             } catch (Exception e) {
               e.printStackTrace();
             }

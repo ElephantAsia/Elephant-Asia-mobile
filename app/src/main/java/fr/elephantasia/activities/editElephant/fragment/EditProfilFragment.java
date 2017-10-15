@@ -18,7 +18,7 @@ import fr.elephantasia.activities.editElephant.EditElephantActivity;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.AddElephantProfilFragmentBinding;
 import fr.elephantasia.dialogs.LocationInputDialog;
-import fr.elephantasia.fragment.DatePickerFragment;
+import fr.elephantasia.dialogs.DatePickerDialog;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 public class EditProfilFragment extends Fragment {
@@ -41,8 +41,8 @@ public class EditProfilFragment extends Fragment {
 
   @OnClick(R.id.birthDate)
   public void showDatePicker(final EditText editText) {
-    DatePickerFragment dialog = new DatePickerFragment();
-    dialog.setListener(new DatePickerFragment.Listener() {
+    DatePickerDialog dialog = new DatePickerDialog();
+    dialog.setListener(new DatePickerDialog.Listener() {
       @Override
       public void onDateSet(int year, int month, int dayOfMonth) {
         editText.setText(getString(R.string.date, year, month, dayOfMonth));

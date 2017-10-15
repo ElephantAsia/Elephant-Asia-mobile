@@ -15,4 +15,5 @@ public class ElephantState extends RealmObject {
   public boolean deleted = false;
   public boolean local = false;
   public boolean draft = false;
+  public boolean refused = false;
 }

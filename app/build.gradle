@@ -27,7 +27,8 @@ android {
                     'src/main/res/layouts/add_elephant',
                     'src/main/res/layouts/custom_view',
                     'src/main/res/layouts/dialogs',
-                    'src/main/res/layouts/main',
+                    'src/main/res/layouts/home',
+                    'src/main/res/layouts/login',
                     'src/main/res/layouts/refactor',
                     'src/main/res/layouts/search_contact',
                     'src/main/res/layouts/search_elephant',
@@ -59,6 +60,7 @@ dependencies {
     compile 'com.android.support:support-v4:26.0.1'
     compile 'com.android.support:palette-v7:26.0.1'
     compile 'com.android.support:recyclerview-v7:26.0.1'
+    compile 'com.android.support:cardview-v7:26.0.1'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 

@@ -106,7 +106,7 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{e.getSex()}"
+            android:text="@{e.getGenderText()}"
             android:textColor="@android:color/black"
             android:textSize="18sp"/>
 
@@ -403,7 +403,7 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{e.getHeight()}"
+            android:text="@{e.getHeightText()}"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             />
@@ -428,7 +428,7 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{e.getWeight()}"
+            android:text="@{e.getWeightText()}"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             />
