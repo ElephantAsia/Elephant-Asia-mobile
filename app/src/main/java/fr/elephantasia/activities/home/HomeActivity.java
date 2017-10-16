@@ -225,7 +225,7 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   private void setHomePageFragment() {
-    HomePageFragment fragment = new HomePageFragment();
+    HomePageRecentFragment fragment = new HomePageRecentFragment();
     Bundle args = new Bundle();
     fragment.setArguments(args);
     getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fragment).commit();

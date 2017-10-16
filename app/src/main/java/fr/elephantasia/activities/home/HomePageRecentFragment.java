@@ -21,7 +21,7 @@ import io.realm.Sort;
 
 import static fr.elephantasia.database.model.Elephant.LAST_VISITED;
 
-public class HomePageFragment extends Fragment {
+public class HomePageRecentFragment extends Fragment {
 
   // View binding
   @BindView(R.id.recent_list) RecyclerView recentList;
@@ -30,7 +30,7 @@ public class HomePageFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-    View view = inflater.inflate(R.layout.home_page_fragment, container, false);
+    View view = inflater.inflate(R.layout.home_page_recent_fragment, container, false);
     ButterKnife.bind(this, view);
 
     recentList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
