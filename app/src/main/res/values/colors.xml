@@ -10,6 +10,26 @@
   <color name="icons">#FFFFFF</color>
   <color name="divider">#8d5923</color>
 
+  <!-- Material design primary color -->
+  <color name="md_red">#F44336</color>
+  <color name="md_pink">#E91E63</color>
+  <color name="md_purple">#9C27B0</color>
+  <color name="md_indigo">#3F51B5</color>
+  <color name="md_blue">#2196F3</color>
+  <color name="md_light_blue">#03A9F4</color>
+  <color name="md_cyan">#00BCD4</color>
+  <color name="md_teal">#009688</color>
+  <color name="md_green">#4CAF50</color>
+  <color name="md_light_green">#8BC34A</color>
+  <color name="md_lime">#CDDC39</color>
+  <color name="md_yellow">#FFEB3B</color>
+  <color name="md_amber">#FFC107</color>
+  <color name="md_orange">#FF9800</color>
+  <color name="md_deep_orange">#FF5722</color>
+  <color name="md_brown">#795548</color>
+  <color name="md_grey">#9E9E9E</color>
+
+
 
   <!-- TODO: try to clean useless color -->
   <color name="primary_75">#bf303030</color>

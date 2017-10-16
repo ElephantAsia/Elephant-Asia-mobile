@@ -27,6 +27,16 @@ public class Elephant extends RealmObject {
   @Ignore
   public static final String ID = "id";
   @Ignore
+  public static final String STATE_DRAFT = "state.draft";
+  @Ignore
+  public static final String STATE_PENDING = "state.pending";
+  @Ignore
+  public static final String STATE_DELETED = "state.deleted";
+  @Ignore
+  public static final String STATE_LOCAL = "state.local";
+  @Ignore
+  public static final String STATE_REFUSED = "state.refused";
+  @Ignore
   public static final String NAME = "name";
   @Ignore
   public static final String CHIPS1 = "chips1";
@@ -38,6 +48,7 @@ public class Elephant extends RealmObject {
   public static final String REGISTRATION_LOC = "registrationLoc";
   @Ignore
   public static final String LAST_VISITED = "lastVisited";
+
 
   @PrimaryKey
   public Integer id = -1;

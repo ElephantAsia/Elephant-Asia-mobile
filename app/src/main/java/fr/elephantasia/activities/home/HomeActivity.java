@@ -225,10 +225,13 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   private void setHomePageFragment() {
-    HomePageRecentFragment fragment = new HomePageRecentFragment();
-    Bundle args = new Bundle();
-    fragment.setArguments(args);
-    getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fragment).commit();
+    HomePageRecentFragment recentFragment = new HomePageRecentFragment();
+    recentFragment.setArguments(new Bundle());
+    getSupportFragmentManager().beginTransaction().replace(R.id.recent_fragment, recentFragment).commit();
+
+    HomePageDataFragment fragment = new HomePageDataFragment();
+    fragment.setArguments(new Bundle());
+    getSupportFragmentManager().beginTransaction().replace(R.id.data_fragment, fragment).commit();
   }
 
   private void setDisconnectFragment() {
