@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.database.model.Elephant.StateValue;
 
 /**
  * Created by seb on 27/05/2017.
@@ -88,7 +89,7 @@ public class ElephantPreview extends FrameLayout {
       chip1.setText(formatChip());
       location.setText(elephant.currentLoc.format());
 
-      if (elephant.state.local || elephant.state.draft) {
+      if (elephant.state.equals(StateValue.draft.name()) || elephant.state.equals(StateValue.saved.name())) {
         stateLocal.setVisibility(View.VISIBLE);
       }
     }

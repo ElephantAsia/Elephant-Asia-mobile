@@ -43,6 +43,4 @@ public class ShowParentageFragment extends Fragment {
     ViewHelpers.extendListView(children);
     return (view);
   }
-
-
 }

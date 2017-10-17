@@ -27,15 +27,7 @@ public class Elephant extends RealmObject {
   @Ignore
   public static final String ID = "id";
   @Ignore
-  public static final String STATE_DRAFT = "state.draft";
-  @Ignore
-  public static final String STATE_PENDING = "state.pending";
-  @Ignore
-  public static final String STATE_DELETED = "state.deleted";
-  @Ignore
-  public static final String STATE_LOCAL = "state.local";
-  @Ignore
-  public static final String STATE_REFUSED = "state.refused";
+  public static final String STATE = "state";
   @Ignore
   public static final String NAME = "name";
   @Ignore
@@ -45,14 +37,24 @@ public class Elephant extends RealmObject {
   @Ignore
   public static final String FEMALE = "female";
   @Ignore
-  public static final String REGISTRATION_LOC = "registrationLoc";
-  @Ignore
   public static final String LAST_VISITED = "lastVisited";
 
 
+  public enum StateValue {
+    draft, // saved locally as draft
+    saved, // saved locally
+    modified, // elephant sync from server modified
+    pending, // creation / modification wating for approval
+    rejected, // creation / modification rejected
+    validated, // creation / modification accepted,
+    synced, // elephant unchanged from server
+    deleted // elephant synced from server deleted locally
+  }
+
   @PrimaryKey
   public Integer id = -1;
-  public ElephantState state = new ElephantState();
+  // State possible values are detailled in StateValue enum
+  public String state;
 
   //Profil
   public String name;
@@ -183,14 +185,20 @@ public class Elephant extends RealmObject {
   }
 
   public String getStateText() {
-    if (state.pending) {
-      return "sync pending";
-    } else if (state.draft) {
-      return "draft";
-    } else if (state.local) {
-      return "not sync";
-    } else if (state.refused) {
-      return "sync refused";
+    if (state.equals(StateValue.draft.name())) {
+      return StateValue.draft.name();
+    } else if (state.equals(StateValue.saved.name())) {
+      return StateValue.saved.name();
+    } else if (state.equals(StateValue.modified.name())) {
+      return StateValue.modified.name();
+    } else if (state.equals(StateValue.pending.name())) {
+      return StateValue.pending.name();
+    } else if (state.equals(StateValue.rejected.name())) {
+      return StateValue.rejected.name();
+    } else if (state.equals(StateValue.validated.name())) {
+      return StateValue.validated.name();
+    } else if (state.equals(StateValue.deleted.name())) {
+      return StateValue.deleted.name();
     }
     return "synced";
   }

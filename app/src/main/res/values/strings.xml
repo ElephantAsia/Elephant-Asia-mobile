@@ -42,8 +42,8 @@
   <string name="cornacs">Cornacs</string>
   <string name="vets">Vets</string>
 
+  <string name="saved">saved</string>
   <string name="pending">pending</string>
-  <string name="rejected">rejected</string>
   <string name="total">total</string>
   <string name="draft">draft</string>
   <string name="drafts">drafts</string>

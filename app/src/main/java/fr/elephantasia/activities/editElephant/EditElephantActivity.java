@@ -49,6 +49,7 @@ import fr.elephantasia.database.RealmDB;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.database.model.Elephant.StateValue;
 import fr.elephantasia.dialogs.PickImageDialog;
 import fr.elephantasia.dialogs.PickImageDialogBuilder;
 import fr.elephantasia.utils.ImageUtil;
@@ -252,13 +253,13 @@ public class EditElephantActivity extends AppCompatActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.add_elephant_menu_draft && checkMandatoryFields()) {
-      elephant.state.draft = true;
+      elephant.state = StateValue.draft.name();
       saveToDb();
 			setResult(RESULT_OK);
       finish();
       return true;
     } else if (item.getItemId() == R.id.add_elephant_menu_validate && checkMandatoryFields()) {
-      elephant.state.local = true;
+      elephant.state = StateValue.saved.name();
       saveToDb();
 			setResult(RESULT_OK);
       finish();
@@ -313,7 +314,7 @@ public class EditElephantActivity extends AppCompatActivity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						if (checkMandatoryFields()) {
-							elephant.state.draft = true;
+							elephant.state = StateValue.draft.name();
 							saveToDb();
 							setResult(RESULT_DRAFT);
 							finish();
