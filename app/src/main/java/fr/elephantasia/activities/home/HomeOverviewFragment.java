@@ -51,7 +51,7 @@ public class HomeOverviewFragment extends Fragment {
 
     pendingIcon.setImageDrawable(new IconicsDrawable(getContext()).
         icon(MaterialDesignIconic.Icon.gmi_refresh_sync)
-        .color(ContextCompat.getColor(getContext(), R.color.md_blue_grey)).sizeDp(42)
+        .color(ContextCompat.getColor(getContext(), R.color.md_light_blue)).sizeDp(42)
     );
 
     draftIcon.setImageDrawable(new IconicsDrawable(getContext()).

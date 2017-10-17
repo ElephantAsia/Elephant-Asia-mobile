@@ -1,104 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<android.support.v7.widget.CardView
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
-  android:layout_height="140dp"
-  android:descendantFocusability="blocksDescendants"
-  android:paddingEnd="5dp"
-  android:paddingLeft="5dp"
-  android:paddingRight="5dp"
-  android:paddingStart="5dp"
-  android:paddingTop="5dp"
-  android:theme="@style/AppThemeWhiteBackground">
-
-  <ImageView
-    android:id="@+id/search_overview_background"
-    android:layout_width="match_parent"
-    android:layout_height="140dp"
-    android:contentDescription="@null"
-    android:scaleType="centerCrop"
-    android:src="@mipmap/stripe"/>
-
-  <de.hdodenhof.circleimageview.CircleImageView
-    android:id="@+id/search_overview_photo"
-    android:layout_width="100dp"
-    android:layout_height="100dp"
-    android:layout_marginStart="17dp"
-    android:layout_marginTop="17dp"
-    android:contentDescription="@null"
-    android:src="@mipmap/elephant"/>
-
+  android:layout_height="wrap_content"
+  android:layout_margin="5dp"
+  android:clickable="true"
+  android:foreground="?android:attr/selectableItemBackground"
+  android:padding="10dp"
+  app:cardCornerRadius="4dp"
+  app:cardUseCompatPadding="true"
+  >
 
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignTop="@id/search_overview_photo"
-    android:layout_marginStart="20dp"
-    android:layout_toEndOf="@id/search_overview_photo"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
-    <TextView
-      android:id="@+id/profil"
-      android:layout_width="wrap_content"
+    <!--<ImageView-->
+      <!--android:layout_width="wrap_content"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:layout_gravity="start"-->
+      <!--android:adjustViewBounds="true"-->
+      <!--android:contentDescription="@null"-->
+      <!--android:scaleType="centerCrop"-->
+      <!--android:src="@mipmap/elephant_placeholder"/>-->
+
+
+    <LinearLayout
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="5dp"
-      android:textColor="@android:color/white"
-      android:textSize="16sp"
-      android:textStyle="bold"/>
+      android:orientation="vertical">
 
-    <TextView
-      android:id="@+id/chip1"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="5dp"
-      android:drawablePadding="5dp"
-      android:textColor="@android:color/white"
-      android:textSize="16sp"/>
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/accent"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-    <TextView
-      android:id="@+id/location"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="5dp"
-      android:drawablePadding="5dp"
-      android:textColor="@android:color/white"
-      android:textSize="16sp"/>
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Whun"
+          android:textSize="24sp"
+          android:textStyle="bold"/>
 
-    <TextView
-      android:id="@+id/state_local"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="5dp"
-      android:drawablePadding="5dp"
-      android:text="@string/not_synchronized_yet"
-      android:textColor="@android:color/white"
-      android:textSize="16sp"
-      android:visibility="gone"/>
+        <TextView
+          android:id="@+id/profil"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text=", Male"
+          android:textSize="16sp"
+          android:textStyle="bold"/>
+      </LinearLayout>
 
+    </LinearLayout>
+
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:text="49ans"
+        android:textColor="@color/primary"/>
+
+      <TextView
+        android:id="@+id/state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:text="Synced"
+        android:textColor="@color/primary"/>
+
+      <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:text="Iguazu"
+        android:textColor="@color/primary"/>
+
+      <TextView
+        android:id="@+id/chip1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="5dp"
+        android:text="3dawd1adwa321321"
+        android:textColor="@color/primary"/>
 
   </LinearLayout>
 
-  <ImageButton
-    android:id="@+id/remove_elephant"
-    android:layout_width="20dp"
-    android:layout_height="20dp"
-    android:layout_alignParentEnd="true"
-    android:layout_centerVertical="true"
-    android:layout_marginEnd="20dp"
-    android:background="@color/transparent"
-    android:contentDescription="@string/remove_elephant_from_list"
-    android:visibility="gone"/>
-
-  <ImageButton
-    android:id="@+id/favorite_elephant_off"
-    android:layout_width="20dp"
-    android:layout_height="20dp"
-    android:layout_alignParentEnd="true"
-    android:layout_centerVertical="true"
-    android:layout_marginEnd="20dp"
-    android:background="@color/transparent"
-    android:contentDescription="@string/add_elephant_to_favorite"
-    android:visibility="gone"/>
-
-</RelativeLayout>
+</android.support.v7.widget.CardView>

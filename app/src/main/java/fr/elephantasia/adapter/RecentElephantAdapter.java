@@ -20,7 +20,7 @@ import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.E
  * https://github.com/realm/realm-android-adapters/blob/master/example/src/main/java/io/realm/examples/adapters/ui/recyclerview/MyRecyclerViewAdapter.java
  */
 
-public class ElephantRecentAdapter extends RealmRecyclerViewAdapter<Elephant, ElephantRecentAdapter.ViewHolder> {
+public class RecentElephantAdapter extends RealmRecyclerViewAdapter<Elephant, RecentElephantAdapter.ViewHolder> {
 
   // ViewHolder inner class
   class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,13 +51,13 @@ public class ElephantRecentAdapter extends RealmRecyclerViewAdapter<Elephant, El
     }
   }
 
-  public ElephantRecentAdapter(OrderedRealmCollection<Elephant> elephants) {
+  public RecentElephantAdapter(OrderedRealmCollection<Elephant> elephants) {
     super(elephants, true);
     setHasStableIds(true);
   }
 
   @Override
-  public ElephantRecentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  public RecentElephantAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.elephant_recent_card, parent, false);
 
     ViewHolder vh = new ViewHolder(v);

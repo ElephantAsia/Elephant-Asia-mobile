@@ -28,9 +28,9 @@ public class ElephantPreview extends FrameLayout {
   @BindView(R.id.profil) TextView profil;
   @BindView(R.id.chip1) TextView chip1;
   @BindView(R.id.location) TextView location;
-  @BindView(R.id.state_local) TextView stateLocal;
-  @BindView(R.id.remove_elephant) ImageButton removeButton;
-  @BindView(R.id.favorite_elephant_off) ImageButton favoriteButton;
+  @BindView(R.id.state) TextView stateLocal;
+//  @BindView(R.id.remove_elephant) ImageButton removeButton;
+//  @BindView(R.id.favorite_elephant_off) ImageButton favoriteButton;
 
   // Attr
   private Elephant elephant;
@@ -58,14 +58,14 @@ public class ElephantPreview extends FrameLayout {
   }
 
   private void initIcon(Context context) {
-    favoriteButton.setImageDrawable(
-        new IconicsDrawable(context)
-        .icon(MaterialDesignIconic.Icon.gmi_favorite_outline)
-        .color(Color.WHITE).sizeDp(22));
-
-    removeButton.setImageDrawable(new IconicsDrawable(context)
-        .icon(MaterialDesignIconic.Icon.gmi_close_circle)
-        .color(Color.WHITE).sizeDp(22));
+//    favoriteButton.setImageDrawable(
+//        new IconicsDrawable(context)
+//        .icon(MaterialDesignIconic.Icon.gmi_favorite_outline)
+//        .color(Color.WHITE).sizeDp(22));
+//
+//    removeButton.setImageDrawable(new IconicsDrawable(context)
+//        .icon(MaterialDesignIconic.Icon.gmi_close_circle)
+//        .color(Color.WHITE).sizeDp(22));
 
     chip1.setCompoundDrawables(new IconicsDrawable(context)
         .icon(MaterialDesignIconic.Icon.gmi_card_sd)
@@ -96,19 +96,19 @@ public class ElephantPreview extends FrameLayout {
   }
 
   public void setRemoveListener(View.OnClickListener listener) {
-    removeButton.setOnClickListener(listener);
+//    removeButton.setOnClickListener(listener);
   }
 
 
   public void setRemoveButtonVisibility(boolean show) {
     if (show) {
-      removeButton.setVisibility(VISIBLE);
+//      removeButton.setVisibility(VISIBLE);
     }
   }
 
   public void setFavoriteButtonVisibility(boolean show) {
     if (show) {
-      favoriteButton.setVisibility(VISIBLE);
+//      favoriteButton.setVisibility(VISIBLE);
     }
   }
 

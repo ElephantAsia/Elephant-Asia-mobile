@@ -12,7 +12,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
-import fr.elephantasia.adapter.ElephantRecentAdapter;
+import fr.elephantasia.adapter.RecentElephantAdapter;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.DateHelpers;
 import io.realm.Realm;
@@ -56,7 +56,7 @@ public class HomeRecentFragment extends Fragment {
       noItemsYet.setVisibility(View.VISIBLE);
     } else {
       noItemsYet.setVisibility(View.GONE);
-      recentList.setAdapter(new ElephantRecentAdapter(elephants));
+      recentList.setAdapter(new RecentElephantAdapter(elephants));
     }
   }
 }

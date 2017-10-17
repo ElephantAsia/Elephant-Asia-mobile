@@ -34,7 +34,7 @@ import fr.elephantasia.R;
 import fr.elephantasia.activities.LoginActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.activities.addElephant.AddElephantActivity;
-import fr.elephantasia.adapter.MainActivityDrawerListAdapter;
+import fr.elephantasia.adapter.HomeDrawerListAdapter;
 import fr.elephantasia.utils.Preferences;
 import io.realm.Realm;
 import jp.wasabeef.blurry.Blurry;
@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   // Attr
-  private MainActivityDrawerListAdapter drawerListAdapter;
+  private HomeDrawerListAdapter drawerListAdapter;
   private Realm realm;
 
 
@@ -146,7 +146,7 @@ public class HomeActivity extends AppCompatActivity {
       }
     });
 
-    drawerListAdapter = new MainActivityDrawerListAdapter(getApplicationContext());
+    drawerListAdapter = new HomeDrawerListAdapter(getApplicationContext());
     drawerList.setAdapter(drawerListAdapter);
   }
 

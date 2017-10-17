@@ -18,13 +18,13 @@ import fr.elephantasia.R;
  * Created by Stephane on 06/01/2017.
  */
 
-public class MainActivityDrawerListAdapter extends BaseAdapter {
+public class HomeDrawerListAdapter extends BaseAdapter {
 
   private Context context;
   private int selection;
   private List<String> content;
 
-  public MainActivityDrawerListAdapter(Context context) {
+  public HomeDrawerListAdapter(Context context) {
     this.context = context;
     this.content = new ArrayList<>();
 

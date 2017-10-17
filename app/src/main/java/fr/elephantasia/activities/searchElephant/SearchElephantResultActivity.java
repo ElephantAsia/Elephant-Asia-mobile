@@ -3,10 +3,11 @@ package fr.elephantasia.activities.searchElephant;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -15,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.showElephant.ShowElephantActivity;
-import fr.elephantasia.adapter.RealmElephantAdapter;
+import fr.elephantasia.adapter.SearchElephantAdapter;
 import fr.elephantasia.database.model.Elephant;
 import io.realm.Case;
 import io.realm.OrderedRealmCollection;
@@ -25,7 +26,6 @@ import io.realm.RealmResults;
 
 import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
 import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_SEARCH_ELEPHANT;
-import static fr.elephantasia.activities.addElephant.AddElephantActivity.SELECT_ELEPHANT;
 import static fr.elephantasia.database.model.Elephant.CHIPS1;
 import static fr.elephantasia.database.model.Elephant.FEMALE;
 import static fr.elephantasia.database.model.Elephant.MALE;
@@ -34,12 +34,12 @@ import static fr.elephantasia.database.model.Elephant.NAME;
 public class SearchElephantResultActivity extends AppCompatActivity {
 
   // View Binding
-  @BindView(R.id.list_view) ListView listView;
+  @BindView(R.id.result_view) RecyclerView resultList;
   @BindView(R.id.no_result) TextView noResult;
   @BindView(R.id.toolbar) Toolbar toolbar;
 
   // Attr
-  private RealmElephantAdapter adapter;
+  private SearchElephantAdapter adapter;
   private Realm realm;
 
   @Override
@@ -54,6 +54,8 @@ public class SearchElephantResultActivity extends AppCompatActivity {
 
     TextView title = toolbar.findViewById(R.id.title);
     title.setText(getString(R.string.search_result));
+
+    resultList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) {
@@ -77,10 +79,10 @@ public class SearchElephantResultActivity extends AppCompatActivity {
   private void displaySearchResult() {
     OrderedRealmCollection<Elephant> realmResults = searchElephants();
     if (!realmResults.isEmpty()) {
-      adapter = new RealmElephantAdapter(realmResults, this, false, true);
-      listView.setAdapter(adapter);
+      adapter = new SearchElephantAdapter(realmResults);
+      resultList.setAdapter(adapter);
     } else {
-      listView.setVisibility(View.GONE);
+      resultList.setVisibility(View.GONE);
       noResult.setVisibility(View.VISIBLE);
     }
   }
@@ -108,11 +110,11 @@ public class SearchElephantResultActivity extends AppCompatActivity {
   private void setListItemClickListener() {
     String action = getIntent().getAction();
 
-    if (action != null && action.equals(SELECT_ELEPHANT)) {
-      listView.setOnItemClickListener(selectElephantListener());
-    } else {
-      listView.setOnItemClickListener(showElephantListener());
-    }
+//    if (action != null && action.equals(SELECT_ELEPHANT)) {
+//      resultList.setOnItemClickListener(selectElephantListener());
+//    } else {
+//      resultList.setOnItemClickListener(showElephantListener());
+//    }
   }
 
   AdapterView.OnItemClickListener selectElephantListener() {
