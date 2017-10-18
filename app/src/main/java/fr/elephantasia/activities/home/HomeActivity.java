@@ -231,7 +231,7 @@ public class HomeActivity extends AppCompatActivity {
 
     HomeOverviewFragment fragment = new HomeOverviewFragment();
     fragment.setArguments(new Bundle());
-    getSupportFragmentManager().beginTransaction().replace(R.id.data_fragment, fragment).commit();
+    getSupportFragmentManager().beginTransaction().replace(R.id.overview_fragment, fragment).commit();
   }
 
   private void setDisconnectFragment() {

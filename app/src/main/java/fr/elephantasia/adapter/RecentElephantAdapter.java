@@ -1,11 +1,18 @@
 package fr.elephantasia.adapter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
 import fr.elephantasia.R;
 import fr.elephantasia.activities.showElephant.ShowElephantActivity;
@@ -26,11 +33,12 @@ public class RecentElephantAdapter extends RealmRecyclerViewAdapter<Elephant, Re
   class ViewHolder extends RecyclerView.ViewHolder {
     public View cardView;
     public TextView name;
-    public TextView id;
     public TextView gender;
-    public TextView state;
+    public TextView age;
+    public TextView weight;
+    public TextView height;
 
-    ViewHolder(View v) {
+    ViewHolder(View v, Context ctx) {
       super(v);
       cardView = v;
       cardView.setOnClickListener(new View.OnClickListener() {
@@ -44,10 +52,24 @@ public class RecentElephantAdapter extends RealmRecyclerViewAdapter<Elephant, Re
           }
         }
       });
+
       name = v.findViewById(R.id.name);
-      id = v.findViewById(R.id.id);
       gender = v.findViewById(R.id.gender);
-      state = v.findViewById(R.id.state);
+      age = v.findViewById(R.id.age);
+      weight = v.findViewById(R.id.weight);
+      height = v.findViewById(R.id.height);
+
+      gender.setCompoundDrawables(new IconicsDrawable(ctx).icon(FontAwesome.Icon.faw_venus_mars)
+          .color(ContextCompat.getColor(ctx, R.color.md_indigo)).sizeDp(14), null, null, null);
+
+      age.setCompoundDrawables(new IconicsDrawable(ctx).icon(MaterialDesignIconic.Icon.gmi_cake)
+          .color(ContextCompat.getColor(ctx, R.color.md_light_blue)).sizeDp(14), null, null, null);
+
+      weight.setCompoundDrawables(new IconicsDrawable(ctx).icon(CommunityMaterial.Icon.cmd_weight)
+          .color(ContextCompat.getColor(ctx, R.color.md_teal)).sizeDp(14), null, null, null);
+
+      height.setCompoundDrawables(new IconicsDrawable(ctx).icon(FontAwesome.Icon.faw_arrows_v)
+          .color(ContextCompat.getColor(ctx, R.color.md_green)).sizeDp(14), null, null, null);
     }
   }
 
@@ -60,17 +82,18 @@ public class RecentElephantAdapter extends RealmRecyclerViewAdapter<Elephant, Re
   public RecentElephantAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.elephant_recent_card, parent, false);
 
-    ViewHolder vh = new ViewHolder(v);
+    ViewHolder vh = new ViewHolder(v, parent.getContext());
     return vh;
   }
 
   @Override
   @SuppressWarnings({"ConstantConditions"})
   public void onBindViewHolder(ViewHolder holder, int position) {
-    holder.name.setText(getItem(position).name);
-    holder.id.setText(getItem(position).getRegIDText());
+    holder.name.setText(getItem(position).getNameText());
     holder.gender.setText(getItem(position).getGenderText());
-    holder.state.setText(getItem(position).getStateText());
+    holder.age.setText(getItem(position).getAgeText());
+    holder.height.setText(getItem(position).getHeightText());
+    holder.weight.setText(getItem(position).getWeightText());
   }
 
   @Override

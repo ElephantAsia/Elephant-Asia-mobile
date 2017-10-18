@@ -6,7 +6,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mikepenz.iconics.IconicsDrawable;
@@ -24,13 +23,9 @@ import static fr.elephantasia.database.model.Elephant.StateValue;
 public class HomeOverviewFragment extends Fragment {
 
   // View binding
-  @BindView(R.id.total_icon) ImageView totalIcon;
   @BindView(R.id.total_value) TextView totalValue;
-  @BindView(R.id.pending_icon) ImageView pendingIcon;
   @BindView(R.id.pending_value) TextView pendingValue;
-  @BindView(R.id.draft_icon) ImageView draftIcon;
   @BindView(R.id.draft_value) TextView draftValue;
-  @BindView(R.id.saved_icon) ImageView savedIcon;
   @BindView(R.id.saved_value) TextView savedValue;
 
 
@@ -44,25 +39,22 @@ public class HomeOverviewFragment extends Fragment {
   }
 
   private void initIcon() {
-    totalIcon.setImageDrawable(new IconicsDrawable(getContext()).
+
+    totalValue.setCompoundDrawables(new IconicsDrawable(getContext()).
         icon(MaterialDesignIconic.Icon.gmi_collection_text)
-        .color(ContextCompat.getColor(getContext(), R.color.md_indigo)).sizeDp(42)
-    );
+        .color(ContextCompat.getColor(getContext(), R.color.md_indigo)).sizeDp(28), null, null, null);
 
-    pendingIcon.setImageDrawable(new IconicsDrawable(getContext()).
+    pendingValue.setCompoundDrawables(new IconicsDrawable(getContext()).
         icon(MaterialDesignIconic.Icon.gmi_refresh_sync)
-        .color(ContextCompat.getColor(getContext(), R.color.md_light_blue)).sizeDp(42)
-    );
+        .color(ContextCompat.getColor(getContext(), R.color.md_light_blue)).sizeDp(28), null, null, null);
 
-    draftIcon.setImageDrawable(new IconicsDrawable(getContext()).
+    draftValue.setCompoundDrawables(new IconicsDrawable(getContext()).
         icon(MaterialDesignIconic.Icon.gmi_archive)
-        .color(ContextCompat.getColor(getContext(), R.color.md_teal)).sizeDp(42)
-    );
+        .color(ContextCompat.getColor(getContext(), R.color.md_teal)).sizeDp(28), null, null, null);
 
-    savedIcon.setImageDrawable(new IconicsDrawable(getContext()).
+    savedValue.setCompoundDrawables(new IconicsDrawable(getContext()).
         icon(MaterialDesignIconic.Icon.gmi_check)
-        .color(ContextCompat.getColor(getContext(), R.color.md_green)).sizeDp(42)
-    );
+        .color(ContextCompat.getColor(getContext(), R.color.md_green)).sizeDp(28), null, null, null);
   }
 
 

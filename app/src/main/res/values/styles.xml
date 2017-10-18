@@ -41,6 +41,21 @@
     <item name="md_negative_color">@color/accent</item>
     <item name="md_title_color">@color/primary</item>
 
+    <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+  </style>
+
+  <!-- Default dialog -->
+  <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+    <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+  </style>
+
+  <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+    <item name="android:textColor">@color/accent</item>
+  </style>
+
+  <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+    <item name="android:textColor">@color/accent</item>
   </style>
 
 

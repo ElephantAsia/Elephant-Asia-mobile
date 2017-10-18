@@ -5,94 +5,131 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:layout_margin="5dp"
-  android:clickable="true"
+  android:layout_margin="8dp"
   android:foreground="?android:attr/selectableItemBackground"
-  android:padding="10dp"
-  app:cardCornerRadius="4dp"
+  app:cardCornerRadius="2dp"
   app:cardUseCompatPadding="true"
   >
 
-  <LinearLayout
+  <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_height="match_parent">
 
-    <!--<ImageView-->
-      <!--android:layout_width="wrap_content"-->
-      <!--android:layout_height="wrap_content"-->
-      <!--android:layout_gravity="start"-->
-      <!--android:adjustViewBounds="true"-->
-      <!--android:contentDescription="@null"-->
-      <!--android:scaleType="centerCrop"-->
-      <!--android:src="@mipmap/elephant_placeholder"/>-->
+    <ImageView
+      android:id="@+id/elephant_picture"
+      android:layout_width="150dp"
+      android:layout_height="150dp"
+      android:layout_alignParentEnd="true"
+      android:layout_gravity="end"
+      android:layout_marginEnd="16dp"
+      android:layout_marginTop="16dp"
+      android:adjustViewBounds="true"
+      android:contentDescription="@null"
+      android:scaleType="fitCenter"
+      android:src="@mipmap/elephant_placeholder"/>
 
-
-    <LinearLayout
-      android:layout_width="match_parent"
+    <TextView
+      android:id="@+id/name"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:orientation="vertical">
+      android:paddingEnd="16dp"
+      android:paddingStart="16dp"
+      android:paddingTop="24dp"
+      android:textColor="@color/primary"
+      android:textSize="24sp"/>
 
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/accent"
-        android:orientation="horizontal"
-        android:padding="16dp">
+    <TextView
+      android:id="@+id/gender"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/name"
+      android:layout_marginStart="10dp"
+      android:drawablePadding="5dp"
+      android:paddingEnd="16dp"
+      android:paddingStart="16dp"
+      android:paddingTop="16dp"
+      android:textColor="@color/primary_light"
+      android:textSize="14sp"/>
 
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Whun"
-          android:textSize="24sp"
-          android:textStyle="bold"/>
+    <TextView
+      android:id="@+id/age"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/name"
+      android:layout_toEndOf="@+id/gender"
+      android:drawablePadding="5dp"
+      android:paddingEnd="16dp"
+      android:paddingStart="16dp"
+      android:paddingTop="16dp"
+      android:textColor="@color/primary_light"
+      android:textSize="14sp"/>
 
-        <TextView
-          android:id="@+id/profil"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text=", Male"
-          android:textSize="16sp"
-          android:textStyle="bold"/>
-      </LinearLayout>
+    <TextView
+      android:id="@+id/weight"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/gender"
+      android:layout_marginStart="10dp"
+      android:drawablePadding="5dp"
+      android:paddingEnd="16dp"
+      android:paddingStart="16dp"
+      android:paddingTop="16dp"
+      android:textColor="@color/primary_light"
+      android:textSize="14sp"/>
 
-    </LinearLayout>
 
+    <TextView
+      android:id="@+id/height"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignStart="@+id/age"
+      android:layout_below="@+id/age"
+      android:layout_toEndOf="@+id/weight"
+      android:drawablePadding="5dp"
+      android:paddingEnd="16dp"
+      android:paddingStart="16dp"
+      android:paddingTop="16dp"
+      android:textColor="@color/primary_light"
+      android:textSize="14sp"/>
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="5dp"
-        android:gravity="center"
-        android:text="49ans"
-        android:textColor="@color/primary"/>
+    <TextView
+      android:id="@+id/edit_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/elephant_picture"
+      android:layout_marginBottom="8dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      android:height="36dp"
+      android:clickable="true"
+      android:foreground="?android:attr/selectableItemBackground"
+      android:gravity="center"
+      android:minWidth="88dp"
+      android:text="@string/edit"
+      android:textAllCaps="true"
+      android:textColor="@color/accent"
+      android:textSize="14sp"/>
 
-      <TextView
-        android:id="@+id/state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="5dp"
-        android:gravity="center"
-        android:text="Synced"
-        android:textColor="@color/primary"/>
+    <TextView
+      android:id="@+id/show_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/elephant_picture"
+      android:layout_marginBottom="8dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      android:layout_toEndOf="@+id/edit_button"
+      android:height="36dp"
+      android:clickable="true"
+      android:foreground="?android:attr/selectableItemBackground"
+      android:gravity="center"
+      android:minWidth="88dp"
+      android:text="@string/show"
+      android:textAllCaps="true"
+      android:textColor="@color/accent"
+      android:textSize="14sp"/>
 
-      <TextView
-        android:id="@+id/location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="5dp"
-        android:gravity="center"
-        android:text="Iguazu"
-        android:textColor="@color/primary"/>
+  </RelativeLayout>
 
-      <TextView
-        android:id="@+id/chip1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="5dp"
-        android:text="3dawd1adwa321321"
-        android:textColor="@color/primary"/>
-
-  </LinearLayout>
 
 </android.support.v7.widget.CardView>

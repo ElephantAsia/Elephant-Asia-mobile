@@ -2,6 +2,7 @@ package fr.elephantasia.customView;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
@@ -24,16 +27,18 @@ import fr.elephantasia.database.model.Elephant.StateValue;
 
 public class ElephantPreview extends FrameLayout {
 
-  // Views Binding
-  @BindView(R.id.profil) TextView profil;
-  @BindView(R.id.chip1) TextView chip1;
-  @BindView(R.id.location) TextView location;
-  @BindView(R.id.state) TextView stateLocal;
+
+
 //  @BindView(R.id.remove_elephant) ImageButton removeButton;
 //  @BindView(R.id.favorite_elephant_off) ImageButton favoriteButton;
 
   // Attr
-  private Elephant elephant;
+  Elephant elephant;
+  TextView name;
+  TextView gender;
+  TextView age;
+  TextView weight;
+  TextView height;
 
   public ElephantPreview(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
@@ -51,47 +56,39 @@ public class ElephantPreview extends FrameLayout {
   }
 
   private void initView(Context context) {
-    View view = inflate(getContext(), R.layout.elephant_preview, null);
-    ButterKnife.bind(this, view);
-    initIcon(context);
-    addView(view);
+    View v = inflate(getContext(), R.layout.elephant_preview, null);
+    name = v.findViewById(R.id.name);
+    gender = v.findViewById(R.id.gender);
+    age = v.findViewById(R.id.age);
+    weight = v.findViewById(R.id.weight);
+    height = v.findViewById(R.id.height);
+    initIcon();
+    addView(v);
   }
 
-  private void initIcon(Context context) {
-//    favoriteButton.setImageDrawable(
-//        new IconicsDrawable(context)
-//        .icon(MaterialDesignIconic.Icon.gmi_favorite_outline)
-//        .color(Color.WHITE).sizeDp(22));
-//
-//    removeButton.setImageDrawable(new IconicsDrawable(context)
-//        .icon(MaterialDesignIconic.Icon.gmi_close_circle)
-//        .color(Color.WHITE).sizeDp(22));
+  private void initIcon() {
+    gender.setCompoundDrawables(new IconicsDrawable(getContext()).icon(FontAwesome.Icon.faw_venus_mars)
+        .color(ContextCompat.getColor(getContext(), R.color.md_indigo)).sizeDp(14), null, null, null);
 
-    chip1.setCompoundDrawables(new IconicsDrawable(context)
-        .icon(MaterialDesignIconic.Icon.gmi_card_sd)
-        .color(Color.WHITE).sizeDp(20), null, null, null);
+    age.setCompoundDrawables(new IconicsDrawable(getContext()).icon(MaterialDesignIconic.Icon.gmi_cake)
+        .color(ContextCompat.getColor(getContext(), R.color.md_light_blue)).sizeDp(14), null, null, null);
 
-    location.setCompoundDrawables(new IconicsDrawable(context)
-        .icon(MaterialDesignIconic.Icon.gmi_pin)
-        .color(Color.WHITE).sizeDp(20), null, null, null);
+    weight.setCompoundDrawables(new IconicsDrawable(getContext()).icon(CommunityMaterial.Icon.cmd_weight)
+        .color(ContextCompat.getColor(getContext(), R.color.md_teal)).sizeDp(14), null, null, null);
 
-    stateLocal.setCompoundDrawables(new IconicsDrawable(context)
-        .icon(MaterialDesignIconic.Icon.gmi_info_outline)
-        .color(Color.WHITE).sizeDp(20), null, null, null);
-
+    height.setCompoundDrawables(new IconicsDrawable(getContext()).icon(FontAwesome.Icon.faw_arrows_v)
+        .color(ContextCompat.getColor(getContext(), R.color.md_green)).sizeDp(14), null, null, null);
   }
 
   public void setElephant(Elephant elephant) {
     this.elephant = elephant;
 
     if (elephant != null) {
-      profil.setText(formatProfil());
-      chip1.setText(formatChip());
-      location.setText(elephant.currentLoc.format());
-
-      if (elephant.state.equals(StateValue.draft.name()) || elephant.state.equals(StateValue.saved.name())) {
-        stateLocal.setVisibility(View.VISIBLE);
-      }
+      name.setText(elephant.getNameText());
+      gender.setText(elephant.getGenderText());
+      age.setText(elephant.getAgeText());
+      height.setText(elephant.getHeightText());
+      weight.setText(elephant.getWeightText());
     }
   }
 
@@ -110,28 +107,5 @@ public class ElephantPreview extends FrameLayout {
     if (show) {
 //      favoriteButton.setVisibility(VISIBLE);
     }
-  }
-
-
-  private String formatProfil() {
-    String res = elephant.name + ", " + elephant.getGenderText() + ", ";
-
-    if (!TextUtils.isEmpty(elephant.birthDate)) {
-      res += elephant.getAgeText() + " y/o";
-    } else {
-      res += "Age N/A";
-    }
-    return res;
-  }
-
-  private String formatChip() {
-    String res;
-
-    if (!TextUtils.isEmpty(elephant.chips1)) {
-      res = "#" + elephant.chips1;
-    } else {
-      res = "N/A";
-    }
-    return res;
   }
 }

@@ -10,6 +10,7 @@
   <string name="male">Male</string>
   <string name="yes">Yes</string>
   <string name="no">No</string>
+  <string name="show">show</string>
   <string name="elephant_birthdate">Birthdate</string>
   <string name="elephant_name">Elephant name *</string>
   <string name="contact_name">Contact name</string>

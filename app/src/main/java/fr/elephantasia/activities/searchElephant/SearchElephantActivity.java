@@ -22,7 +22,6 @@ public class SearchElephantActivity extends AppCompatActivity {
   public static final String EXTRA_SEARCH_ELEPHANT = "extra_search_elephant";
   public static final String EXTRA_ELEPHANT_ID = "EXTRA_ELEPHANT_ID";
 
-
   // Request code
   public static final int REQUEST_ELEPHANT_SELECTED = 1;
 

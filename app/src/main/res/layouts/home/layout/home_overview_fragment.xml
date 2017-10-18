@@ -16,7 +16,7 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:gravity="center"
-    app:contentPadding="24dp"
+    app:contentPadding="16dp"
     app:layout_columnWeight="1"
     app:layout_gravity="fill"
     app:layout_rowWeight="1">
@@ -31,28 +31,16 @@
       android:textColor="@color/accent"
       android:textSize="18sp"/>
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="horizontal">
-
-      <ImageView
-        android:id="@+id/total_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"/>
-
-      <TextView
-        android:id="@+id/total_value"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@color/primary"
-        android:textSize="30sp"/>
-    </LinearLayout>
+    <TextView
+      android:id="@+id/total_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginStart="-10dp"
+      android:drawablePadding="15dp"
+      android:textAllCaps="true"
+      android:textColor="@color/primary"
+      android:textSize="30sp"/>
 
   </android.support.v7.widget.CardView>
 
@@ -62,7 +50,7 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:gravity="center"
-    app:contentPadding="24dp"
+    app:contentPadding="16dp"
     app:layout_columnWeight="1"
     app:layout_gravity="fill"
     app:layout_rowWeight="1">
@@ -77,28 +65,16 @@
       android:textColor="@color/accent"
       android:textSize="18sp"/>
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="horizontal">
-
-      <ImageView
-        android:id="@+id/pending_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"/>
-
-      <TextView
-        android:id="@+id/pending_value"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@color/primary"
-        android:textSize="24sp"/>
-    </LinearLayout>
+    <TextView
+      android:id="@+id/pending_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginStart="-10dp"
+      android:drawablePadding="15dp"
+      android:textAllCaps="true"
+      android:textColor="@color/primary"
+      android:textSize="30sp"/>
 
   </android.support.v7.widget.CardView>
 
@@ -108,11 +84,10 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:gravity="center"
-    app:contentPadding="24dp"
+    app:contentPadding="16dp"
     app:layout_columnWeight="1"
     app:layout_gravity="fill"
     app:layout_rowWeight="1">
-
 
     <TextView
       android:layout_width="match_parent"
@@ -124,28 +99,17 @@
       android:textColor="@color/accent"
       android:textSize="18sp"/>
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="horizontal">
+    <TextView
+      android:id="@+id/draft_value"
 
-      <ImageView
-        android:id="@+id/draft_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"/>
-
-      <TextView
-        android:id="@+id/draft_value"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@color/primary"
-        android:textSize="24sp"/>
-    </LinearLayout>
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginStart="-10dp"
+      android:drawablePadding="15dp"
+      android:textAllCaps="true"
+      android:textColor="@color/primary"
+      android:textSize="30sp"/>
 
   </android.support.v7.widget.CardView>
 
@@ -155,7 +119,7 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:gravity="center"
-    app:contentPadding="24dp"
+    app:contentPadding="16dp"
     app:layout_columnWeight="1"
     app:layout_gravity="fill"
     app:layout_rowWeight="1">
@@ -170,28 +134,16 @@
       android:textColor="@color/accent"
       android:textSize="18sp"/>
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="horizontal">
-
-      <ImageView
-        android:id="@+id/saved_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"/>
-
-      <TextView
-        android:id="@+id/saved_value"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@color/primary"
-        android:textSize="24sp"/>
-    </LinearLayout>
+    <TextView
+      android:id="@+id/saved_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginStart="-10dp"
+      android:drawablePadding="15dp"
+      android:textAllCaps="true"
+      android:textColor="@color/primary"
+      android:textSize="30sp"/>
 
   </android.support.v7.widget.CardView>
 

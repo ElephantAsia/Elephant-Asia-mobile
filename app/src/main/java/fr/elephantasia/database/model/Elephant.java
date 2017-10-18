@@ -10,6 +10,7 @@ import java.util.Date;
 
 import fr.elephantasia.database.parceler.ContactParcelConverter;
 import fr.elephantasia.database.parceler.ElephantParcelConverter;
+import fr.elephantasia.utils.TextHelpers;
 import io.realm.ElephantRealmProxy;
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -144,6 +145,10 @@ public class Elephant extends RealmObject {
     }
   }
 
+  public String getNameText() {
+    return TextHelpers.capitalize(name);
+  }
+
   public String getGenderText() {
     return male ? "Male" : "Female";
   }
@@ -154,7 +159,7 @@ public class Elephant extends RealmObject {
       return height + " " + heightUnit;
     }
 
-    return "N/A";
+    return "-";
   }
 
   public String getWeightText() {
@@ -163,16 +168,16 @@ public class Elephant extends RealmObject {
       return weight + " kg";
     }
 
-    return "N/A";
+    return "-";
   }
 
   public String getAgeText() {
-    String res = null;
+    String res = "-";
 
     if (!TextUtils.isEmpty(birthDate)) {
       Integer year = Integer.parseInt(birthDate.substring(0, 4));
       Integer age = Calendar.getInstance().get(Calendar.YEAR) - year;
-      res = age.toString();
+      res = age.toString() + "y";
     }
     return res;
   }
@@ -181,7 +186,7 @@ public class Elephant extends RealmObject {
     if (!TextUtils.isEmpty(regID)) {
       return regID;
     }
-    return "N/A";
+    return "-";
   }
 
   public String getStateText() {

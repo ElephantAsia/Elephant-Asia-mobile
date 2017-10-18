@@ -2,24 +2,27 @@ package fr.elephantasia.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
 import fr.elephantasia.R;
+import fr.elephantasia.activities.editElephant.EditElephantActivity;
 import fr.elephantasia.activities.showElephant.ShowElephantActivity;
 import fr.elephantasia.database.model.Elephant;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
 import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
+import static fr.elephantasia.activities.showElephant.ShowElephantActivity.EXTRA_EDIT_ELEPHANT_ID;
 
 /**
  * Created by seb on 15/10/2017.
@@ -31,24 +34,59 @@ public class SearchElephantAdapter extends RealmRecyclerViewAdapter<Elephant, Se
   // ViewHolder inner class
   class ViewHolder extends RecyclerView.ViewHolder {
     public View cardView;
-    public TextView profil;
-    public TextView chip1;
-    public TextView location;
-    public TextView state;
-    public ImageButton favoris;
+    public TextView name;
+    public TextView gender;
+    public TextView age;
+    public TextView weight;
+    public TextView height;
+    public TextView show;
+    public TextView edit;
 
     ViewHolder(View v, Context ctx) {
       super(v);
       cardView = v;
-      profil = v.findViewById(R.id.profil);
-      chip1 = v.findViewById(R.id.chip1);
-      location = v.findViewById(R.id.location);
-      state = v.findViewById(R.id.state);
+      name = v.findViewById(R.id.name);
+      gender = v.findViewById(R.id.gender);
+      age = v.findViewById(R.id.age);
+      weight = v.findViewById(R.id.weight);
+      height = v.findViewById(R.id.height);
 
-      chip1.setCompoundDrawables(new IconicsDrawable(ctx)
-          .icon(MaterialDesignIconic.Icon.gmi_memory)
-          .color(Color.WHITE).sizeDp(20), null, null, null);
+      gender.setCompoundDrawables(new IconicsDrawable(ctx).icon(FontAwesome.Icon.faw_venus_mars)
+          .color(ContextCompat.getColor(ctx, R.color.md_indigo)).sizeDp(14), null, null, null);
 
+      age.setCompoundDrawables(new IconicsDrawable(ctx).icon(MaterialDesignIconic.Icon.gmi_cake)
+          .color(ContextCompat.getColor(ctx, R.color.md_light_blue)).sizeDp(14), null, null, null);
+
+      weight.setCompoundDrawables(new IconicsDrawable(ctx).icon(CommunityMaterial.Icon.cmd_weight)
+          .color(ContextCompat.getColor(ctx, R.color.md_teal)).sizeDp(14), null, null, null);
+
+      height.setCompoundDrawables(new IconicsDrawable(ctx).icon(FontAwesome.Icon.faw_arrows_v)
+          .color(ContextCompat.getColor(ctx, R.color.md_green)).sizeDp(14), null, null, null);
+
+      show = v.findViewById(R.id.show_button);
+      edit = v.findViewById(R.id.edit_button);
+
+      show.setOnClickListener(
+          new View.OnClickListener() {
+            public void onClick(View v) {
+              Elephant elephant = getItem(getAdapterPosition());
+
+              Intent intent = new Intent(v.getContext(), ShowElephantActivity.class);
+              intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+              cardView.getContext().startActivity(intent);
+            }
+          });
+
+      edit.setOnClickListener(
+          new View.OnClickListener() {
+            public void onClick(View v) {
+              Elephant elephant = getItem(getAdapterPosition());
+
+              Intent intent = new Intent(v.getContext(), EditElephantActivity.class);
+              intent.putExtra(EXTRA_EDIT_ELEPHANT_ID, elephant.id);
+              cardView.getContext().startActivity(intent);
+            }
+          });
     }
   }
 
@@ -68,10 +106,11 @@ public class SearchElephantAdapter extends RealmRecyclerViewAdapter<Elephant, Se
   @Override
   @SuppressWarnings({"ConstantConditions"})
   public void onBindViewHolder(ViewHolder holder, int position) {
-//    holder.profil.setText(getItem(position).name);
-//    holder.chip1.setText(getItem(position).getRegIDText());
-//    holder.location.setText("location tmp");
-//    holder.state.setText(getItem(position).getStateText());
+    holder.name.setText(getItem(position).getNameText());
+    holder.gender.setText(getItem(position).getGenderText());
+    holder.age.setText(getItem(position).getAgeText());
+    holder.height.setText(getItem(position).getHeightText());
+    holder.weight.setText(getItem(position).getWeightText());
   }
 
   @Override

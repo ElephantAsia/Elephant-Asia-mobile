@@ -48,7 +48,6 @@
           android:visibility="@{e.mother != null ? View.GONE : View.VISIBLE}"/>
 
         <fr.elephantasia.customView.ElephantPreview
-
           android:id="@+id/mother_preview"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

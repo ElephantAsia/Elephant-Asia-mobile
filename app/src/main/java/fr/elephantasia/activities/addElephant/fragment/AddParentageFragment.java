@@ -49,7 +49,7 @@ public class AddParentageFragment extends Fragment {
   private Elephant elephant;
   private AddElephantParentageFragmentBinding binding;
   private ElephantPreviewAdapter adapter;
-  // private RealmManager realmManager = RealmManager.getInstance();
+
 
   // Listener binding
   @OnClick(R.id.mother_add_button)
@@ -78,11 +78,15 @@ public class AddParentageFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     binding = DataBindingUtil.inflate(inflater, R.layout.add_elephant_parentage_fragment, container, false);
     binding.setE(elephant);
+
     View view = binding.getRoot();
     ButterKnife.bind(this, view);
+
     motherPreview.setRemoveListener(unsetMother());
     fatherPreview.setRemoveListener(unsetFather());
+
     setupChildrenList(inflater);
+
     KeyboardHelpers.hideKeyboardListener(view, getActivity());
     return (view);
   }
@@ -112,9 +116,11 @@ public class AddParentageFragment extends Fragment {
     Realm realm = Realm.getDefaultInstance();
     elephant.mother = realm.where(Elephant.class).equalTo(ID, id).findFirst();
     elephant.mother = realm.copyFromRealm(elephant.mother);
+
     motherButton.setVisibility(View.GONE);
     motherPreview.setElephant(elephant.mother);
     motherPreview.setVisibility(View.VISIBLE);
+
     realm.close();
   }
 
