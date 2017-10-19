@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.editElephant.fragment;
+package fr.elephantasia.activities.manageElephant.fragment;
 
 
 import android.content.Intent;
@@ -19,15 +19,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.SearchContactActivity;
-import fr.elephantasia.activities.editElephant.EditElephantActivity;
+import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.adapter.ContactPreviewAdapter;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Elephant;
 
 import static butterknife.ButterKnife.findById;
-import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_CONTACT_SELECTED;
+import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.REQUEST_CONTACT_SELECTED;
 
-public class EditContactFragment extends Fragment {
+public class ContactFragment extends Fragment {
 
   // View binding
   @BindView(R.id.list) ListView list;
@@ -36,16 +36,17 @@ public class EditContactFragment extends Fragment {
   private ContactPreviewAdapter adapter;
   private Elephant elephant;
 
+
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    elephant = ((EditElephantActivity) getActivity()).getElephant();
+    elephant = ((ManageElephantActivity) getActivity()).getElephant();
     adapter = new ContactPreviewAdapter(getContext(), elephant.contacts, true);
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.add_elephant_contact_fragment, container, false);
+    View view = inflater.inflate(R.layout.manage_elephant_contact_fragment, container, false);
     View footerView = inflater.inflate(R.layout.add_button_footer_list, list, false);
 
     TextView addButton = findById(footerView, R.id.add_button_footer);

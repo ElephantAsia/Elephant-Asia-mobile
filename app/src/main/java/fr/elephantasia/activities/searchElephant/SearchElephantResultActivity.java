@@ -14,7 +14,7 @@ import org.parceler.Parcels;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.editElephant.EditElephantActivity;
+import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.adapter.SearchElephantAdapter;
 import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.model.Elephant;
@@ -37,6 +37,8 @@ public class SearchElephantResultActivity extends AppCompatActivity {
   @BindView(R.id.result_view) RecyclerView resultList;
   @BindView(R.id.no_result) TextView noResult;
   @BindView(R.id.toolbar) Toolbar toolbar;
+  @BindView(R.id.title) TextView toolbarTitle;
+
 
   // Attr
   private SearchElephantAdapter adapter;
@@ -52,10 +54,6 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     resultList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
     displaySearchResult();
-
-    TextView title = toolbar.findViewById(R.id.title);
-    title.setText(getString(R.string.search_result));
-
 
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) {
@@ -78,6 +76,9 @@ public class SearchElephantResultActivity extends AppCompatActivity {
 
   private void displaySearchResult() {
     OrderedRealmCollection<Elephant> realmResults = searchElephants();
+    Integer total = realmResults.size();
+
+    toolbarTitle.setText(total.toString().concat(" ").concat(getString(R.string.search_result)));
 
     if (!realmResults.isEmpty()) {
       initAdapter(realmResults);
@@ -141,7 +142,7 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     return new SearchElephantAdapter.OnActionClickListener() {
       @Override
       public void onActionClick(Elephant elephant) {
-        Intent intent = new Intent(SearchElephantResultActivity.this, EditElephantActivity.class);
+        Intent intent = new Intent(SearchElephantResultActivity.this, ManageElephantActivity.class);
 
         if (elephant != null) {
           intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);

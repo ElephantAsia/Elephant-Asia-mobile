@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.addElephant.AddElephantActivity"/>
+        <activity android:name=".activities.manageElephant.ManageElephantActivity"/>
         <activity android:name=".activities.LoginActivity"/>
         <activity android:name=".activities.home.HomeActivity"/>
         <activity android:name=".activities.searchElephant.SearchElephantActivity"/>

@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.addElephant;
+package fr.elephantasia.activities.manageElephant;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mikepenz.iconics.IconicsDrawable;
@@ -37,13 +38,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.addDocument.AddDocumentActivity;
-import fr.elephantasia.activities.addElephant.fragment.AddChildrenFragment;
-import fr.elephantasia.activities.addElephant.fragment.AddContactFragment;
-import fr.elephantasia.activities.addElephant.fragment.AddDescriptionFragment;
-import fr.elephantasia.activities.addElephant.fragment.AddDocumentFragment;
-import fr.elephantasia.activities.addElephant.fragment.AddParentageFragment;
-import fr.elephantasia.activities.addElephant.fragment.AddProfilFragment;
-import fr.elephantasia.activities.addElephant.fragment.AddRegistrationFragment;
+import fr.elephantasia.activities.manageElephant.fragment.ChildrenFragment;
+import fr.elephantasia.activities.manageElephant.fragment.ContactFragment;
+import fr.elephantasia.activities.manageElephant.fragment.DescriptionFragment;
+import fr.elephantasia.activities.manageElephant.fragment.DocumentFragment;
+import fr.elephantasia.activities.manageElephant.fragment.ParentageFragment;
+import fr.elephantasia.activities.manageElephant.fragment.ProfilFragment;
+import fr.elephantasia.activities.manageElephant.fragment.RegistrationFragment;
 import fr.elephantasia.adapter.ViewPagerAdapter;
 import fr.elephantasia.database.RealmDB;
 import fr.elephantasia.database.model.Contact;
@@ -58,8 +59,9 @@ import io.realm.Realm;
 
 import static fr.elephantasia.activities.SearchContactActivity.EXTRA_SEARCH_CONTACT;
 import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
+import static fr.elephantasia.database.model.Elephant.ID;
 
-public class AddElephantActivity extends AppCompatActivity {
+public class ManageElephantActivity extends AppCompatActivity {
 
   // Result code
   public static final int RESULT_DRAFT = 2;
@@ -74,27 +76,24 @@ public class AddElephantActivity extends AppCompatActivity {
   public static final int REQUEST_IMPORT_PHOTO = 9;
   public static final int REQUEST_ADD_DOCUMENT = 10;
 
-  // Action code
-//  public static final String SELECT_ELEPHANT = "select_elephant";
-  static String motherId;
-
   // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
+  @BindView(R.id.title) TextView toolbarTitle;
   @BindView(R.id.tabs) TabLayout tabLayout;
   @BindView(R.id.viewpager) ViewPager viewPager;
   @BindView(R.id.add_elephant_activity) View rootView;
   @BindView(R.id.add_elephant_fab) FloatingActionButton fab;
 
   // Fragment
-  private AddProfilFragment profilFragment = new AddProfilFragment();
-  private AddRegistrationFragment registrationFragment = new AddRegistrationFragment();;
-  private AddContactFragment contactFragment = new AddContactFragment();
-  private AddParentageFragment parentageFragment = new AddParentageFragment();
-  private AddChildrenFragment childrenFragment = new AddChildrenFragment();
-  private AddDocumentFragment docFragment = new AddDocumentFragment();
+  private ProfilFragment profilFragment = new ProfilFragment();
+  private RegistrationFragment registrationFragment = new RegistrationFragment();;
+  private ContactFragment contactFragment = new ContactFragment();
+  private ParentageFragment parentageFragment = new ParentageFragment();
+  private ChildrenFragment childrenFragment = new ChildrenFragment();
+  private DocumentFragment docFragment = new DocumentFragment();
 
   // Attr
-  private Elephant elephant = new Elephant();
+  private Elephant elephant;
   private PickImageDialog pickImageDialog;
   private Realm realm;
   private List<Document> documents = new ArrayList<>();
@@ -104,7 +103,7 @@ public class AddElephantActivity extends AppCompatActivity {
   Drawable validateIcon;
   Drawable nextStepIcon;
 
-  public AddElephantActivity() {
+  public ManageElephantActivity() {
 
   }
 
@@ -121,7 +120,7 @@ public class AddElephantActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.add_elephant_activity);
+    setContentView(R.layout.manage_elephant_activity);
     ButterKnife.bind(this);
     initIcon();
 
@@ -146,6 +145,19 @@ public class AddElephantActivity extends AppCompatActivity {
     setupViewPager(viewPager);
     tabLayout.setupWithViewPager(viewPager);
     realm = Realm.getDefaultInstance();
+
+    int id = getIntent().getIntExtra(EXTRA_ELEPHANT_ID, -1);
+    if (id != -1) {
+      elephant = realm.copyFromRealm(realm.where(Elephant.class).equalTo(ID, id).findFirst());
+      documents = realm.copyFromRealm(realm.where(Document.class).equalTo(Document.ELEPHANT_ID, id).findAll());
+
+      toolbarTitle.setText(String.format(getString(R.string.edit_elephant_title), elephant.name));
+//      docFragment.addDocuments(documents);
+    } else {
+      elephant = new Elephant();
+    }
+
+
   }
 
   private void initIcon() {
@@ -163,7 +175,7 @@ public class AddElephantActivity extends AppCompatActivity {
     adapter.addFragment(profilFragment, getString(R.string.profil));
     adapter.addFragment(registrationFragment, getString(R.string.registration));
     adapter.addFragment(contactFragment, getString(R.string.contact));
-    adapter.addFragment(new AddDescriptionFragment(), getString(R.string.description));
+    adapter.addFragment(new DescriptionFragment(), getString(R.string.description));
     adapter.addFragment(parentageFragment, getString(R.string.parentage));
     adapter.addFragment(childrenFragment, getString(R.string.children));
     viewPager.setAdapter(adapter);
@@ -322,7 +334,7 @@ public class AddElephantActivity extends AppCompatActivity {
           public void execute(Intent intent, int requestCode) {
             if (requestCode == REQUEST_CAPTURE_PHOTO) {
               if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(AddElephantActivity.this, new String[]{Manifest.permission.CAMERA}, 0);
+                ActivityCompat.requestPermissions(ManageElephantActivity.this, new String[]{Manifest.permission.CAMERA}, 0);
               } else {
                 startActivityForResult(intent, requestCode);
               }

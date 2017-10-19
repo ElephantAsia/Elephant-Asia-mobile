@@ -1,5 +1,4 @@
-package fr.elephantasia.activities.editElephant.fragment;
-
+package fr.elephantasia.activities.manageElephant.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,38 +19,39 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.editElephant.EditElephantActivity;
+import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.adapter.DocumentAdapter;
 import fr.elephantasia.database.model.Document;
 import io.realm.RealmList;
 
 import static butterknife.ButterKnife.findById;
 
-public class EditDocumentFragment extends Fragment {
+public class DocumentFragment extends Fragment {
 
   @BindView(R.id.list)
   ListView list;
   private DocumentAdapter adapter;
-	private List<Document> documents = new ArrayList<>();
+  private List<Document> documents = new ArrayList<>();
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-		adapter = new DocumentAdapter(getContext(), new RealmList<Document>(), null);
+    adapter = new DocumentAdapter(getContext(), new RealmList<Document>(), null);
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.add_elephant_document_fragment, container, false);
+    View view = inflater.inflate(R.layout.manage_elephant_document_fragment, container, false);
 
     ButterKnife.bind(this, view);
     setupFooter(inflater);
     list.setAdapter(adapter);
 
-		if (documents.size() != 0) {
-			adapter.addAll(documents);
-			documents.clear();
-		}
+    if (documents.size() != 0) {
+      adapter.addAll(documents);
+      documents.clear();
+    }
+
     return (view);
   }
 
@@ -66,7 +66,7 @@ public class EditDocumentFragment extends Fragment {
 
     addButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        ((EditElephantActivity) getActivity()).onAddDocumentClick();
+        ((ManageElephantActivity) getActivity()).onAddDocumentClick();
       }
     });
 
@@ -74,19 +74,19 @@ public class EditDocumentFragment extends Fragment {
   }
 
   public void addDocument(@NonNull Document doc) {
-		if (adapter == null) {
-			documents.add(doc);
-		} else {
-			adapter.add(doc);
-		}
+    if (adapter == null) {
+      documents.add(doc);
+    } else {
+      adapter.add(doc);
+    }
   }
 
   public void addDocuments(@NonNull List<Document> docs) {
-		if (adapter == null) {
-			documents.addAll(docs);
-		} else {
-			adapter.addAll(docs);
-		}
-	}
+    if (adapter == null) {
+      documents.addAll(docs);
+    } else {
+      adapter.addAll(docs);
+    }
+  }
 
 }

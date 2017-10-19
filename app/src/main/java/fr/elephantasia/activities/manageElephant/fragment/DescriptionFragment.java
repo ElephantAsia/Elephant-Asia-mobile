@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.editElephant.fragment;
+package fr.elephantasia.activities.manageElephant.fragment;
 
 
 import android.databinding.DataBindingUtil;
@@ -18,15 +18,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.editElephant.EditElephantActivity;
+import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.database.model.Elephant;
-import fr.elephantasia.databinding.AddElephantDescriptionFragmentBinding;
+import fr.elephantasia.databinding.ManageElephantDescriptionFragmentBinding;
 import fr.elephantasia.dialogs.GirthDialog;
 import fr.elephantasia.dialogs.HeightDialog;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 
-public class EditDescriptionFragment extends Fragment {
+public class DescriptionFragment extends Fragment {
 
   // View binding
   @BindView(R.id.weight) TextView weightView;
@@ -50,14 +50,14 @@ public class EditDescriptionFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    AddElephantDescriptionFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_elephant_description_fragment, container, false);
-    elephant = ((EditElephantActivity) getActivity()).getElephant();
+    ManageElephantDescriptionFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.manage_elephant_description_fragment, container, false);
+    elephant = ((ManageElephantActivity) getActivity()).getElephant();
     View view = binding.getRoot();
     binding.setE(elephant);
     ButterKnife.bind(this, view);
 
-    ArrayAdapter<String> adapterFront = new ArrayAdapter<>(getContext(), R.layout.ea_spinner, Arrays.asList("0", "1", "2", "3", "4"));
-    ArrayAdapter<String> adapterRear = new ArrayAdapter<>(getContext(), R.layout.ea_spinner, Arrays.asList("0", "1", "2", "3", "4", "5"));
+    ArrayAdapter<String> adapterFront = new ArrayAdapter<>(getContext(), R.layout.ea_spinner, Arrays.asList("0", "1", "2", "3", "4", "5"));
+    ArrayAdapter<String> adapterRear = new ArrayAdapter<>(getContext(), R.layout.ea_spinner, Arrays.asList("0", "1", "2", "3", "4"));
 
     ((Spinner) view.findViewById(R.id.nailsFrontLeft)).setAdapter(adapterFront);
     ((Spinner) view.findViewById(R.id.nailsFrontRight)).setAdapter(adapterFront);

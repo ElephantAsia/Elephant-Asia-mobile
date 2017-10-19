@@ -32,7 +32,6 @@
         android:maxLines="1"
         android:paddingBottom="16dp"
         android:scrollHorizontally="true"
-        android:textAllCaps="true"
         android:textColor="@color/primary"
         android:textStyle="bold"/>
 

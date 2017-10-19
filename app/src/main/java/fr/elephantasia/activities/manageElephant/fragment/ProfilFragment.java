@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.addElephant.fragment;
+package fr.elephantasia.activities.manageElephant.fragment;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -13,14 +13,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.addElephant.AddElephantActivity;
+import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.database.model.Elephant;
-import fr.elephantasia.databinding.AddElephantProfilFragmentBinding;
-import fr.elephantasia.dialogs.LocationInputDialog;
+import fr.elephantasia.databinding.ManageElephantProfilFragmentBinding;
 import fr.elephantasia.dialogs.DatePickerDialog;
+import fr.elephantasia.dialogs.LocationInputDialog;
 import fr.elephantasia.utils.KeyboardHelpers;
 
-public class AddProfilFragment extends Fragment {
+public class ProfilFragment extends Fragment {
 
   // View binding
   @BindView(R.id.birthLocation) EditText birthLocation;
@@ -63,8 +63,8 @@ public class AddProfilFragment extends Fragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    AddElephantProfilFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_elephant_profil_fragment, container, false);
-    elephant = ((AddElephantActivity) getActivity()).getElephant();
+    ManageElephantProfilFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.manage_elephant_profil_fragment, container, false);
+    elephant = ((ManageElephantActivity) getActivity()).getElephant();
     binding.setE(elephant);
     View view = binding.getRoot();
     ButterKnife.bind(this, view);

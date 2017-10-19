@@ -25,7 +25,7 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.editElephant.EditElephantActivity;
+import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.showDocument.ShowDocumentActivity;
 import fr.elephantasia.activities.showElephant.fragment.ShowChildrenFragment;
 import fr.elephantasia.activities.showElephant.fragment.ShowDocumentFragment;
@@ -39,6 +39,8 @@ import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ShowElephantActivityBinding;
 import io.realm.Realm;
 
+import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.RESULT_DRAFT;
+import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.RESULT_VALIDATE;
 import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
 import static fr.elephantasia.database.model.Elephant.ID;
 
@@ -57,6 +59,8 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   // Attr
   private Elephant elephant;
   private Realm realm;
+  ViewPagerAdapter adapter;
+
 
   // Icons
   Drawable deleteIcon;
@@ -122,8 +126,8 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.edit_elephant) {
-      Intent intent = new Intent(this, EditElephantActivity.class);
-      intent.putExtra(EXTRA_EDIT_ELEPHANT_ID, elephant.id);
+      Intent intent = new Intent(this, ManageElephantActivity.class);
+      intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
       startActivityForResult(intent, REQUEST_ELEPHANT_EDITED);
       return true;
     } else if (item.getItemId() == R.id.delete_elephant) {
@@ -154,7 +158,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
-    if (resultCode == RESULT_OK) {
+    if (resultCode == RESULT_DRAFT || resultCode == RESULT_VALIDATE) {
       switch (requestCode) {
         case REQUEST_ELEPHANT_EDITED:
           Intent intent = getIntent();
@@ -176,11 +180,11 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
     if (id != -1) {
       return realm.where(Elephant.class).equalTo(ID, id).findFirst();
     }
-		throw new RuntimeException("ShowElephantActivity:148: ID incorrect");
+    throw new RuntimeException("ShowElephantActivity:148: ID incorrect");
   }
 
   private void setupViewPager(ViewPager viewPager) {
-    ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+    adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(new ShowOverviewFragment(), getString(R.string.overview));
     adapter.addFragment(new ShowParentageFragment(), getString(R.string.parentage));
     adapter.addFragment(new ShowChildrenFragment(), getString(R.string.children));
@@ -190,11 +194,11 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 
   @Override
   public void onDocumentClick(Document document) {
-		Intent intent = new Intent(this, ShowDocumentActivity.class);
-		ShowDocumentActivity.setExtraTitle(intent, document.title);
-		ShowDocumentActivity.setExtraPath(intent, document.path);
-		startActivity(intent);
-		overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+    Intent intent = new Intent(this, ShowDocumentActivity.class);
+    ShowDocumentActivity.setExtraTitle(intent, document.title);
+    ShowDocumentActivity.setExtraPath(intent, document.path);
+    startActivity(intent);
+    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
   }
 
 }

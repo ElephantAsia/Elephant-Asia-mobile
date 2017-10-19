@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.addElephant.fragment;
+package fr.elephantasia.activities.manageElephant.fragment;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -17,20 +17,20 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.addElephant.AddElephantActivity;
+import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.adapter.ChildrenListAdapter;
 import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.model.Elephant;
-import fr.elephantasia.databinding.AddElephantChildrenFragmentBinding;
+import fr.elephantasia.databinding.ManageElephantChildrenFragmentBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
 import io.realm.Realm;
 
 import static butterknife.ButterKnife.findById;
-import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_CHILD_SELECTED;
+import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.REQUEST_CHILD_SELECTED;
 import static fr.elephantasia.database.model.Elephant.ID;
 
-public class AddChildrenFragment extends Fragment {
+public class ChildrenFragment extends Fragment {
 
   // View binding
   @BindView(R.id.list) ListView childrenList;
@@ -42,13 +42,13 @@ public class AddChildrenFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    elephant = ((AddElephantActivity) getActivity()).getElephant();
+    elephant = ((ManageElephantActivity) getActivity()).getElephant();
     adapter = new ChildrenListAdapter(getContext(), elephant.children);
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    AddElephantChildrenFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_elephant_children_fragment, container, false);
+    ManageElephantChildrenFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.manage_elephant_children_fragment, container, false);
     binding.setE(elephant);
 
     View view = binding.getRoot();
@@ -83,7 +83,7 @@ public class AddChildrenFragment extends Fragment {
   }
 
   public void setChild(final int id) {
-    Realm realm = ((AddElephantActivity) getActivity()).getRealm();
+    Realm realm = ((ManageElephantActivity) getActivity()).getRealm();
     Elephant child = realm.where(Elephant.class).equalTo(ID, id).findFirst();
     adapter.add(realm.copyFromRealm(child));
   }

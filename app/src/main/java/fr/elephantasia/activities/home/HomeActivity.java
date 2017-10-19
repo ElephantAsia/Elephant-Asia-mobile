@@ -32,8 +32,8 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.LoginActivity;
+import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
-import fr.elephantasia.activities.addElephant.AddElephantActivity;
 import fr.elephantasia.adapter.HomeDrawerListAdapter;
 import fr.elephantasia.utils.Preferences;
 import io.realm.Realm;
@@ -44,14 +44,6 @@ public class HomeActivity extends AppCompatActivity {
   public static final int REQUEST_ADD_ELEPHANT = 1;
   private static final String EXTRA_FRAGMENT = "main.fragment";
   private static final int FRAGMENT_HOME_PAGE = 0;
-  //private static final int FRAGMENT_SEARCH = 1;
-  private static final int FRAGMENT_CURRENT_ANIMAL = 1;
-  private static final int FRAGMENT_LOCATIONS = 2;
-  private static final int FRAGMENT_REPORTS = 3;
-  private static final int FRAGMENT_FAVORITES = 4;
-  private static final int FRAGMENT_SETTINGS = 5;
-  private static final int FRAGMENT_OFFICIALS = 6;
-  private static final int FRAGMENT_SUPPORT = 7;
   private static final int FRAGMENT_DISCONNECT = 8;
 
   // View binding
@@ -64,8 +56,8 @@ public class HomeActivity extends AppCompatActivity {
 
   // Listeners Binding
   @OnClick(R.id.home_page_fab)
-  public void addElephant() {
-    Intent intent = new Intent(this, AddElephantActivity.class);
+  public void manageElephant() {
+    Intent intent = new Intent(this, ManageElephantActivity.class);
     startActivityForResult(intent, REQUEST_ADD_ELEPHANT);
   }
 
@@ -186,9 +178,9 @@ public class HomeActivity extends AppCompatActivity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (requestCode == REQUEST_ADD_ELEPHANT) {
-      if (resultCode == AddElephantActivity.RESULT_DRAFT) {
+      if (resultCode == ManageElephantActivity.RESULT_DRAFT) {
         Toast.makeText(this, R.string.elephant_draft_added, Toast.LENGTH_SHORT).show();
-      } else if (resultCode == AddElephantActivity.RESULT_VALIDATE) {
+      } else if (resultCode == ManageElephantActivity.RESULT_VALIDATE) {
         Toast.makeText(this, R.string.elephant_local_added, Toast.LENGTH_SHORT).show();
       }
     }
