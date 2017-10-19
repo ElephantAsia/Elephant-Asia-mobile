@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -15,8 +14,9 @@ import org.parceler.Parcels;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.showElephant.ShowElephantActivity;
+import fr.elephantasia.activities.editElephant.EditElephantActivity;
 import fr.elephantasia.adapter.SearchElephantAdapter;
+import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.model.Elephant;
 import io.realm.Case;
 import io.realm.OrderedRealmCollection;
@@ -50,7 +50,6 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     realm = Realm.getDefaultInstance();
 
     displaySearchResult();
-    setListItemClickListener();
 
     TextView title = toolbar.findViewById(R.id.title);
     title.setText(getString(R.string.search_result));
@@ -78,14 +77,16 @@ public class SearchElephantResultActivity extends AppCompatActivity {
 
   private void displaySearchResult() {
     OrderedRealmCollection<Elephant> realmResults = searchElephants();
+
     if (!realmResults.isEmpty()) {
-      adapter = new SearchElephantAdapter(realmResults);
+      initAdapter(realmResults);
       resultList.setAdapter(adapter);
     } else {
       resultList.setVisibility(View.GONE);
       noResult.setVisibility(View.VISIBLE);
     }
   }
+
 
   private RealmResults<Elephant> searchElephants() {
     Elephant e = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_ELEPHANT));
@@ -107,22 +108,25 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     return query.findAll();
   }
 
-  private void setListItemClickListener() {
+  private void initAdapter(OrderedRealmCollection<Elephant> realmResults) {
     String action = getIntent().getAction();
+    SearchElephantAdapter.OnActionClickListener listener;
 
-//    if (action != null && action.equals(SELECT_ELEPHANT)) {
-//      resultList.setOnItemClickListener(selectElephantListener());
-//    } else {
-//      resultList.setOnItemClickListener(showElephantListener());
-//    }
+    if (action != null && action.equals(ElephantPreview.SELECT)) {
+      listener = createElephantListener();
+    } else {
+      listener = createEditListener();
+      action = getString(R.string.edit);
+    }
+
+    adapter = new SearchElephantAdapter(realmResults, listener, action);
   }
 
-  AdapterView.OnItemClickListener selectElephantListener() {
-    return new AdapterView.OnItemClickListener() {
+  SearchElephantAdapter.OnActionClickListener createElephantListener() {
+    return new SearchElephantAdapter.OnActionClickListener() {
       @Override
-      public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+      public void onActionClick(Elephant elephant) {
         Intent resultIntent = getIntent();
-        Elephant elephant = adapter.getItem(i);
 
         if (elephant != null) {
           resultIntent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
@@ -133,12 +137,11 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     };
   }
 
-  AdapterView.OnItemClickListener showElephantListener() {
-    return new AdapterView.OnItemClickListener() {
+  SearchElephantAdapter.OnActionClickListener createEditListener() {
+    return new SearchElephantAdapter.OnActionClickListener() {
       @Override
-      public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Intent intent = new Intent(SearchElephantResultActivity.this, ShowElephantActivity.class);
-        Elephant elephant = adapter.getItem(i);
+      public void onActionClick(Elephant elephant) {
+        Intent intent = new Intent(SearchElephantResultActivity.this, EditElephantActivity.class);
 
         if (elephant != null) {
           intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
@@ -147,5 +150,4 @@ public class SearchElephantResultActivity extends AppCompatActivity {
       }
     };
   }
-
 }

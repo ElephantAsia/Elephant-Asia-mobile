@@ -130,6 +130,8 @@
   <string name="nickname">Nickname</string>
   <string name="delete">delete</string>
   <string name="edit">edit</string>
+  <string name="select">select</string>
+  <string name="unselect">unselect</string>
   <string name="recent">Recent</string>
 
   <string name="date">%1$04d/%2$02d/%3$02d</string>

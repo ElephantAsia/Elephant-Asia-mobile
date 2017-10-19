@@ -7,6 +7,7 @@
   <TextView
     android:drawablePadding="10dp"
     android:padding="10dp"
+    android:hint="@string/add_child"
     android:textColor="@color/primary_light"
     android:id="@+id/add_button_footer"
     android:layout_width="match_parent"

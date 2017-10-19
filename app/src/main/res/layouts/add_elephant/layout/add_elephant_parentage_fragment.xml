@@ -12,14 +12,12 @@
 
   </data>
 
+
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
-    >
+    android:padding="16dp">
 
     <LinearLayout
       android:layout_width="wrap_content"
@@ -47,18 +45,16 @@
           android:src="@drawable/add_picture"
           android:visibility="@{e.mother != null ? View.GONE : View.VISIBLE}"/>
 
-        <fr.elephantasia.customView.ElephantPreview
+        <fr.elephantasia.customView.ElephantPreviewFull
           android:id="@+id/mother_preview"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:visibility="@{e.mother != null ? View.VISIBLE : View.GONE}"
-          app:elephant="@{e.mother}"
-          app:removeButtonVisibility="@{true}"/>
+          app:action="@string/unselect"/>
 
       </FrameLayout>
 
     </LinearLayout>
-
 
     <LinearLayout
       android:layout_width="wrap_content"
@@ -87,38 +83,18 @@
           android:src="@drawable/add_picture"
           android:visibility="@{e.father != null ? View.GONE : View.VISIBLE}"/>
 
-        <fr.elephantasia.customView.ElephantPreview
+        <fr.elephantasia.customView.ElephantPreviewFull
           android:id="@+id/father_preview"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:visibility="@{e.father != null ? View.VISIBLE : View.GONE}"
-          app:elephant="@{e.father}"
-          app:removeButtonVisibility="@{true}"/>
+          app:action="@string/unselect"/>
 
       </FrameLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_marginTop="14dp"
-      android:orientation="vertical">
-
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="@string/children"
-        android:textSize="18sp"/>
-
-      <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    </LinearLayout>
-
   </LinearLayout>
+
 
 </layout>

@@ -37,6 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.addDocument.AddDocumentActivity;
+import fr.elephantasia.activities.addElephant.fragment.AddChildrenFragment;
 import fr.elephantasia.activities.addElephant.fragment.AddContactFragment;
 import fr.elephantasia.activities.addElephant.fragment.AddDescriptionFragment;
 import fr.elephantasia.activities.addElephant.fragment.AddDocumentFragment;
@@ -74,7 +75,7 @@ public class AddElephantActivity extends AppCompatActivity {
   public static final int REQUEST_ADD_DOCUMENT = 10;
 
   // Action code
-  public static final String SELECT_ELEPHANT = "select_elephant";
+//  public static final String SELECT_ELEPHANT = "select_elephant";
   static String motherId;
 
   // View binding
@@ -89,6 +90,7 @@ public class AddElephantActivity extends AppCompatActivity {
   private AddRegistrationFragment registrationFragment = new AddRegistrationFragment();;
   private AddContactFragment contactFragment = new AddContactFragment();
   private AddParentageFragment parentageFragment = new AddParentageFragment();
+  private AddChildrenFragment childrenFragment = new AddChildrenFragment();
   private AddDocumentFragment docFragment = new AddDocumentFragment();
 
   // Attr
@@ -163,6 +165,7 @@ public class AddElephantActivity extends AppCompatActivity {
     adapter.addFragment(contactFragment, getString(R.string.contact));
     adapter.addFragment(new AddDescriptionFragment(), getString(R.string.description));
     adapter.addFragment(parentageFragment, getString(R.string.parentage));
+    adapter.addFragment(childrenFragment, getString(R.string.children));
     viewPager.setAdapter(adapter);
   }
 
@@ -208,7 +211,7 @@ public class AddElephantActivity extends AppCompatActivity {
           parentageFragment.setFather(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
         case REQUEST_CHILD_SELECTED:
-          parentageFragment.setChild(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
+          childrenFragment.setChild(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
         case REQUEST_CAPTURE_PHOTO:
           addDocument(Uri.fromFile(ImageUtil.getCapturePhotoFile(this)));

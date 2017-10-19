@@ -1,6 +1,5 @@
 package fr.elephantasia.activities.editElephant.fragment;
 
-
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -21,10 +20,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
-import fr.elephantasia.activities.editElephant.EditElephantActivity;
-import fr.elephantasia.adapter.ElephantPreviewAdapter;
+import fr.elephantasia.activities.addElephant.AddElephantActivity;
 import fr.elephantasia.customView.ElephantPreview;
-import fr.elephantasia.database.RealmManager;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.AddElephantParentageFragmentBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
@@ -34,57 +31,52 @@ import static butterknife.ButterKnife.findById;
 import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_CHILD_SELECTED;
 import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_FATHER_SELECTED;
 import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_MOTHER_SELECTED;
-import static fr.elephantasia.activities.addElephant.AddElephantActivity.SELECT_ELEPHANT;
 import static fr.elephantasia.database.model.Elephant.ID;
 
 public class EditParentageFragment extends Fragment {
 
   // View binding
   @BindView(R.id.mother_add_button) ImageView motherButton;
-  @BindView(R.id.mother_preview) ElephantPreview motherPreview;
   @BindView(R.id.father_add_button) ImageView fatherButton;
+  @BindView(R.id.mother_preview) ElephantPreview motherPreview;
   @BindView(R.id.father_preview) ElephantPreview fatherPreview;
   @BindView(R.id.list) ListView childrenList;
 
-
   // Attr
   private Elephant elephant;
-  private AddElephantParentageFragmentBinding binding;
-  private ElephantPreviewAdapter adapter;
-  private RealmManager realmManager = RealmManager.getInstance();
 
   // Listener binding
   @OnClick(R.id.mother_add_button)
   public void searchMother() {
     Intent intent = new Intent(getActivity(), SearchElephantActivity.class);
-    intent.setAction(SELECT_ELEPHANT);
+    intent.setAction(ElephantPreview.SELECT);
     getActivity().startActivityForResult(intent, REQUEST_MOTHER_SELECTED);
   }
 
   @OnClick(R.id.father_add_button)
   public void searchFather() {
     Intent intent = new Intent(getActivity(), SearchElephantActivity.class);
-    intent.setAction(SELECT_ELEPHANT);
+    intent.setAction(ElephantPreview.SELECT);
     getActivity().startActivityForResult(intent, REQUEST_FATHER_SELECTED);
   }
-
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    elephant = ((EditElephantActivity) getActivity()).getElephant();
-    adapter = new ElephantPreviewAdapter(getContext(), elephant.children, true, false);
+    elephant = ((AddElephantActivity) getActivity()).getElephant();
+//    adapter = new ChildrenListAdapter(getContext(), elephant.children, true, false);
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    binding = DataBindingUtil.inflate(inflater, R.layout.add_elephant_parentage_fragment, container, false);
+    AddElephantParentageFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.add_elephant_parentage_fragment, container, false);
     binding.setE(elephant);
+
     View view = binding.getRoot();
     ButterKnife.bind(this, view);
-    motherPreview.setRemoveListener(unsetMother());
-    fatherPreview.setRemoveListener(unsetFather());
+
     setupChildrenList(inflater);
+
     KeyboardHelpers.hideKeyboardListener(view, getActivity());
     return (view);
   }
@@ -102,39 +94,44 @@ public class EditParentageFragment extends Fragment {
     addChildButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         Intent intent = new Intent(getActivity(), SearchElephantActivity.class);
-        intent.setAction(SELECT_ELEPHANT);
+        intent.setAction(ElephantPreview.SELECT);
         getActivity().startActivityForResult(intent, REQUEST_CHILD_SELECTED);
       }
     });
-    childrenList.addHeaderView(headerView);
-    childrenList.setAdapter(adapter);
+//    childrenList.addHeaderView(headerView);
+//    childrenList.setAdapter(adapter);
   }
 
   public void setMother(final int id) {
-    Realm realm = Realm.getDefaultInstance();
+    Realm realm = ((AddElephantActivity) getActivity()).getRealm();
     elephant.mother = realm.where(Elephant.class).equalTo(ID, id).findFirst();
     elephant.mother = realm.copyFromRealm(elephant.mother);
-    motherButton.setVisibility(View.GONE);
+
     motherPreview.setElephant(elephant.mother);
+    motherPreview.setPreviewContent();
+    motherPreview.setActionListener(unsetMother(), getString(R.string.unselect));
+
+    motherButton.setVisibility(View.GONE);
     motherPreview.setVisibility(View.VISIBLE);
-    realm.close();
   }
 
   public void setFather(final int id) {
-    Realm realm = Realm.getDefaultInstance();
+    Realm realm = ((AddElephantActivity) getActivity()).getRealm();
     elephant.father = realm.where(Elephant.class).equalTo(ID, id).findFirst();
     elephant.father = realm.copyFromRealm(elephant.father);
-    fatherButton.setVisibility(View.GONE);
+
     fatherPreview.setElephant(elephant.father);
+    fatherPreview.setPreviewContent();
+    motherPreview.setActionListener(unsetFather(), getString(R.string.unselect));
+
+    fatherButton.setVisibility(View.GONE);
     fatherPreview.setVisibility(View.VISIBLE);
-    realm.close();
   }
 
   public void setChild(final int id) {
-    Realm realm = Realm.getDefaultInstance();
+    Realm realm = ((AddElephantActivity) getActivity()).getRealm();
     Elephant child = realm.where(Elephant.class).equalTo(ID, id).findFirst();
-    adapter.add(realm.copyFromRealm(child));
-    realm.close();
+//    adapter.add(realm.copyFromRealm(child));
   }
 
   private View.OnClickListener unsetMother() {

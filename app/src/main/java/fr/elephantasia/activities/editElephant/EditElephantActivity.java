@@ -151,7 +151,7 @@ public class EditElephantActivity extends AppCompatActivity {
     tabLayout.setupWithViewPager(viewPager);
     realm = Realm.getDefaultInstance();
 
-    int id = getIntent().getIntExtra(EXTRA_EDIT_ELEPHANT_ID, -1);
+    int id = getIntent().getIntExtra(EXTRA_ELEPHANT_ID, -1);
     elephant = realm.copyFromRealm(realm.where(Elephant.class).equalTo(ID, id).findFirst());
     documents = realm.copyFromRealm(realm.where(Document.class).equalTo(Document.ELEPHANT_ID, id).findAll());
 
