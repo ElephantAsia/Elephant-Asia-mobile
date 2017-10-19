@@ -3,6 +3,7 @@ package fr.elephantasia.customView;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -23,7 +24,7 @@ import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.E
  * Created by seb on 27/05/2017.
  */
 
-public class ElephantPreview extends FrameLayout {
+public abstract class ElephantPreview extends FrameLayout {
 
   //  @BindView(R.id.remove_elephant) ImageButton removeButton;
 //  @BindView(R.id.favorite_elephant_off) ImageButton favoriteButton;
@@ -68,14 +69,17 @@ public class ElephantPreview extends FrameLayout {
     showButton = v.findViewById(R.id.show_button);
     actionButton = v.findViewById(R.id.action_button);
 
-    showButton.setOnClickListener(
-        new View.OnClickListener() {
-          public void onClick(View v) {
-            Intent intent = new Intent(v.getContext(), ShowElephantActivity.class);
-            intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
-            getContext().startActivity(intent);
-          }
-        });
+    if (showButton != null) {
+      showButton.setOnClickListener(
+          new View.OnClickListener() {
+            public void onClick(View v) {
+              Intent intent = new Intent(v.getContext(), ShowElephantActivity.class);
+              intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+              getContext().startActivity(intent);
+            }
+          });
+    }
+
 
     setTextIcons();
     addView(v);
@@ -100,6 +104,10 @@ public class ElephantPreview extends FrameLayout {
     actionButton.setText(action);
   }
 
+  public void hideActionButton() {
+    actionButton.setVisibility(GONE);
+  }
+
   public void setElephant(Elephant elephant) {
     this.elephant = elephant;
   }
@@ -111,7 +119,10 @@ public class ElephantPreview extends FrameLayout {
       age.setText(elephant.getAgeText());
       height.setText(elephant.getHeightText());
       weight.setText(elephant.getWeightText());
-//      setButtonListener();
+
+      name.setMaxLines(1);
+      name.setHorizontallyScrolling(true);
+      name.setEllipsize(TextUtils.TruncateAt.END);
     }
   }
 }

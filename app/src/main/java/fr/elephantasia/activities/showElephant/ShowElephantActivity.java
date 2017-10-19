@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
@@ -26,6 +27,7 @@ import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.editElephant.EditElephantActivity;
 import fr.elephantasia.activities.showDocument.ShowDocumentActivity;
+import fr.elephantasia.activities.showElephant.fragment.ShowChildrenFragment;
 import fr.elephantasia.activities.showElephant.fragment.ShowDocumentFragment;
 import fr.elephantasia.activities.showElephant.fragment.ShowOverviewFragment;
 import fr.elephantasia.activities.showElephant.fragment.ShowParentageFragment;
@@ -65,14 +67,20 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     ShowElephantActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.show_elephant_activity);
+
     realm = Realm.getDefaultInstance();
     elephant = getExtraElephant();
+
     RealmDB.updateLastVisitedDate(elephant.id);
+
     binding.setE(elephant);
     ButterKnife.bind(this);
 
     initIcon();
     setSupportActionBar(toolbar);
+    toolbarTitle.setMaxLines(1);
+    toolbarTitle.setHorizontallyScrolling(true);
+    toolbarTitle.setEllipsize(TextUtils.TruncateAt.END);
     toolbarTitle.setText(String.format(getString(R.string.elephant_show_title), elephant.name));
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -175,6 +183,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
     ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(new ShowOverviewFragment(), getString(R.string.overview));
     adapter.addFragment(new ShowParentageFragment(), getString(R.string.parentage));
+    adapter.addFragment(new ShowChildrenFragment(), getString(R.string.children));
     adapter.addFragment(new ShowDocumentFragment(), getString(R.string.documents));
     viewPager.setAdapter(adapter);
   }

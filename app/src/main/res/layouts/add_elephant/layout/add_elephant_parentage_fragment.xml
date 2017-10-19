@@ -1,5 +1,4 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:theme="@style/AppThemeWhiteBackground">
 
   <data>
@@ -28,6 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:textColor="@color/accent"
         android:text="@string/mother"
         android:textSize="18sp"/>
 
@@ -49,8 +49,7 @@
           android:id="@+id/mother_preview"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:visibility="@{e.mother != null ? View.VISIBLE : View.GONE}"
-          app:action="@string/unselect"/>
+          android:visibility="@{e.mother != null ? View.VISIBLE : View.GONE}"/>
 
       </FrameLayout>
 
@@ -66,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:textColor="@color/accent"
         android:text="@string/father"
         android:textSize="18sp"/>
 
@@ -87,8 +87,7 @@
           android:id="@+id/father_preview"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:visibility="@{e.father != null ? View.VISIBLE : View.GONE}"
-          app:action="@string/unselect"/>
+          android:visibility="@{e.father != null ? View.VISIBLE : View.GONE}"/>
 
       </FrameLayout>
 

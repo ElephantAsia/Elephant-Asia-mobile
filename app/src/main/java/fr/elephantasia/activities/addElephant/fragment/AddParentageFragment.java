@@ -4,15 +4,10 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.mikepenz.iconics.IconicsDrawable;
-import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +22,6 @@ import fr.elephantasia.utils.KeyboardHelpers;
 import io.realm.Realm;
 
 import static butterknife.ButterKnife.findById;
-import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_CHILD_SELECTED;
 import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_FATHER_SELECTED;
 import static fr.elephantasia.activities.addElephant.AddElephantActivity.REQUEST_MOTHER_SELECTED;
 import static fr.elephantasia.database.model.Elephant.ID;

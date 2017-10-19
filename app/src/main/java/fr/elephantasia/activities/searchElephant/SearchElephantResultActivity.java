@@ -49,12 +49,13 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     ButterKnife.bind(this);
     realm = Realm.getDefaultInstance();
 
+    resultList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
     displaySearchResult();
 
     TextView title = toolbar.findViewById(R.id.title);
     title.setText(getString(R.string.search_result));
 
-    resultList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) {
@@ -86,7 +87,6 @@ public class SearchElephantResultActivity extends AppCompatActivity {
       noResult.setVisibility(View.VISIBLE);
     }
   }
-
 
   private RealmResults<Elephant> searchElephants() {
     Elephant e = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_ELEPHANT));

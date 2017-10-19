@@ -1,5 +1,4 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:theme="@style/AppThemeWhiteBackground">
 
   <data>
@@ -12,84 +11,68 @@
 
   </data>
 
-  <ScrollView
-    android:id="@+id/scrollViewId"
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <LinearLayout
-      android:layout_width="match_parent"
+      android:layout_weight="0.5"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:paddingLeft="16dp"
-      android:paddingRight="16dp"
-      android:paddingTop="16dp"
-      >
+      android:orientation="vertical">
 
-      <LinearLayout
+      <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="@{e.mother != null ? View.VISIBLE : View.GONE}">
+        android:text="@string/mother"
+        android:textColor="@color/accent"
+        android:textSize="18sp"/>
 
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_margin="5dp"
-          android:text="@string/mother"
-          android:textSize="18sp"/>
-
-        <fr.elephantasia.customView.ElephantPreview
-          android:id="@+id/mother_preview"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          app:elephant="@{e.mother}"/>
-      </LinearLayout>
-
-
-      <LinearLayout
+      <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:orientation="vertical"
-        android:visibility="@{e.father != null ? View.VISIBLE : View.GONE}">
+        android:text="@string/not_set"
+        android:textStyle="italic"
+        android:visibility="@{e.mother == null ? View.VISIBLE : View.GONE}"/>
 
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_margin="5dp"
-          android:text="@string/father"
-          android:textSize="18sp"/>
-
-
-        <fr.elephantasia.customView.ElephantPreview
-          android:id="@+id/father_preview"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          app:elephant="@{e.father}"/>
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="14dp"
-        android:orientation="vertical">
-
-        <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="5dp"
-          android:text="@string/children"
-          android:textSize="18sp"/>
-
-        <ListView
-          android:id="@+id/list"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"/>
-
-      </LinearLayout>
+      <fr.elephantasia.customView.ElephantPreviewFull
+        android:id="@+id/mother_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="@{e.mother != null ? View.VISIBLE : View.GONE}"/>
     </LinearLayout>
-  </ScrollView>
+
+
+    <LinearLayout
+      android:layout_weight="0.5"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/father"
+        android:textColor="@color/accent"
+        android:textSize="18sp"/>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/not_set"
+        android:textStyle="italic"
+        android:visibility="@{e.father == null ? View.VISIBLE : View.GONE}"/>
+
+
+      <fr.elephantasia.customView.ElephantPreviewFull
+        android:id="@+id/father_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="@{e.father != null ? View.VISIBLE : View.GONE}"/>
+
+    </LinearLayout>
+
+  </LinearLayout>
 </layout>
