@@ -177,7 +177,7 @@ public class Elephant extends RealmObject {
     if (!TextUtils.isEmpty(birthDate)) {
       Integer year = Integer.parseInt(birthDate.substring(0, 4));
       Integer age = Calendar.getInstance().get(Calendar.YEAR) - year;
-      res = age.toString() + "y";
+      res = age.toString();
     }
     return res;
   }

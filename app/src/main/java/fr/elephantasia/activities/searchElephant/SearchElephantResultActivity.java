@@ -30,8 +30,14 @@ import static fr.elephantasia.database.model.Elephant.CHIPS1;
 import static fr.elephantasia.database.model.Elephant.FEMALE;
 import static fr.elephantasia.database.model.Elephant.MALE;
 import static fr.elephantasia.database.model.Elephant.NAME;
+import static fr.elephantasia.database.model.Elephant.STATE;
 
 public class SearchElephantResultActivity extends AppCompatActivity {
+
+  public static String SEARCH_ALL = "SEARCH_ALL";
+  public static String SEARCH_PENDING = "SEARCH_PENDING";
+  public static String SEARCH_DRAFT = "SEARCH_DRAFT";
+  public static String SEARCH_SAVED = "SEARCH_SAVED";
 
   // View Binding
   @BindView(R.id.result_view) RecyclerView resultList;
@@ -89,22 +95,35 @@ public class SearchElephantResultActivity extends AppCompatActivity {
   }
 
   private RealmResults<Elephant> searchElephants() {
-    Elephant e = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_ELEPHANT));
     RealmQuery<Elephant> query = realm.where(Elephant.class);
 
-    query.contains(NAME, e.name, Case.INSENSITIVE);
+    Elephant e = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_ELEPHANT));
+    String action = getIntent().getAction();
 
-    if (e.chips1 != null) {
-      query.contains(CHIPS1, e.chips1, Case.INSENSITIVE);
+    if (e != null) {
+      query.contains(NAME, e.name, Case.INSENSITIVE);
+
+      if (e.chips1 != null) {
+        query.contains(CHIPS1, e.chips1, Case.INSENSITIVE);
+      }
+
+      if (!e.male) {
+        query.equalTo(MALE, false);
+      }
+
+      if (!e.female) {
+        query.equalTo(FEMALE, false);
+      }
+    } else if (action != null) {
+      if (action.equals(SEARCH_DRAFT)) {
+        query.equalTo(STATE, Elephant.StateValue.draft.name());
+      } else if (action.equals(SEARCH_PENDING)) {
+        query.equalTo(STATE, Elephant.StateValue.pending.name());
+      } else if (action.equals(SEARCH_SAVED)) {
+        query.equalTo(STATE, Elephant.StateValue.saved.name());
+      }
     }
 
-    if (!e.male) {
-      query.equalTo(MALE, false);
-    }
-
-    if (!e.female) {
-      query.equalTo(FEMALE, false);
-    }
     return query.findAll();
   }
 

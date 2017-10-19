@@ -98,6 +98,7 @@
   <string name="no_item_found">No item found</string>
 
   <string name="not_synchronized_yet">Not synchronized yet</string>
+  <string name="sync_db">Sync database</string>
 
   <string name="elephant_microchip">Elephant microchip</string>
 

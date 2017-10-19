@@ -1,8 +1,10 @@
 package fr.elephantasia.activities.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +13,22 @@ import android.widget.TextView;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
+import org.parceler.Parcels;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.searchElephant.SearchElephantResultActivity;
 import fr.elephantasia.database.model.Elephant;
 import io.realm.Realm;
 
+import static fr.elephantasia.R.mipmap.elephant;
+import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_SEARCH_ELEPHANT;
+import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_ALL;
+import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_DRAFT;
+import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_PENDING;
+import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_SAVED;
 import static fr.elephantasia.database.model.Elephant.STATE;
 import static fr.elephantasia.database.model.Elephant.StateValue;
 
@@ -28,6 +40,34 @@ public class HomeOverviewFragment extends Fragment {
   @BindView(R.id.draft_value) TextView draftValue;
   @BindView(R.id.saved_value) TextView savedValue;
 
+  // Listeners Binding
+  @OnClick(R.id.total_card)
+  public void searchElephantAll() {
+    Intent intent = new Intent(getContext(), SearchElephantResultActivity.class);
+    intent.setAction(SEARCH_ALL);
+    startActivity(intent);
+  }
+
+  @OnClick(R.id.pending_card)
+  public void searchElephantPending() {
+    Intent intent = new Intent(getContext(), SearchElephantResultActivity.class);
+    intent.setAction(SEARCH_PENDING);
+    startActivity(intent);
+  }
+
+  @OnClick(R.id.draft_card)
+  public void searchElephantDraft() {
+    Intent intent = new Intent(getContext(), SearchElephantResultActivity.class);
+    intent.setAction(SEARCH_DRAFT);
+    startActivity(intent);
+  }
+
+  @OnClick(R.id.saved_card)
+  public void searchElephantSaved() {
+    Intent intent = new Intent(getContext(), SearchElephantResultActivity.class);
+    intent.setAction(SEARCH_SAVED);
+    startActivity(intent);
+  }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

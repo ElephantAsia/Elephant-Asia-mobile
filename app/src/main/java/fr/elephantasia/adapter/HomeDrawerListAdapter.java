@@ -1,6 +1,7 @@
 package fr.elephantasia.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +9,19 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.elephantasia.R;
+import fr.elephantasia.activities.LoginActivity;
+import fr.elephantasia.activities.home.HomeActivity;
+import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
+import fr.elephantasia.utils.Preferences;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 
 /**
@@ -20,23 +30,125 @@ import fr.elephantasia.R;
 
 public class HomeDrawerListAdapter extends BaseAdapter {
 
-  private Context context;
   private int selection;
-  private List<String> content;
+  private List<NavItem> navItems;
+  private Context ctx;
 
-  public HomeDrawerListAdapter(Context context) {
-    this.context = context;
-    this.content = new ArrayList<>();
+  class NavItem {
+    String title;
+    IconicsDrawable icon;
+    View.OnClickListener listener;
 
-    content.add(context.getString(R.string.home_page));
-    content.add(context.getString(R.string.current_animal));
-    content.add(context.getString(R.string.locations));
-    content.add(context.getString(R.string.reports));
-    content.add(context.getString(R.string.favorites));
-    content.add(context.getString(R.string.settings));
-    content.add(context.getString(R.string.officials));
-    content.add(context.getString(R.string.support));
-    content.add(context.getString(R.string.logout));
+    public NavItem(String title, IconicsDrawable icon, View.OnClickListener listener) {
+      this.title = title;
+      this.icon = icon;
+      this.listener = listener;
+    }
+  }
+
+  public HomeDrawerListAdapter(final Context ctx) {
+    this.navItems = new ArrayList<>();
+    this.ctx = ctx;
+
+    navItems.add(
+        new NavItem(ctx.getString(R.string.home_page),
+            new IconicsDrawable(ctx).icon(MaterialDesignIconic.Icon.gmi_home)
+                .color(ContextCompat.getColor(ctx, R.color.primary_light))
+                .sizeDp(16),
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                Intent intent = new Intent(ctx, HomeActivity.class);
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                ctx.startActivity(intent);
+              }
+            }));
+
+    navItems.add(
+        new NavItem(ctx.getString(R.string.search),
+            new IconicsDrawable(ctx).icon(MaterialDesignIconic.Icon.gmi_search)
+                .color(ContextCompat.getColor(ctx, R.color.primary_light))
+                .sizeDp(16),
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                Intent intent = new Intent(ctx, SearchElephantActivity.class);
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                ctx.startActivity(intent);
+              }
+            }));
+
+    navItems.add(
+        new NavItem(ctx.getString(R.string.sync_db),
+            new IconicsDrawable(ctx).icon(MaterialDesignIconic.Icon.gmi_refresh_sync)
+                .color(ContextCompat.getColor(ctx, R.color.primary_light))
+                .sizeDp(16),
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+//                Intent intent = new Intent(ctx, SearchElephantActivity.class);
+//                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+//                ctx.startActivity(intent);
+              }
+            }));
+
+    navItems.add(
+        new NavItem(ctx.getString(R.string.locations),
+            new IconicsDrawable(ctx).icon(MaterialDesignIconic.Icon.gmi_pin)
+                .color(ContextCompat.getColor(ctx, R.color.primary_light))
+                .sizeDp(16),
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+//                Intent intent = new Intent(ctx, SearchElephantActivity.class);
+//                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+//                ctx.startActivity(intent);
+              }
+            }));
+
+    navItems.add(
+        new NavItem(ctx.getString(R.string.favorites),
+            new IconicsDrawable(ctx).icon(MaterialDesignIconic.Icon.gmi_star)
+                .color(ContextCompat.getColor(ctx, R.color.primary_light))
+                .sizeDp(16),
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+//                Intent intent = new Intent(ctx, SearchElephantActivity.class);
+//                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+//                ctx.startActivity(intent);
+              }
+            }));
+
+    navItems.add(
+        new NavItem(ctx.getString(R.string.settings),
+            new IconicsDrawable(ctx).icon(MaterialDesignIconic.Icon.gmi_settings)
+                .color(ContextCompat.getColor(ctx, R.color.primary_light))
+                .sizeDp(16),
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+//                Intent intent = new Intent(ctx, SearchElephantActivity.class);
+//                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+//                ctx.startActivity(intent);
+              }
+            }));
+
+    navItems.add(
+        new NavItem(ctx.getString(R.string.logout),
+            new IconicsDrawable(ctx).icon(MaterialDesignIconic.Icon.gmi_sign_in)
+                .color(ContextCompat.getColor(ctx, R.color.primary_light))
+                .sizeDp(16),
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                Intent intent = new Intent(ctx, LoginActivity.class);
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                Preferences.setUsername(ctx.getApplicationContext(), null);
+                Preferences.setPassword(ctx.getApplicationContext(), null);
+                ctx.startActivity(intent);
+              }
+            }));
   }
 
   public void setSelection(int selection) {
@@ -46,13 +158,13 @@ public class HomeDrawerListAdapter extends BaseAdapter {
 
   @Override
   public int getCount() {
-    return (content.size());
+    return (navItems.size());
   }
 
 
   @Override
-  public String getItem(int index) {
-    return (content.get(index));
+  public NavItem getItem(int index) {
+    return (navItems.get(index));
   }
 
   @Override
@@ -67,21 +179,23 @@ public class HomeDrawerListAdapter extends BaseAdapter {
     if (old != null) {
       view = old;
     } else {
-      LayoutInflater inflater = LayoutInflater.from(context);
+      LayoutInflater inflater = LayoutInflater.from(ctx);
       view = inflater.inflate(R.layout.list_item_drawer, parent, false);
+
+      TextView item = view.findViewById(R.id.nav_item);
+      item.setText(getItem(index).title);
+      item.setCompoundDrawables(getItem(index).icon, null, null, null);
+      item.setOnClickListener(getItem(index).listener);
     }
 
-    TextView label = (TextView) view.findViewById(R.id.listitem_drawer_label);
-    //ImageView image = (ImageView) view.findViewById(R.id.listitem_drawer_image);
-    label.setText(getItem(index));
-
     if (index == selection) {
-      //image.setImageResource(R.drawable.menu_icon_home_enabled);
-      //label.setTextColor(context.getResources().getColor(R.color.list_selection));
+//      image.setImageResource(R.drawable.menu_icon_home_enabled);
+//      label.setTextColor(context.getResources().getColor(R.color.list_selection));
     } else {
-      label.setTextColor(ContextCompat.getColor(context, R.color.list_indice));
+//      label.setTextColor(ContextCompat.getColor(context, R.color.list_indice));
     }
     return view;
   }
+
 
 }

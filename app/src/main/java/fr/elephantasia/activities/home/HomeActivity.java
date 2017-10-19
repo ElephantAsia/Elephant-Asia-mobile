@@ -2,8 +2,10 @@ package fr.elephantasia.activities.home;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -43,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
 
   public static final int REQUEST_ADD_ELEPHANT = 1;
   private static final String EXTRA_FRAGMENT = "main.fragment";
+
   private static final int FRAGMENT_HOME_PAGE = 0;
   private static final int FRAGMENT_DISCONNECT = 8;
 
@@ -129,12 +132,9 @@ public class HomeActivity extends AppCompatActivity {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         drawerListAdapter.setSelection(position);
+        view.setBackgroundColor(ContextCompat.getColor(parent.getContext(), R.color.primary_light));
         drawerListAdapter.notifyDataSetChanged();
-
         drawer.closeDrawer(GravityCompat.START);
-
-        setFragment(getIntent(), position);
-        refreshFragment();
       }
     });
 
