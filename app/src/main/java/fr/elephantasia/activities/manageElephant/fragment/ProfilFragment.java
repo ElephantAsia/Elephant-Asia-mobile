@@ -68,20 +68,15 @@ public class ProfilFragment extends Fragment {
     binding.setE(elephant);
     View view = binding.getRoot();
     ButterKnife.bind(this, view);
+
     KeyboardHelpers.hideKeyboardListener(view, getActivity());
     return (view);
   }
 
-  /**
-   * Used by EditElephantActivity to set error
-   */
   public void setNameError() {
     name.setError(getText(R.string.name_required));
   }
 
-  /**
-   * Used by EditElephantActivity to set error
-   */
   public void setSexError() {
     male.setError(getText(R.string.sex_required));
     female.setError(getText(R.string.sex_required));

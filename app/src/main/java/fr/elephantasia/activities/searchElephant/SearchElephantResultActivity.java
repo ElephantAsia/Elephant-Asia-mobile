@@ -75,13 +75,12 @@ public class SearchElephantResultActivity extends AppCompatActivity {
   }
 
   private void displaySearchResult() {
-    OrderedRealmCollection<Elephant> realmResults = searchElephants();
-    Integer total = realmResults.size();
+    OrderedRealmCollection<Elephant> results = searchElephants();
 
-    toolbarTitle.setText(total.toString().concat(" ").concat(getString(R.string.search_result)));
+    toolbarTitle.setText(String.format(getString(R.string.search_result), results.size()));
 
-    if (!realmResults.isEmpty()) {
-      initAdapter(realmResults);
+    if (!results.isEmpty()) {
+      initAdapter(results);
       resultList.setAdapter(adapter);
     } else {
       resultList.setVisibility(View.GONE);

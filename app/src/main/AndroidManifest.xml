@@ -22,7 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.addElephant.AddElephantActivity"/>
         <activity android:name=".activities.manageElephant.ManageElephantActivity"/>
         <activity android:name=".activities.LoginActivity"/>
         <activity android:name=".activities.home.HomeActivity"/>
@@ -37,7 +36,6 @@
         <activity
             android:name=".activities.addDocument.AddDocumentActivity"
             android:windowSoftInputMode="stateVisible"/>
-        <activity android:name=".activities.editElephant.EditElephantActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

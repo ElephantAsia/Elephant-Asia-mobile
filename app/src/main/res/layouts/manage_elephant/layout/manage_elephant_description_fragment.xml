@@ -182,7 +182,7 @@
           android:clickable="true"
           android:focusable="false"
           android:gravity="center"
-          android:inputType="numberSigned"/>
+          android:inputType="numberDecimal|numberSigned"/>
 
       </LinearLayout>
 

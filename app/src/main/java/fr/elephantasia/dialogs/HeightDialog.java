@@ -49,7 +49,7 @@ public class HeightDialog {
     unit.setAdapter(spinnerUnits);
     value.setText(elephant.height);
     new MaterialDialog.Builder(activity)
-        .title(R.string.set_girth)
+        .title(R.string.set_height)
         .positiveText(R.string.OK)
         .onPositive(new MaterialDialog.SingleButtonCallback() {
           @Override

@@ -27,7 +27,7 @@ public class RealmDB {
     dog.mother = realm.where(Elephant.class).equalTo(ID, id).findFirst();
   } */
 
-  static private Integer getNextId(Realm realm, Class<? extends RealmObject> cls, String columnIdName) {
+  static public Integer getNextId(Realm realm, Class<? extends RealmObject> cls, String columnIdName) {
 		return StaticTools.increment(realm.where(cls).max(columnIdName));
 	}
 

@@ -94,7 +94,7 @@
 
   <string name="documents">Documents</string>
 
-  <string name="search_result">Result(s)</string>
+  <string name="search_result">%d Result(s)</string>
   <string name="no_item_found">No item found</string>
 
   <string name="not_synchronized_yet">Not synchronized yet</string>
@@ -156,5 +156,6 @@
   <string name="set_birth_location">Set birth location</string>
   <string name="set_registration_location">Set registration location</string>
   <string name="set_girth">Set girth in cm</string>
+  <string name="set_height">Set height</string>
 
 </resources>

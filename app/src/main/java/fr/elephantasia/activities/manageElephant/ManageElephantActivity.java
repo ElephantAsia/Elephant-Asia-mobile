@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -37,11 +36,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.addDocument.AddDocumentActivity;
 import fr.elephantasia.activities.manageElephant.fragment.ChildrenFragment;
 import fr.elephantasia.activities.manageElephant.fragment.ContactFragment;
 import fr.elephantasia.activities.manageElephant.fragment.DescriptionFragment;
-import fr.elephantasia.activities.manageElephant.fragment.DocumentFragment;
 import fr.elephantasia.activities.manageElephant.fragment.ParentageFragment;
 import fr.elephantasia.activities.manageElephant.fragment.ProfilFragment;
 import fr.elephantasia.activities.manageElephant.fragment.RegistrationFragment;
@@ -53,7 +50,6 @@ import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.database.model.Elephant.StateValue;
 import fr.elephantasia.dialogs.PickImageDialog;
 import fr.elephantasia.dialogs.PickImageDialogBuilder;
-import fr.elephantasia.utils.ImageUtil;
 import fr.elephantasia.utils.KeyboardHelpers;
 import io.realm.Realm;
 
@@ -86,11 +82,11 @@ public class ManageElephantActivity extends AppCompatActivity {
 
   // Fragment
   private ProfilFragment profilFragment = new ProfilFragment();
-  private RegistrationFragment registrationFragment = new RegistrationFragment();;
+  private RegistrationFragment registrationFragment = new RegistrationFragment();
+  ;
   private ContactFragment contactFragment = new ContactFragment();
   private ParentageFragment parentageFragment = new ParentageFragment();
   private ChildrenFragment childrenFragment = new ChildrenFragment();
-  private DocumentFragment docFragment = new DocumentFragment();
 
   // Attr
   private Elephant elephant;
@@ -152,12 +148,12 @@ public class ManageElephantActivity extends AppCompatActivity {
       documents = realm.copyFromRealm(realm.where(Document.class).equalTo(Document.ELEPHANT_ID, id).findAll());
 
       toolbarTitle.setText(String.format(getString(R.string.edit_elephant_title), elephant.name));
-//      docFragment.addDocuments(documents);
+      toolbarTitle.setMaxLines(1);
+      toolbarTitle.setHorizontallyScrolling(true);
+      toolbarTitle.setEllipsize(TextUtils.TruncateAt.END);
     } else {
       elephant = new Elephant();
     }
-
-
   }
 
   private void initIcon() {
@@ -225,21 +221,7 @@ public class ManageElephantActivity extends AppCompatActivity {
         case REQUEST_CHILD_SELECTED:
           childrenFragment.setChild(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
-        case REQUEST_CAPTURE_PHOTO:
-          addDocument(Uri.fromFile(ImageUtil.getCapturePhotoFile(this)));
-          break;
-        case REQUEST_IMPORT_PHOTO:
-          addDocument(data.getData());
-          break;
-        case REQUEST_ADD_DOCUMENT:
-					Document doc = new Document();
-					doc.path = AddDocumentActivity.getExtraPath(data);
-					doc.title = AddDocumentActivity.getExtraTitle(data);
-					doc.type = AddDocumentActivity.getExtraType(data);
-					documents.add(doc);
-					docFragment.addDocument(doc);
-					break;
-       }
+      }
     }
   }
 
@@ -349,21 +331,9 @@ public class ManageElephantActivity extends AppCompatActivity {
     pickImageDialog.show();
   }
 
-  private void addDocument(Uri uri) {
-    String path = ImageUtil.createImageFileFromUri(this, uri);
-
-    if (path != null) {
-        Intent intent = new Intent(this, AddDocumentActivity.class);
-        AddDocumentActivity.setExtraPath(intent, path);
-        startActivityForResult(intent, REQUEST_ADD_DOCUMENT);
-    } else {
-        Toast.makeText(getApplicationContext(), "Error on adding document", Toast.LENGTH_SHORT).show();
-    }
-  }
-
   private void saveToDb() {
-		RealmDB.insertOrUpdateElephant(elephant, documents);
-		// TODO: add popup 'saving ...'
+    RealmDB.insertOrUpdateElephant(elephant, documents);
+    // TODO: add popup 'saving ...'
   }
 
 }

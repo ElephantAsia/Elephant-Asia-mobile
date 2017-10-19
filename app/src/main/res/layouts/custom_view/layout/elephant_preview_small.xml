@@ -39,7 +39,7 @@
         android:id="@+id/gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
         android:paddingBottom="8dp"
         android:textColor="@color/primary"/>
 
@@ -47,7 +47,7 @@
         android:id="@+id/age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
         android:paddingBottom="8dp"
         android:textColor="@color/primary"/>
 
@@ -55,7 +55,7 @@
         android:id="@+id/weight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
         android:paddingBottom="8dp"
         android:textColor="@color/primary"/>
 
@@ -63,7 +63,7 @@
         android:id="@+id/height"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
         android:paddingBottom="8dp"
         android:textColor="@color/primary"/>
 
