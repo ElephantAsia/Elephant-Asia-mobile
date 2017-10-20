@@ -2,9 +2,11 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <data>
+
     <variable
       name="e"
       type="fr.elephantasia.database.model.Elephant"/>
+
     <import type="fr.elephantasia.database.model.Location"/>
   </data>
 
@@ -53,7 +55,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+      <android.support.design.widget.FloatingActionButton
+        android:id="@+id/home_page_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/viewpager"
+        android:layout_alignEnd="@id/viewpager"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/accent"
+        app:borderWidth="0dp"
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="@color/accent"/>
     </RelativeLayout>
+
 
   </LinearLayout>
 </layout>

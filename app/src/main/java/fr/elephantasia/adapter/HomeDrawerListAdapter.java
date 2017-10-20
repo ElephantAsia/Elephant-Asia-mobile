@@ -1,5 +1,6 @@
 package fr.elephantasia.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
@@ -16,8 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.elephantasia.R;
+import fr.elephantasia.activities.AddContactActivity;
 import fr.elephantasia.activities.LoginActivity;
 import fr.elephantasia.activities.home.HomeActivity;
+import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.utils.Preferences;
 
@@ -51,16 +54,16 @@ public class HomeDrawerListAdapter extends BaseAdapter {
     this.ctx = ctx;
 
     navItems.add(
-        new NavItem(ctx.getString(R.string.home_page),
-            new IconicsDrawable(ctx).icon(MaterialDesignIconic.Icon.gmi_home)
+        new NavItem(ctx.getString(R.string.favorites),
+            new IconicsDrawable(ctx).icon(MaterialDesignIconic.Icon.gmi_star)
                 .color(ContextCompat.getColor(ctx, R.color.primary_light))
                 .sizeDp(16),
             new View.OnClickListener() {
               @Override
               public void onClick(View view) {
-                Intent intent = new Intent(ctx, HomeActivity.class);
-                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                ctx.startActivity(intent);
+//                Intent intent = new Intent(ctx, SearchElephantActivity.class);
+//                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+//                ctx.startActivity(intent);
               }
             }));
 
@@ -77,6 +80,7 @@ public class HomeDrawerListAdapter extends BaseAdapter {
                 ctx.startActivity(intent);
               }
             }));
+
 
     navItems.add(
         new NavItem(ctx.getString(R.string.sync_db),
@@ -106,17 +110,32 @@ public class HomeDrawerListAdapter extends BaseAdapter {
               }
             }));
 
+
     navItems.add(
-        new NavItem(ctx.getString(R.string.favorites),
-            new IconicsDrawable(ctx).icon(MaterialDesignIconic.Icon.gmi_star)
+        new NavItem(ctx.getString(R.string.add_elephant),
+            new IconicsDrawable(ctx).icon(MaterialDesignIconic.Icon.gmi_plus)
                 .color(ContextCompat.getColor(ctx, R.color.primary_light))
                 .sizeDp(16),
             new View.OnClickListener() {
               @Override
               public void onClick(View view) {
-//                Intent intent = new Intent(ctx, SearchElephantActivity.class);
-//                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-//                ctx.startActivity(intent);
+                Intent intent = new Intent(ctx, ManageElephantActivity.class);
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                ctx.startActivity(intent);
+              }
+            }));
+
+    navItems.add(
+        new NavItem(ctx.getString(R.string.add_contact),
+            new IconicsDrawable(ctx).icon(MaterialDesignIconic.Icon.gmi_account_add)
+                .color(ContextCompat.getColor(ctx, R.color.primary_light))
+                .sizeDp(16),
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                Intent intent = new Intent(ctx, AddContactActivity.class);
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                ctx.startActivity(intent);
               }
             }));
 

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.showDocument.ShowDocumentActivity;
@@ -55,6 +57,14 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   @BindView(R.id.tabs) TabLayout tabLayout;
   @BindView(R.id.viewpager) ViewPager viewPager;
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
+  @BindView(R.id.home_page_fab) FloatingActionButton fab;
+
+  // Listeners Binding
+  @OnClick(R.id.home_page_fab)
+  public void manageElephant() {
+//    Intent intent = new Intent(this, ManageElephantActivity.class);
+//    startActivityForResult(intent, REQUEST_ADD_ELEPHANT);
+  }
 
   // Attr
   private Elephant elephant;
@@ -99,6 +109,11 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
         .color(Color.WHITE).sizeDp(24);
     editIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_edit)
         .color(Color.WHITE).sizeDp(24);
+
+    fab.setImageDrawable(new IconicsDrawable(this)
+        .icon(MaterialDesignIconic.Icon.gmi_plus)
+        .color(Color.WHITE)
+        .sizeDp(24));
   }
 
   @Override

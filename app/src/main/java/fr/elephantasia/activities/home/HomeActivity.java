@@ -55,14 +55,6 @@ public class HomeActivity extends AppCompatActivity {
   @BindView(R.id.main_drawer_pic_profil) CircleImageView profilPic;
   @BindView(R.id.main_drawer) DrawerLayout drawer;
   @BindView(R.id.main_drawer_list) ListView drawerList;
-  @BindView(R.id.home_page_fab) FloatingActionButton fab;
-
-  // Listeners Binding
-  @OnClick(R.id.home_page_fab)
-  public void manageElephant() {
-    Intent intent = new Intent(this, ManageElephantActivity.class);
-    startActivityForResult(intent, REQUEST_ADD_ELEPHANT);
-  }
 
   // Attr
   private HomeDrawerListAdapter drawerListAdapter;
@@ -83,11 +75,6 @@ public class HomeActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.home_activity);
     ButterKnife.bind(this);
-
-    fab.setImageDrawable(new IconicsDrawable(this)
-        .icon(MaterialDesignIconic.Icon.gmi_plus)
-        .color(Color.WHITE)
-        .sizeDp(24));
 
     setSupportActionBar(toolbar);
     initActionBarDrawer();
