@@ -80,10 +80,6 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   private Realm realm;
 	private ViewPagerAdapter adapter;
 
-  // Icons
-	// private Drawable deleteIcon;
-	// private Drawable editIcon;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -192,11 +188,21 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 
   @Override
   public boolean onSupportNavigateUp() {
-    setResult(RESULT_OK);
-    finish();
-    overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
-    return true;
+  	if (fabIsOpen) {
+  		onFabMenuTriggered();
+  		return false;
+		} else {
+			setResult(RESULT_OK);
+			finish();
+			overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+			return true;
+		}
   }
+
+	@Override
+	public void onBackPressed() {
+		onSupportNavigateUp();
+	}
 
   /* @Override
   public boolean onCreateOptionsMenu(Menu menu) {
