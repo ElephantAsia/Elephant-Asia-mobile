@@ -10,6 +10,9 @@ import io.realm.Realm;
 
 import static fr.elephantasia.database.model.Elephant.ID;
 
+/**
+ * \brief Entry point of the application
+ */
 public class BaseApplication extends MultiDexApplication {
 
   @Override

@@ -3,23 +3,23 @@ package fr.elephantasia.activities.showElephant;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.StackingBehavior;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
@@ -27,7 +27,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.showDocument.ShowDocumentActivity;
 import fr.elephantasia.activities.showElephant.fragment.ShowChildrenFragment;
 import fr.elephantasia.activities.showElephant.fragment.ShowDocumentFragment;
@@ -46,6 +45,9 @@ import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.R
 import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
 import static fr.elephantasia.database.model.Elephant.ID;
 
+/**
+ ** STEPH NOTE : That would be nice if we make a class pour the fab menu. I will do that if we use fab menu again in an other part of the app.
+ **/
 public class ShowElephantActivity extends AppCompatActivity implements DocumentAdapter.Listener {
 
   public static final String EXTRA_EDIT_ELEPHANT_ID = "EXTRA_EDIT_ELEPHANT_ID";
@@ -57,25 +59,30 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   @BindView(R.id.tabs) TabLayout tabLayout;
   @BindView(R.id.viewpager) ViewPager viewPager;
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R.id.home_page_fab) FloatingActionButton fab;
+  @BindView(R.id.fabMenuTrigger) FloatingActionButton fabMenuTrigger;
 
-  // Listeners Binding
-  @OnClick(R.id.home_page_fab)
-  public void manageElephant() {
-//    Intent intent = new Intent(this, ManageElephantActivity.class);
-//    startActivityForResult(intent, REQUEST_ADD_ELEPHANT);
-  }
+	@BindView(R.id.fabMenuBackgroundMask) View fabMenuBackgroundMask;
+  @BindView(R.id.minifab_menu) LinearLayout fabMenu;
+	@BindView(R.id.minifab_edit) FloatingActionButton fabEdit;
+	@BindView(R.id.minifab_addnote) FloatingActionButton fabAddNote;
+	@BindView(R.id.minifab_addlocation) FloatingActionButton fabAddLocation;
+	@BindView(R.id.minifab_addconsultation) FloatingActionButton fabAddConsultation;
+	@BindView(R.id.minifab_delete) FloatingActionButton fabDelete;
+
+	private Animation miniFabOpenAnimation;
+  private Animation miniFabCloseAnimation;
+  private AlphaAnimation backgroundInAnimation;
+  private AlphaAnimation backgroundOutAnimation;
+  private boolean fabIsOpen = false;
 
   // Attr
   private Elephant elephant;
   private Realm realm;
-  ViewPagerAdapter adapter;
-
+	private ViewPagerAdapter adapter;
 
   // Icons
-  Drawable deleteIcon;
-  Drawable editIcon;
-
+	// private Drawable deleteIcon;
+	// private Drawable editIcon;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -102,18 +109,79 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 
     setupViewPager(viewPager);
     tabLayout.setupWithViewPager(viewPager);
+
+    /* set mini fab menu open/close animations */
+    miniFabOpenAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_in);
+    miniFabCloseAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_out);
+
+    miniFabOpenAnimation.setAnimationListener(new Animation.AnimationListener() {
+			@Override public void onAnimationStart(Animation animation) { fabMenu.setVisibility(View.VISIBLE); }
+			@Override public void onAnimationEnd(Animation animation) {}
+			@Override public void onAnimationRepeat(Animation animation) {}
+		});
+
+    miniFabCloseAnimation.setAnimationListener(new Animation.AnimationListener() {
+			@Override public void onAnimationStart(Animation animation) {}
+			@Override public void onAnimationEnd(Animation animation) { fabMenu.setVisibility(View.GONE); }
+			@Override public void onAnimationRepeat(Animation animation) {}
+		});
+
+    backgroundInAnimation = new AlphaAnimation(0f, 1f);
+    backgroundInAnimation.setInterpolator(new LinearInterpolator());
+    backgroundInAnimation.setDuration(400);
+
+    backgroundOutAnimation = new AlphaAnimation(1f, 0f);
+		backgroundOutAnimation.setInterpolator(new LinearInterpolator());
+		backgroundOutAnimation.setDuration(300);
+
+    backgroundInAnimation.setAnimationListener(new Animation.AnimationListener() {
+			@Override public void onAnimationStart(Animation animation) { fabMenuBackgroundMask.setVisibility(View.VISIBLE); }
+			@Override public void onAnimationEnd(Animation animation) {}
+			@Override public void onAnimationRepeat(Animation animation) {}
+		});
+		backgroundOutAnimation.setAnimationListener(new Animation.AnimationListener() {
+			@Override public void onAnimationStart(Animation animation) {}
+			@Override public void onAnimationEnd(Animation animation) { fabMenuBackgroundMask.setVisibility(View.GONE); }
+			@Override public void onAnimationRepeat(Animation animation) {}
+		});
   }
 
   private void initIcon() {
-    deleteIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_delete)
-        .color(Color.WHITE).sizeDp(24);
-    editIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_edit)
-        .color(Color.WHITE).sizeDp(24);
-
-    fab.setImageDrawable(new IconicsDrawable(this)
+		fabMenuTrigger.setImageDrawable(new IconicsDrawable(this)
         .icon(MaterialDesignIconic.Icon.gmi_plus)
         .color(Color.WHITE)
-        .sizeDp(24));
+        .sizeDp(24)
+		);
+
+		fabEdit.setImageDrawable(new IconicsDrawable(this)
+			.icon(MaterialDesignIconic.Icon.gmi_edit)
+			.color(Color.WHITE)
+			.sizeDp(16)
+		);
+
+		fabDelete.setImageDrawable(new IconicsDrawable(this)
+			.icon(MaterialDesignIconic.Icon.gmi_delete)
+			.color(Color.WHITE)
+			.sizeDp(16)
+		);
+
+		fabAddNote.setImageDrawable(new IconicsDrawable(this)
+			.icon(MaterialDesignIconic.Icon.gmi_calendar_note)
+			.color(Color.WHITE)
+			.sizeDp(16)
+		);
+
+		fabAddLocation.setImageDrawable(new IconicsDrawable(this)
+			.icon(MaterialDesignIconic.Icon.gmi_my_location)
+			.color(Color.WHITE)
+			.sizeDp(16)
+		);
+
+		fabAddConsultation.setImageDrawable(new IconicsDrawable(this)
+			.icon(MaterialDesignIconic.Icon.gmi_file)
+			.color(Color.WHITE)
+			.sizeDp(16)
+		);
   }
 
   @Override
@@ -130,15 +198,15 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
     return true;
   }
 
-  @Override
+  /* @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.show_elephant_options_menu, menu);
     menu.findItem(R.id.edit_elephant).setIcon(editIcon);
     menu.findItem(R.id.delete_elephant).setIcon(deleteIcon);
     return true;
-  }
+  } */
 
-  @Override
+  /* @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.edit_elephant) {
       Intent intent = new Intent(this, ManageElephantActivity.class);
@@ -167,7 +235,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
       return true;
     }
     return false;
-  }
+  } */
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -215,5 +283,45 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
     startActivity(intent);
     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
   }
+
+  // Intent intent = new Intent(this, ManageElephantActivity.class);
+	// startActivityForResult(intent, REQUEST_ADD_ELEPHANT);
+	@OnClick(R.id.fabMenuTrigger)
+	public void onFabMenuTriggered() {
+		fabIsOpen = !fabIsOpen;
+		if (fabIsOpen) {
+			/* open fab sub menu */
+			fabMenuBackgroundMask.startAnimation(backgroundInAnimation);
+
+			fabMenuTrigger.animate()
+				.rotation(-135)
+				.setInterpolator(new AccelerateDecelerateInterpolator())
+				.setDuration(400);
+
+			fabMenu.startAnimation(miniFabOpenAnimation);
+		} else {
+			/* close fab sub menu */
+			fabMenuBackgroundMask.startAnimation(backgroundOutAnimation);
+
+			fabMenuTrigger.animate()
+				.rotation(0)
+				.setInterpolator(new AccelerateDecelerateInterpolator())
+				.setDuration(300);
+
+			fabMenu.startAnimation(miniFabCloseAnimation);
+		}
+	}
+
+	@OnClick(R.id.fabMenuBackgroundMask)
+	public void onFabMenuBackgroundMaskClick() {
+  	if (fabIsOpen) {
+			onFabMenuTriggered();
+		}
+	}
+
+	@OnClick(R.id.minifab_edit)
+	public void onEditClick() {
+  	Log.i("click", "edit");
+	}
 
 }
