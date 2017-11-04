@@ -158,5 +158,11 @@
   <string name="set_registration_location">Set registration location</string>
   <string name="set_girth">Set girth in cm</string>
   <string name="set_height">Set height</string>
+  
+  <string name="edit_elephant">Edit the elephant</string>
+  <string name="add_observation">Add observation</string>
+  <string name="add_location">Add location</string>
+  <string name="add_consultation">Add consultation</string>
+  <string name="delete_elephant">Delete the elephant</string>
 
 </resources>
