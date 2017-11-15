@@ -23,19 +23,21 @@ public class RegistrationFragment extends Fragment {
 
   // View binding
   @BindView(R.id.registration_location) EditText registrationLocation;
-  @BindView(R.id.mte_input) TextInputLayout mteInput;
+  @BindView(R.id.mte_input_layout) TextInputLayout mteInputLayout;
+  @BindView(R.id.mte_input) EditText mteInput;
 
   // Attr
   private Elephant elephant;
-
 
   // Listener
   @OnClick(R.id.mte_checkbox)
   void displayMteInput() {
     if (elephant.mteOwner) {
-      mteInput.setVisibility(View.VISIBLE);
+      mteInputLayout.setVisibility(View.VISIBLE);
     } else {
-      mteInput.setVisibility(View.GONE);
+      mteInputLayout.setVisibility(View.GONE);
+      mteInput.setText(null);
+      elephant.mteNumber = null;
     }
   }
 
