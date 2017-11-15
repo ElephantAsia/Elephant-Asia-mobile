@@ -234,11 +234,25 @@ public class BaseApplication extends MultiDexApplication {
       e6.weight = "2064";
       e6.state = "saved";
 
+
+
       // Parentage
       e5.mother = e4;
       e5.father = e3;
       e6.mother = e4;
       e6.father = e3;
+
+      realm.executeTransaction(new Realm.Transaction() {
+        @Override
+        public void execute(Realm bgRealm) {
+          saveElephant(e, bgRealm);
+          saveElephant(e2, bgRealm);
+          saveElephant(e3, bgRealm);
+          saveElephant(e4, bgRealm);
+          saveElephant(e5, bgRealm);
+          saveElephant(e6, bgRealm);
+        }
+      });
 
       e3.children.add(e5);
       e3.children.add(e6);
