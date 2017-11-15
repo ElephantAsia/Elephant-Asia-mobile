@@ -3,8 +3,11 @@ package fr.elephantasia.activities.searchElephant;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.EditText;
 
 import org.parceler.Parcels;
 
@@ -27,9 +30,23 @@ public class SearchElephantActivity extends AppCompatActivity {
 
   // Views Binding
   @BindView(R.id.toolbar) Toolbar toolbar;
+  @BindView(R.id.mte_input_layout) TextInputLayout mteInputLayout;
+  @BindView(R.id.mte_input) EditText mteInput;
 
   // Attr
   private Elephant elephant = new Elephant();
+
+  // Listener
+  @OnClick(R.id.mte_checkbox)
+  void displayMteInput() {
+    if (elephant.mteOwner) {
+      mteInputLayout.setVisibility(View.VISIBLE);
+    } else {
+      mteInputLayout.setVisibility(View.GONE);
+      mteInput.setText(null);
+      elephant.mteNumber = null;
+    }
+  }
 
   public SearchElephantActivity() {
     elephant.male = true;

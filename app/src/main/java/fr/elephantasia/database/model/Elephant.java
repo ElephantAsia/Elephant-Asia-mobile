@@ -24,7 +24,10 @@ import io.realm.annotations.PrimaryKey;
 
 @Parcel(implementations = {ElephantRealmProxy.class})
 public class Elephant extends RealmObject {
-  // Columns' names must match attributes' names
+  // IMPORTANT: Columns' names must match attributes' names
+
+
+  // Profil
   @Ignore
   public static final String ID = "id";
   @Ignore
@@ -37,6 +40,15 @@ public class Elephant extends RealmObject {
   public static final String MALE = "male";
   @Ignore
   public static final String FEMALE = "female";
+
+  // Registration
+  @Ignore
+  public static final String MTE_OWNER = "mteOwner";
+  @Ignore
+  public static final String MTE_NUMBER = "mteNumber";
+
+
+  // Metadata
   @Ignore
   public static final String LAST_VISITED = "lastVisited";
 

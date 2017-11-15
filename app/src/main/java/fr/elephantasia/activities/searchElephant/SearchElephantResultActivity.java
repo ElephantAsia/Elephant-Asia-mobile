@@ -29,6 +29,8 @@ import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.E
 import static fr.elephantasia.database.model.Elephant.CHIPS1;
 import static fr.elephantasia.database.model.Elephant.FEMALE;
 import static fr.elephantasia.database.model.Elephant.MALE;
+import static fr.elephantasia.database.model.Elephant.MTE_NUMBER;
+import static fr.elephantasia.database.model.Elephant.MTE_OWNER;
 import static fr.elephantasia.database.model.Elephant.NAME;
 import static fr.elephantasia.database.model.Elephant.STATE;
 
@@ -113,6 +115,14 @@ public class SearchElephantResultActivity extends AppCompatActivity {
 
       if (!e.female) {
         query.equalTo(FEMALE, false);
+      }
+
+      if (e.mteOwner) {
+        if (e.mteNumber != null) {
+          query.equalTo(MTE_NUMBER, e.mteNumber);
+        } else {
+          query.equalTo(MTE_OWNER, true);
+        }
       }
     } else if (action != null) {
       if (action.equals(SEARCH_DRAFT)) {
