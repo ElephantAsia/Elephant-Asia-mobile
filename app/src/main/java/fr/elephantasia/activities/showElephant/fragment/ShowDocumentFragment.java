@@ -19,10 +19,10 @@ import io.realm.Realm;
 
 public class ShowDocumentFragment extends Fragment {
 
-  @BindView(R.id.list)
-  ListView list;
+  @BindView(R.id.list) ListView list;
+  @BindView(R.id.empty) View empty;
+
   private DocumentAdapter adapter;
-	// private List<Document> documents = new ArrayList<>();
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -38,13 +38,21 @@ public class ShowDocumentFragment extends Fragment {
 		View view = inflater.inflate(R.layout.show_document_fragment, container, false);
 		ButterKnife.bind(this, view);
     list.setAdapter(adapter);
+
+		if (adapter.getCount() == 0) {
+			empty.setVisibility(View.VISIBLE);
+			list.setVisibility(View.GONE);
+		}
+
     return (view);
   }
 
   public void addDocument(Document document) {
   	if (adapter != null) {
   		adapter.add(document);
-		}
+			empty.setVisibility(View.GONE);
+			list.setVisibility(View.VISIBLE);
+  	}
 	}
 
   private void loadDocuments() {
