@@ -165,10 +165,9 @@ public class ImageUtil {
 			temp.delete();
 		}
 
-    String photoToUpload = file.getAbsolutePath();
-    rotateImage(photoToUpload);
-
-    return photoToUpload;
+    String path = file.getAbsolutePath();
+    rotateImage(path);
+    return path;
   }
 
   static public byte[] resizeImage(String path, float maxW, float maxH) {

@@ -1,6 +1,6 @@
 package fr.elephantasia.database;
 
-import android.icu.util.Calendar;
+import android.support.annotation.NonNull;
 
 import java.util.Date;
 import java.util.List;
@@ -35,7 +35,7 @@ public class RealmDB {
     Realm realm = Realm.getDefaultInstance();
     realm.executeTransaction(new Realm.Transaction() {
       @Override
-      public void execute(Realm bgRealm) {
+      public void execute(@NonNull Realm bgRealm) {
         if (elephant.id == -1) {
           elephant.id = getNextId(bgRealm, Elephant.class, ID);
         }
@@ -52,6 +52,19 @@ public class RealmDB {
       }
     });
   }
+
+  static public void insertOrUpdateDocument(final Document document) {
+  	Realm realm = Realm.getDefaultInstance();
+  	realm.executeTransaction(new Realm.Transaction() {
+			@Override
+			public void execute(@NonNull Realm bgRealm) {
+				if (document.id == -1) {
+					document.id = getNextId(bgRealm, Document.class, Document.ID);
+				}
+				bgRealm.insertOrUpdate(document);
+			}
+		});
+	}
 
   static public void updateLastVisitedDate(final int id) {
     Realm realm = Realm.getDefaultInstance();
@@ -79,6 +92,18 @@ public class RealmDB {
       @Override
       public void execute(Realm realm) {
         realm.copyToRealmOrUpdate(contact);
+      }
+    });
+    realm.close();
+  }
+
+  static public void copyOrUpdate(final Document document) {
+    Realm realm = Realm.getDefaultInstance();
+
+    realm.executeTransactionAsync(new Realm.Transaction() {
+      @Override
+      public void execute(Realm realm) {
+        realm.copyToRealmOrUpdate(document);
       }
     });
     realm.close();

@@ -27,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.addDocument.AddDocumentActivity;
 import fr.elephantasia.activities.showDocument.ShowDocumentActivity;
 import fr.elephantasia.activities.showElephant.fragment.ShowChildrenFragment;
 import fr.elephantasia.activities.showElephant.fragment.ShowDocumentFragment;
@@ -51,7 +52,9 @@ import static fr.elephantasia.database.model.Elephant.ID;
 public class ShowElephantActivity extends AppCompatActivity implements DocumentAdapter.Listener {
 
   public static final String EXTRA_EDIT_ELEPHANT_ID = "EXTRA_EDIT_ELEPHANT_ID";
+
   private static final int REQUEST_ELEPHANT_EDITED = 0;
+	private static final int REQUEST_ADD_DOCUMENT = 1;
 
   // View Binding
   @BindView(R.id.toolbar) Toolbar toolbar;
@@ -64,6 +67,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 	@BindView(R.id.fabMenuBackgroundMask) View fabMenuBackgroundMask;
   @BindView(R.id.minifab_menu) LinearLayout fabMenu;
 	@BindView(R.id.minifab_edit) FloatingActionButton fabEdit;
+	@BindView(R.id.minifab_adddocument) FloatingActionButton fabAddDocument;
 	@BindView(R.id.minifab_addnote) FloatingActionButton fabAddNote;
 	@BindView(R.id.minifab_addlocation) FloatingActionButton fabAddLocation;
 	@BindView(R.id.minifab_addconsultation) FloatingActionButton fabAddConsultation;
@@ -74,6 +78,8 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   private AlphaAnimation backgroundInAnimation;
   private AlphaAnimation backgroundOutAnimation;
   private boolean fabIsOpen = false;
+
+  private ShowDocumentFragment showDocumentFragment;
 
   // Attr
   private Elephant elephant;
@@ -151,6 +157,12 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 
 		fabEdit.setImageDrawable(new IconicsDrawable(this)
 			.icon(MaterialDesignIconic.Icon.gmi_edit)
+			.color(Color.WHITE)
+			.sizeDp(16)
+		);
+
+		fabAddDocument.setImageDrawable(new IconicsDrawable(this)
+			.icon(MaterialDesignIconic.Icon.gmi_filter_frames)
 			.color(Color.WHITE)
 			.sizeDp(16)
 		);
@@ -247,16 +259,26 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
-    if (resultCode == RESULT_DRAFT || resultCode == RESULT_VALIDATE) {
-      switch (requestCode) {
-        case REQUEST_ELEPHANT_EDITED:
-          Intent intent = getIntent();
-          intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-          finish();
-          startActivity(intent);
-          break;
-      }
-    }
+    if ((resultCode == RESULT_DRAFT || resultCode == RESULT_VALIDATE) && requestCode == REQUEST_ELEPHANT_EDITED ) {
+				Intent intent = getIntent();
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+				finish();
+				startActivity(intent);
+    } else {
+    	switch (requestCode) {
+				case REQUEST_ADD_DOCUMENT:
+					if (data != null) {
+						Document document = new Document();
+						document.title = AddDocumentActivity.getExtraTitle(data);
+						document.path = AddDocumentActivity.getExtraPath(data);
+						document.type = AddDocumentActivity.getExtraType(data);
+						document.elephant_id = elephant.id;
+						showDocumentFragment.addDocument(document);
+						RealmDB.insertOrUpdateDocument(document);
+					}
+					break;
+			}
+		}
   }
 
   public Elephant getElephant() {
@@ -273,11 +295,13 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   }
 
   private void setupViewPager(ViewPager viewPager) {
+  	showDocumentFragment = new ShowDocumentFragment();
+
     adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(new ShowOverviewFragment(), getString(R.string.overview));
     adapter.addFragment(new ShowParentageFragment(), getString(R.string.parentage));
     adapter.addFragment(new ShowChildrenFragment(), getString(R.string.children));
-    adapter.addFragment(new ShowDocumentFragment(), getString(R.string.documents));
+    adapter.addFragment(showDocumentFragment, getString(R.string.documents));
     viewPager.setAdapter(adapter);
   }
 
@@ -290,8 +314,6 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
   }
 
-  // Intent intent = new Intent(this, ManageElephantActivity.class);
-	// startActivityForResult(intent, REQUEST_ADD_ELEPHANT);
 	@OnClick(R.id.fabMenuTrigger)
 	public void onFabMenuTriggered() {
 		fabIsOpen = !fabIsOpen;
@@ -328,6 +350,13 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 	@OnClick(R.id.minifab_edit)
 	public void onEditClick() {
   	Log.i("click", "edit");
+	}
+
+	@OnClick(R.id.minifab_adddocument)
+	public void onAddDocumentClick() {
+		Intent intent = new Intent(this, AddDocumentActivity.class);
+		startActivityForResult(intent, REQUEST_ADD_DOCUMENT);
+		onFabMenuTriggered();
 	}
 
 }

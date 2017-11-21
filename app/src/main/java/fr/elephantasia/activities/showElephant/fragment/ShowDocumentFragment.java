@@ -22,6 +22,7 @@ public class ShowDocumentFragment extends Fragment {
   @BindView(R.id.list)
   ListView list;
   private DocumentAdapter adapter;
+	// private List<Document> documents = new ArrayList<>();
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -40,11 +41,17 @@ public class ShowDocumentFragment extends Fragment {
     return (view);
   }
 
+  public void addDocument(Document document) {
+  	if (adapter != null) {
+  		adapter.add(document);
+		}
+	}
+
   private void loadDocuments() {
 		Realm realm = Realm.getDefaultInstance();
 		Integer id = ((ShowElephantActivity)getActivity()).getElephant().id;
-		List<Document> results = realm.copyFromRealm(realm.where(Document.class).equalTo(Document.ELEPHANT_ID, id).findAll());
-		adapter = new DocumentAdapter(getContext(), results, new DocumentAdapter.Listener() {
+		List<Document> documents = realm.copyFromRealm(realm.where(Document.class).equalTo(Document.ELEPHANT_ID, id).findAll());
+		adapter = new DocumentAdapter(getContext(), documents, new DocumentAdapter.Listener() {
 			@Override
 			public void onDocumentClick(Document document) {
 				((ShowElephantActivity)getActivity()).onDocumentClick(document);

@@ -162,7 +162,7 @@
   <string name="edit_elephant">Edit the elephant</string>
   <string name="add_observation">Add observation</string>
   <string name="add_location">Add location</string>
-  <string name="add_consultation">Add consultation</string>
+  <string name="add_consultation">Add health report</string>
   <string name="delete_elephant">Delete the elephant</string>
 
 </resources>

@@ -5,41 +5,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+	<android.support.design.widget.AppBarLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/primary">
+			<android.support.v7.widget.Toolbar
+					android:id="@+id/toolbar"
+					android:layout_width="match_parent"
+					android:layout_height="?attr/actionBarSize"
+					android:background="@color/primary">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/add_document"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"/>
+					<TextView
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:text="@string/add_document"
+							android:textColor="@android:color/white"
+							android:textSize="20sp"/>
 
-        </android.support.v7.widget.Toolbar>
+			</android.support.v7.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>
+	</android.support.design.widget.AppBarLayout>
 
-    <EditText
-        android:id="@+id/title"
-        android:hint="title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:focusable="true"/>
+	<LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+			android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/type"
-        android:hint="type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"/>
+			<ImageView
+				android:id="@+id/image"
+				android:padding="4dp"
+				android:layout_gravity="start"
+				android:layout_width="64dp"
+				android:layout_height="64dp"
+				android:contentDescription="document preview"
+				android:src="@drawable/add_picture" />
+
+			<EditText
+				android:id="@+id/title"
+				android:hint="title"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:inputType="text"
+				android:focusable="true"/>
+
+			<EditText
+				android:id="@+id/type"
+				android:hint="type"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:inputType="text"/>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -34,8 +34,8 @@
         <activity android:name=".activities.showDocument.ShowDocumentActivity" />
 
         <activity
-            android:name=".activities.addDocument.AddDocumentActivity"
-            android:windowSoftInputMode="stateVisible"/>
+            android:name=".activities.addDocument.AddDocumentActivity" />
+            <!-- android:windowSoftInputMode="stateVisible"/> -->
 
         <provider
             android:name="android.support.v4.content.FileProvider"

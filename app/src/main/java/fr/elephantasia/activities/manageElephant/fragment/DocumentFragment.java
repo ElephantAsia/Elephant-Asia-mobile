@@ -19,7 +19,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.adapter.DocumentAdapter;
 import fr.elephantasia.database.model.Document;
 import io.realm.RealmList;
@@ -64,11 +63,11 @@ public class DocumentFragment extends Fragment {
         .icon(MaterialDesignIconic.Icon.gmi_plus)
         .color(color).sizeDp(40), null, null, null);
 
-    addButton.setOnClickListener(new View.OnClickListener() {
+    /* addButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         ((ManageElephantActivity) getActivity()).onAddDocumentClick();
       }
-    });
+    }); */
 
     list.addFooterView(footerView);
   }
