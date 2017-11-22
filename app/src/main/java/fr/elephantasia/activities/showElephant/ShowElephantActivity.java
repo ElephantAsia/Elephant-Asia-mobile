@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -20,6 +20,9 @@ import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.StackingBehavior;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
@@ -28,6 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.addDocument.AddDocumentActivity;
+import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.showDocument.ShowDocumentActivity;
 import fr.elephantasia.activities.showElephant.fragment.ShowChildrenFragment;
 import fr.elephantasia.activities.showElephant.fragment.ShowDocumentFragment;
@@ -349,7 +353,31 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 
 	@OnClick(R.id.minifab_edit)
 	public void onEditClick() {
-  	Log.i("click", "edit");
+		Intent intent = new Intent(this, ManageElephantActivity.class);
+		intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+		startActivityForResult(intent, REQUEST_ELEPHANT_EDITED);
+	}
+
+	@OnClick(R.id.minifab_delete)
+	public void onDeleteClick() {
+		new MaterialDialog.Builder(this)
+			.title(R.string.delete_this_elephant_from_local_db)
+			.positiveText(R.string.yes)
+			.onPositive(new MaterialDialog.SingleButtonCallback() {
+				@Override
+				public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+					realm.executeTransaction(new Realm.Transaction() {
+						@Override
+						public void execute(Realm realm) {
+							elephant.deleteFromRealm();
+						}
+					});
+					finish();
+				}
+			})
+			.negativeText(R.string.no)
+			.stackingBehavior(StackingBehavior.ALWAYS)
+			.show();
 	}
 
 	@OnClick(R.id.minifab_adddocument)
