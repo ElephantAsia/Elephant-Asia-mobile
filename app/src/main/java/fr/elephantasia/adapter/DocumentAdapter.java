@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import fr.elephantasia.AsyncTasks.LoadBitmapAsyncTask;
 import fr.elephantasia.R;
+import fr.elephantasia.asyncTasks.LoadBitmapAsyncTask;
 import fr.elephantasia.customView.RoundedImageView;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.refactor.interfaces.LoadBitmapInterface;

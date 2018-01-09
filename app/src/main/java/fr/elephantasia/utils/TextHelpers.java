@@ -1,6 +1,9 @@
 package fr.elephantasia.utils;
 
-import java.util.Date;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TextHelpers {
 
@@ -21,5 +24,21 @@ public class TextHelpers {
     }
     return builder.toString();
   }
+
+  static public String UrlEncoder(Map<String, String> values) throws UnsupportedEncodingException {
+    StringBuilder builder = new StringBuilder();
+
+    for (HashMap.Entry<String, String> entry : values.entrySet()) {
+      if (builder.length() > 0) builder.append('&');
+      builder.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+      builder.append('=');
+      builder.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+    }
+    return builder.toString();
+  }
+
+  static public boolean IsEmpty(String s) {
+  	return s == null || s.trim().length() == 0 || s.length() == 0;
+	}
 
 }

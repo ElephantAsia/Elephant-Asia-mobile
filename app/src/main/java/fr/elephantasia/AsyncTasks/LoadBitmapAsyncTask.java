@@ -1,4 +1,4 @@
-package fr.elephantasia.AsyncTasks;
+package fr.elephantasia.asyncTasks;
 
 import android.content.Context;
 import android.graphics.Bitmap;

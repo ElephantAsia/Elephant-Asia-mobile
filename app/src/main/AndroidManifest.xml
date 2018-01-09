@@ -1,59 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="fr.elephantasia">
+					package="fr.elephantasia">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
 
-    <application
-        android:name=".BaseApplication"
-        android:allowBackup="true"
-        android:fullBackupContent="true"
-        android:icon="@drawable/logo"
-        android:label="@string/app_name"
-        android:largeHeap="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".activities.SplashScreenActivity"
-            android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+	<application
+		android:name=".BaseApplication"
+		android:allowBackup="true"
+		android:fullBackupContent="true"
+		android:icon="@drawable/logo"
+		android:label="@string/app_name"
+		android:largeHeap="true"
+		android:theme="@style/AppTheme">
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.manageElephant.ManageElephantActivity"/>
-        <activity android:name=".activities.LoginActivity"/>
-        <activity android:name=".activities.home.HomeActivity"/>
-        <activity android:name=".activities.searchElephant.SearchElephantActivity"/>
-        <activity android:name=".activities.SearchContactActivity"/>
-        <activity android:name=".activities.SearchContactResultActivity"/>
-        <activity android:name=".activities.searchElephant.SearchElephantResultActivity"/>
-        <activity android:name=".activities.AddContactActivity"/>
-        <activity android:name=".activities.showElephant.ShowElephantActivity"/>
-        <activity android:name=".activities.showDocument.ShowDocumentActivity" />
+		<activity
+			android:name=".activities.SplashScreenActivity"
+			android:theme="@style/SplashTheme">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
 
-        <activity
-            android:name=".activities.addDocument.AddDocumentActivity" />
-            <!-- android:windowSoftInputMode="stateVisible"/> -->
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
 
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
-        </provider>
+		<activity android:name=".activities.manageElephant.ManageElephantActivity"/>
+		<activity android:name=".activities.LoginActivity"/>
+		<activity android:name=".activities.home.HomeActivity"/>
+		<activity android:name=".activities.searchElephant.SearchElephantActivity"/>
+		<activity android:name=".activities.SearchContactActivity"/>
+		<activity android:name=".activities.SearchContactResultActivity"/>
+		<activity android:name=".activities.searchElephant.SearchElephantResultActivity"/>
+		<activity android:name=".activities.AddContactActivity"/>
+		<activity android:name=".activities.showElephant.ShowElephantActivity"/>
+		<activity android:name=".activities.showDocument.ShowDocumentActivity"/>
+		<activity android:name=".activities.addDocument.AddDocumentActivity"/>
+		<!-- android:windowSoftInputMode="stateVisible"/> -->
+		<activity android:name=".auth.AuthActivity" android:excludeFromRecents="true" />
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC03RrMCbPiC4W3loYhRvmnA9lZh4aHP5w"/>
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+		<service android:name=".auth.AuthService">
+			<intent-filter>
+				<action android:name="android.accounts.AccountAuthenticator" />
+			</intent-filter>
 
-    </application>
+			<meta-data
+				android:name="android.accounts.AccountAuthenticator"
+				android:resource="@xml/authenticator" />
+		</service>
+
+		<provider
+			android:name="android.support.v4.content.FileProvider"
+			android:authorities="${applicationId}.provider"
+			android:exported="false"
+			android:grantUriPermissions="true">
+			<meta-data
+				android:name="android.support.FILE_PROVIDER_PATHS"
+				android:resource="@xml/provider_paths"/>
+		</provider>
+
+		<meta-data
+			android:name="com.google.android.geo.API_KEY"
+			android:value="AIzaSyC03RrMCbPiC4W3loYhRvmnA9lZh4aHP5w"/>
+		<meta-data
+			android:name="com.google.android.gms.version"
+			android:value="@integer/google_play_services_version"/>
+
+	</application>
 
 </manifest>

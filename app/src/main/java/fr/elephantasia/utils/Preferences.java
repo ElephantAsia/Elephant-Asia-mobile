@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 /**
  * Cette classe a pour fonction de gérer les préférences de l'application.
@@ -19,12 +18,12 @@ public class Preferences {
   /**
    * Identifiant pour le nom d'utilisateur
    */
-  private final static String USERNAME = "USERNAME";
+  // private final static String USERNAME = "USERNAME";
 
   /**
    * Identifiant pour le mot de passe
    */
-  private final static String PASSWORD = "PASSWORD";
+  // private final static String PASSWORD = "PASSWORD";
 
 
   /**
@@ -47,7 +46,7 @@ public class Preferences {
    * @param context Le contexte
    * @return La valeur ou NULL
    */
-  @Nullable
+  /* @Nullable
   public static String getUsername(
       @NonNull Context context
   ) {
@@ -58,7 +57,7 @@ public class Preferences {
       setUsername(context, null);
       return null;
     }
-  }
+  } */
 
   /**
    * Définit le nom d'utilisateur enregistré dans les préférences.
@@ -66,7 +65,7 @@ public class Preferences {
    * @param context Le contexte
    * @param value   La valeur ou NULL
    */
-  public static void setUsername(
+  /* public static void setUsername(
       @NonNull Context context,
       @Nullable String value
   ) {
@@ -76,7 +75,7 @@ public class Preferences {
     } else {
       prefs.edit().putString(USERNAME, value).apply();
     }
-  }
+  } */
 
   /**
    * Retourne le mot de passe enregistré dans les préférences.
@@ -84,7 +83,7 @@ public class Preferences {
    * @param context Le contexte
    * @return La valeur ou NULL
    */
-  @Nullable
+  /* @Nullable
   public static String getPassword(
       @NonNull Context context
   ) {
@@ -95,7 +94,7 @@ public class Preferences {
       setPassword(context, null);
       return null;
     }
-  }
+  } */
 
   /**
    * Définit le mot de passe enregistré dans les préférences.
@@ -103,7 +102,7 @@ public class Preferences {
    * @param context Le contexte
    * @param value   La valeur ou NULL
    */
-  public static void setPassword(
+  /* public static void setPassword(
       @NonNull Context context,
       @Nullable String value
   ) {
@@ -113,7 +112,7 @@ public class Preferences {
     } else {
       prefs.edit().putString(PASSWORD, value).apply();
     }
-  }
+  } */
 
   /**
    * Vérifie que l'utilisateur se soit enregistré.
@@ -121,10 +120,10 @@ public class Preferences {
    * @param context Le context
    * @return TRUE si l'utilisateur est enregistré
    */
-  public static boolean hasSignin(
+  /* public static boolean hasSignin(
       @NonNull Context context
   ) {
     return getUsername(context) != null && getPassword(context) != null;
-  }
+  } */
 
 }

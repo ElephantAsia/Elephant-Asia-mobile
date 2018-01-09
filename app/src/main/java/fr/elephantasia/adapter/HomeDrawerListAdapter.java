@@ -1,6 +1,5 @@
 package fr.elephantasia.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
@@ -18,11 +17,9 @@ import java.util.List;
 
 import fr.elephantasia.R;
 import fr.elephantasia.activities.AddContactActivity;
-import fr.elephantasia.activities.LoginActivity;
-import fr.elephantasia.activities.home.HomeActivity;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
-import fr.elephantasia.utils.Preferences;
+import fr.elephantasia.auth.AuthActivity;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -161,10 +158,10 @@ public class HomeDrawerListAdapter extends BaseAdapter {
             new View.OnClickListener() {
               @Override
               public void onClick(View view) {
-                Intent intent = new Intent(ctx, LoginActivity.class);
+                Intent intent = new Intent(ctx, AuthActivity.class);
                 intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                Preferences.setUsername(ctx.getApplicationContext(), null);
-                Preferences.setPassword(ctx.getApplicationContext(), null);
+                // Preferences.setUsername(ctx.getApplicationContext(), null);
+                // Preferences.setPassword(ctx.getApplicationContext(), null);
                 ctx.startActivity(intent);
               }
             }));

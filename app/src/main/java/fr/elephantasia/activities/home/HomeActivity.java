@@ -2,9 +2,7 @@ package fr.elephantasia.activities.home;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.LayoutInflaterCompat;
@@ -30,14 +28,12 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.LoginActivity;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.adapter.HomeDrawerListAdapter;
-import fr.elephantasia.utils.Preferences;
+import fr.elephantasia.auth.AuthActivity;
 import io.realm.Realm;
 import jp.wasabeef.blurry.Blurry;
 
@@ -214,10 +210,10 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   private void setDisconnectFragment() {
-    Preferences.setUsername(getApplicationContext(), null);
-    Preferences.setPassword(getApplicationContext(), null);
+    // Preferences.setUsername(getApplicationContext(), null);
+    // Preferences.setPassword(getApplicationContext(), null);
 
-    Intent intent = new Intent(this, LoginActivity.class);
+    Intent intent = new Intent(this, AuthActivity.class);
     startActivity(intent);
     finish();
   }
