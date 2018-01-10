@@ -1,7 +1,10 @@
 package fr.elephantasia.activities.home;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -34,6 +37,7 @@ import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.adapter.HomeDrawerListAdapter;
 import fr.elephantasia.auth.AuthActivity;
+import fr.elephantasia.auth.Constants;
 import io.realm.Realm;
 import jp.wasabeef.blurry.Blurry;
 
@@ -213,9 +217,9 @@ public class HomeActivity extends AppCompatActivity {
     // Preferences.setUsername(getApplicationContext(), null);
     // Preferences.setPassword(getApplicationContext(), null);
 
-    Intent intent = new Intent(this, AuthActivity.class);
+    /* ntent intent = new Intent(this, AuthActivity.class);
     startActivity(intent);
-    finish();
+    finish(); */
   }
 
   public Realm getRealm() {

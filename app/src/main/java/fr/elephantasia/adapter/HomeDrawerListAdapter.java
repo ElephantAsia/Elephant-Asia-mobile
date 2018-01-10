@@ -1,7 +1,10 @@
 package fr.elephantasia.adapter;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +23,7 @@ import fr.elephantasia.activities.AddContactActivity;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.auth.AuthActivity;
+import fr.elephantasia.auth.Constants;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -160,6 +164,15 @@ public class HomeDrawerListAdapter extends BaseAdapter {
               public void onClick(View view) {
                 Intent intent = new Intent(ctx, AuthActivity.class);
                 intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+
+                AccountManager am = AccountManager.get(ctx);
+                Account[] accounts = am.getAccountsByType(Constants.ACCOUNT_TYPE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                  am.removeAccountExplicitly(accounts[0]);
+                } else {
+                  am.removeAccount(accounts[0], null, null);
+                }
+
                 // Preferences.setUsername(ctx.getApplicationContext(), null);
                 // Preferences.setPassword(ctx.getApplicationContext(), null);
                 ctx.startActivity(intent);

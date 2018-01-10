@@ -204,7 +204,6 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 
 	private void finishAuth(final String authToken) {
 		Account account = new Account(mUsernameEditText.getText().toString(), Constants.ACCOUNT_TYPE);
-
 		if (newAccount) {
 			accountManager.addAccountExplicitly(account, password, null); // dernier parametre : bundle informations de l'user
 			accountManager.setAuthToken(account, Constants.AUTHTOKEN_TYPE, authToken);
