@@ -16,7 +16,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.database.model.Elephant;
-import fr.elephantasia.databinding.SearchElephantActivityBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 public class SearchElephantActivity extends AppCompatActivity {
@@ -65,15 +64,15 @@ public class SearchElephantActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    SearchElephantActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.search_elephant_activity);
-    binding.setE(elephant);
+//    SearchElephantActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.search_elephant_activity);
+//    binding.setE(elephant);
     ButterKnife.bind(this);
     setSupportActionBar(toolbar);
 
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    KeyboardHelpers.hideKeyboardListener(binding.getRoot(), this);
+//    KeyboardHelpers.hideKeyboardListener(binding.getRoot(), this);
   }
 
   @Override

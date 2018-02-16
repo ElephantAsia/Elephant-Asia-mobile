@@ -1,4 +1,4 @@
-package fr.elephantasia.activities;
+package fr.elephantasia.activities.contact;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ import io.realm.RealmList;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
-import static fr.elephantasia.activities.SearchContactActivity.EXTRA_SEARCH_FILTERS;
+import static fr.elephantasia.activities.contact.SearchContactActivity.EXTRA_SEARCH_FILTERS;
 import static fr.elephantasia.database.model.Contact.CORNAC;
 import static fr.elephantasia.database.model.Contact.FIRSTNAME;
 import static fr.elephantasia.database.model.Contact.LASTNAME;

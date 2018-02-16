@@ -46,7 +46,7 @@ import fr.elephantasia.database.model.Elephant.StateValue;
 import fr.elephantasia.utils.KeyboardHelpers;
 import io.realm.Realm;
 
-import static fr.elephantasia.activities.SearchContactActivity.EXTRA_SEARCH_CONTACT;
+import static fr.elephantasia.activities.contact.SearchContactActivity.EXTRA_SEARCH_CONTACT;
 import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
 import static fr.elephantasia.database.model.Elephant.ID;
 
@@ -61,9 +61,6 @@ public class ManageElephantActivity extends AppCompatActivity {
   public static final int REQUEST_FATHER_SELECTED = 5;
   public static final int REQUEST_MOTHER_SELECTED = 6;
   public static final int REQUEST_CHILD_SELECTED = 7;
-  // public static final int REQUEST_CAPTURE_PHOTO = 8;
-  // public static final int REQUEST_IMPORT_PHOTO = 9;
-  public static final int REQUEST_ADD_DOCUMENT = 10;
 
   // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
@@ -83,7 +80,6 @@ public class ManageElephantActivity extends AppCompatActivity {
 
   // Attr
   private Elephant elephant;
-  // private PickImageDialog pickImageDialog;
   private Realm realm;
   private List<Document> documents = new ArrayList<>();
 
@@ -240,13 +236,6 @@ public class ManageElephantActivity extends AppCompatActivity {
     return false;
   }
 
-  /* @Override
-  public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-      startActivityForResult(pickImageDialog.getIntent(0), pickImageDialog.getRequestCode(0));
-    }
-  } */
-
   /**
    * @return true if at least the name and sex are set
    */
@@ -296,29 +285,6 @@ public class ManageElephantActivity extends AppCompatActivity {
           .show();
     }
   }
-
-  /* public void onAddDocumentClick() {
-    pickImageDialog = new PickImageDialogBuilder(this)
-        .build()
-        .setListener(new PickImageDialog.Listener() {
-          @Override
-          public void execute(Intent intent, int requestCode) {
-            if (requestCode == REQUEST_CAPTURE_PHOTO) {
-              if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(ManageElephantActivity.this, new String[]{Manifest.permission.CAMERA}, 0);
-              } else {
-                startActivityForResult(intent, requestCode);
-              }
-            } else {
-              startActivityForResult(intent, requestCode);
-            }
-          }
-        })
-        .setCaptureCode(REQUEST_CAPTURE_PHOTO)
-        .setImportCode(REQUEST_IMPORT_PHOTO)
-        .load();
-    pickImageDialog.show();
-  } */
 
   private void saveToDb() {
     RealmDB.insertOrUpdateElephant(elephant, documents);

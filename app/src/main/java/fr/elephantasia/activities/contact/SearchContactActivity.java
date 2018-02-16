@@ -1,4 +1,4 @@
-package fr.elephantasia.activities;
+package fr.elephantasia.activities.contact;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -16,8 +16,8 @@ import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.databinding.SearchContactActivityBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
 
-import static fr.elephantasia.activities.AddContactActivity.EXTRA_CONTACT_CREATED;
-import static fr.elephantasia.activities.SearchContactResultActivity.EXTRA_CONTACT_SELECTED;
+import static fr.elephantasia.activities.contact.AddContactActivity.EXTRA_CONTACT_CREATED;
+import static fr.elephantasia.activities.contact.SearchContactResultActivity.EXTRA_CONTACT_SELECTED;
 
 public class SearchContactActivity extends AppCompatActivity {
 

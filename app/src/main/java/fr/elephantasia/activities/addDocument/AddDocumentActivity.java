@@ -24,8 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.dialogs.PickImageDialog;
-import fr.elephantasia.dialogs.PickImageDialogBuilder;
+import fr.elephantasia.activities.addDocument.dialog.PickImageDialog;
+import fr.elephantasia.activities.addDocument.dialog.PickImageDialogBuilder;
 import fr.elephantasia.utils.ImageUtil;
 
 public class AddDocumentActivity extends AppCompatActivity {

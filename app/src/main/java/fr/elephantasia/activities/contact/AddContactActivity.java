@@ -1,4 +1,4 @@
-package fr.elephantasia.activities;
+package fr.elephantasia.activities.contact;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;

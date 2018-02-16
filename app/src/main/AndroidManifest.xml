@@ -33,8 +33,8 @@
     <activity android:name=".activities.manageElephant.ManageElephantActivity"/>
     <activity android:name=".activities.home.HomeActivity"/>
     <activity android:name=".activities.searchElephant.SearchElephantActivity"/>
-    <activity android:name=".activities.searchContact.SearchContactActivity"/>
-    <activity android:name=".activities.searchContact.SearchContactResultActivity"/>
+    <activity android:name=".activities.contact.SearchContactActivity"/>
+    <activity android:name=".activities.contact.SearchContactResultActivity"/>
     <activity android:name=".activities.searchElephant.SearchElephantResultActivity"/>
     <activity android:name=".activities.addContact.AddContactActivity"/>
     <activity android:name=".activities.showElephant.ShowElephantActivity"/>
@@ -60,14 +60,14 @@
 
 
     <service
-      android:name=".syncAdapter.SyncService"
+      android:name=".activities.sync.syncAdapter.SyncService"
       android:exported="true"
       android:process=":sync">
       <intent-filter>
         <action android:name="android.content.SyncAdapter"/>
       </intent-filter>
       <meta-data android:name="android.content.SyncAdapter"
-                 android:resource="@xml/syncadapter" />
+                 android:resource="@xml/sync_adapter" />
     </service>
 
     <provider
@@ -81,7 +81,7 @@
     </provider>
 
     <provider
-      android:name=".contentProvider.StubProvider"
+      android:name=".activities.sync.contentProvider.StubProvider"
       android:authorities="com.example.android.datasync.provider"
       android:exported="false"
       android:syncable="true"/>

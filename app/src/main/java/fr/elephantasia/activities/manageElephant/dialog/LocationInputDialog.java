@@ -1,4 +1,4 @@
-package fr.elephantasia.dialogs;
+package fr.elephantasia.activities.manageElephant.dialog;
 
 import android.app.Activity;
 import android.content.DialogInterface;

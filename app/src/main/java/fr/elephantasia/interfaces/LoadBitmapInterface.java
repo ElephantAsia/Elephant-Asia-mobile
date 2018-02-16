@@ -1,4 +1,4 @@
-package fr.elephantasia.refactor.interfaces;
+package fr.elephantasia.interfaces;
 
 import android.graphics.Bitmap;
 

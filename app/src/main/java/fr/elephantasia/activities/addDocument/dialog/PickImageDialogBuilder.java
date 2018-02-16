@@ -1,4 +1,4 @@
-package fr.elephantasia.dialogs;
+package fr.elephantasia.activities.addDocument.dialog;
 
 import android.content.Context;
 

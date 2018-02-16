@@ -61,7 +61,7 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.auth_activity);
+		setContentView(R.layout.login_activity);
 		final View activityRootView = findViewById(R.id.login_activity_main_layout);
 		KeyboardHelpers.hideKeyboardListener(activityRootView, this);
 

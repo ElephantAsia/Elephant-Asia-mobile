@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.elephantasia.R;
-import fr.elephantasia.activities.AddContactActivity;
+import fr.elephantasia.activities.contact.AddContactActivity;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.auth.AuthActivity;

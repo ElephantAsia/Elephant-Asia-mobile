@@ -1,4 +1,4 @@
-package fr.elephantasia.contentProvider;
+package fr.elephantasia.activities.sync.contentProvider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;

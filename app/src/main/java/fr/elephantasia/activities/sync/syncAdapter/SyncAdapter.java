@@ -1,4 +1,4 @@
-package fr.elephantasia.syncAdapter;
+package fr.elephantasia.activities.sync.syncAdapter;
 
 /**
  * Created by seb on 16/02/2018.
