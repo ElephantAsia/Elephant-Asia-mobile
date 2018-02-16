@@ -61,7 +61,7 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.login_activity);
+		setContentView(R.layout.auth_activity);
 		final View activityRootView = findViewById(R.id.login_activity_main_layout);
 		KeyboardHelpers.hideKeyboardListener(activityRootView, this);
 
@@ -102,6 +102,7 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 		newAccount = username == null;
 
 		Account[] accounts = accountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
+
 		if (accounts.length > 0) {
 			if (launchedByAccountManager) {
 				new MaterialDialog.Builder(AuthActivity.this)
@@ -117,7 +118,11 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 					})
 					.show();
 			} else {
-				username = accounts[0].name;
+     // TODO: check if steph and gilles what we want to do here
+     final Intent intent = new Intent(this, HomeActivity.class);
+     startActivity(intent);
+     finish();
+//				username = accounts[0].name;
 			}
 		}
 
