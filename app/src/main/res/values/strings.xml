@@ -86,6 +86,7 @@
   <string name="logout">Log out</string>
 
   <string name="add_elephant">Add Elephant</string>
+  <string name="synchronize">Synchronize</string>
   <string name="profil">Profil</string>
   <string name="registration">Registration</string>
   <string name="contact">Contact</string>

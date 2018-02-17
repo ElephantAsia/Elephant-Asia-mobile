@@ -153,10 +153,10 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 		password = mPasswordEditText.getText().toString();
 
 		if (!isGetAuthTokenRunning()) {
-			getAuthTokenAsyncRequest = new GetAuthTokenAsyncRequest(getApplicationContext(), username, password,
+			getAuthTokenAsyncRequest = new GetAuthTokenAsyncRequest(username, password,
 				new GetAuthTokenAsyncRequest.Listener() {
 				@Override
-				public void onFinish(JSONObject json) {
+				public void onSuccess(JSONObject json) {
 					try {
 						onAuthenticationResult(json.getString("token"));
 					} catch (JSONException e) {

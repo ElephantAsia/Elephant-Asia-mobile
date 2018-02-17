@@ -91,4 +91,6 @@ dependencies {
     compile 'com.mikepenz:community-material-typeface:1.9.32.2@aar'
     // MpAndroidCharts https://github.com/PhilJay/MPAndroidChart
     //    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+
+    compile 'com.android.volley:volley:1.1.0'
 }

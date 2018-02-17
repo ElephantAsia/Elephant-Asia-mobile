@@ -12,32 +12,32 @@ import java.util.HashMap;
 
 public class GetAuthTokenRequest extends RequestSyncTask<String> {
 
-	private static final String URL = "/login";
+  private static final String URL = "/login";
 
-	private String username;
-	private String password;
+  private String username;
+  private String password;
 
-	public GetAuthTokenRequest(String username, String password) {
-		this.username = username;
-		this.password = password;
-	}
+  public GetAuthTokenRequest(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
 
-	@Override
-	@Nullable
-	public String execute() {
-		HashMap<String, String> requestParams = new HashMap<>();
+  @Override
+  @Nullable
+  public String execute() {
+    HashMap<String, String> requestParams = new HashMap<>();
 
-		requestParams.put("username", username);
-		requestParams.put("password", password);
+    requestParams.put("username", username);
+    requestParams.put("password", password);
 
-		POSTUrlEncoded(URL, requestParams);
+    POSTUrlEncoded(URL, requestParams);
 
-		try {
-			return getJson().getString("token");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+    try {
+      return getJson().getString("token");
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
 
 }
