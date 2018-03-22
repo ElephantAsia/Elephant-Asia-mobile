@@ -1,6 +1,7 @@
 package fr.elephantasia.database;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,7 +17,10 @@ import fr.elephantasia.utils.StaticTools;
 import io.realm.Realm;
 import io.realm.RealmObject;
 
+import static fr.elephantasia.database.model.Elephant.CUID;
+import static fr.elephantasia.database.model.Elephant.DB_STATE;
 import static fr.elephantasia.database.model.Elephant.ID;
+import static fr.elephantasia.database.model.Elephant.SYNC_STATE;
 
 /**
  * Created by seb on 29/04/2017.
@@ -55,36 +59,6 @@ public class RealmDB {
         }
       }
     });
-  }
-
-  static public void insertOrUpdateElephant(JSONArray res) {
-    Realm realm = Realm.getDefaultInstance();
-    for (int i = 0; i < res.length(); i++) {
-      try {
-        JSONObject e = res.getJSONObject(i);
-        String id = e.getString("id");
-      } catch (JSONException e1) {
-        e1.printStackTrace();
-      }
-    }
-//    realm.executeTransaction(new Realm.Transaction() {
-//      @Override
-//      public void execute(@NonNull Realm bgRealm) {
-//        if (elephant.id == -1) {
-//          elephant.id = getNextId(bgRealm, Elephant.class, ID);
-//        }
-//        elephant.lastVisited = new Date();
-//        bgRealm.insertOrUpdate(elephant);
-//
-//        for (Document document : documents) {
-//          if (document.id == -1) {
-//            document.id = getNextId(bgRealm, Document.class, Document.ID);
-//          }
-//          document.elephant_id = elephant.id;
-//          bgRealm.insertOrUpdate(document);
-//        }
-//      }
-//    });
   }
 
   static public void insertOrUpdateDocument(final Document document) {

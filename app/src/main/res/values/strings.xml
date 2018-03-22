@@ -34,6 +34,7 @@
 
   <string name="validate">Validate</string>
   <string name="OK">OK</string>
+  <string name="DOWNLOAD">DOWNLOAD</string>
   <string name="CANCEL">CANCEL</string>
 
   <string name="name_required">Name is required</string>
@@ -167,5 +168,13 @@
   <string name="add_location">Add location</string>
   <string name="add_consultation">Add health report</string>
   <string name="delete_elephant">Delete the elephant</string>
+
+  <string name="confirmation_download">
+    Please make sure your phone is connected to wifi and has enough battery to go through the procedure.
+  </string>
+
+  <string name="downloading_data">Downloading data from server...</string>
+
+  <string name="updating_local">Updating local database...</string>
 
 </resources>

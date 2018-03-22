@@ -12,6 +12,7 @@ import java.util.Date;
 
 import fr.elephantasia.database.parceler.ContactParcelConverter;
 import fr.elephantasia.database.parceler.ElephantParcelConverter;
+import fr.elephantasia.utils.JsonHelpers;
 import fr.elephantasia.utils.TextHelpers;
 import io.realm.ElephantRealmProxy;
 import io.realm.RealmList;
@@ -72,45 +73,6 @@ public class Elephant extends RealmObject {
     deleted,
   }
 
-
-  public Elephant() {}
-
-  public Elephant(JSONObject e) throws JSONException {
-    // Profil
-    name = e.getString("name");
-    nickName = e.getString("nickname");
-    sex = e.getString("sex");
-    currentLoc = null;
-    birthLoc = null;
-    birthDate = e.getString("birth_date");
-
-    // Registration
-    earTag = e.getString("ear_tag") != null;
-    eyeD = e.getString("eye_d") != null;
-    mteOwner = false;
-    mteNumber = null;
-    chips1 = e.getString("microchip_1");
-    chips2 = e.getString("microchip_2");
-    chips3 = e.getString("microchip_3");
-    regID = null;
-    registrationLoc = null;
-
-    // Description
-    tusk = e.getString("tusk");
-    nailsFrontLeft = e.getString("nail_front_left");
-    nailsFrontRight = e.getString("nail_front_right");
-    nailsRearLeft = e.getString("nail_rear_left");
-    nailsRearRight = e.getString("nail_rear_right");
-    weight = e.getString("weight");
-    girth = null;
-    weightUnit = null;
-    height = e.getString("height");
-    heightUnit = null;
-
-    // Server data:
-    cuid = e.getString("cuid");
-  }
-
   @PrimaryKey
   public Integer id = -1;
 
@@ -168,6 +130,45 @@ public class Elephant extends RealmObject {
   // Server data
   public String cuid;
 
+  public Elephant() {}
+
+  public Elephant(JSONObject e) throws JSONException {
+    // Profil
+    name = JsonHelpers.getString(e, "name");
+    nickName = JsonHelpers.getString(e, "nickname");
+    sex = JsonHelpers.getString(e, "sex");
+    currentLoc = null;
+    birthLoc = null;
+    birthDate = JsonHelpers.getString(e, "birth_date");
+
+    // Registration
+    earTag = JsonHelpers.getString(e, "ear_tag") != null;
+    eyeD = JsonHelpers.getString(e, "eye_d") != null;
+    mteOwner = false;
+    mteNumber = null;
+    chips1 = JsonHelpers.getString(e, "microchip_1");
+    chips2 = JsonHelpers.getString(e, "microchip_2");
+    chips3 = JsonHelpers.getString(e, "microchip_3");
+    regID = null;
+    registrationLoc = null;
+
+    // Description
+    tusk = JsonHelpers.getString(e, "tusk");
+    nailsFrontLeft = JsonHelpers.getString(e, "nail_front_left");
+    nailsFrontRight = JsonHelpers.getString(e, "nail_front_right");
+    nailsRearLeft = JsonHelpers.getString(e, "nail_rear_left");
+    nailsRearRight = JsonHelpers.getString(e, "nail_rear_right");
+    weight = JsonHelpers.getString(e, "weight");
+    girth = null;
+    weightUnit = null;
+    height = JsonHelpers.getString(e, "height");
+    heightUnit = null;
+
+    // Server data:
+    cuid = JsonHelpers.getString(e, "cuid");
+  }
+
+  //TODO: update this method when we are done modyfing elephant attributes
   /**
    * Used to check if an elephant should be saved as draft before
    * the end of EditElephantActivity.
