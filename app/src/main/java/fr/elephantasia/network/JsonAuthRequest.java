@@ -25,11 +25,12 @@ import fr.elephantasia.auth.Constants;
  */
 
 public class JsonAuthRequest extends JsonArrayRequest {
-
+  private static String BASE_URL = "http://elephant-asia.herokuapp.com/api";
   private String authToken = null;
 
-  public JsonAuthRequest(final Activity ac, int method, String url, JSONArray jsonRequest, Response.Listener<JSONArray> listener, Response.ErrorListener errorListener) {
-    super(method, url, jsonRequest, listener, errorListener);
+
+  public JsonAuthRequest(final Activity ac, int method, String endPoint, JSONArray jsonRequest, Response.Listener<JSONArray> listener, Response.ErrorListener errorListener) {
+    super(method, BASE_URL + endPoint, jsonRequest, listener, errorListener);
     AccountManager accountManager = AccountManager.get(ac);
     accountManager.getAuthToken(
         accountManager.getAccountsByType(Constants.ACCOUNT_TYPE)[0],
@@ -54,6 +55,7 @@ public class JsonAuthRequest extends JsonArrayRequest {
   @Override
   public Map<String, String> getHeaders() throws AuthFailureError {
     Map<String, String> headers = new HashMap<>();
+    headers.put("Content-Type", "application/x-www-form-urlencoded");
     headers.put("Api-key", this.authToken);
     return headers;
   }

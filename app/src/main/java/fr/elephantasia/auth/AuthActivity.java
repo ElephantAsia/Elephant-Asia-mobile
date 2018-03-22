@@ -118,7 +118,7 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 					})
 					.show();
 			} else {
-     // TODO: check if steph and gilles what we want to do here
+     // TODO: check with steph and gilles if that what we want to do here
      final Intent intent = new Intent(this, HomeActivity.class);
      startActivity(intent);
      finish();

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
-
-import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,14 +20,13 @@ import fr.elephantasia.activities.searchElephant.SearchElephantResultActivity;
 import fr.elephantasia.database.model.Elephant;
 import io.realm.Realm;
 
-import static fr.elephantasia.R.mipmap.elephant;
-import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_SEARCH_ELEPHANT;
 import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_ALL;
 import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_DRAFT;
 import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_PENDING;
 import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_SAVED;
-import static fr.elephantasia.database.model.Elephant.STATE;
-import static fr.elephantasia.database.model.Elephant.StateValue;
+import static fr.elephantasia.database.model.Elephant.DB_STATE;
+import static fr.elephantasia.database.model.Elephant.DRAFT;
+import static fr.elephantasia.database.model.Elephant.SYNC_STATE;
 
 public class HomeOverviewFragment extends Fragment {
 
@@ -109,21 +105,19 @@ public class HomeOverviewFragment extends Fragment {
     int total = realm.where(Elephant.class).findAll().size();
 
     int pending = realm.where(Elephant.class)
-        .equalTo(STATE, StateValue.pending.name())
-        .or().equalTo(STATE, StateValue.rejected.name())
-        .or().equalTo(STATE, StateValue.validated.name())
+        .isNotNull(SYNC_STATE)
         .findAll().size();
 
-    int saved = realm.where(Elephant.class)
-        .equalTo(STATE, StateValue.saved.name())
-        .or().equalTo(STATE, StateValue.deleted.name())
+    int readyToSync = realm.where(Elephant.class)
+        .isNotNull(DB_STATE)
+        .equalTo(DRAFT, false)
         .findAll().size();
 
-    int draft = realm.where(Elephant.class).equalTo(STATE, StateValue.draft.name()).findAll().size();
+    int draft = realm.where(Elephant.class).equalTo(DRAFT, true).findAll().size();
 
     totalValue.setText(String.valueOf(total));
     pendingValue.setText(String.valueOf(pending));
-    savedValue.setText(String.valueOf(saved));
+    savedValue.setText(String.valueOf(readyToSync));
     draftValue.setText(String.valueOf(draft));
   }
 }

@@ -42,7 +42,6 @@ import fr.elephantasia.database.RealmDB;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
-import fr.elephantasia.database.model.Elephant.StateValue;
 import fr.elephantasia.utils.KeyboardHelpers;
 import io.realm.Realm;
 
@@ -221,13 +220,14 @@ public class ManageElephantActivity extends AppCompatActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.add_elephant_menu_draft && checkMandatoryFields()) {
-      elephant.state = StateValue.draft.name();
+      elephant.dbState = Elephant.DbState.edited.name();
+      elephant.draft = true;
       saveToDb();
       setResult(RESULT_DRAFT);
       finish();
       return true;
     } else if (item.getItemId() == R.id.add_elephant_menu_validate && checkMandatoryFields()) {
-      elephant.state = StateValue.saved.name();
+      elephant.dbState = Elephant.DbState.edited.name();
       saveToDb();
       setResult(RESULT_VALIDATE);
       finish();
@@ -245,7 +245,7 @@ public class ManageElephantActivity extends AppCompatActivity {
       Toast.makeText(this, R.string.name_required, Toast.LENGTH_SHORT).show();
       return false;
     }
-    if (!elephant.male && !elephant.female) {
+    if (elephant.sex == null) {
       profilFragment.setSexError();
       Toast.makeText(this, R.string.sex_required, Toast.LENGTH_SHORT).show();
       return false;
@@ -275,7 +275,7 @@ public class ManageElephantActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
               if (checkMandatoryFields()) {
-                elephant.state = StateValue.draft.name();
+                elephant.draft = true;
                 saveToDb();
                 setResult(RESULT_DRAFT);
                 finish();

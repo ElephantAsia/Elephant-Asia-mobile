@@ -3,6 +3,8 @@
   <string name="app_name">Elephant Asia</string>
 
   <string name="female">Female</string>
+  <string name="female_only">Female only</string>
+  <string name="male_only">Male only</string>
   <string name="father">Father</string>
   <string name="mother">Mother</string>
   <string name="children">Children</string>

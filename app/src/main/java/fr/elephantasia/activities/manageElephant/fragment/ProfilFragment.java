@@ -6,11 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
@@ -33,7 +35,15 @@ public class ProfilFragment extends Fragment {
 
   // Listener binding
   @OnClick({R.id.male, R.id.female})
-  public void removeSexError() {
+  public void removeSexError(RadioButton radioButton) {
+    switch (radioButton.getId()) {
+      case R.id.male:
+        elephant.sex = "M";
+        break;
+      case R.id.female:
+        elephant.sex = "F";
+        break;
+    }
     male.setError(null);
     female.setError(null);
   }

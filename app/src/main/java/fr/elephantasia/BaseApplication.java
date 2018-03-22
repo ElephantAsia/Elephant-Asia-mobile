@@ -36,7 +36,7 @@ public class BaseApplication extends MultiDexApplication {
       // Profil
       e.name = "wung chu";
       e.nickName = "wung";
-      e.male = true;
+      e.sex = "M";
       e.currentLoc.provinceName = "Yangoon";
       e.currentLoc.cityName = "Yangoon";
       e.birthDate = "1983/10/27";
@@ -60,7 +60,7 @@ public class BaseApplication extends MultiDexApplication {
       e.heightUnit = "m";
       e.girth = "340";
       e.weight = "2784";
-      e.state = "saved";
+      e.dbState = Elephant.DbState.edited.name();
 
       /**
        * Elephant 2 (random damaged)
@@ -69,7 +69,7 @@ public class BaseApplication extends MultiDexApplication {
       // Profil
       e2.name = "zai po";
       e2.nickName = "zai zai";
-      e2.female = true;
+      e2.sex = "F";
       e2.currentLoc.provinceName = "Ayeyarwady";
       e2.currentLoc.cityName = "Pathein";
       e2.birthDate = "1990/11/03";
@@ -93,7 +93,7 @@ public class BaseApplication extends MultiDexApplication {
       e2.heightUnit = "m";
       e2.girth = "320";
       e2.weight = "2424";
-      e2.state = "saved";
+      e2.dbState = Elephant.DbState.edited.name();
 
       /**
        * Elephant 3 (father)
@@ -102,7 +102,7 @@ public class BaseApplication extends MultiDexApplication {
       // Profil
       e3.name = "panto zilak";
       e3.nickName = "panto";
-      e3.male = true;
+      e3.sex = "M";
       e3.currentLoc.provinceName = "Pyay";
       e3.currentLoc.cityName = "Bago";
       e3.birthDate = "1986/08/24";
@@ -127,7 +127,7 @@ public class BaseApplication extends MultiDexApplication {
       e3.heightUnit = "m";
       e3.girth = "400";
       e3.weight = "3864";
-      e3.state = "saved";
+      e3.dbState = Elephant.DbState.edited.name();
 
       /**
        * Elephant 4 (mother)
@@ -136,7 +136,7 @@ public class BaseApplication extends MultiDexApplication {
       // Profil
       e4.name = "zilui trant";
       e4.nickName = "zizi";
-      e4.female = true;
+      e4.sex = "F";
       e4.currentLoc.provinceName = "Mandalay";
       e4.currentLoc.cityName = "Meiktila";
       e4.birthDate = "1988/01/06";
@@ -161,7 +161,7 @@ public class BaseApplication extends MultiDexApplication {
       e4.heightUnit = "m";
       e4.girth = "330";
       e4.weight = "2604";
-      e4.state = "saved";
+      e4.dbState = Elephant.DbState.edited.name();
 
 
 
@@ -172,7 +172,7 @@ public class BaseApplication extends MultiDexApplication {
       // Profil
       e5.name = "slatu";
       e5.nickName = "slatu";
-      e5.male = true;
+      e5.sex = "M";
       e5.currentLoc.provinceName = "Sagain";
       e5.currentLoc.cityName = "Monywa";
       e5.birthDate = "2008/08/17";
@@ -197,7 +197,7 @@ public class BaseApplication extends MultiDexApplication {
       e5.heightUnit = "m";
       e5.girth = "300";
       e5.weight = "2064";
-      e5.state = "saved";
+      e5.dbState = Elephant.DbState.edited.name();
 
 
       /**
@@ -207,7 +207,7 @@ public class BaseApplication extends MultiDexApplication {
       // Profil
       e6.name = "prantao dest";
       e6.nickName = "tao";
-      e6.female = false;
+      e6.sex = "F";
       e6.currentLoc.provinceName = "Rakhine";
       e6.currentLoc.cityName = "Sittwe";
       e6.birthDate = "2012/02/01";
@@ -232,7 +232,7 @@ public class BaseApplication extends MultiDexApplication {
       e6.heightUnit = "m";
       e6.girth = "280";
       e6.weight = "2064";
-      e6.state = "saved";
+      e6.dbState = Elephant.DbState.edited.name();
 
 
 
