@@ -20,6 +20,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 /**
  * Created by seb on 29/04/2017.
@@ -77,8 +78,10 @@ public class Elephant extends RealmObject {
   public Integer id = -1;
 
   //Profil
+  @Required
   public String name;
   public String nickName;
+  @Required
   public String sex;
   public Location currentLoc = new Location();
   public String birthDate;

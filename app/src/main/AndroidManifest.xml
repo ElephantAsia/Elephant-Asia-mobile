@@ -52,6 +52,7 @@
     <activity android:name=".activities.showDocument.ShowDocumentActivity"/>
     <activity android:name=".activities.addDocument.AddDocumentActivity"/>
     <activity android:name=".activities.sync.SyncActivity"/>
+    <activity android:name=".activities.sync.UploadActivity"/>
 
 
     <!-- android:windowSoftInputMode="stateVisible"/> -->

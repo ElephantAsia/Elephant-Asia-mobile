@@ -2,6 +2,7 @@ package fr.elephantasia.activities.sync;
 
 import android.accounts.AccountManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,8 +36,6 @@ import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.network.JsonAuthRequest;
 import io.realm.Realm;
 
-import static fr.elephantasia.database.RealmDB.getNextId;
-import static fr.elephantasia.database.RealmDB.insertOrUpdateElephant;
 import static fr.elephantasia.database.model.Elephant.CUID;
 import static fr.elephantasia.database.model.Elephant.ID;
 
@@ -60,12 +59,12 @@ public class SyncActivity extends AppCompatActivity {
   @OnClick(R.id.download)
   public void showConfirmationDialog() {
     new MaterialDialog.Builder(this)
-        .title(R.string.confirmation_download)
+        .title(R.string.confirmation_sync)
         .positiveText(R.string.DOWNLOAD)
         .onPositive(new MaterialDialog.SingleButtonCallback() {
           @Override
           public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            syncWithServer();
+            syncFromServer();
           }
         })
         .dismissListener(new DialogInterface.OnDismissListener() {
@@ -76,17 +75,30 @@ public class SyncActivity extends AppCompatActivity {
         .show();
   }
 
+  @OnClick(R.id.upload)
+  public void startUploadActivity() {
+    final Intent intent = new Intent(this, UploadActivity.class);
+    startActivity(intent);
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.sync_activity);
     ButterKnife.bind(this);
     setSupportActionBar(toolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     accountManager = AccountManager.get(this);
   }
 
-  private void syncWithServer() {
+  @Override
+  public boolean onSupportNavigateUp() {
+    onBackPressed();
+    return true;
+  }
+
+  private void syncFromServer() {
     tvDownloading.setVisibility(View.VISIBLE);
     progressBar.setVisibility(View.VISIBLE);
     btDownload.setVisibility(View.INVISIBLE);
@@ -126,8 +138,8 @@ public class SyncActivity extends AppCompatActivity {
     };
   }
 
-  private class SyncFromServerTask extends AsyncTask<URL, Integer, Void> {
-    protected Void doInBackground(URL... urls) {
+  private class SyncFromServerTask extends AsyncTask<URL, Integer, Boolean> {
+    protected Boolean doInBackground(URL... urls) {
       final Realm realm = Realm.getDefaultInstance();
       realm.beginTransaction();
 
@@ -147,11 +159,12 @@ public class SyncActivity extends AppCompatActivity {
           }
         } catch (JSONException e1) {
           e1.printStackTrace();
+          return false;
         }
       }
 
       realm.commitTransaction();
-      return null;
+      return true;
     }
 
     @Override
@@ -168,7 +181,7 @@ public class SyncActivity extends AppCompatActivity {
       progressBar.setProgress(i);
     }
 
-    protected void onPostExecute(Long result) {
+    protected void onPostExecute(Boolean result) {
       progressBar.setIndeterminate(true);
       tvDownloading.setText(R.string.downloading_data);
       tvDownloading.setVisibility(View.INVISIBLE);
@@ -176,7 +189,11 @@ public class SyncActivity extends AppCompatActivity {
       btDownload.setVisibility(View.VISIBLE);
       btUpload.setVisibility(View.VISIBLE);
 
-      Toast.makeText(getApplicationContext(), "Syncing done succesfully", Toast.LENGTH_SHORT).show();
+      if (result) {
+        Toast.makeText(getApplicationContext(), "Syncing done succesfully", Toast.LENGTH_SHORT).show();
+      } else {
+        Toast.makeText(getApplicationContext(), "Error during sync, please try again", Toast.LENGTH_SHORT).show();
+      }
     }
   }
 

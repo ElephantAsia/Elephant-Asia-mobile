@@ -30,7 +30,7 @@ public class SearchElephantAdapter extends RealmRecyclerViewAdapter<Elephant, Se
       elephantPreview = v;
     }
 
-    public void bindActionListener(final Elephant item, final OnActionClickListener listener, String action) {
+    void bindActionListener(final Elephant item, final OnActionClickListener listener, String action) {
       elephantPreview.setActionListener(
           new View.OnClickListener() {
             @Override
@@ -72,6 +72,5 @@ public class SearchElephantAdapter extends RealmRecyclerViewAdapter<Elephant, Se
       //noinspection ConstantConditions
       return getItem(index).id;
     }
-
   }
 

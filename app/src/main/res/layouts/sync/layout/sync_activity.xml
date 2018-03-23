@@ -29,15 +29,17 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:background="@color/primary">
 
     <TextView
-      android:id="@+id/title"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="@string/add_elephant"
+      android:text="@string/sync_with_server"
       android:textColor="@android:color/white"
-      android:textSize="20sp"/>
+      android:textSize="20sp"
+      tools:layout_editor_absoluteX="16dp"
+      tools:layout_editor_absoluteY="15dp"/>
 
   </android.support.v7.widget.Toolbar>
 
