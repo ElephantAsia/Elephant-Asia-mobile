@@ -78,10 +78,8 @@ public class Elephant extends RealmObject {
   public Integer id = -1;
 
   //Profil
-  @Required
   public String name;
   public String nickName;
-  @Required
   public String sex;
   public Location currentLoc = new Location();
   public String birthDate;

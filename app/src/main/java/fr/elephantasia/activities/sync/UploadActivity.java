@@ -91,7 +91,7 @@ public class UploadActivity extends AppCompatActivity {
 
     mRecyclerView.setHasFixedSize(true);
 
-    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     mRecyclerView.setLayoutManager(mLayoutManager);
 
     realm = Realm.getDefaultInstance();

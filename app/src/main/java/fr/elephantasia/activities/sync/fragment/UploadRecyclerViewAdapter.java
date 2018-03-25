@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 
 import fr.elephantasia.R;
-import fr.elephantasia.customView.ElephantPreview;
+import fr.elephantasia.customView.ElephantPreviewV2;
 import fr.elephantasia.database.model.Elephant;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
@@ -21,13 +21,12 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
 
   // View holder
   class ViewHolder extends RecyclerView.ViewHolder {
-    ElephantPreview elephantPreview;
+    ElephantPreviewV2 elephantPreview;
     CheckBox cb;
 
     ViewHolder(View v) {
       super(v);
-      elephantPreview = v.findViewById(R.id.preview);
-      cb = elephantPreview.findViewById(R.id.checkbox);
+      elephantPreview = (ElephantPreviewV2) v;
     }
   }
 
@@ -37,25 +36,27 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View view = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.upload_selection, parent, false);
+    View view = new ElephantPreviewV2(parent.getContext());
+    view.setLayoutParams(new RecyclerView.LayoutParams(
+        RecyclerView.LayoutParams.MATCH_PARENT,
+        RecyclerView.LayoutParams.MATCH_PARENT
+    ));
     return new ViewHolder(view);
   }
 
   @Override
   public void onBindViewHolder(final ViewHolder holder, int position) {
     holder.elephantPreview.setElephant(getItem(position));
-    holder.elephantPreview.setPreviewContent();
-    if (holder.cb.isChecked()) {
-      holder.cb.toggle();
-    }
-    holder.elephantPreview.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        holder.cb.toggle();
-        itemStateArray.put(holder.getAdapterPosition(), holder.cb.isChecked());
-      }
-    });
+//    if (holder.cb.isChecked()) {
+//      holder.cb.toggle();
+//    }
+//    holder.elephantPreview.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View v) {
+////        holder.cb.toggle();
+////        itemStateArray.put(holder.getAdapterPosition(), holder.cb.isChecked());
+//      }
+//    });
   }
 
   public SparseBooleanArray getSelectedElephants() {
