@@ -15,13 +15,8 @@ import java.util.Map;
  */
 public abstract class RequestAsyncTask<ResultType> extends AsyncTask<Void, Integer, ResultType> {
 
-	private Context context;
 	private Request request = new Request();
 	private boolean running;
-
-	RequestAsyncTask(@NonNull Context context) {
-		this.context = context;
-	}
 
 	public void execute() {
 		executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -29,11 +24,6 @@ public abstract class RequestAsyncTask<ResultType> extends AsyncTask<Void, Integ
 
 	public boolean isRunning() {
 		return (running);
-	}
-
-	@NonNull
-	protected Context getContext() {
-		return (context);
 	}
 
 	@Override

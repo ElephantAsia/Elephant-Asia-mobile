@@ -1,2 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="elephant_preview">elephant preview</string>
+  <string name="elephant">elephant</string>
 </resources>

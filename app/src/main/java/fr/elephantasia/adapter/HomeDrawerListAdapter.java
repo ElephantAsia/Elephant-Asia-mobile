@@ -19,9 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.elephantasia.R;
-import fr.elephantasia.activities.AddContactActivity;
+import fr.elephantasia.activities.contact.AddContactActivity;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
+import fr.elephantasia.activities.sync.SyncActivity;
 import fr.elephantasia.auth.AuthActivity;
 import fr.elephantasia.auth.Constants;
 
@@ -91,9 +92,9 @@ public class HomeDrawerListAdapter extends BaseAdapter {
             new View.OnClickListener() {
               @Override
               public void onClick(View view) {
-//                Intent intent = new Intent(ctx, SearchElephantActivity.class);
-//                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-//                ctx.startActivity(intent);
+                Intent intent = new Intent(ctx, SyncActivity.class);
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                ctx.startActivity(intent);
               }
             }));
 

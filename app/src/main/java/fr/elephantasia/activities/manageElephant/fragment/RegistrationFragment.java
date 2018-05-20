@@ -16,7 +16,7 @@ import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ManageElephantRegistrationFragmentBinding;
-import fr.elephantasia.dialogs.LocationInputDialog;
+import fr.elephantasia.activities.manageElephant.dialog.LocationInputDialog;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 public class RegistrationFragment extends Fragment {

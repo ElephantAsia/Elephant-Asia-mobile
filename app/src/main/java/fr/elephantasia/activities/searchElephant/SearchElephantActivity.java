@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import org.parceler.Parcels;
@@ -32,6 +33,8 @@ public class SearchElephantActivity extends AppCompatActivity {
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.mte_input_layout) TextInputLayout mteInputLayout;
   @BindView(R.id.mte_input) EditText mteInput;
+  @BindView(R.id.male) CheckBox maleCb;
+  @BindView(R.id.female) CheckBox femaleCb;
 
   // Attr
   private Elephant elephant = new Elephant();
@@ -48,9 +51,22 @@ public class SearchElephantActivity extends AppCompatActivity {
     }
   }
 
-  public SearchElephantActivity() {
-    elephant.male = true;
-    elephant.female = true;
+  @OnClick(R.id.male)
+  void setMaleOnly() {
+    elephant.sex = maleCb.isChecked() ? "M" : null;
+
+    if (femaleCb.isChecked()) {
+      femaleCb.toggle();
+    }
+  }
+
+  @OnClick(R.id.female)
+  void setFemaleOnly() {
+    elephant.sex = femaleCb.isChecked() ? "F" : null;
+
+    if (maleCb.isChecked()) {
+      maleCb.toggle();
+    }
   }
 
   // Listeners Binding

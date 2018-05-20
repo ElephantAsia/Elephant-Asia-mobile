@@ -1,6 +1,11 @@
 package fr.elephantasia.database;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Date;
 import java.util.List;
@@ -12,7 +17,10 @@ import fr.elephantasia.utils.StaticTools;
 import io.realm.Realm;
 import io.realm.RealmObject;
 
+import static fr.elephantasia.database.model.Elephant.CUID;
+import static fr.elephantasia.database.model.Elephant.DB_STATE;
 import static fr.elephantasia.database.model.Elephant.ID;
+import static fr.elephantasia.database.model.Elephant.SYNC_STATE;
 
 /**
  * Created by seb on 29/04/2017.

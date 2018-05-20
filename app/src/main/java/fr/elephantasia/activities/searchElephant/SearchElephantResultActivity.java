@@ -27,12 +27,13 @@ import io.realm.RealmResults;
 import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
 import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_SEARCH_ELEPHANT;
 import static fr.elephantasia.database.model.Elephant.CHIPS1;
-import static fr.elephantasia.database.model.Elephant.FEMALE;
-import static fr.elephantasia.database.model.Elephant.MALE;
+import static fr.elephantasia.database.model.Elephant.DB_STATE;
+import static fr.elephantasia.database.model.Elephant.DRAFT;
 import static fr.elephantasia.database.model.Elephant.MTE_NUMBER;
 import static fr.elephantasia.database.model.Elephant.MTE_OWNER;
 import static fr.elephantasia.database.model.Elephant.NAME;
-import static fr.elephantasia.database.model.Elephant.STATE;
+import static fr.elephantasia.database.model.Elephant.SEX;
+import static fr.elephantasia.database.model.Elephant.SYNC_STATE;
 
 public class SearchElephantResultActivity extends AppCompatActivity {
 
@@ -109,12 +110,8 @@ public class SearchElephantResultActivity extends AppCompatActivity {
         query.contains(CHIPS1, e.chips1, Case.INSENSITIVE);
       }
 
-      if (!e.male) {
-        query.equalTo(MALE, false);
-      }
-
-      if (!e.female) {
-        query.equalTo(FEMALE, false);
+      if (e.sex != null) {
+        query.equalTo(SEX, e.sex);
       }
 
       if (e.mteOwner) {
@@ -126,11 +123,12 @@ public class SearchElephantResultActivity extends AppCompatActivity {
       }
     } else if (action != null) {
       if (action.equals(SEARCH_DRAFT)) {
-        query.equalTo(STATE, Elephant.StateValue.draft.name());
+        query.equalTo(DRAFT, true);
       } else if (action.equals(SEARCH_PENDING)) {
-        query.equalTo(STATE, Elephant.StateValue.pending.name());
+        query.isNotNull(SYNC_STATE);
       } else if (action.equals(SEARCH_SAVED)) {
-        query.equalTo(STATE, Elephant.StateValue.saved.name());
+        query.equalTo(DB_STATE, Elephant.DbState.edited.name())
+        .or().equalTo(DB_STATE, Elephant.DbState.deleted.name());
       }
     }
 

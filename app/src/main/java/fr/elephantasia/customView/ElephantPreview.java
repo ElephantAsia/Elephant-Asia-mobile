@@ -2,10 +2,13 @@ package fr.elephantasia.customView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -42,6 +45,8 @@ public abstract class ElephantPreview extends FrameLayout {
   TextView showButton;
   TextView actionButton;
 
+  CheckBox selectedCb;
+
   // Attr
   Elephant elephant;
 
@@ -60,6 +65,7 @@ public abstract class ElephantPreview extends FrameLayout {
 
   protected void initView(int layoutId) {
     View v = inflate(getContext(), layoutId, null);
+
     name = v.findViewById(R.id.name);
     gender = v.findViewById(R.id.gender);
     age = v.findViewById(R.id.age);
@@ -68,6 +74,14 @@ public abstract class ElephantPreview extends FrameLayout {
 
     showButton = v.findViewById(R.id.show_button);
     actionButton = v.findViewById(R.id.action_button);
+
+    selectedCb = v.findViewById(R.id.checkbox);
+
+    if (this.isFocusable()) {
+      showButton.setVisibility(GONE);
+      actionButton.setVisibility(GONE);
+      selectedCb.setVisibility(VISIBLE);
+    }
 
     if (showButton != null) {
       showButton.setOnClickListener(

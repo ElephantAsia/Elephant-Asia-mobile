@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import fr.elephantasia.refactor.interfaces.LoadBitmapInterface;
+import fr.elephantasia.interfaces.LoadBitmapInterface;
 import fr.elephantasia.utils.BitmapCache;
 import fr.elephantasia.utils.ImageUtil;
 

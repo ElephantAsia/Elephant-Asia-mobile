@@ -18,7 +18,7 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.SearchContactActivity;
+import fr.elephantasia.activities.contact.SearchContactActivity;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.adapter.ContactPreviewAdapter;
 import fr.elephantasia.database.model.Contact;

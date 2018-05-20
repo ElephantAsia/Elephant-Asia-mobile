@@ -2,6 +2,8 @@ package fr.elephantasia.database.model;
 
 import android.text.TextUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
@@ -10,6 +12,7 @@ import java.util.Date;
 
 import fr.elephantasia.database.parceler.ContactParcelConverter;
 import fr.elephantasia.database.parceler.ElephantParcelConverter;
+import fr.elephantasia.utils.JsonHelpers;
 import fr.elephantasia.utils.TextHelpers;
 import io.realm.ElephantRealmProxy;
 import io.realm.RealmList;
@@ -17,6 +20,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 /**
  * Created by seb on 29/04/2017.
@@ -26,20 +30,15 @@ import io.realm.annotations.PrimaryKey;
 public class Elephant extends RealmObject {
   // IMPORTANT: Columns' names must match attributes' names
 
-
   // Profil
   @Ignore
   public static final String ID = "id";
-  @Ignore
-  public static final String STATE = "state";
   @Ignore
   public static final String NAME = "name";
   @Ignore
   public static final String CHIPS1 = "chips1";
   @Ignore
-  public static final String MALE = "male";
-  @Ignore
-  public static final String FEMALE = "female";
+  public static final String SEX = "sex";
 
   // Registration
   @Ignore
@@ -47,33 +46,41 @@ public class Elephant extends RealmObject {
   @Ignore
   public static final String MTE_NUMBER = "mteNumber";
 
+  // Sync
+  @Ignore
+  public static final String DRAFT = "draft";
+  @Ignore
+  public static final String SYNC_STATE = "syncState";
+  @Ignore
+  public static final String DB_STATE = "dbState";
 
   // Metadata
   @Ignore
   public static final String LAST_VISITED = "lastVisited";
 
+  // Server data
+  @Ignore
+  public static final String CUID = "cuid";
 
-  public enum StateValue {
-    draft, // saved locally as draft
-    saved, // saved locally
-    modified, // elephant sync from server modified
-    pending, // creation / modification wating for approval
-    rejected, // creation / modification rejected
-    validated, // creation / modification accepted,
-    synced, // elephant unchanged from server
-    deleted // elephant synced from server deleted locally
+
+  public enum SyncState {
+    pending,
+    accepted,
+    rejected,
+  }
+
+  public enum DbState {
+    edited,
+    deleted,
   }
 
   @PrimaryKey
   public Integer id = -1;
-  // State possible values are detailled in StateValue enum
-  public String state;
 
   //Profil
   public String name;
   public String nickName;
-  public boolean male = false;
-  public boolean female = false;
+  public String sex;
   public Location currentLoc = new Location();
   public String birthDate;
   public Location birthLoc = new Location();
@@ -112,10 +119,57 @@ public class Elephant extends RealmObject {
   @ParcelPropertyConverter(ContactParcelConverter.class)
   public RealmList<Contact> contacts = new RealmList<>();
 
+  // Sync
+  public boolean draft = false;
+  public String syncState;
+  public String dbState;
+
   // Metadata
   @Index
   public Date lastVisited;
 
+  // Server data
+  public String cuid;
+
+  public Elephant() {}
+
+  public Elephant(JSONObject e) throws JSONException {
+    // Profil
+    name = JsonHelpers.getString(e, "name");
+    nickName = JsonHelpers.getString(e, "nickname");
+    sex = JsonHelpers.getString(e, "sex");
+    currentLoc = null;
+    birthLoc = null;
+    birthDate = JsonHelpers.getString(e, "birth_date");
+
+    // Registration
+    earTag = JsonHelpers.getString(e, "ear_tag") != null;
+    eyeD = JsonHelpers.getString(e, "eye_d") != null;
+    mteOwner = false;
+    mteNumber = null;
+    chips1 = JsonHelpers.getString(e, "microchip_1");
+    chips2 = JsonHelpers.getString(e, "microchip_2");
+    chips3 = JsonHelpers.getString(e, "microchip_3");
+    regID = null;
+    registrationLoc = null;
+
+    // Description
+    tusk = JsonHelpers.getString(e, "tusk");
+    nailsFrontLeft = JsonHelpers.getString(e, "nail_front_left");
+    nailsFrontRight = JsonHelpers.getString(e, "nail_front_right");
+    nailsRearLeft = JsonHelpers.getString(e, "nail_rear_left");
+    nailsRearRight = JsonHelpers.getString(e, "nail_rear_right");
+    weight = JsonHelpers.getString(e, "weight");
+    girth = null;
+    weightUnit = null;
+    height = JsonHelpers.getString(e, "height");
+    heightUnit = null;
+
+    // Server data:
+    cuid = JsonHelpers.getString(e, "cuid");
+  }
+
+  //TODO: update this method when we are done modyfing elephant attributes
   /**
    * Used to check if an elephant should be saved as draft before
    * the end of EditElephantActivity.
@@ -162,7 +216,10 @@ public class Elephant extends RealmObject {
   }
 
   public String getGenderText() {
-    return male ? "Male" : "Female";
+    if (sex != null) {
+      return sex.equals("M") ? "Male" : "Female";
+    }
+    return "";
   }
 
   public String getHeightText() {
@@ -199,24 +256,5 @@ public class Elephant extends RealmObject {
       return regID;
     }
     return "-";
-  }
-
-  public String getStateText() {
-    if (state.equals(StateValue.draft.name())) {
-      return StateValue.draft.name();
-    } else if (state.equals(StateValue.saved.name())) {
-      return StateValue.saved.name();
-    } else if (state.equals(StateValue.modified.name())) {
-      return StateValue.modified.name();
-    } else if (state.equals(StateValue.pending.name())) {
-      return StateValue.pending.name();
-    } else if (state.equals(StateValue.rejected.name())) {
-      return StateValue.rejected.name();
-    } else if (state.equals(StateValue.validated.name())) {
-      return StateValue.validated.name();
-    } else if (state.equals(StateValue.deleted.name())) {
-      return StateValue.deleted.name();
-    }
-    return "synced";
   }
 }

@@ -13,49 +13,49 @@ import java.util.HashMap;
 
 public class GetAuthTokenAsyncRequest extends RequestAsyncTask<String> {
 
-	private static final String URL = "/login";
+  private static final String URL = "/login";
 
-	private String username;
-	private String password;
-	private Listener listener;
+  private String username;
+  private String password;
+  private Listener listener;
 
-	public GetAuthTokenAsyncRequest(Context context, String username, String password, Listener listener) {
-		super(context);
-		this.username = username;
-		this.password = password;
-		this.listener = listener;
-	}
+  public GetAuthTokenAsyncRequest(String username, String password, Listener listener) {
+    this.username = username;
+    this.password = password;
+    this.listener = listener;
+  }
 
-	@Nullable
-	@Override
-	protected String doInBackground(@Nullable Void... params) {
-		HashMap<String, String> requestParams = new HashMap<>();
+  @Nullable
+  @Override
+  protected String doInBackground(@Nullable Void... params) {
+    HashMap<String, String> requestParams = new HashMap<>();
 
-		requestParams.put("username", username);
-		requestParams.put("password", password);
-		POSTUrlEncoded(URL, requestParams);
-		return null;
-	}
+    requestParams.put("username", username);
+    requestParams.put("password", password);
+    POSTUrlEncoded(URL, requestParams);
+    return null;
+  }
 
-	@Override
-	protected void onPostExecute(final String result) {
-		super.onPostExecute(result);
-		if (getResponseCode() != null && getResponseCode() == 200) {
-			listener.onFinish(getJson());
-		} else {
-			listener.onError(getResponseCode(), null);
-		}
-	}
+  @Override
+  protected void onPostExecute(final String result) {
+    super.onPostExecute(result);
+    if (getResponseCode() != null && getResponseCode() == 200) {
+      listener.onSuccess(getJson());
+    } else {
+      listener.onError(getResponseCode(), null);
+    }
+  }
 
-	@Override
-	protected void onCancelled() {
-		super.onCancelled();
-		listener.onError(getResponseCode(), getJsonError());
-	}
+  @Override
+  protected void onCancelled() {
+    super.onCancelled();
+    listener.onError(getResponseCode(), getJsonError());
+  }
 
-	public interface Listener {
-		void onFinish(JSONObject json);
-		void onError(Integer code, JSONObject json);
-	}
+  public interface Listener {
+    void onSuccess(JSONObject json);
+
+    void onError(Integer code, JSONObject json);
+  }
 
 }

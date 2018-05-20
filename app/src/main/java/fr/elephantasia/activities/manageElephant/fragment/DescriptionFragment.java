@@ -21,8 +21,8 @@ import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ManageElephantDescriptionFragmentBinding;
-import fr.elephantasia.dialogs.GirthDialog;
-import fr.elephantasia.dialogs.HeightDialog;
+import fr.elephantasia.activities.manageElephant.dialog.GirthDialog;
+import fr.elephantasia.activities.manageElephant.dialog.HeightDialog;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 

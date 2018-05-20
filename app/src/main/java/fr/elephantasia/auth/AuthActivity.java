@@ -102,6 +102,7 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 		newAccount = username == null;
 
 		Account[] accounts = accountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
+
 		if (accounts.length > 0) {
 			if (launchedByAccountManager) {
 				new MaterialDialog.Builder(AuthActivity.this)
@@ -117,7 +118,11 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 					})
 					.show();
 			} else {
-				username = accounts[0].name;
+     // TODO: check with steph and gilles if that what we want to do here
+     final Intent intent = new Intent(this, HomeActivity.class);
+     startActivity(intent);
+     finish();
+//				username = accounts[0].name;
 			}
 		}
 
@@ -148,10 +153,10 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 		password = mPasswordEditText.getText().toString();
 
 		if (!isGetAuthTokenRunning()) {
-			getAuthTokenAsyncRequest = new GetAuthTokenAsyncRequest(getApplicationContext(), username, password,
+			getAuthTokenAsyncRequest = new GetAuthTokenAsyncRequest(username, password,
 				new GetAuthTokenAsyncRequest.Listener() {
 				@Override
-				public void onFinish(JSONObject json) {
+				public void onSuccess(JSONObject json) {
 					try {
 						onAuthenticationResult(json.getString("token"));
 					} catch (JSONException e) {
