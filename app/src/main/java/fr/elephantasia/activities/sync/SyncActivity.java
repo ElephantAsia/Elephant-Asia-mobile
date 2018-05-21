@@ -1,5 +1,6 @@
 package fr.elephantasia.activities.sync;
 
+import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -16,24 +18,31 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
-import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
+import fr.elephantasia.auth.Constants;
 import fr.elephantasia.database.RealmDB;
 import fr.elephantasia.database.model.Elephant;
-import fr.elephantasia.network.JsonAuthRequest;
+import fr.elephantasia.utils.Preferences;
 import io.realm.Realm;
 
 import static fr.elephantasia.database.model.Elephant.CUID;
@@ -43,10 +52,7 @@ import static fr.elephantasia.database.model.Elephant.ID;
 public class SyncActivity extends AppCompatActivity {
 
   // Instance fields
-  AccountManager accountManager;
-  public JSONArray syncFromServerResponse;
-
-  final private String getElephantByLastUpdate = "/elephants";
+  private AccountManager accountManager;
 
   // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
@@ -105,22 +111,45 @@ public class SyncActivity extends AppCompatActivity {
     btUpload.setVisibility(View.INVISIBLE);
 
     RequestQueue queue = Volley.newRequestQueue(SyncActivity.this);
-    JsonAuthRequest req =
-        new JsonAuthRequest(SyncActivity.this, Request.Method.GET,
-            getElephantByLastUpdate,
-            null,
+
+    String lastSync = Preferences.GetLastSync(this);
+    Log.w("date", lastSync);
+    String url = "https://elephant-asia.herokuapp.com/api/sync/download/" + lastSync;
+    JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
             createOnSuccessListener(),
-            createOnErrorListener());
+            createOnErrorListener()) {
+      @Override
+      public Map<String, String> getHeaders() throws AuthFailureError {
+        Account[] accounts = accountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
+        Map<String, String> headers = new HashMap<>();
+
+        try {
+            String authToken = accountManager.blockingGetAuthToken(accounts[0], Constants.AUTHTOKEN_TYPE, true);
+            Log.w("authToken", authToken);
+            headers.put("Api-Key", authToken);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return headers;
+      }
+    };
+
     queue.add(req);
   }
 
-  private Response.Listener<JSONArray> createOnSuccessListener() {
-    return new Response.Listener<JSONArray>() {;
+  private Response.Listener<JSONObject> createOnSuccessListener() {
+    return new Response.Listener<JSONObject>() {
       @Override
-      public void onResponse(JSONArray response) {
-        syncFromServerResponse = response;
-        SyncFromServerTask task = new SyncFromServerTask();
+      public void onResponse(JSONObject response) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        String date = df.format(Calendar.getInstance().getTime());
+        Preferences.SetLastSync(SyncActivity.this, date);
+        Log.w("lastSync", "now " + date);
+
+        SyncFromServerTask task = new SyncFromServerTask(response);
         task.execute();
+
+        Log.w("onResponse", response.toString());
       }
     };
   }
@@ -138,29 +167,39 @@ public class SyncActivity extends AppCompatActivity {
     };
   }
 
+  // TODO: add listener class and put SyncFromServerTask static
   private class SyncFromServerTask extends AsyncTask<URL, Integer, Boolean> {
+
+    private JSONObject syncFromServerResponse;
+
+    SyncFromServerTask(JSONObject syncFromServerResponse) {
+      this.syncFromServerResponse = syncFromServerResponse;
+    }
+
     protected Boolean doInBackground(URL... urls) {
       final Realm realm = Realm.getDefaultInstance();
       realm.beginTransaction();
 
-      for (int i = 0; i < syncFromServerResponse.length(); i++) {
-        publishProgress(i);
-        try {
-          Elephant newE = new Elephant(syncFromServerResponse.getJSONObject(i));
+      try {
+        JSONArray elephants = syncFromServerResponse.getJSONArray("elephants");
+        for (int i = 0 ; i < elephants.length() ; i++) {
+          publishProgress(i);
+          Elephant newE = new Elephant(elephants.getJSONObject(i));
           Elephant e = realm.where(Elephant.class).equalTo(CUID, newE.cuid).findFirst();
 
           if (e == null) {
             newE.id = RealmDB.getNextId(realm, Elephant.class, ID);
             realm.insertOrUpdate(newE);
+            Log.w("sync_elephants", "lol");
           } else if (e.dbState == null && e.syncState == null) {
             newE.id = e.id;
             newE.lastVisited = e.lastVisited;
+            Log.w("sync_elephants", "xd");
             realm.insertOrUpdate(newE);
           }
-        } catch (JSONException e1) {
-          e1.printStackTrace();
-          return false;
         }
+      } catch (Exception e) {
+        e.printStackTrace();
       }
 
       realm.commitTransaction();
@@ -177,8 +216,11 @@ public class SyncActivity extends AppCompatActivity {
     }
 
     protected void onProgressUpdate(Integer... progress) {
-      int i = progress[0] > 0 ? (int) (((double) progress[0] / (double) syncFromServerResponse.length()) * 100) : 0;
-      progressBar.setProgress(i);
+      try {
+        JSONArray elephants = syncFromServerResponse.getJSONArray("elephants");
+        int i = progress[0] > 0 ? (int) (((double) progress[0] / (double) elephants.length()) * 100) : 0;
+        progressBar.setProgress(i);
+      } catch (Exception e) {}
     }
 
     protected void onPostExecute(Boolean result) {

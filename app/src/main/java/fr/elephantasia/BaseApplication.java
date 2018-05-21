@@ -20,8 +20,7 @@ public class BaseApplication extends MultiDexApplication {
     super.onCreate();
     Realm.init(this);
 
-    addElephantDemo();
-
+    // addElephantDemo();
   }
 
   private void addElephantDemo() {

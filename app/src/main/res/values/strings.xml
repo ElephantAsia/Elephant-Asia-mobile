@@ -180,4 +180,6 @@
   <string name="sync_with_server">Sync with server</string>
   <string name="upload_selection">Upload selection</string>
 
+  <string name="last_sync">Last sync : %s</string>
+
 </resources>

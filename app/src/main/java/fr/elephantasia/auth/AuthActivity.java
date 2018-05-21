@@ -118,11 +118,11 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 					})
 					.show();
 			} else {
-     // TODO: check with steph and gilles if that what we want to do here
-     final Intent intent = new Intent(this, HomeActivity.class);
-     startActivity(intent);
-     finish();
-//				username = accounts[0].name;
+				 // TODO: check with steph and gilles if that what we want to do here
+				 final Intent intent = new Intent(this, HomeActivity.class);
+				 startActivity(intent);
+				 finish();
+				// username = accounts[0].name;
 			}
 		}
 

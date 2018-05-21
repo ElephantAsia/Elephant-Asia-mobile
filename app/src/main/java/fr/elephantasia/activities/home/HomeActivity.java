@@ -1,10 +1,7 @@
 package fr.elephantasia.activities.home;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -20,12 +17,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,8 +36,7 @@ import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.adapter.HomeDrawerListAdapter;
-import fr.elephantasia.auth.AuthActivity;
-import fr.elephantasia.auth.Constants;
+import fr.elephantasia.utils.Preferences;
 import io.realm.Realm;
 import jp.wasabeef.blurry.Blurry;
 
@@ -55,11 +54,11 @@ public class HomeActivity extends AppCompatActivity {
   @BindView(R.id.main_drawer_pic_profil) CircleImageView profilPic;
   @BindView(R.id.main_drawer) DrawerLayout drawer;
   @BindView(R.id.main_drawer_list) ListView drawerList;
+  @BindView(R.id.main_drawer_last_sync) TextView lastSyncTextView;
 
   // Attr
   private HomeDrawerListAdapter drawerListAdapter;
   private Realm realm;
-
 
   public static int getFragment(Intent intent) {
     return intent.getIntExtra(EXTRA_FRAGMENT, FRAGMENT_HOME_PAGE);
@@ -89,7 +88,6 @@ public class HomeActivity extends AppCompatActivity {
     super.onDestroy();
     realm.close();
   }
-
 
   private void initActionBarDrawer() {
     ActionBarDrawerToggle actionBarDrawer = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close);
@@ -160,6 +158,19 @@ public class HomeActivity extends AppCompatActivity {
 
     drawerListAdapter.setSelection(FRAGMENT_HOME_PAGE);
     drawerListAdapter.notifyDataSetChanged();
+
+    String lastSync = Preferences.GetLastSync(this);
+    try {
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+      Date date = format.parse(lastSync);
+
+      SimpleDateFormat displayedFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+      String displayedDate = displayedFormat.format(date);
+
+      lastSyncTextView.setText(getResources().getString(R.string.last_sync, displayedDate));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @Override

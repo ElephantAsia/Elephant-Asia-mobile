@@ -1,9 +1,5 @@
 package fr.elephantasia.utils;
 
-/**
- * Created by Stephane on 05/01/2017.
- */
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -14,17 +10,7 @@ import android.support.annotation.NonNull;
  */
 public class Preferences {
 
-
-  /**
-   * Identifiant pour le nom d'utilisateur
-   */
-  // private final static String USERNAME = "USERNAME";
-
-  /**
-   * Identifiant pour le mot de passe
-   */
-  // private final static String PASSWORD = "PASSWORD";
-
+  private final static String LAST_SYNC = "LAST_SYNC";
 
   /**
    * Retourne l'instance par défaut des préférences partagées.
@@ -39,91 +25,24 @@ public class Preferences {
     return PreferenceManager.getDefaultSharedPreferences(context);
   }
 
-
-  /**
-   * Retourne le nom d'utilisateur enregistré dans les préférences.
-   *
-   * @param context Le contexte
-   * @return La valeur ou NULL
-   */
-  /* @Nullable
-  public static String getUsername(
-      @NonNull Context context
-  ) {
+  public static String GetLastSync(Context context) {
     SharedPreferences prefs = getSharedPreferences(context);
     try {
-      return prefs.getString(USERNAME, null);
+      return prefs.getString(LAST_SYNC, "1970-01-01T00:00:00.000Z");
     } catch (Exception e) {
-      setUsername(context, null);
+      SetLastSync(context, "1970-01-01T00:00:00.000Z");
       return null;
     }
-  } */
+  }
 
-  /**
-   * Définit le nom d'utilisateur enregistré dans les préférences.
-   *
-   * @param context Le contexte
-   * @param value   La valeur ou NULL
-   */
-  /* public static void setUsername(
-      @NonNull Context context,
-      @Nullable String value
-  ) {
+  public static void SetLastSync(Context context, String value) {
     SharedPreferences prefs = getSharedPreferences(context);
+
     if (value == null) {
-      prefs.edit().remove(USERNAME).apply();
+      prefs.edit().remove(LAST_SYNC).apply();
     } else {
-      prefs.edit().putString(USERNAME, value).apply();
+      prefs.edit().putString(LAST_SYNC, value).apply();
     }
-  } */
-
-  /**
-   * Retourne le mot de passe enregistré dans les préférences.
-   *
-   * @param context Le contexte
-   * @return La valeur ou NULL
-   */
-  /* @Nullable
-  public static String getPassword(
-      @NonNull Context context
-  ) {
-    SharedPreferences prefs = getSharedPreferences(context);
-    try {
-      return prefs.getString(PASSWORD, null);
-    } catch (Exception e) {
-      setPassword(context, null);
-      return null;
-    }
-  } */
-
-  /**
-   * Définit le mot de passe enregistré dans les préférences.
-   *
-   * @param context Le contexte
-   * @param value   La valeur ou NULL
-   */
-  /* public static void setPassword(
-      @NonNull Context context,
-      @Nullable String value
-  ) {
-    SharedPreferences prefs = getSharedPreferences(context);
-    if (value == null) {
-      prefs.edit().remove(PASSWORD).apply();
-    } else {
-      prefs.edit().putString(PASSWORD, value).apply();
-    }
-  } */
-
-  /**
-   * Vérifie que l'utilisateur se soit enregistré.
-   *
-   * @param context Le context
-   * @return TRUE si l'utilisateur est enregistré
-   */
-  /* public static boolean hasSignin(
-      @NonNull Context context
-  ) {
-    return getUsername(context) != null && getPassword(context) != null;
-  } */
+  }
 
 }
