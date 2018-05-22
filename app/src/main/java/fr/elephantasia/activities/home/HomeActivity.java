@@ -159,7 +159,7 @@ public class HomeActivity extends AppCompatActivity {
     drawerListAdapter.setSelection(FRAGMENT_HOME_PAGE);
     drawerListAdapter.notifyDataSetChanged();
 
-    String lastSync = Preferences.GetLastSync(this);
+    String lastSync = Preferences.GetLastDownloadSync(this);
     try {
       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
       Date date = format.parse(lastSync);

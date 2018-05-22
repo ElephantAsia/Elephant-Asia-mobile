@@ -10,7 +10,10 @@ import android.support.annotation.NonNull;
  */
 public class Preferences {
 
-  private final static String LAST_SYNC = "LAST_SYNC";
+  private final static String LAST_DL_SYNC = "LAST_DL_SYNC";
+  private final static String LAST_UP_SYNC = "LAST_UP_SYNC";
+
+  private final static String DEFAULT_DATE = "1970-01-01T00:00:00.000Z";
 
   /**
    * Retourne l'instance par défaut des préférences partagées.
@@ -19,29 +22,51 @@ public class Preferences {
    * @return L'instance par défaut
    */
   @NonNull
-  private static SharedPreferences getSharedPreferences(
+  private static SharedPreferences GetSharedPreferences(
       @NonNull Context context
   ) {
     return PreferenceManager.getDefaultSharedPreferences(context);
   }
 
-  public static String GetLastSync(Context context) {
-    SharedPreferences prefs = getSharedPreferences(context);
+  public static String GetLastDownloadSync(Context context) {
+    SharedPreferences prefs = GetSharedPreferences(context);
+
     try {
-      return prefs.getString(LAST_SYNC, "1970-01-01T00:00:00.000Z");
+      return prefs.getString(LAST_DL_SYNC, DEFAULT_DATE);
     } catch (Exception e) {
-      SetLastSync(context, "1970-01-01T00:00:00.000Z");
+      SetLastDownloadSync(context, DEFAULT_DATE);
       return null;
     }
   }
 
-  public static void SetLastSync(Context context, String value) {
-    SharedPreferences prefs = getSharedPreferences(context);
+  public static void SetLastDownloadSync(Context context, String value) {
+    SharedPreferences prefs = GetSharedPreferences(context);
 
     if (value == null) {
-      prefs.edit().remove(LAST_SYNC).apply();
+      prefs.edit().remove(LAST_DL_SYNC).apply();
     } else {
-      prefs.edit().putString(LAST_SYNC, value).apply();
+      prefs.edit().putString(LAST_DL_SYNC, value).apply();
+    }
+  }
+
+  public static String GetLastUploadSync(Context context) {
+    SharedPreferences prefs = GetSharedPreferences(context);
+
+    try {
+      return prefs.getString(LAST_UP_SYNC, DEFAULT_DATE);
+    } catch (Exception e) {
+      SetLastUploadSync(context, null);
+      return null;
+    }
+  }
+
+  public static void SetLastUploadSync(Context context, String value) {
+    SharedPreferences prefs = GetSharedPreferences(context);
+
+    if (value == null) {
+      prefs.edit().remove(LAST_UP_SYNC).apply();
+    } else {
+      prefs.edit().putString(LAST_UP_SYNC, value).apply();
     }
   }
 

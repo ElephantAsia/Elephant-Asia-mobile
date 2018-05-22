@@ -13,4 +13,8 @@ public class DateHelpers {
     return new Date(now.getTime() - 604800000L); // 7 * 24 * 60 * 60 * 1000
   }
 
+  static public long getYearDiff(long x, long y) {
+    return (y - x) / (1000L * 60L * 60L * 24L * 365L);
+  }
+
 }

@@ -180,6 +180,13 @@
   <string name="sync_with_server">Sync with server</string>
   <string name="upload_selection">Upload selection</string>
 
+  <string name="current_device_state">Current device state</string>
   <string name="last_sync">Last sync : %s</string>
+  <string name="lastest_sync_activities">Lastest sync activities</string>
+  <string name="outdated_local_db">Your local database is very old and might be completely outdated ; we recommand you to update it asap.</string>
+  <string name="date_label">Date : %s</string>
+  <string name="elephants_ready_to_be_upload">%d elephant(s) are ready to be uploaded</string>
+  <string name="last_dl_sum"> Last download summary </string>
+  <string name="last_up_sum"> Last upload summary </string>
 
 </resources>
