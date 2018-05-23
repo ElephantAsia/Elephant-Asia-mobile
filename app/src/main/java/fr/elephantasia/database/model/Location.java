@@ -24,6 +24,7 @@ public class Location extends RealmObject {
         && TextUtils.isEmpty(streetName);
   }
 
+  // Should be rename toString()
   public String format() {
     String p = formatProvince();
 

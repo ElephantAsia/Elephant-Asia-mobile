@@ -1,28 +1,26 @@
-package fr.elephantasia.activities.sync.fragment;
+package fr.elephantasia.activities.sync.adapters;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 
-import fr.elephantasia.R;
 import fr.elephantasia.customView.ElephantPreviewV2;
 import fr.elephantasia.database.model.Elephant;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
-
 public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant, UploadRecyclerViewAdapter.ViewHolder> {
 
   // Attributes
   private SparseBooleanArray itemStateArray = new SparseBooleanArray();
+  private Listener listener;
 
   // View holder
   class ViewHolder extends RecyclerView.ViewHolder {
     ElephantPreviewV2 elephantPreview;
-    CheckBox cb;
+    // CheckBox cb;
 
     ViewHolder(View v) {
       super(v);
@@ -30,8 +28,9 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
     }
   }
 
-  public UploadRecyclerViewAdapter(OrderedRealmCollection<Elephant> items) {
+  public UploadRecyclerViewAdapter(OrderedRealmCollection<Elephant> items, @NonNull  Listener listener) {
     super(items, true);
+    this.listener = listener;
   }
 
   @Override
@@ -46,7 +45,25 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
 
   @Override
   public void onBindViewHolder(final ViewHolder holder, int position) {
+    boolean selected = itemStateArray.get(position);
+
     holder.elephantPreview.setElephant(getItem(position));
+    holder.elephantPreview.setListener(new ElephantPreviewV2.Listener() {
+      @Override
+      public void onSelectButtonClick(Elephant elephant) {
+        boolean selected = !itemStateArray.get(holder.getAdapterPosition());
+        itemStateArray.put(holder.getAdapterPosition(), selected);
+        holder.elephantPreview.refreshSelectButtonLogo(selected);
+        listener.onSelectButtonClick(selected, elephant);
+      }
+
+      @Override
+      public void onConsultationButtonClick(Elephant elephant) {
+        listener.onConsultationButtonClick(elephant);
+      }
+    });
+    holder.elephantPreview.refreshView(selected);
+    //holder.elephantPreview.refreshView();
 //    if (holder.cb.isChecked()) {
 //      holder.cb.toggle();
 //    }
@@ -64,6 +81,13 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
   }
 
   public void resetSelection() {
-    itemStateArray = new SparseBooleanArray();
+    // itemStateArray = new SparseBooleanArray();
+    itemStateArray.clear();
+    notifyDataSetChanged();
+  }
+
+  public interface Listener {
+    void onSelectButtonClick(boolean selected, Elephant elephant);
+    void onConsultationButtonClick(Elephant elephant);
   }
 }

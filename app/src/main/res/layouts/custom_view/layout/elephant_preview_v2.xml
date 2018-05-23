@@ -3,7 +3,6 @@
 <android.support.v7.widget.CardView
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/card"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
@@ -13,10 +12,8 @@
   app:cardElevation="8dp"
   app:cardUseCompatPadding="true">
 
-  <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+  <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -42,31 +39,33 @@
       app:layout_constraintGuide_begin="200dp"/>
 
     <android.support.design.widget.FloatingActionButton
-      android:id="@+id/button1"
+      android:id="@+id/select"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginEnd="16dp"
       android:layout_marginTop="172dp"
       android:clickable="true"
       android:focusable="true"
+      app:fabSize="mini"
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:srcCompat="@color/common_google_signin_btn_text_light_disabled"/>
 
     <android.support.design.widget.FloatingActionButton
-      android:id="@+id/button2"
+      android:id="@+id/consultation"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginEnd="16dp"
       android:layout_marginTop="172dp"
       android:clickable="true"
       android:focusable="true"
-      app:layout_constraintEnd_toStartOf="@+id/button1"
+      app:fabSize="mini"
+      app:layout_constraintEnd_toStartOf="@id/select"
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:srcCompat="@color/common_google_signin_btn_text_light_disabled"/>
 
-    <android.support.design.widget.FloatingActionButton
+    <!--<android.support.design.widget.FloatingActionButton
       android:id="@+id/button3"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -74,9 +73,10 @@
       android:layout_marginTop="172dp"
       android:clickable="true"
       android:focusable="true"
-      app:layout_constraintEnd_toStartOf="@+id/button2"
+      app:fabSize="mini"
+      app:layout_constraintEnd_toStartOf="@id/consultation"
       app:layout_constraintTop_toTopOf="parent"
-      app:srcCompat="@color/common_google_signin_btn_text_light_disabled"/>
+      app:srcCompat="@color/common_google_signin_btn_text_light_disabled"/>-->
 
     <TextView
       android:id="@+id/name"
@@ -84,7 +84,7 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="16dp"
       android:layout_marginTop="32dp"
-      android:text="Pranzo"
+      android:text="name"
       android:textColor="@color/primary"
       android:textSize="16sp"
       android:textStyle="bold"
@@ -92,7 +92,7 @@
       app:layout_constraintTop_toTopOf="@+id/guideline"/>
 
     <TextView
-      android:id="@+id/description"
+      android:id="@+id/localization"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginEnd="16dp"
@@ -106,7 +106,7 @@
       app:layout_constraintTop_toBottomOf="@+id/name"/>
 
     <TextView
-      android:id="@+id/registration_id"
+      android:id="@+id/db_status"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginLeft="16dp"
@@ -116,10 +116,10 @@
       android:textColor="@color/primary"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/registration_id_title"/>
+      app:layout_constraintTop_toBottomOf="@+id/db_status_title"/>
 
     <TextView
-      android:id="@+id/textView18"
+      android:id="@+id/registration_id"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginLeft="16dp"
@@ -129,10 +129,10 @@
       android:textColor="@color/primary"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/textView16"/>
+      app:layout_constraintTop_toBottomOf="@+id/registration_id_title"/>
 
     <TextView
-      android:id="@+id/textView19"
+      android:id="@+id/mte_id"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginLeft="16dp"
@@ -142,10 +142,10 @@
       android:textColor="@color/primary"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintStart_toStartOf="@+id/guideline8"
-      app:layout_constraintTop_toBottomOf="@+id/textView17"/>
+      app:layout_constraintTop_toBottomOf="@+id/mte_id_title"/>
 
     <TextView
-      android:id="@+id/textView15"
+      android:id="@+id/age"
       android:layout_width="wrap_content"
       android:layout_height="0dp"
       android:layout_marginStart="16dp"
@@ -153,10 +153,10 @@
       android:text="40"
       android:textColor="@color/primary"
       app:layout_constraintStart_toStartOf="@+id/guideline8"
-      app:layout_constraintTop_toBottomOf="@+id/textView12"/>
+      app:layout_constraintTop_toBottomOf="@+id/age_title"/>
 
     <TextView
-      android:id="@+id/textView12"
+      android:id="@+id/age_title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="16dp"
@@ -165,10 +165,10 @@
       android:textAllCaps="true"
       android:textColor="@color/accent"
       app:layout_constraintStart_toStartOf="@+id/guideline8"
-      app:layout_constraintTop_toBottomOf="@+id/description"/>
+      app:layout_constraintTop_toBottomOf="@+id/localization"/>
 
     <TextView
-      android:id="@+id/registration_id_title"
+      android:id="@+id/db_status_title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginLeft="16dp"
@@ -180,10 +180,10 @@
       android:textColor="@color/accent"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/description"/>
+      app:layout_constraintTop_toBottomOf="@+id/localization"/>
 
     <TextView
-      android:id="@+id/textView16"
+      android:id="@+id/registration_id_title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginLeft="16dp"
@@ -194,10 +194,10 @@
       android:textColor="@color/accent"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/registration_id"/>
+      app:layout_constraintTop_toBottomOf="@+id/db_status"/>
 
     <TextView
-      android:id="@+id/textView17"
+      android:id="@+id/mte_id_title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="16dp"
@@ -206,7 +206,7 @@
       android:textAllCaps="true"
       android:textColor="@color/accent"
       app:layout_constraintStart_toStartOf="@+id/guideline8"
-      app:layout_constraintTop_toBottomOf="@+id/textView15"/>
+      app:layout_constraintTop_toBottomOf="@+id/age"/>
 
     <android.support.constraint.Guideline
       android:id="@+id/guideline8"
@@ -223,4 +223,5 @@
       app:layout_constraintTop_toTopOf="parent"/>
 
   </android.support.constraint.ConstraintLayout>
+
 </android.support.v7.widget.CardView>

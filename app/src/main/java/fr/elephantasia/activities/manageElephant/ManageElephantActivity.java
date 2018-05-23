@@ -79,13 +79,14 @@ public class ManageElephantActivity extends AppCompatActivity {
 
   // Attr
   private Elephant elephant;
+  private boolean editing;
   private Realm realm;
   private List<Document> documents = new ArrayList<>();
 
   // Icons
-  Drawable draftIcon;
-  Drawable validateIcon;
-  Drawable nextStepIcon;
+  private Drawable draftIcon;
+  private Drawable validateIcon;
+  private Drawable nextStepIcon;
 
   // Listener binding
   @OnClick(R.id.add_elephant_fab)
@@ -125,9 +126,11 @@ public class ManageElephantActivity extends AppCompatActivity {
     setupViewPager(viewPager);
     tabLayout.setupWithViewPager(viewPager);
     realm = Realm.getDefaultInstance();
+    editing = false;
 
     int id = getIntent().getIntExtra(EXTRA_ELEPHANT_ID, -1);
     if (id != -1) {
+      editing = true;
       elephant = realm.copyFromRealm(realm.where(Elephant.class).equalTo(ID, id).findFirst());
       documents = realm.copyFromRealm(realm.where(Document.class).equalTo(Document.ELEPHANT_ID, id).findAll());
 
@@ -220,14 +223,14 @@ public class ManageElephantActivity extends AppCompatActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.add_elephant_menu_draft && checkMandatoryFields()) {
-      elephant.dbState = Elephant.DbState.edited.name();
+      elephant.dbState = Elephant.DbState.Edited.name();
       elephant.draft = true;
       saveToDb();
       setResult(RESULT_DRAFT);
       finish();
       return true;
     } else if (item.getItemId() == R.id.add_elephant_menu_validate && checkMandatoryFields()) {
-      elephant.dbState = Elephant.DbState.edited.name();
+      elephant.dbState = ((editing) ? Elephant.DbState.Edited.name() : Elephant.DbState.Created.name());
       saveToDb();
       setResult(RESULT_VALIDATE);
       finish();

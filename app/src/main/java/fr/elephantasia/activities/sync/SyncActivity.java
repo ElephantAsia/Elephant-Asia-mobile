@@ -55,7 +55,6 @@ import static fr.elephantasia.database.model.Elephant.ID;
 public class SyncActivity extends AppCompatActivity {
 
   // Instance fields
-  private AccountManager accountManager;
   private MaterialDialog dialog;
   private MenuItem download;
   private MenuItem upload;
@@ -79,7 +78,6 @@ public class SyncActivity extends AppCompatActivity {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    accountManager = AccountManager.get(this);
     dialog = new MaterialDialog.Builder(SyncActivity.this).title("Progress dialog").build();
     refresh();
   }
@@ -122,7 +120,6 @@ public class SyncActivity extends AppCompatActivity {
       startDownloadSync();
       return true;
     } else if (item.getItemId() == R.id.upload) {
-      disableMenuItems();
       startUploadSync();
       return true;
     }
@@ -158,21 +155,22 @@ public class SyncActivity extends AppCompatActivity {
     String lastSync = Preferences.GetLastDownloadSync(this);
     String url = "https://elephant-asia.herokuapp.com/api/sync/download/" + lastSync; // TODO: use api URL in constants
     JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
-            createOnSuccessListener(),
-            createOnErrorListener()) {
-      @Override
-      public Map<String, String> getHeaders() {
-        Account[] accounts = accountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
-        Map<String, String> headers = new HashMap<>();
+      createOnSuccessListener(),
+      createOnErrorListener()) {
+        @Override
+        public Map<String, String> getHeaders() {
+          AccountManager accountManager = AccountManager.get(SyncActivity.this);
+          Account[] accounts = accountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
+          Map<String, String> headers = new HashMap<>();
 
-        try {
-            String authToken = accountManager.blockingGetAuthToken(accounts[0], Constants.AUTHTOKEN_TYPE, true);
-            headers.put("Api-Key", authToken);
-        } catch (Exception e) {
-            e.printStackTrace();
+          try {
+              String authToken = accountManager.blockingGetAuthToken(accounts[0], Constants.AUTHTOKEN_TYPE, true);
+              headers.put("Api-Key", authToken);
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+          return headers;
         }
-        return headers;
-      }
     };
 
     queue.add(req);
@@ -187,7 +185,6 @@ public class SyncActivity extends AppCompatActivity {
     return new Response.Listener<JSONObject>() {
       @Override
       public void onResponse(JSONObject response) {
-
         SyncFromServerTask task = new SyncFromServerTask(response, new SyncFromServerTask.Listener() {
           @Override
           public void onPreExecute() {
@@ -232,6 +229,7 @@ public class SyncActivity extends AppCompatActivity {
     return new Response.ErrorListener() {
       @Override
       public void onErrorResponse(VolleyError error) {
+        dialog.dismiss();
         enableMenuItems();
         Toast.makeText(getApplicationContext(), "Error during the request try again", Toast.LENGTH_SHORT).show();
       }
@@ -311,7 +309,7 @@ public class SyncActivity extends AppCompatActivity {
 
       long yearDiff = DateHelpers.getYearDiff(date.getTime(), now.getTime());
       if (yearDiff > 0) {
-        dbOutdatedTextView.setCompoundDrawablePadding(8);
+        dbOutdatedTextView.setCompoundDrawablePadding(16);
         dbOutdatedTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(
           new IconicsDrawable(this)
             .icon(MaterialDesignIconic.Icon.gmi_info)

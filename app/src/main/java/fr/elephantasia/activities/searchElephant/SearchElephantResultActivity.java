@@ -127,8 +127,8 @@ public class SearchElephantResultActivity extends AppCompatActivity {
       } else if (action.equals(SEARCH_PENDING)) {
         query.isNotNull(SYNC_STATE);
       } else if (action.equals(SEARCH_SAVED)) {
-        query.equalTo(DB_STATE, Elephant.DbState.edited.name())
-        .or().equalTo(DB_STATE, Elephant.DbState.deleted.name());
+        query.equalTo(DB_STATE, Elephant.DbState.Edited.name())
+        .or().equalTo(DB_STATE, Elephant.DbState.Deleted.name());
       }
     }
 

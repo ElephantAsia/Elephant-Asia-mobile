@@ -6,7 +6,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.BatteryManager;
-import android.util.Log;
 
 public class DeviceHelpers {
 
@@ -26,15 +25,17 @@ public class DeviceHelpers {
     if (batteryStatus != null) {
       level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
     }
-    Log.w("battery", "level: " + level);
     return level;
   }
 
   static public boolean IsBatteryCharging(Context context) {
-    Intent intent = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    IntentFilter batteryIntentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+    Intent intent = context.registerReceiver(null, batteryIntentFilter);
     if (intent == null) return false;
     int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
-    return plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB || plugged == BatteryManager.BATTERY_PLUGGED_WIRELESS;
+    return (plugged == BatteryManager.BATTERY_PLUGGED_AC
+      || plugged == BatteryManager.BATTERY_PLUGGED_USB
+      || plugged == BatteryManager.BATTERY_PLUGGED_WIRELESS);
   }
 
 }

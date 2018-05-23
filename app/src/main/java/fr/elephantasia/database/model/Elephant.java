@@ -20,11 +20,6 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.Required;
-
-/**
- * Created by seb on 29/04/2017.
- */
 
 @Parcel(implementations = {ElephantRealmProxy.class})
 public class Elephant extends RealmObject {
@@ -62,16 +57,16 @@ public class Elephant extends RealmObject {
   @Ignore
   public static final String CUID = "cuid";
 
-
   public enum SyncState {
-    pending,
-    accepted,
-    rejected,
+    Pending,
+    Accepted,
+    Rejected,
   }
 
   public enum DbState {
-    edited,
-    deleted,
+    Created,
+    Edited,
+    Deleted,
   }
 
   @PrimaryKey
@@ -256,5 +251,16 @@ public class Elephant extends RealmObject {
       return regID;
     }
     return "-";
+  }
+
+  public JSONObject toJsonObject() throws JSONException {
+    JSONObject jsonObject = new JSONObject();
+
+    jsonObject.put("name", name);
+    jsonObject.put("nickname", nickName);
+    jsonObject.put("id", id);
+    jsonObject.put("sex", sex);
+    jsonObject.put("cuid", "ez");
+    return jsonObject;
   }
 }

@@ -59,7 +59,7 @@ public class BaseApplication extends MultiDexApplication {
       e.heightUnit = "m";
       e.girth = "340";
       e.weight = "2784";
-      e.dbState = Elephant.DbState.edited.name();
+      e.dbState = Elephant.DbState.Edited.name();
 
       /**
        * Elephant 2 (random damaged)
@@ -92,7 +92,7 @@ public class BaseApplication extends MultiDexApplication {
       e2.heightUnit = "m";
       e2.girth = "320";
       e2.weight = "2424";
-      e2.dbState = Elephant.DbState.edited.name();
+      e2.dbState = Elephant.DbState.Edited.name();
 
       /**
        * Elephant 3 (father)
@@ -126,7 +126,7 @@ public class BaseApplication extends MultiDexApplication {
       e3.heightUnit = "m";
       e3.girth = "400";
       e3.weight = "3864";
-      e3.dbState = Elephant.DbState.edited.name();
+      e3.dbState = Elephant.DbState.Edited.name();
 
       /**
        * Elephant 4 (mother)
@@ -160,7 +160,7 @@ public class BaseApplication extends MultiDexApplication {
       e4.heightUnit = "m";
       e4.girth = "330";
       e4.weight = "2604";
-      e4.dbState = Elephant.DbState.edited.name();
+      e4.dbState = Elephant.DbState.Edited.name();
 
 
 
@@ -196,7 +196,7 @@ public class BaseApplication extends MultiDexApplication {
       e5.heightUnit = "m";
       e5.girth = "300";
       e5.weight = "2064";
-      e5.dbState = Elephant.DbState.edited.name();
+      e5.dbState = Elephant.DbState.Edited.name();
 
 
       /**
@@ -231,7 +231,7 @@ public class BaseApplication extends MultiDexApplication {
       e6.heightUnit = "m";
       e6.girth = "280";
       e6.weight = "2064";
-      e6.dbState = Elephant.DbState.edited.name();
+      e6.dbState = Elephant.DbState.Edited.name();
 
 
 
