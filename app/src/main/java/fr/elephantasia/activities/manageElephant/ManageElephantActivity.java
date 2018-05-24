@@ -236,7 +236,12 @@ public class ManageElephantActivity extends AppCompatActivity {
         elephant.dbState = Elephant.DbState.Created.name();
         // ready
       } */
-      elephant.dbState = ((editing) ? Elephant.DbState.Edited.name() : Elephant.DbState.Created.name());
+      if (editing) {
+        elephant.dbState = Elephant.DbState.Edited.name();
+        elephant.syncState = null;
+      } else {
+        elephant.dbState = Elephant.DbState.Created.name();
+      }
       saveToDb();
       setResult(RESULT_VALIDATE);
       finish();

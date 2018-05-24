@@ -260,9 +260,9 @@ public class Elephant extends RealmObject {
 
     jsonObject.put("name", name);
     jsonObject.put("nickname", nickName);
-    jsonObject.put("id", id);
+    // jsonObject.put("id", id);
     jsonObject.put("sex", sex);
-    jsonObject.put("cuid", "ez");
+    jsonObject.put("cuid", cuid);
     return jsonObject;
   }
 }

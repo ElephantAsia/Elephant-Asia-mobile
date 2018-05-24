@@ -96,9 +96,9 @@ public class ProfilFragment extends Fragment {
   }
 
   private void refreshSex() {
-    if (elephant.sex.equals("M")) {
+    if (elephant.sex != null && elephant.sex.equals("M")) {
       male.toggle();
-    } else {
+    } else if (elephant.sex != null && elephant.sex.equals("F")) {
       female.toggle();
     }
   }

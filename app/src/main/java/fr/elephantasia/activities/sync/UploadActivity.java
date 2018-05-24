@@ -257,8 +257,16 @@ public class UploadActivity extends AppCompatActivity {
     return new Response.Listener<JSONArray>() {
       @Override
       public void onResponse(JSONArray response) {
-        for (Elephant e : editedElephants) {
+        for (int i = 0 ; i < editedElephants.size() ; ++i) {
+          Elephant e = editedElephants.get(i);
           e.syncState = SyncState.Pending.name();
+          if (e.dbState.equals(Elephant.DbState.Created.name())) {
+            try {
+              e.cuid = response.getJSONObject(i).getString("cuid");
+            } catch (Exception er) {
+              er.printStackTrace();
+            }
+          }
         }
         realm.executeTransaction(new Realm.Transaction() {
           @Override
