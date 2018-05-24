@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -50,12 +51,13 @@ public class SearchElephantActivity extends AppCompatActivity {
   @BindView(R.id.registration_city) EditText cityEditText;
 
   // Attr
+  private SearchElephantActivityBinding binding;
   private Elephant elephant = new Elephant();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    SearchElephantActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.search_elephant_activity);
+    binding = DataBindingUtil.setContentView(this, R.layout.search_elephant_activity);
     binding.setE(elephant);
     ButterKnife.bind(this);
     setSupportActionBar(toolbar);
@@ -125,6 +127,7 @@ public class SearchElephantActivity extends AppCompatActivity {
   @OnClick(R.id.search_button)
   void searchElephant() {
     if (isFieldsValid()) {
+      Log.w("search", "sex: " + ((elephant.sex != null) ? elephant.sex : "null"));
       Intent intent = new Intent(this, SearchElephantResultActivity.class);
       intent.setAction(getIntent().getAction());
       intent.putExtra(EXTRA_SEARCH_ELEPHANT, Parcels.wrap(elephant));
@@ -153,14 +156,11 @@ public class SearchElephantActivity extends AppCompatActivity {
   }
 
   private void resetFilter() {
-    nameEditText.setText("");
     femaleCb.setChecked(false);
     maleCb.setChecked(false);
-    microchipEditText.setText("");
-    mteEditText.setText("");
-    provinceEditText.setText("");
-    districtEditText.setText("");
-    cityEditText.setText("");
+
+    elephant = new Elephant();
+    binding.setE(elephant);
   }
 
   private boolean isFieldsValid() {

@@ -20,7 +20,6 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
   // View holder
   class ViewHolder extends RecyclerView.ViewHolder {
     ElephantPreviewV2 elephantPreview;
-    // CheckBox cb;
 
     ViewHolder(View v) {
       super(v);
@@ -63,17 +62,6 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
       }
     });
     holder.elephantPreview.refreshView(selected);
-    //holder.elephantPreview.refreshView();
-//    if (holder.cb.isChecked()) {
-//      holder.cb.toggle();
-//    }
-//    holder.elephantPreview.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View v) {
-////        holder.cb.toggle();
-////        itemStateArray.put(holder.getAdapterPosition(), holder.cb.isChecked());
-//      }
-//    });
   }
 
   public SparseBooleanArray getSelectedElephants() {
@@ -81,7 +69,6 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
   }
 
   public void resetSelection() {
-    // itemStateArray = new SparseBooleanArray();
     itemStateArray.clear();
     notifyDataSetChanged();
   }
