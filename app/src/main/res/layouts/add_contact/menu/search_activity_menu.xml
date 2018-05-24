@@ -5,7 +5,7 @@
 
   <item
     android:id="@+id/reset_filter"
-    android:title="reset filter"
+    android:title="RESET FILTER"
     app:showAsAction="ifRoom|collapseActionView" />
 
 </menu>

@@ -1,6 +1,7 @@
 <resources>
 
   <string name="app_name">Elephant Asia</string>
+  <string name="Elephant">Elephant</string>
 
   <string name="female">Female</string>
   <string name="female_only">Female only</string>

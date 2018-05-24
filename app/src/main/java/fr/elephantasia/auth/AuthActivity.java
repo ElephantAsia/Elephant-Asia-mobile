@@ -6,6 +6,7 @@ import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -40,10 +41,11 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 	private String username;
 	private String password;
 
+	private TextInputLayout mUsernameLayout;
 	private EditText mUsernameEditText;
+	private TextInputLayout mPasswordLayout;
 	private EditText mPasswordEditText;
 	private Button mButton;
-
 
 	public static void setExtraLaunchedByAccountManager(Intent intent, boolean value) {
 		intent.putExtra(EXTRA_LAUNCHED_BY_ACCOUNT_MANAGER, value);
@@ -66,7 +68,9 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 		KeyboardHelpers.hideKeyboardListener(activityRootView, this);
 
 		mButton = findViewById(R.id.login_button);
+		mUsernameLayout = findViewById(R.id.login_id_layout);
 		mUsernameEditText = findViewById(R.id.login_id);
+		mPasswordLayout = findViewById(R.id.login_pwd_layout);
 		mPasswordEditText = findViewById(R.id.login_pwd);
 
 		mUsernameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -132,19 +136,19 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 
 	private boolean validUsername() {
 		if (mUsernameEditText.getText().toString().trim().length() == 0) {
-			mUsernameEditText.setError(getResources().getString(R.string.empty_username));
+			mUsernameLayout.setError(getResources().getString(R.string.empty_username));
 			return false;
 		}
-		mUsernameEditText.setError(null);
+    mUsernameLayout.setError(null);
 		return true;
 	}
 
 	private boolean validPassword() {
 		if (mPasswordEditText.getText().toString().length() == 0) {
-			mPasswordEditText.setError(getResources().getString(R.string.empty_password));
+			mPasswordLayout.setError(getResources().getString(R.string.empty_password));
 			return false;
 		}
-		mPasswordEditText.setError(null);
+    mPasswordLayout.setError(null);
 		return true;
 	}
 
