@@ -58,6 +58,8 @@ public class Elephant extends RealmObject {
   public static final String CUID = "cuid";
 
   public enum SyncState {
+    // Created,
+    // Edited,
     Pending,
     Accepted,
     Rejected,
@@ -75,7 +77,7 @@ public class Elephant extends RealmObject {
   //Profil
   public String name;
   public String nickName;
-  public String sex;
+  public String sex; // TODO: enum instead of String
   public Location currentLoc = new Location();
   public String birthDate;
   public Location birthLoc = new Location();

@@ -1,15 +1,304 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:theme="@style/AppThemeWhiteBackground"
-  >
+<layout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:theme="@style/AppThemeWhiteBackground">
 
   <data>
-
     <variable
       name="e"
       type="fr.elephantasia.database.model.Elephant"/>
+  </data>
 
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/primary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Search Elephant"
+          android:textColor="@android:color/white"
+          android:textSize="20sp"/>
+
+      </android.support.v7.widget.Toolbar>
+
+      <View
+        android:background="@color/grey_light_50"
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
+
+      <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+          android:padding="12dp"
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+          <TextView
+            android:id="@+id/title_profil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="by Profile data"
+            android:textColor="@color/accent"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+          <android.support.design.widget.TextInputLayout
+            android:id="@+id/name_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+              android:id="@+id/name"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:ems="10"
+              android:hint="Name *"
+              android:inputType="text"
+              android:text="@={e.name}"
+              android:textSize="16sp"/>
+
+          </android.support.design.widget.TextInputLayout>
+
+          <LinearLayout
+            android:id="@+id/female_only_layout"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentStart="true"
+              android:layout_centerVertical="true"
+              android:text="@string/female_only"
+              android:textSize="@dimen/font_size_normal"/> -->
+
+            <CheckBox
+              android:id="@+id/female_only"
+              android:text="Female only"
+              android:textSize="@dimen/font_size_normal"
+              android:textColor="@color/primary"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"/>
+
+            <CheckBox
+              android:id="@+id/male_only"
+              android:text="Male only"
+              android:textSize="@dimen/font_size_normal"
+              android:textColor="@color/primary"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"/>
+
+          </LinearLayout>
+
+          <!-- <RelativeLayout
+            android:id="@+id/male_only_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentStart="true"
+              android:layout_centerVertical="true"
+              android:text="@string/male_only"
+              android:textSize="@dimen/font_size_normal"/>
+
+            <CheckBox
+              android:id="@+id/male_only"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:layout_centerVertical="true" />
+
+          </RelativeLayout> -->
+
+          <TextView
+            android:id="@+id/title_registration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="24dp"
+            android:text="by Registration data"
+            android:textColor="@color/accent"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+          <android.support.design.widget.TextInputLayout
+            android:id="@+id/microship_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+              android:id="@+id/microchip"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:ems="10"
+              android:hint="Microchip number"
+              android:inputType="numberDecimal"
+              android:text="@={e.chips1}"
+              android:textSize="16sp"/>
+
+          </android.support.design.widget.TextInputLayout>
+
+          <!-- <RelativeLayout
+            android:id="@+id/mte_checkbox_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentStart="true"
+              android:layout_centerVertical="true"
+              android:text="@string/mte_owner"
+              android:textSize="@dimen/font_size_normal" />
+
+            <CheckBox
+              android:id="@+id/mte_checkbox"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:layout_centerVertical="true"
+              android:checked="@={e.mteOwner}" />
+
+          </RelativeLayout> -->
+
+          <android.support.design.widget.TextInputLayout
+            android:id="@+id/mte_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <EditText
+              android:id="@+id/mte"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:hint="MTE number"
+              android:inputType="text"
+              android:ems="10"
+              android:textSize="16sp"
+              android:text="@={e.mteNumber}" />
+
+          </android.support.design.widget.TextInputLayout>
+
+          <LinearLayout
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputLayout
+              android:id="@+id/registration_province_layout"
+              android:layout_width="0dp"
+              android:layout_weight="1"
+              android:layout_height="wrap_content">
+
+              <EditText
+                android:id="@+id/registration_province"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Province"
+                android:inputType="text"
+                android:text="@={e.registrationLoc.provinceName}"
+                android:textSize="16sp"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+              android:id="@+id/registration_district_layout"
+              android:layout_width="0dp"
+              android:layout_weight="1"
+              android:layout_height="wrap_content">
+
+              <EditText
+                android:id="@+id/registration_district"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="District"
+                android:inputType="text"
+                android:text="@={e.registrationLoc.districtName}"
+                android:textSize="16sp"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+          </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/registration_city_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+              android:id="@+id/registration_city"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:ems="10"
+              android:hint="City"
+              android:inputType="text"
+              android:text="@={e.registrationLoc.cityName}"
+              android:textSize="16sp"/>
+
+          </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+      </ScrollView>
+
+    </LinearLayout>
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <android.support.design.widget.FloatingActionButton
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/accent"
+        app:fabSize="normal"
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="@color/accent"/>
+
+    </RelativeLayout>
+
+  </FrameLayout>
+
+</layout>
+
+
+<!-- <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:theme="@style/AppThemeWhiteBackground">
+  <data>
+    <variable
+      name="e"
+      type="fr.elephantasia.database.model.Elephant"/>
   </data>
 
   <LinearLayout
@@ -25,7 +314,7 @@
       <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="?android:attr/actionBarSize"
         android:background="@color/primary">
 
         <TextView
@@ -51,25 +340,38 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <EditText
-          android:id="@+id/search_elephant_name"
+        <android.support.design.widget.TextInputLayout
+          android:id="@+id/search_elephant_name_layout"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:ems="10"
-          android:hint="@string/elephant_name"
-          android:inputType="text"
-          android:text="@={e.name}"
-          android:textSize="16sp"/>
+          android:layout_height="wrap_content">
 
-        <EditText
-          android:id="@+id/search_elephant_microchip"
+          <EditText
+            android:id="@+id/search_elephant_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/elephant_name"
+            android:inputType="text"
+            android:text="@={e.name}"
+            android:textSize="16sp"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:ems="10"
-          android:hint="@string/elephant_microchip"
-          android:inputType="numberDecimal"
-          android:text="@={e.chips1}"
-          android:textSize="16sp"/>
+          android:layout_height="wrap_content">
+
+          <EditText
+            android:id="@+id/search_elephant_microchip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/elephant_microchip"
+            android:inputType="numberDecimal"
+            android:text="@={e.chips1}"
+            android:textSize="16sp"/>
+
+        </android.support.design.widget.TextInputLayout>
 
         <RelativeLayout
           android:layout_width="fill_parent"
@@ -117,7 +419,6 @@
 
         </RelativeLayout>
 
-        <!--Mte owner checkbox-->
         <RelativeLayout
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"
@@ -144,7 +445,6 @@
 
         </RelativeLayout>
 
-        <!--Mte owner number-->
         <android.support.design.widget.TextInputLayout
           android:id="@+id/mte_input_layout"
           android:layout_width="match_parent"
@@ -211,4 +511,4 @@
 
 
   </LinearLayout>
-</layout>
+</layout> -->

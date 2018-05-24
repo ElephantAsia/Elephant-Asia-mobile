@@ -218,8 +218,7 @@ public class UploadActivity extends AppCompatActivity {
   }
 
   /*
-   * A big enhancement will be to use our HTTP classes or at least use a better lib
-   * to have a full control on or requests.
+   * network upload progress ?
    */
   private void startUpload(final JSONArray data, final List<Elephant> editedElephants) {
     RequestQueue queue = Volley.newRequestQueue(UploadActivity.this);

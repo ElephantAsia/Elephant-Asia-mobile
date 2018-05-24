@@ -230,6 +230,12 @@ public class ManageElephantActivity extends AppCompatActivity {
       finish();
       return true;
     } else if (item.getItemId() == R.id.add_elephant_menu_validate && checkMandatoryFields()) {
+      /* if (editing && elephant.syncState == null) {
+        elephant.dbState = Elephant.DbState.Edited.name();
+      } else {
+        elephant.dbState = Elephant.DbState.Created.name();
+        // ready
+      } */
       elephant.dbState = ((editing) ? Elephant.DbState.Edited.name() : Elephant.DbState.Created.name());
       saveToDb();
       setResult(RESULT_VALIDATE);

@@ -2,13 +2,21 @@ package fr.elephantasia.activities.searchElephant;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
 import org.parceler.Parcels;
 
@@ -31,52 +39,18 @@ public class SearchElephantActivity extends AppCompatActivity {
 
   // Views Binding
   @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.mte_input_layout) TextInputLayout mteInputLayout;
-  @BindView(R.id.mte_input) EditText mteInput;
-  @BindView(R.id.male) CheckBox maleCb;
-  @BindView(R.id.female) CheckBox femaleCb;
+  @BindView(R.id.search_button) FloatingActionButton searchButton;
+  @BindView(R.id.name) EditText nameEditText;
+  @BindView(R.id.male_only) CheckBox maleCb;
+  @BindView(R.id.female_only) CheckBox femaleCb;
+  @BindView(R.id.microchip) EditText microchipEditText;
+  @BindView(R.id.mte) EditText mteEditText;
+  @BindView(R.id.registration_province) EditText provinceEditText;
+  @BindView(R.id.registration_district) EditText districtEditText;
+  @BindView(R.id.registration_city) EditText cityEditText;
 
   // Attr
   private Elephant elephant = new Elephant();
-
-  // Listener
-  @OnClick(R.id.mte_checkbox)
-  void displayMteInput() {
-    if (elephant.mteOwner) {
-      mteInputLayout.setVisibility(View.VISIBLE);
-    } else {
-      mteInputLayout.setVisibility(View.GONE);
-      mteInput.setText(null);
-      elephant.mteNumber = null;
-    }
-  }
-
-  @OnClick(R.id.male)
-  void setMaleOnly() {
-    elephant.sex = maleCb.isChecked() ? "M" : null;
-
-    if (femaleCb.isChecked()) {
-      femaleCb.toggle();
-    }
-  }
-
-  @OnClick(R.id.female)
-  void setFemaleOnly() {
-    elephant.sex = femaleCb.isChecked() ? "F" : null;
-
-    if (maleCb.isChecked()) {
-      maleCb.toggle();
-    }
-  }
-
-  // Listeners Binding
-  @OnClick(R.id.search_button)
-  public void searchElephant() {
-    Intent intent = new Intent(this, SearchElephantResultActivity.class);
-    intent.setAction(getIntent().getAction());
-    intent.putExtra(EXTRA_SEARCH_ELEPHANT, Parcels.wrap(elephant));
-    startActivityForResult(intent, REQUEST_ELEPHANT_SELECTED);
-  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +64,38 @@ public class SearchElephantActivity extends AppCompatActivity {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     KeyboardHelpers.hideKeyboardListener(binding.getRoot(), this);
+
+    searchButton.setImageDrawable(
+      new IconicsDrawable(this)
+        .icon(MaterialDesignIconic.Icon.gmi_search)
+        .color(Color.WHITE)
+        .sizeDp(22)
+    );
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.search_activity_menu, menu);
+
+    MenuItem resetFilter = menu.findItem(R.id.reset_filter);
+    resetFilter.setIcon(
+      new IconicsDrawable(this)
+        .icon(CommunityMaterial.Icon.cmd_filter_remove_outline)
+        .color(Color.WHITE)
+        .sizeDp(22)
+    );
+
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == R.id.reset_filter) {
+      resetFilter();
+      return true;
+    }
+    return false;
   }
 
   @Override
@@ -115,4 +121,52 @@ public class SearchElephantActivity extends AppCompatActivity {
       }
     }
   }
+
+  @OnClick(R.id.search_button)
+  void searchElephant() {
+    if (isFieldsValid()) {
+      Intent intent = new Intent(this, SearchElephantResultActivity.class);
+      intent.setAction(getIntent().getAction());
+      intent.putExtra(EXTRA_SEARCH_ELEPHANT, Parcels.wrap(elephant));
+      startActivityForResult(intent, REQUEST_ELEPHANT_SELECTED);
+    } else {
+      Toast.makeText(this, "You must fill at least one field", Toast.LENGTH_SHORT).show();
+    }
+  }
+
+  @OnClick(R.id.male_only)
+  void setMaleOnly() {
+    elephant.sex = maleCb.isChecked() ? "M" : null;
+
+    if (femaleCb.isChecked()) {
+      femaleCb.toggle();
+    }
+  }
+
+  @OnClick(R.id.female_only)
+  void setFemaleOnly() {
+    elephant.sex = femaleCb.isChecked() ? "F" : null;
+
+    if (maleCb.isChecked()) {
+      maleCb.toggle();
+    }
+  }
+
+  private void resetFilter() {
+    nameEditText.setText("");
+    femaleCb.setChecked(false);
+    maleCb.setChecked(false);
+    microchipEditText.setText("");
+    mteEditText.setText("");
+    provinceEditText.setText("");
+    districtEditText.setText("");
+    cityEditText.setText("");
+  }
+
+  private boolean isFieldsValid() {
+    return nameEditText.length() + microchipEditText.length() + mteEditText.length()
+      + provinceEditText.length() + districtEditText.length() + cityEditText.length()
+      + ((femaleCb.isChecked())?1:0) + ((maleCb.isChecked())?1:0) > 0;
+  }
+
 }

@@ -6,20 +6,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
-import fr.elephantasia.database.model.Elephant;
-import fr.elephantasia.databinding.ManageElephantProfilFragmentBinding;
 import fr.elephantasia.activities.manageElephant.dialog.DatePickerDialog;
 import fr.elephantasia.activities.manageElephant.dialog.LocationInputDialog;
+import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.databinding.ManageElephantProfilFragmentBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 public class ProfilFragment extends Fragment {
@@ -80,6 +78,7 @@ public class ProfilFragment extends Fragment {
     ButterKnife.bind(this, view);
 
     KeyboardHelpers.hideKeyboardListener(view, getActivity());
+    refresh();
     return (view);
   }
 
@@ -90,5 +89,17 @@ public class ProfilFragment extends Fragment {
   public void setSexError() {
     male.setError(getText(R.string.sex_required));
     female.setError(getText(R.string.sex_required));
+  }
+
+  private void refresh() {
+    refreshSex();
+  }
+
+  private void refreshSex() {
+    if (elephant.sex.equals("M")) {
+      male.toggle();
+    } else {
+      female.toggle();
+    }
   }
 }

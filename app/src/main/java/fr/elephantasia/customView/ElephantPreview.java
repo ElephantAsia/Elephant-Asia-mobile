@@ -2,9 +2,7 @@ package fr.elephantasia.customView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -109,7 +107,7 @@ public abstract class ElephantPreview extends FrameLayout {
     weight.setCompoundDrawables(new IconicsDrawable(getContext()).icon(CommunityMaterial.Icon.cmd_weight)
         .color(ContextCompat.getColor(getContext(), R.color.md_teal)).sizeDp(14), null, null, null);
 
-    height.setCompoundDrawables(new IconicsDrawable(getContext()).icon(FontAwesome.Icon.faw_arrows_v)
+    height.setCompoundDrawables(new IconicsDrawable(getContext()).icon(FontAwesome.Icon.faw_arrows_alt_v)
         .color(ContextCompat.getColor(getContext(), R.color.md_green)).sizeDp(14), null, null, null);
   }
 
