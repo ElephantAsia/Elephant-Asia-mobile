@@ -12,10 +12,40 @@
   app:cardElevation="8dp"
   app:cardUseCompatPadding="true">
 
-  <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+  <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <android.support.design.widget.FloatingActionButton
+      android:id="@+id/select"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:layout_marginTop="172dp"
+      android:clickable="true"
+      android:focusable="true"
+      app:fabSize="mini"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@color/common_google_signin_btn_text_light_disabled"/>
+
+  <android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.FloatingActionButton
+      android:id="@+id/select_faked"
+      android:visibility="invisible"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:layout_marginTop="172dp"
+      android:clickable="true"
+      android:focusable="true"
+      app:fabSize="mini"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@color/common_google_signin_btn_text_light_disabled"/>
 
     <ImageView
       android:id="@+id/imageView"
@@ -39,19 +69,6 @@
       app:layout_constraintGuide_begin="200dp"/>
 
     <android.support.design.widget.FloatingActionButton
-      android:id="@+id/select"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="16dp"
-      android:layout_marginTop="172dp"
-      android:clickable="true"
-      android:focusable="true"
-      app:fabSize="mini"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:srcCompat="@color/common_google_signin_btn_text_light_disabled"/>
-
-    <android.support.design.widget.FloatingActionButton
       android:id="@+id/consultation"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -60,23 +77,10 @@
       android:clickable="true"
       android:focusable="true"
       app:fabSize="mini"
-      app:layout_constraintEnd_toStartOf="@id/select"
+      app:layout_constraintEnd_toStartOf="@id/select_faked"
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:srcCompat="@color/common_google_signin_btn_text_light_disabled"/>
-
-    <!--<android.support.design.widget.FloatingActionButton
-      android:id="@+id/button3"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="16dp"
-      android:layout_marginTop="172dp"
-      android:clickable="true"
-      android:focusable="true"
-      app:fabSize="mini"
-      app:layout_constraintEnd_toStartOf="@id/consultation"
-      app:layout_constraintTop_toTopOf="parent"
-      app:srcCompat="@color/common_google_signin_btn_text_light_disabled"/>-->
 
     <TextView
       android:id="@+id/name"
@@ -221,6 +225,15 @@
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"/>
+
+  </android.support.constraint.ConstraintLayout>
+
+  <FrameLayout
+    android:id="@+id/select_mask"
+    android:visibility="gone"
+    android:background="@color/grey_light_50"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
 
   </android.support.constraint.ConstraintLayout>
 

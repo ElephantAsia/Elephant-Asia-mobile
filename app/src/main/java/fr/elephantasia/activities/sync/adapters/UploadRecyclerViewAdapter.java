@@ -68,6 +68,15 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
     return itemStateArray;
   }
 
+  public int countElephantsSelected() {
+    int k = 0;
+
+    for (int i = 0 ; i < itemStateArray.size() ; ++i) {
+      if (itemStateArray.get(i)) ++k;
+    }
+    return k;
+  }
+
   public void resetSelection() {
     itemStateArray.clear();
     notifyDataSetChanged();

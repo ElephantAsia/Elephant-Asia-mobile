@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -98,22 +99,6 @@ public class UploadActivity extends AppCompatActivity {
 
     realm = Realm.getDefaultInstance();
     dialog = new MaterialDialog.Builder(UploadActivity.this).title("Progress dialog").build();
-//    editedElephantsLive =
-//        realm.where(Elephant.class)
-//            .isNotNull(DB_STATE)
-//            .findAll();
-////    realm.executeTransaction(new Realm.Transaction() {
-////      @Override
-////      public void execute(@NonNull Realm realm) {
-////        editedElephantsLive =
-////            realm.where(Elephant.class)
-////                .isNotNull(DB_STATE)
-////                .findAll();
-////        for (Elephant el : editedElephantsLive) {
-////          el.syncState = null;
-////        }
-////      }
-////    });
 
     editedElephantsLive =
         realm.where(Elephant.class)
@@ -124,11 +109,6 @@ public class UploadActivity extends AppCompatActivity {
     mAdapter = new UploadRecyclerViewAdapter(editedElephantsLive, new UploadRecyclerViewAdapter.Listener() {
       @Override
       public void onSelectButtonClick(boolean selected, Elephant elephant) {
-        if (selected) {
-          Toast.makeText(UploadActivity.this, "Elephant " + elephant.getNameText() + " added", Toast.LENGTH_SHORT).show();
-        } else {
-          Toast.makeText(UploadActivity.this, "Elephant " + elephant.getNameText() + " removed", Toast.LENGTH_SHORT).show();
-        }
       }
 
       @Override
@@ -160,7 +140,6 @@ public class UploadActivity extends AppCompatActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.upload) {
-      // showConfirmationDialog();
       startUploadSync();
       return true;
     }
@@ -180,8 +159,30 @@ public class UploadActivity extends AppCompatActivity {
   }
 
   void startUploadSync() {
-    // TODO: check error if there are error here (no selected elephant, ...)
-    syncToServer();
+    if (mAdapter.countElephantsSelected() > 0) {
+      displayUploadConfirmation();
+    } else {
+      new MaterialDialog.Builder(this)
+        .title("Error")
+        .content("No elephant selected.")
+        .neutralText("OK")
+        .show();
+    }
+  }
+
+  void displayUploadConfirmation() {
+    new MaterialDialog.Builder(this)
+      .title("Confirmation")
+      .content("Do you really want to upload the selected elephant(s) ?")
+      .positiveText("Yes")
+      .onPositive(new MaterialDialog.SingleButtonCallback() {
+        @Override
+        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+          syncToServer();
+        }
+      })
+      .negativeText("No")
+      .show();
   }
 
   void syncToServer() {

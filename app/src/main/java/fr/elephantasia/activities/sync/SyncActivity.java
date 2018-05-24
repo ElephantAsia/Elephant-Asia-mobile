@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -116,7 +118,7 @@ public class SyncActivity extends AppCompatActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.download) {
-      disableMenuItems();
+      // disableMenuItems();
       startDownloadSync();
       return true;
     } else if (item.getItemId() == R.id.upload) {
@@ -134,7 +136,7 @@ public class SyncActivity extends AppCompatActivity {
 
   private void startDownloadSync() {
     if (valid()) {
-      syncFromServer();
+      displayDownloadConfirmation();
     } else {
       new MaterialDialog.Builder(this)
         .title("Error")
@@ -142,6 +144,21 @@ public class SyncActivity extends AppCompatActivity {
         .content("Please check your internet connection or recharge your device.")
         .show();
     }
+  }
+
+  void displayDownloadConfirmation() {
+    new MaterialDialog.Builder(this)
+      .title("Confirmation")
+      .content("Do you really want to update your local database ?")
+      .positiveText("Yes")
+      .onPositive(new MaterialDialog.SingleButtonCallback() {
+        @Override
+        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+          syncFromServer();
+        }
+      })
+      .negativeText("No")
+      .show();
   }
 
   private void startUploadSync() {
@@ -200,7 +217,7 @@ public class SyncActivity extends AppCompatActivity {
           @Override
           public void onFinish() {
             dialog.dismiss();
-            enableMenuItems();
+            // enableMenuItems();
           }
 
           @Override
@@ -230,7 +247,7 @@ public class SyncActivity extends AppCompatActivity {
       @Override
       public void onErrorResponse(VolleyError error) {
         dialog.dismiss();
-        enableMenuItems();
+        // enableMenuItems();
         Toast.makeText(getApplicationContext(), "Error during the request try again", Toast.LENGTH_SHORT).show();
       }
     };
@@ -354,7 +371,7 @@ public class SyncActivity extends AppCompatActivity {
     }
   }
 
-  private void disableMenuItems() {
+  /* private void disableMenuItems() {
     if (download != null && upload != null) {
       download.setEnabled(false);
       upload.setEnabled(false);
@@ -366,7 +383,7 @@ public class SyncActivity extends AppCompatActivity {
       download.setEnabled(true);
       upload.setEnabled(true);
     }
-  }
+  } */
 
   static private class SyncFromServerTask extends AsyncTask<URL, Integer, Boolean> {
 

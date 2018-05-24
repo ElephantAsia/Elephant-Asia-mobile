@@ -7,6 +7,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.mikepenz.iconics.IconicsDrawable;
@@ -24,6 +29,9 @@ public class ElephantPreviewV2 extends CardView {
   private Elephant elephant;
   private Listener listener;
 
+  private AlphaAnimation backgroundInAnimation;
+  private AlphaAnimation backgroundOutAnimation;
+
   @BindView(R.id.name) TextView name;
   @BindView(R.id.localization) TextView localization;
   @BindView(R.id.db_status) TextView dbStatus;
@@ -32,6 +40,7 @@ public class ElephantPreviewV2 extends CardView {
   @BindView(R.id.mte_id) TextView mteId;
   @BindView(R.id.select) FloatingActionButton selectButton;
   @BindView(R.id.consultation) FloatingActionButton consultationButton;
+  @BindView(R.id.select_mask) FrameLayout selectMask;
 
   public ElephantPreviewV2(Context ctx, AttributeSet attrs, int defStyle) {
     super(ctx, attrs, defStyle);
@@ -51,6 +60,25 @@ public class ElephantPreviewV2 extends CardView {
   private void init() {
     View view = inflate(getContext(), R.layout.elephant_preview_v2, null);
     addView(view);
+
+    backgroundInAnimation = new AlphaAnimation(0f, 1f);
+    backgroundInAnimation.setInterpolator(new LinearInterpolator());
+    backgroundInAnimation.setDuration(400);
+
+    backgroundOutAnimation = new AlphaAnimation(1f, 0f);
+    backgroundOutAnimation.setInterpolator(new LinearInterpolator());
+    backgroundOutAnimation.setDuration(300);
+
+    backgroundInAnimation.setAnimationListener(new Animation.AnimationListener() {
+      @Override public void onAnimationStart(Animation animation) { selectMask.setVisibility(View.VISIBLE); }
+      @Override public void onAnimationEnd(Animation animation) {}
+      @Override public void onAnimationRepeat(Animation animation) {}
+    });
+    backgroundOutAnimation.setAnimationListener(new Animation.AnimationListener() {
+      @Override public void onAnimationStart(Animation animation) {}
+      @Override public void onAnimationEnd(Animation animation) { selectMask.setVisibility(View.GONE); }
+      @Override public void onAnimationRepeat(Animation animation) {}
+    });
   }
 
   public void setElephant(Elephant e) {
@@ -101,6 +129,13 @@ public class ElephantPreviewV2 extends CardView {
   }
 
   private void refreshSelectButton(boolean selected) {
+    selectButton.setImageDrawable(
+      new IconicsDrawable(getContext())
+        .icon(MaterialDesignIconic.Icon.gmi_plus)
+        .color(Color.WHITE)
+        .sizeDp(22)
+    );
+
     refreshSelectButtonLogo(selected);
     selectButton.setOnClickListener(new OnClickListener() {
       @Override
@@ -114,19 +149,17 @@ public class ElephantPreviewV2 extends CardView {
 
   public void refreshSelectButtonLogo(boolean selected) {
     if (selected) {
-      selectButton.setImageDrawable(
-        new IconicsDrawable(getContext())
-          .icon(MaterialDesignIconic.Icon.gmi_minus)
-          .color(Color.WHITE)
-          .sizeDp(22)
-      );
+      selectMask.startAnimation(backgroundInAnimation);
+      selectButton.animate()
+        .rotation(-135)
+        .setInterpolator(new AccelerateDecelerateInterpolator())
+        .setDuration(400);
     } else {
-      selectButton.setImageDrawable(
-        new IconicsDrawable(getContext())
-          .icon(MaterialDesignIconic.Icon.gmi_plus)
-          .color(Color.WHITE)
-          .sizeDp(22)
-      );
+      selectMask.startAnimation(backgroundOutAnimation);
+      selectButton.animate()
+        .rotation(0)
+        .setInterpolator(new AccelerateDecelerateInterpolator())
+        .setDuration(300);
     }
   }
 
@@ -151,12 +184,6 @@ public class ElephantPreviewV2 extends CardView {
   private @NonNull String format(@Nullable String s) {
     return ((s != null && !s.trim().isEmpty()) ? s : "-");
   }
-
-  /* private void setTextIcons() {
-    gender.setCompoundDrawables(new IconicsDrawable(getContext()).icon(FontAwesome.Icon.faw_venus_mars)
-        .color(ContextCompat.getColor(getContext(), R.color.md_indigo)).sizeDp(14), null, null, null);
-
-  } */
 
   public interface Listener {
     void onSelectButtonClick(Elephant elephant);
