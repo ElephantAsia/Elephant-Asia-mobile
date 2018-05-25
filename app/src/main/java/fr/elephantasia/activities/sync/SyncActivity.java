@@ -37,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -51,7 +52,9 @@ import fr.elephantasia.utils.Preferences;
 import io.realm.Realm;
 
 import static fr.elephantasia.database.model.Elephant.CUID;
+import static fr.elephantasia.database.model.Elephant.DB_STATE;
 import static fr.elephantasia.database.model.Elephant.ID;
+import static fr.elephantasia.database.model.Elephant.SYNC_STATE;
 
 
 public class SyncActivity extends AppCompatActivity {
@@ -314,7 +317,15 @@ public class SyncActivity extends AppCompatActivity {
   }
 
   private void refreshElephantsReadyToBeUploaded() {
-    elephantsReady.setText(getResources().getString(R.string.elephants_ready_to_be_upload, 42));
+    Realm realm = Realm.getDefaultInstance();
+    List<Elephant> elephants =
+      realm.where(Elephant.class)
+        .isNotNull(DB_STATE)
+        .isNull(SYNC_STATE)
+        .findAll();
+
+    elephantsReady.setText(getResources().getString(R.string.elephants_ready_to_be_upload, elephants.size()));
+    realm.close();
   }
 
   private void refreshOutdatedDb() {

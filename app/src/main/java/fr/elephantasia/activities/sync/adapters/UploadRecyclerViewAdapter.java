@@ -64,6 +64,8 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
     holder.elephantPreview.refreshView(selected);
   }
 
+
+
   public SparseBooleanArray getSelectedElephants() {
     return itemStateArray;
   }

@@ -16,6 +16,7 @@ import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -33,7 +34,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +48,7 @@ import fr.elephantasia.activities.showElephant.ShowElephantActivity;
 import fr.elephantasia.activities.sync.adapters.UploadRecyclerViewAdapter;
 import fr.elephantasia.auth.Constants;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.utils.Preferences;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -63,22 +67,7 @@ public class UploadActivity extends AppCompatActivity {
   // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.list) RecyclerView mRecyclerView;
-  // @BindView(R.id.progress_bar) ProgressBar progressBar;
-
-  // Listener
-  /* public void showConfirmationDialog() {
-    new MaterialDialog.Builder(this)
-        .title(R.string.confirmation_sync)
-        .positiveText(R.string.UPLOAD)
-        .onPositive(new MaterialDialog.SingleButtonCallback() {
-          @Override
-          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            syncToServer();
-          }
-        })
-        .negativeText(R.string.CANCEL)
-        .show();
-  } */
+  @BindView(R.id.empty_layout) View emptyLayout;
 
   // Attributes
   private UploadRecyclerViewAdapter mAdapter;
@@ -100,25 +89,7 @@ public class UploadActivity extends AppCompatActivity {
     realm = Realm.getDefaultInstance();
     dialog = new MaterialDialog.Builder(UploadActivity.this).title("Progress dialog").build();
 
-    editedElephantsLive =
-        realm.where(Elephant.class)
-            .isNotNull(DB_STATE)
-            .isNull(SYNC_STATE)
-            .findAll();
-
-    mAdapter = new UploadRecyclerViewAdapter(editedElephantsLive, new UploadRecyclerViewAdapter.Listener() {
-      @Override
-      public void onSelectButtonClick(boolean selected, Elephant elephant) {
-      }
-
-      @Override
-      public void onConsultationButtonClick(Elephant elephant) {
-        Intent intent = new Intent(UploadActivity.this, ShowElephantActivity.class);
-        intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
-        startActivity(intent);
-      }
-    });
-    mRecyclerView.setAdapter(mAdapter);
+    refreshList();
   }
 
   @Override
@@ -183,6 +154,34 @@ public class UploadActivity extends AppCompatActivity {
       })
       .negativeText("No")
       .show();
+  }
+
+  void refreshList() {
+    editedElephantsLive = realm.where(Elephant.class)
+      .isNotNull(DB_STATE)
+      .isNull(SYNC_STATE)
+      .findAll();
+
+    if (mAdapter == null) {
+      mAdapter = new UploadRecyclerViewAdapter(editedElephantsLive, new UploadRecyclerViewAdapter.Listener() {
+        @Override
+        public void onSelectButtonClick(boolean selected, Elephant elephant) {
+        }
+
+        @Override
+        public void onConsultationButtonClick(Elephant elephant) {
+          Intent intent = new Intent(UploadActivity.this, ShowElephantActivity.class);
+          intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+          startActivity(intent);
+        }
+      });
+      mRecyclerView.setAdapter(mAdapter);
+    }
+    if (editedElephantsLive != null && editedElephantsLive.size() > 0) {
+      emptyLayout.setVisibility(View.GONE);
+    } else {
+      emptyLayout.setVisibility(View.VISIBLE);
+    }
   }
 
   void syncToServer() {
@@ -273,16 +272,16 @@ public class UploadActivity extends AppCompatActivity {
           @Override
           public void execute(@NonNull Realm realm) {
             realm.insertOrUpdate(editedElephants);
-            editedElephantsLive =
-              realm.where(Elephant.class)
-                .isNotNull(DB_STATE)
-                .isNull(SYNC_STATE)
-                .findAll();
+            refreshList();
           }
         });
 
         dialog.dismiss();
         mAdapter.resetSelection();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        String date = df.format(Calendar.getInstance().getTime());
+        Preferences.SetLastUploadSync(UploadActivity.this, date);
         Toast.makeText(getApplicationContext(), "Upload successfull", Toast.LENGTH_SHORT).show();
         Log.w("upload", "success response: " + response);
       }
