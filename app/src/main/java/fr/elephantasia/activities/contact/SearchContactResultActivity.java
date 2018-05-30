@@ -65,7 +65,7 @@ public class SearchContactResultActivity extends AppCompatActivity {
     });
 
     TextView title = toolbar.findViewById(R.id.title);
-    title.setText(getString(R.string.search_result));
+    title.setText(getString(R.string.search_result, contacts.size()));
 
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) {
