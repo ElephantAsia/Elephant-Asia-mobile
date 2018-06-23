@@ -281,13 +281,13 @@ public class SyncActivity extends AppCompatActivity {
   private void refreshConnectivity() {
     IconicsDrawable icon;
     if (DeviceHelpers.IsConnected(this)) {
-      connectivityTextView.setText("You're connected to internet");
+      connectivityTextView.setText("Connected to internet");
       icon = new IconicsDrawable(this)
         .icon(MaterialDesignIconic.Icon.gmi_check)
         .color(ContextCompat.getColor(this, R.color.md_green))
         .sizeDp(14);
     } else {
-      connectivityTextView.setText("You're not connected to internet");
+      connectivityTextView.setText("Not connected to internet");
       icon = new IconicsDrawable(this)
         .icon(MaterialDesignIconic.Icon.gmi_alert_triangle)
         .color(ContextCompat.getColor(this, R.color.md_red))
