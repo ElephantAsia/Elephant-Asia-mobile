@@ -114,6 +114,7 @@
       android:layout_height="wrap_content" />
 
     <TextView
+      android:id="@+id/date_last_dl_status"
       android:text="Status : SUCCESS"
       android:textColor="@color/md_light_green"
       android:layout_width="match_parent"
@@ -159,6 +160,7 @@
       android:layout_height="wrap_content" />
 
     <TextView
+      android:id="@+id/date_last_up_status"
       android:text="Status : SUCCESS"
       android:textColor="@color/md_light_green"
       android:layout_width="match_parent"

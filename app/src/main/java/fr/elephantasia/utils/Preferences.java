@@ -39,6 +39,11 @@ public class Preferences {
     }
   }
 
+  public static boolean IsLastDownloadSyncNeverHappened(Context context) {
+    String lastDownload = GetLastDownloadSync(context);
+    return lastDownload == null || lastDownload.equals(DEFAULT_DATE);
+  }
+
   public static void SetLastDownloadSync(Context context, String value) {
     SharedPreferences prefs = GetSharedPreferences(context);
 
@@ -58,6 +63,11 @@ public class Preferences {
       SetLastUploadSync(context, null);
       return null;
     }
+  }
+
+  public static boolean IsLastUploadSyncNeverHappened(Context context) {
+    String lastUpload = GetLastUploadSync(context);
+    return lastUpload == null || lastUpload.equals(DEFAULT_DATE);
   }
 
   public static void SetLastUploadSync(Context context, String value) {

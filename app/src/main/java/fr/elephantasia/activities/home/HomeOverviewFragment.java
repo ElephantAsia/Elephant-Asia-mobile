@@ -105,7 +105,7 @@ public class HomeOverviewFragment extends Fragment {
     int total = realm.where(Elephant.class).findAll().size();
 
     int pending = realm.where(Elephant.class)
-        .isNotNull(SYNC_STATE)
+        .equalTo(SYNC_STATE, Elephant.SyncState.Pending.name())
         .findAll().size();
 
     int readyToSync = realm.where(Elephant.class)

@@ -159,17 +159,21 @@ public class HomeActivity extends AppCompatActivity {
     drawerListAdapter.setSelection(FRAGMENT_HOME_PAGE);
     drawerListAdapter.notifyDataSetChanged();
 
-    String lastSync = Preferences.GetLastDownloadSync(this);
-    try {
-      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-      Date date = format.parse(lastSync);
+    if (Preferences.IsLastDownloadSyncNeverHappened(this)) {
+      lastSyncTextView.setText(getResources().getString(R.string.last_sync, "Never"));
+    } else {
+      String lastSync = Preferences.GetLastDownloadSync(this);
+      try {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        Date date = format.parse(lastSync);
 
-      SimpleDateFormat displayedFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-      String displayedDate = displayedFormat.format(date);
+        SimpleDateFormat displayedFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        String displayedDate = displayedFormat.format(date);
 
-      lastSyncTextView.setText(getResources().getString(R.string.last_sync, displayedDate));
-    } catch (Exception e) {
-      e.printStackTrace();
+        lastSyncTextView.setText(getResources().getString(R.string.last_sync, displayedDate));
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
   }
 

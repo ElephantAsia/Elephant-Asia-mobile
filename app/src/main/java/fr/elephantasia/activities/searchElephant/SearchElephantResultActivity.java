@@ -48,7 +48,6 @@ public class SearchElephantResultActivity extends AppCompatActivity {
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.title) TextView toolbarTitle;
 
-
   // Attr
   private SearchElephantAdapter adapter;
   private Realm realm;
@@ -68,6 +67,14 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    //Toast.makeText(this, "Refreshing ...", Toast.LENGTH_SHORT).show();
+    displaySearchResult();
+    //Toast.makeText(this, "Done !", Toast.LENGTH_SHORT).show();
   }
 
   @Override
@@ -125,10 +132,10 @@ public class SearchElephantResultActivity extends AppCompatActivity {
       if (action.equals(SEARCH_DRAFT)) {
         query.equalTo(DRAFT, true);
       } else if (action.equals(SEARCH_PENDING)) {
-        query.isNotNull(SYNC_STATE);
+        query.equalTo(SYNC_STATE, Elephant.SyncState.Pending.name());
       } else if (action.equals(SEARCH_SAVED)) {
         query.equalTo(DB_STATE, Elephant.DbState.Edited.name())
-        .or().equalTo(DB_STATE, Elephant.DbState.Deleted.name());
+        .or().equalTo(DB_STATE, Elephant.DbState.Deleted.name()); // TODO: ??
       }
     }
 

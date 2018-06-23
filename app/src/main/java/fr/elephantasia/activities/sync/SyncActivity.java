@@ -70,7 +70,9 @@ public class SyncActivity extends AppCompatActivity {
   @BindView(R.id.battery) TextView batteryTextView;
   @BindView(R.id.db_outdated) TextView dbOutdatedTextView;
   @BindView(R.id.date_last_dl) TextView dateLastDl;
+  @BindView(R.id.date_last_dl_status) TextView dateLastDlStatus;
   @BindView(R.id.date_last_up) TextView dateLastUp;
+  @BindView(R.id.date_last_up_status) TextView dateLastUpStatus;
   @BindView(R.id.elephants_ready_to_be_uploaded) TextView elephantsReady;
 
   @Override
@@ -353,32 +355,44 @@ public class SyncActivity extends AppCompatActivity {
   }
 
   private void refreshLastDownloadSync() {
-    String lastSync = Preferences.GetLastDownloadSync(this);
-    try {
-      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-      Date date = format.parse(lastSync);
+    if (Preferences.IsLastDownloadSyncNeverHappened(this)) {
+      dateLastDl.setText(getResources().getString(R.string.date_label, "Never"));
+      dateLastDlStatus.setVisibility(View.GONE);
+    } else {
+      String lastSync = Preferences.GetLastDownloadSync(this);
+      try {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        Date date = format.parse(lastSync);
 
-      SimpleDateFormat displayedFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-      String displayedDate = displayedFormat.format(date);
+        SimpleDateFormat displayedFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        String displayedDate = displayedFormat.format(date);
 
-      dateLastDl.setText(getResources().getString(R.string.date_label, displayedDate));
-    } catch (Exception e) {
-      e.printStackTrace();
+        dateLastDl.setText(getResources().getString(R.string.date_label, displayedDate));
+        dateLastDlStatus.setVisibility(View.VISIBLE);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
   }
 
   private void refreshLastUploadSync() {
-    String lastSync = Preferences.GetLastUploadSync(this);
-    try {
-      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-      Date date = format.parse(lastSync);
+    if (Preferences.IsLastUploadSyncNeverHappened(this)) {
+      dateLastUp.setText(getResources().getString(R.string.date_label, "Never"));
+      dateLastUpStatus.setVisibility(View.GONE);
+    } else {
+      String lastSync = Preferences.GetLastUploadSync(this);
+      try {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        Date date = format.parse(lastSync);
 
-      SimpleDateFormat displayedFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-      String displayedDate = displayedFormat.format(date);
+        SimpleDateFormat displayedFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        String displayedDate = displayedFormat.format(date);
 
-      dateLastUp.setText(getResources().getString(R.string.date_label, displayedDate));
-    } catch (Exception e) {
-      e.printStackTrace();
+        dateLastUp.setText(getResources().getString(R.string.date_label, displayedDate));
+        dateLastUpStatus.setVisibility(View.VISIBLE);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
   }
 
@@ -419,9 +433,12 @@ public class SyncActivity extends AppCompatActivity {
           Elephant e = realm.where(Elephant.class).equalTo(CUID, newE.cuid).findFirst();
 
           if (e == null) {
+            // new elephant in our local db
             newE.id = RealmDB.getNextId(realm, Elephant.class, ID);
+            newE.syncState = Elephant.SyncState.Downloaded.name();
             realm.insertOrUpdate(newE);
-          } else if (e.dbState == null && e.syncState == null) {
+          } else if (/* e.dbState == null && */ e.syncState == null) {
+            // existing elephant in our local db
             newE.id = e.id;
             newE.lastVisited = e.lastVisited;
             realm.insertOrUpdate(newE);

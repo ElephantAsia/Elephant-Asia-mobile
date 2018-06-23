@@ -57,7 +57,6 @@ import static fr.elephantasia.database.model.Elephant.DB_STATE;
 import static fr.elephantasia.database.model.Elephant.SYNC_STATE;
 import static fr.elephantasia.database.model.Elephant.SyncState;
 
-
 public class UploadActivity extends AppCompatActivity {
 
   // Instance fields
@@ -177,6 +176,7 @@ public class UploadActivity extends AppCompatActivity {
       });
       mRecyclerView.setAdapter(mAdapter);
     }
+    mAdapter.resetSelection();
     if (editedElephantsLive != null && editedElephantsLive.size() > 0) {
       emptyLayout.setVisibility(View.GONE);
     } else {
@@ -306,8 +306,6 @@ public class UploadActivity extends AppCompatActivity {
 
     private int totalSelected = 0;
     private List<Elephant> selectedElephant = new ArrayList<>();
-    // private List<Elephant> editedElephants;
-    // private SparseBooleanArray selections;
     private Listener listener;
     private JSONArray serialized = new JSONArray();
 
@@ -320,17 +318,12 @@ public class UploadActivity extends AppCompatActivity {
           selectedElephant.add(editedElephants.get(selections.keyAt(i)));
         }
       }
-      // this.editedElephants = editedElephants;
-      // this.selections = selections;
     }
 
     @Override
     protected void onPreExecute() {
       super.onPreExecute();
       listener.onPreExecute();
-      /* for (int i = 0; i < selections.size(); i++) {
-        totalSelected = selections.valueAt(i) ? totalSelected + 1 : totalSelected;
-      } */
     }
 
     protected Boolean doInBackground(URL... urls) {
@@ -347,15 +340,6 @@ public class UploadActivity extends AppCompatActivity {
           } catch (Exception e) {
             e.printStackTrace();
           }
-
-          /* e.syncState = SyncState.Pending.name();
-
-          // add new elephant
-          if (e.cuid == null) {
-
-          } else {
-            // update new elephant
-          } */
       }
       return true;
     }

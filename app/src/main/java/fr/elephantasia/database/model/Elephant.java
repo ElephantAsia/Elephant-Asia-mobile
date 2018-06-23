@@ -58,11 +58,10 @@ public class Elephant extends RealmObject {
   public static final String CUID = "cuid";
 
   public enum SyncState {
-    // Created,
-    // Edited,
+    Downloaded,
     Pending,
-    Accepted,
-    Rejected,
+    Accepted, // osef
+    Rejected, // osef
   }
 
   public enum DbState {

@@ -230,18 +230,24 @@ public class ManageElephantActivity extends AppCompatActivity {
       finish();
       return true;
     } else if (item.getItemId() == R.id.add_elephant_menu_validate && checkMandatoryFields()) {
-      /* if (editing && elephant.syncState == null) {
-        elephant.dbState = Elephant.DbState.Edited.name();
-      } else {
-        elephant.dbState = Elephant.DbState.Created.name();
-        // ready
-      } */
+
       if (editing) {
-        elephant.dbState = Elephant.DbState.Edited.name();
-        elephant.syncState = null;
+        // Editing mode
+        // does the elephant was uploaded ?
+        if (elephant.syncState != null
+          && (elephant.syncState.equals(Elephant.SyncState.Pending.name())
+          || elephant.syncState.equals(Elephant.SyncState.Downloaded.name()))) {
+          elephant.dbState = Elephant.DbState.Edited.name();
+          // mark it as edited
+        } else {
+          // or still marked as created
+          elephant.dbState = Elephant.DbState.Created.name();
+        }
       } else {
+        // Creating mode
         elephant.dbState = Elephant.DbState.Created.name();
       }
+      elephant.syncState = null;
       saveToDb();
       setResult(RESULT_VALIDATE);
       finish();
