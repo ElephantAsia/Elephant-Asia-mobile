@@ -1,5 +1,7 @@
 package fr.elephantasia.database;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -71,7 +73,6 @@ public class DatabaseController {
     RealmDB.insertOrUpdateElephant(elephant, documents);
   }
 
-
   public void updateLastVisitedDateElephant(Integer id) {
     RealmDB.updateLastVisitedDate(id);
   }
@@ -103,7 +104,8 @@ public class DatabaseController {
     return query.findAll();
   }
 
-  public RealmResults<Elephant> searchElephants(Elephant e) {
+  @NonNull
+  public RealmResults<Elephant> search(Elephant e) {
     RealmQuery<Elephant> query = realm.where(Elephant.class);
 
     query.notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name());
@@ -122,6 +124,25 @@ public class DatabaseController {
           query.equalTo(Elephant.MTE_OWNER, true);
         }
       }
+    }
+    return query.findAll();
+  }
+
+  @NonNull
+  public RealmResults<Contact> search(Contact c) {
+    RealmQuery<Contact> query = realm.where(Contact.class);
+
+    query.contains(Contact.LASTNAME, c.lastName, Case.INSENSITIVE)
+      .or()
+      .contains(Contact.FIRSTNAME, c.lastName, Case.INSENSITIVE);
+    if (!c.owner) {
+      query.equalTo(Contact.OWNER, false);
+    }
+    if (!c.cornac) {
+      query.equalTo(Contact.CORNAC, false);
+    }
+    if (!c.vet) {
+      query.equalTo(Contact.VET, false);
     }
     return query.findAll();
   }

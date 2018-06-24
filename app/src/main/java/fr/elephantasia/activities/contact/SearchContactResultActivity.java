@@ -13,21 +13,15 @@ import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
 import fr.elephantasia.adapter.ContactPreviewAdapter;
+import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Contact;
-import io.realm.Case;
-import io.realm.Realm;
 import io.realm.RealmList;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 import static fr.elephantasia.activities.contact.SearchContactActivity.EXTRA_SEARCH_FILTERS;
-import static fr.elephantasia.database.model.Contact.CORNAC;
-import static fr.elephantasia.database.model.Contact.FIRSTNAME;
-import static fr.elephantasia.database.model.Contact.LASTNAME;
-import static fr.elephantasia.database.model.Contact.OWNER;
-import static fr.elephantasia.database.model.Contact.VET;
 
 public class SearchContactResultActivity extends AppCompatActivity {
 
@@ -39,8 +33,8 @@ public class SearchContactResultActivity extends AppCompatActivity {
   @BindView(R.id.toolbar) Toolbar toolbar;
 
   // Attr
+  private DatabaseController databaseController;
   private ContactPreviewAdapter adapter;
-  private Realm realm;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +42,11 @@ public class SearchContactResultActivity extends AppCompatActivity {
     setContentView(R.layout.search_contact_result_activity);
     ButterKnife.bind(this);
 
+    databaseController = ((BaseApplication) getApplication()).getDatabaseController();
+
     RealmList<Contact> contacts = new RealmList<>();
     contacts.addAll(searchContacts());
+
     adapter = new ContactPreviewAdapter(this, contacts, false);
     listView.setAdapter(adapter);
 
@@ -76,7 +73,7 @@ public class SearchContactResultActivity extends AppCompatActivity {
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    realm.close();
+    // realm.close();
   }
 
   @Override
@@ -88,25 +85,6 @@ public class SearchContactResultActivity extends AppCompatActivity {
 
   private RealmResults<Contact> searchContacts() {
     Contact c = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_FILTERS));
-    realm = Realm.getDefaultInstance();
-    RealmQuery<Contact> query = realm.where(Contact.class);
-
-    query.contains(LASTNAME, c.lastName, Case.INSENSITIVE)
-        .or()
-        .contains(FIRSTNAME, c.lastName, Case.INSENSITIVE);
-
-    if (!c.owner) {
-      query.equalTo(OWNER, false);
-    }
-
-    if (!c.cornac) {
-      query.equalTo(CORNAC, false);
-    }
-
-    if (!c.vet) {
-      query.equalTo(VET, false);
-    }
-
-    return query.findAll();
+    return databaseController.search(c);
   }
 }

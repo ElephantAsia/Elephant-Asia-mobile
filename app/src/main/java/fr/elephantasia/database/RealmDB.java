@@ -85,7 +85,7 @@ public class RealmDB {
 //  }
 //
   @Deprecated
-  static public void copyOrUpdate(final Contact contact) {
+  static void copyOrUpdate(final Contact contact) {
     Realm realm = Realm.getDefaultInstance();
 
     realm.executeTransactionAsync(new Realm.Transaction() {

@@ -86,7 +86,7 @@ public class SearchElephantResultActivity extends AppCompatActivity {
 
     Elephant e = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_ELEPHANT));
     if (e != null) {
-      results = databaseController.searchElephants(e);
+      results = databaseController.search(e);
     } else {
       DatabaseController.SearchMode sm = DatabaseController.SearchMode.All;
       String action = getIntent().getAction();
@@ -111,44 +111,6 @@ public class SearchElephantResultActivity extends AppCompatActivity {
       noResult.setVisibility(View.VISIBLE);
     }
   }
-
-//  private RealmResults<Elephant> searchElephants() {
-//    RealmQuery<Elephant> query = realm.where(Elephant.class);
-//
-//    Elephant e = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_ELEPHANT));
-//
-//
-//    if (e != null) {
-//      query.contains(NAME, e.name, Case.INSENSITIVE);
-//
-//      if (e.chips1 != null) {
-//        query.contains(CHIPS1, e.chips1, Case.INSENSITIVE);
-//      }
-//
-//      if (e.sex != null) {
-//        query.equalTo(SEX, e.sex);
-//      }
-//
-//      if (e.mteOwner) {
-//        if (e.mteNumber != null) {
-//          query.equalTo(MTE_NUMBER, e.mteNumber);
-//        } else {
-//          query.equalTo(MTE_OWNER, true);
-//        }
-//      }
-//    } else if (action != null) {
-//      if (action.equals(SEARCH_DRAFT)) {
-//        query.equalTo(DRAFT, true);
-//      } else if (action.equals(SEARCH_PENDING)) {
-//        query.equalTo(SYNC_STATE, Elephant.SyncState.Pending.name());
-//      } else if (action.equals(SEARCH_SAVED)) {
-//        query.equalTo(DB_STATE, Elephant.DbState.Edited.name())
-//        .or().equalTo(DB_STATE, Elephant.DbState.Deleted.name()); // TODO: ??
-//      }
-//    }
-//
-//    return query.findAll();
-//  }
 
   private void initAdapter(OrderedRealmCollection<Elephant> realmResults) {
     String action = getIntent().getAction();

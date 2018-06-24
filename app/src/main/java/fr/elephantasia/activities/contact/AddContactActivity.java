@@ -11,12 +11,12 @@ import org.parceler.Parcels;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
-import fr.elephantasia.database.RealmDB;
+import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.databinding.AddContactActivityBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
-import io.realm.Realm;
 
 public class AddContactActivity extends AppCompatActivity {
 
@@ -26,14 +26,17 @@ public class AddContactActivity extends AppCompatActivity {
   // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
 
+  private DatabaseController databaseController;
+
   // Attr
-  private Realm realm;
+  //private Realm realm;
   private Contact contact = new Contact();
 
   // Listener binding
   @OnClick(R.id.validate_button)
   public void addNewContact() {
-    RealmDB.copyOrUpdate(contact);
+    // RealmDB.copyOrUpdate(contact);
+    databaseController.copyOrUpdate(contact);
     Intent resultIntent = getIntent();
     resultIntent.putExtra(EXTRA_CONTACT_CREATED, Parcels.wrap(contact));
     setResult(RESULT_OK, resultIntent);
@@ -48,7 +51,8 @@ public class AddContactActivity extends AppCompatActivity {
     ButterKnife.bind(this);
     setSupportActionBar(toolbar);
 
-    realm = Realm.getDefaultInstance();
+    databaseController = ((BaseApplication)getApplication()).getDatabaseController();
+    // realm = Realm.getDefaultInstance();
 
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -67,6 +71,6 @@ public class AddContactActivity extends AppCompatActivity {
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    realm.close();
+    // realm.close();
   }
 }
