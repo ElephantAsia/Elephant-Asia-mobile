@@ -14,12 +14,7 @@ import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.adapter.RecentElephantAdapter;
 import fr.elephantasia.database.model.Elephant;
-import fr.elephantasia.utils.DateHelpers;
-import io.realm.Realm;
 import io.realm.RealmResults;
-import io.realm.Sort;
-
-import static fr.elephantasia.database.model.Elephant.LAST_VISITED;
 
 public class HomeRecentFragment extends Fragment {
 
@@ -47,16 +42,22 @@ public class HomeRecentFragment extends Fragment {
   }
 
   public void setLastVisitedElephant() {
-    Realm realm = ((HomeActivity) getActivity()).getRealm();
-    RealmResults<Elephant> elephants = realm.where(Elephant.class)
-        .greaterThan(LAST_VISITED, DateHelpers.getLastWeek())
-        .findAllSorted(LAST_VISITED, Sort.DESCENDING);
+//    Realm realm = ((HomeActivity) getActivity()).getRealm();
+//    RealmResults<Elephant> elephants = realm.where(Elephant.class)
+//        .greaterThan(LAST_VISITED, DateHelpers.getLastWeek())
+//        .findAllSorted(LAST_VISITED, Sort.DESCENDING);
+    HomeActivity homeActivity = (HomeActivity)getActivity();
 
-    if (elephants.size() == 0) {
-      noItemsYet.setVisibility(View.VISIBLE);
-    } else {
-      noItemsYet.setVisibility(View.GONE);
-      recentList.setAdapter(new RecentElephantAdapter(elephants));
+    if (homeActivity != null) {
+      RealmResults<Elephant> elephants = homeActivity.getLastVisitedElephants();
+
+      if (elephants.size() == 0) {
+        noItemsYet.setVisibility(View.VISIBLE);
+      } else {
+        noItemsYet.setVisibility(View.GONE);
+        recentList.setAdapter(new RecentElephantAdapter(elephants));
+      }
     }
+
   }
 }

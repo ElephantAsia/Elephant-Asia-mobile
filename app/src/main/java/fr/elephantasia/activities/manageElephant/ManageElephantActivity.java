@@ -30,6 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.fragment.ChildrenFragment;
 import fr.elephantasia.activities.manageElephant.fragment.ContactFragment;
@@ -38,16 +39,14 @@ import fr.elephantasia.activities.manageElephant.fragment.ParentageFragment;
 import fr.elephantasia.activities.manageElephant.fragment.ProfilFragment;
 import fr.elephantasia.activities.manageElephant.fragment.RegistrationFragment;
 import fr.elephantasia.adapter.ViewPagerAdapter;
-import fr.elephantasia.database.RealmDB;
+import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.KeyboardHelpers;
-import io.realm.Realm;
 
 import static fr.elephantasia.activities.contact.SearchContactActivity.EXTRA_SEARCH_CONTACT;
 import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
-import static fr.elephantasia.database.model.Elephant.ID;
 
 public class ManageElephantActivity extends AppCompatActivity {
 
@@ -69,6 +68,8 @@ public class ManageElephantActivity extends AppCompatActivity {
   @BindView(R.id.add_elephant_activity) View rootView;
   @BindView(R.id.add_elephant_fab) FloatingActionButton fab;
 
+  private DatabaseController databaseController;
+
   // Fragment
   private ProfilFragment profilFragment = new ProfilFragment();
   private RegistrationFragment registrationFragment = new RegistrationFragment();
@@ -80,7 +81,7 @@ public class ManageElephantActivity extends AppCompatActivity {
   // Attr
   private Elephant elephant;
   private boolean editing;
-  private Realm realm;
+  // private Realm realm;
   private List<Document> documents = new ArrayList<>();
 
   // Icons
@@ -103,6 +104,9 @@ public class ManageElephantActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.manage_elephant_activity);
     ButterKnife.bind(this);
+
+    databaseController = ((BaseApplication)getApplication()).getDatabaseController();
+
     initIcon();
 
     rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -125,14 +129,16 @@ public class ManageElephantActivity extends AppCompatActivity {
 
     setupViewPager(viewPager);
     tabLayout.setupWithViewPager(viewPager);
-    realm = Realm.getDefaultInstance();
+    // realm = Realm.getDefaultInstance();
     editing = false;
 
     int id = getIntent().getIntExtra(EXTRA_ELEPHANT_ID, -1);
     if (id != -1) {
       editing = true;
-      elephant = realm.copyFromRealm(realm.where(Elephant.class).equalTo(ID, id).findFirst());
-      documents = realm.copyFromRealm(realm.where(Document.class).equalTo(Document.ELEPHANT_ID, id).findAll());
+      // elephant = realm.copyFromRealm(realm.where(Elephant.class).equalTo(ID, id).findFirst());
+      // documents = realm.copyFromRealm(realm.where(Document.class).equalTo(Document.ELEPHANT_ID, id).findAll());
+      elephant = databaseController.getElephantById(id);
+      documents = databaseController.getDocumentsByElephantId(id);
 
       toolbarTitle.setText(String.format(getString(R.string.edit_elephant_title), elephant.name));
       toolbarTitle.setMaxLines(1);
@@ -168,9 +174,9 @@ public class ManageElephantActivity extends AppCompatActivity {
     return this.elephant;
   }
 
-  public Realm getRealm() {
-    return this.realm;
-  }
+//  public Realm getRealm() {
+//    return this.realm;
+//  }
 
   @Override
   public boolean onSupportNavigateUp() {
@@ -186,7 +192,7 @@ public class ManageElephantActivity extends AppCompatActivity {
   @Override
   public void onDestroy() {
     super.onDestroy();
-    realm.close();
+    // realm.close();
   }
 
   @Override
@@ -200,13 +206,16 @@ public class ManageElephantActivity extends AppCompatActivity {
           contactFragment.addContactTolist(contact);
           break;
         case REQUEST_MOTHER_SELECTED:
-          parentageFragment.setMother(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
+          // parentageFragment.setMother(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
+          setMother(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
         case REQUEST_FATHER_SELECTED:
-          parentageFragment.setFather(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
+          // parentageFragment.setFather(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
+          setFather(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
         case REQUEST_CHILD_SELECTED:
-          childrenFragment.setChild(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
+          // childrenFragment.setChild(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
+          addChild(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
       }
     }
@@ -306,8 +315,30 @@ public class ManageElephantActivity extends AppCompatActivity {
     }
   }
 
+  private void setMother(Integer id) {
+    Elephant mother = databaseController.getElephantById(id);
+    if (mother != null) {
+      parentageFragment.setMother(mother);
+    }
+  }
+
+  private void setFather(Integer id) {
+    Elephant father = databaseController.getElephantById(id);
+    if (father != null) {
+      parentageFragment.setFather(father);
+    }
+  }
+
+  private void addChild(Integer id) {
+    Elephant child = databaseController.getElephantById(id);
+    if (child != null) {
+      childrenFragment.addChild(child);
+    }
+  }
+
   private void saveToDb() {
-    RealmDB.insertOrUpdateElephant(elephant, documents);
+    databaseController.insertOrUpdate(elephant, documents);
+    // RealmDB.insertOrUpdateElephant(elephant, documents);
     // TODO: add popup 'saving ...'
   }
 

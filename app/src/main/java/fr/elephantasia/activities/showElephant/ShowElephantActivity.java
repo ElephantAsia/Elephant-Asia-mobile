@@ -29,6 +29,7 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.addDocument.AddDocumentActivity;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
@@ -39,16 +40,14 @@ import fr.elephantasia.activities.showElephant.fragment.ShowOverviewFragment;
 import fr.elephantasia.activities.showElephant.fragment.ShowParentageFragment;
 import fr.elephantasia.adapter.DocumentAdapter;
 import fr.elephantasia.adapter.ViewPagerAdapter;
-import fr.elephantasia.database.RealmDB;
+import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ShowElephantActivityBinding;
-import io.realm.Realm;
 
 import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.RESULT_DRAFT;
 import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.RESULT_VALIDATE;
 import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
-import static fr.elephantasia.database.model.Elephant.ID;
 
 /**
  ** STEPH NOTE : That would be nice if we make a class pour the fab menu. I will do that if we use fab menu again in an other part of the app.
@@ -77,6 +76,8 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 	@BindView(R.id.minifab_addconsultation) FloatingActionButton fabAddConsultation;
 	@BindView(R.id.minifab_delete) FloatingActionButton fabDelete;
 
+	private DatabaseController databaseController;
+
 	private Animation miniFabOpenAnimation;
   private Animation miniFabCloseAnimation;
   private AlphaAnimation backgroundInAnimation;
@@ -87,7 +88,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 
   // Attr
   private Elephant elephant;
-  private Realm realm;
+  // private Realm realm;
 	private ViewPagerAdapter adapter;
 
   @Override
@@ -95,10 +96,12 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
     super.onCreate(savedInstanceState);
     ShowElephantActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.show_elephant_activity);
 
-    realm = Realm.getDefaultInstance();
-    elephant = getExtraElephant();
+		databaseController = ((BaseApplication)getApplication()).getDatabaseController();
 
-    RealmDB.updateLastVisitedDate(elephant.id);
+    // realm = Realm.getDefaultInstance();
+    elephant = getExtraElephant();
+		databaseController.updateLastVisitedDateElephant(elephant.id);
+    // RealmDB.updateLastVisitedDate(elephant.id);
 
     binding.setE(elephant);
     ButterKnife.bind(this);
@@ -199,7 +202,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    realm.close();
+    // realm.close();
   }
 
   @Override
@@ -278,7 +281,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 						document.type = AddDocumentActivity.getExtraType(data);
 						document.elephant_id = elephant.id;
 						showDocumentFragment.addDocument(document);
-						RealmDB.insertOrUpdateDocument(document);
+            databaseController.insertOrUpdate(document);
 					}
 					break;
 			}
@@ -293,9 +296,10 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
     Intent intent = getIntent();
     Integer id = intent.getIntExtra(EXTRA_ELEPHANT_ID, -1);
     if (id != -1) {
-      return realm.where(Elephant.class).equalTo(ID, id).findFirst();
+    	return databaseController.getElephantById(id);
+      // return realm.where(Elephant.class).equalTo(ID, id).findFirst();
     }
-    throw new RuntimeException("ShowElephantActivity:148: ID incorrect");
+    throw new RuntimeException("ShowElephantActivity:getExtraElephant: incorrect ID");
   }
 
   private void setupViewPager(ViewPager viewPager) {
@@ -366,12 +370,13 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 			.onPositive(new MaterialDialog.SingleButtonCallback() {
 				@Override
 				public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-					realm.executeTransaction(new Realm.Transaction() {
-						@Override
-						public void execute(Realm realm) {
-							elephant.deleteFromRealm();
-						}
-					});
+//					realm.executeTransaction(new Realm.Transaction() {
+//						@Override
+//						public void execute(Realm realm) {
+//							elephant.deleteFromRealm();
+//						}
+//					});
+          databaseController.delete(elephant);
 					finish();
 				}
 			})

@@ -13,27 +13,17 @@ import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.adapter.SearchElephantAdapter;
 import fr.elephantasia.customView.ElephantPreview;
+import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Elephant;
-import io.realm.Case;
 import io.realm.OrderedRealmCollection;
-import io.realm.Realm;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
 
 import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
 import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_SEARCH_ELEPHANT;
-import static fr.elephantasia.database.model.Elephant.CHIPS1;
-import static fr.elephantasia.database.model.Elephant.DB_STATE;
-import static fr.elephantasia.database.model.Elephant.DRAFT;
-import static fr.elephantasia.database.model.Elephant.MTE_NUMBER;
-import static fr.elephantasia.database.model.Elephant.MTE_OWNER;
-import static fr.elephantasia.database.model.Elephant.NAME;
-import static fr.elephantasia.database.model.Elephant.SEX;
-import static fr.elephantasia.database.model.Elephant.SYNC_STATE;
 
 public class SearchElephantResultActivity extends AppCompatActivity {
 
@@ -48,16 +38,20 @@ public class SearchElephantResultActivity extends AppCompatActivity {
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.title) TextView toolbarTitle;
 
+  private DatabaseController databaseController;
+
   // Attr
   private SearchElephantAdapter adapter;
-  private Realm realm;
+  // private Realm realm;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.search_elephant_result_activity);
     ButterKnife.bind(this);
-    realm = Realm.getDefaultInstance();
+
+    databaseController = ((BaseApplication)getApplication()).getDatabaseController();
+    // realm = Realm.getDefaultInstance();
 
     resultList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
@@ -72,15 +66,12 @@ public class SearchElephantResultActivity extends AppCompatActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    //Toast.makeText(this, "Refreshing ...", Toast.LENGTH_SHORT).show();
     displaySearchResult();
-    //Toast.makeText(this, "Done !", Toast.LENGTH_SHORT).show();
   }
 
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    realm.close();
   }
 
   @Override
@@ -91,7 +82,24 @@ public class SearchElephantResultActivity extends AppCompatActivity {
   }
 
   private void displaySearchResult() {
-    OrderedRealmCollection<Elephant> results = searchElephants();
+    OrderedRealmCollection<Elephant> results;
+
+    Elephant e = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_ELEPHANT));
+    if (e != null) {
+      results = databaseController.searchElephants(e);
+    } else {
+      DatabaseController.SearchMode sm = DatabaseController.SearchMode.All;
+      String action = getIntent().getAction();
+      if (action != null) {
+        if (action.equals(SEARCH_DRAFT))
+          sm = DatabaseController.SearchMode.Draft;
+        else if (action.equals(SEARCH_PENDING))
+          sm = DatabaseController.SearchMode.Pending;
+        else if (action.equals(SEARCH_SAVED))
+          sm = DatabaseController.SearchMode.Saved;
+      }
+      results = databaseController.searchElephantsByState(sm);
+    }
 
     toolbarTitle.setText(String.format(getString(R.string.search_result), results.size()));
 
@@ -104,43 +112,43 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     }
   }
 
-  private RealmResults<Elephant> searchElephants() {
-    RealmQuery<Elephant> query = realm.where(Elephant.class);
-
-    Elephant e = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_ELEPHANT));
-    String action = getIntent().getAction();
-
-    if (e != null) {
-      query.contains(NAME, e.name, Case.INSENSITIVE);
-
-      if (e.chips1 != null) {
-        query.contains(CHIPS1, e.chips1, Case.INSENSITIVE);
-      }
-
-      if (e.sex != null) {
-        query.equalTo(SEX, e.sex);
-      }
-
-      if (e.mteOwner) {
-        if (e.mteNumber != null) {
-          query.equalTo(MTE_NUMBER, e.mteNumber);
-        } else {
-          query.equalTo(MTE_OWNER, true);
-        }
-      }
-    } else if (action != null) {
-      if (action.equals(SEARCH_DRAFT)) {
-        query.equalTo(DRAFT, true);
-      } else if (action.equals(SEARCH_PENDING)) {
-        query.equalTo(SYNC_STATE, Elephant.SyncState.Pending.name());
-      } else if (action.equals(SEARCH_SAVED)) {
-        query.equalTo(DB_STATE, Elephant.DbState.Edited.name())
-        .or().equalTo(DB_STATE, Elephant.DbState.Deleted.name()); // TODO: ??
-      }
-    }
-
-    return query.findAll();
-  }
+//  private RealmResults<Elephant> searchElephants() {
+//    RealmQuery<Elephant> query = realm.where(Elephant.class);
+//
+//    Elephant e = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_ELEPHANT));
+//
+//
+//    if (e != null) {
+//      query.contains(NAME, e.name, Case.INSENSITIVE);
+//
+//      if (e.chips1 != null) {
+//        query.contains(CHIPS1, e.chips1, Case.INSENSITIVE);
+//      }
+//
+//      if (e.sex != null) {
+//        query.equalTo(SEX, e.sex);
+//      }
+//
+//      if (e.mteOwner) {
+//        if (e.mteNumber != null) {
+//          query.equalTo(MTE_NUMBER, e.mteNumber);
+//        } else {
+//          query.equalTo(MTE_OWNER, true);
+//        }
+//      }
+//    } else if (action != null) {
+//      if (action.equals(SEARCH_DRAFT)) {
+//        query.equalTo(DRAFT, true);
+//      } else if (action.equals(SEARCH_PENDING)) {
+//        query.equalTo(SYNC_STATE, Elephant.SyncState.Pending.name());
+//      } else if (action.equals(SEARCH_SAVED)) {
+//        query.equalTo(DB_STATE, Elephant.DbState.Edited.name())
+//        .or().equalTo(DB_STATE, Elephant.DbState.Deleted.name()); // TODO: ??
+//      }
+//    }
+//
+//    return query.findAll();
+//  }
 
   private void initAdapter(OrderedRealmCollection<Elephant> realmResults) {
     String action = getIntent().getAction();
@@ -152,7 +160,6 @@ public class SearchElephantResultActivity extends AppCompatActivity {
       listener = createEditListener();
       action = getString(R.string.edit);
     }
-
     adapter = new SearchElephantAdapter(realmResults, listener, action);
   }
 

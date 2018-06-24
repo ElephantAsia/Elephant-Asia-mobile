@@ -3,6 +3,7 @@ package fr.elephantasia.activities.manageElephant.fragment;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +20,9 @@ import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ManageElephantParentageFragmentBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
-import io.realm.Realm;
 
 import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.REQUEST_FATHER_SELECTED;
 import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.REQUEST_MOTHER_SELECTED;
-import static fr.elephantasia.database.model.Elephant.ID;
 
 public class ParentageFragment extends Fragment {
 
@@ -72,19 +71,19 @@ public class ParentageFragment extends Fragment {
     return (view);
   }
 
-  public void setMother(final int id) {
-    Realm realm = ((ManageElephantActivity) getActivity()).getRealm();
-    elephant.mother = realm.where(Elephant.class).equalTo(ID, id).findFirst();
-    elephant.mother = realm.copyFromRealm(elephant.mother);
-
+  public void setMother(@NonNull Elephant mother) {
+//    Realm realm = ((ManageElephantActivity) getActivity()).getRealm();
+//    elephant.mother = realm.where(Elephant.class).equalTo(ID, id).findFirst();
+//    elephant.mother = realm.copyFromRealm(elephant.mother);
+    elephant.mother = mother;
     displayMother();
   }
 
-  public void setFather(final int id) {
-    Realm realm = ((ManageElephantActivity) getActivity()).getRealm();
-    elephant.father = realm.where(Elephant.class).equalTo(ID, id).findFirst();
-    elephant.father = realm.copyFromRealm(elephant.father);
-
+  public void setFather(Elephant father) {
+//    Realm realm = ((ManageElephantActivity) getActivity()).getRealm();
+//    elephant.father = realm.where(Elephant.class).equalTo(ID, id).findFirst();
+//    elephant.father = realm.copyFromRealm(elephant.father);
+    elephant.father = father;
     displayFather();
   }
 

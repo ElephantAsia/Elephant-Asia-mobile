@@ -32,12 +32,15 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.adapter.HomeDrawerListAdapter;
+import fr.elephantasia.database.DatabaseController;
+import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.Preferences;
-import io.realm.Realm;
+import io.realm.RealmResults;
 import jp.wasabeef.blurry.Blurry;
 
 public class HomeActivity extends AppCompatActivity {
@@ -56,9 +59,11 @@ public class HomeActivity extends AppCompatActivity {
   @BindView(R.id.main_drawer_list) ListView drawerList;
   @BindView(R.id.main_drawer_last_sync) TextView lastSyncTextView;
 
+  private DatabaseController databaseController;
+
   // Attr
   private HomeDrawerListAdapter drawerListAdapter;
-  private Realm realm;
+  // private Realm realm;
 
   public static int getFragment(Intent intent) {
     return intent.getIntExtra(EXTRA_FRAGMENT, FRAGMENT_HOME_PAGE);
@@ -75,18 +80,20 @@ public class HomeActivity extends AppCompatActivity {
     setContentView(R.layout.home_activity);
     ButterKnife.bind(this);
 
+    databaseController = ((BaseApplication)getApplication()).getDatabaseController();
+
     setSupportActionBar(toolbar);
     initActionBarDrawer();
     initActionBarDrawerList();
 
     refreshFragment();
-    realm = Realm.getDefaultInstance();
+    // realm = Realm.getDefaultInstance();
   }
 
   @Override
   public void onDestroy() {
     super.onDestroy();
-    realm.close();
+    // realm.close();
   }
 
   private void initActionBarDrawer() {
@@ -186,6 +193,7 @@ public class HomeActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.elephant_local_added, Toast.LENGTH_SHORT).show();
       }
     }
+
   }
 
   private void refreshProfilPicBlurred() {
@@ -196,7 +204,11 @@ public class HomeActivity extends AppCompatActivity {
           @Override
           public void run() {
             try {
-              Blurry.with(HomeActivity.this).radius(25).sampling(2).capture(profilPic).into(profilPicBlurred);
+              Blurry.with(HomeActivity.this)
+                .radius(25)
+                .sampling(2)
+                .capture(profilPic)
+                .into(profilPicBlurred);
             } catch (Exception e) {
               e.printStackTrace();
             }
@@ -212,7 +224,7 @@ public class HomeActivity extends AppCompatActivity {
         setHomePageFragment();
         break;
       case FRAGMENT_DISCONNECT:
-        setDisconnectFragment();
+        // setDisconnectFragment();
         break;
       default:
     }
@@ -228,16 +240,37 @@ public class HomeActivity extends AppCompatActivity {
     getSupportFragmentManager().beginTransaction().replace(R.id.overview_fragment, fragment).commit();
   }
 
-  private void setDisconnectFragment() {
-    // Preferences.setUsername(getApplicationContext(), null);
-    // Preferences.setPassword(getApplicationContext(), null);
+//  private void setDisconnectFragment() {
+//    // Preferences.setUsername(getApplicationContext(), null);
+//    // Preferences.setPassword(getApplicationContext(), null);
+//
+//    /* ntent intent = new Intent(this, AuthActivity.class);
+//    startActivity(intent);
+//    finish(); */
+//  }
 
-    /* ntent intent = new Intent(this, AuthActivity.class);
-    startActivity(intent);
-    finish(); */
+//  public Realm getRealm() {
+//    return this.realm;
+//  }
+
+  public Long getElephantsCount() {
+    return databaseController.getElephantsCount();
   }
 
-  public Realm getRealm() {
-    return this.realm;
+  public Long getElephantsSyncStatePendingCount() {
+    return databaseController.getElephantsSyncStatePendingCount();
   }
+
+  public Long getElephantsReadyToSyncCount() {
+    return databaseController.getElephantsReadyToSyncCount();
+  }
+
+  public Long getElephantsInDraftCount() {
+    return databaseController.getElephantsDraftCount();
+  }
+
+  public RealmResults<Elephant> getLastVisitedElephants() {
+    return databaseController.getLastVisitedElephant();
+  }
+
 }

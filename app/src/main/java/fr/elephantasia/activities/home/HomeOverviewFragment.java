@@ -17,16 +17,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.searchElephant.SearchElephantResultActivity;
-import fr.elephantasia.database.model.Elephant;
-import io.realm.Realm;
 
 import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_ALL;
 import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_DRAFT;
 import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_PENDING;
 import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_SAVED;
-import static fr.elephantasia.database.model.Elephant.DB_STATE;
-import static fr.elephantasia.database.model.Elephant.DRAFT;
-import static fr.elephantasia.database.model.Elephant.SYNC_STATE;
 
 public class HomeOverviewFragment extends Fragment {
 
@@ -101,7 +96,7 @@ public class HomeOverviewFragment extends Fragment {
   }
 
   public void setOverviewData() {
-    Realm realm = ((HomeActivity) getActivity()).getRealm();
+    /* Realm realm = ((HomeActivity) getActivity()).getRealm();
     int total = realm.where(Elephant.class).findAll().size();
 
     int pending = realm.where(Elephant.class)
@@ -113,11 +108,19 @@ public class HomeOverviewFragment extends Fragment {
         .equalTo(DRAFT, false)
         .findAll().size();
 
-    int draft = realm.where(Elephant.class).equalTo(DRAFT, true).findAll().size();
+    int draft = realm.where(Elephant.class).equalTo(DRAFT, true).findAll().size(); */
+    HomeActivity homeActivity = (HomeActivity)getActivity();
 
-    totalValue.setText(String.valueOf(total));
-    pendingValue.setText(String.valueOf(pending));
-    savedValue.setText(String.valueOf(readyToSync));
-    draftValue.setText(String.valueOf(draft));
+    if (homeActivity != null) {
+      Long totalCount = homeActivity.getElephantsCount();
+      Long pendingCount = homeActivity.getElephantsSyncStatePendingCount();
+      Long readyToSyncCount = homeActivity.getElephantsReadyToSyncCount();
+      Long draftCount = homeActivity.getElephantsInDraftCount();
+
+      totalValue.setText(String.valueOf(totalCount));
+      pendingValue.setText(String.valueOf(pendingCount));
+      savedValue.setText(String.valueOf(readyToSyncCount));
+      draftValue.setText(String.valueOf(draftCount));
+    }
   }
 }

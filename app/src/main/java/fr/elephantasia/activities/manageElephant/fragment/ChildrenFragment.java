@@ -3,6 +3,7 @@ package fr.elephantasia.activities.manageElephant.fragment;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
@@ -24,11 +25,9 @@ import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ManageElephantChildrenFragmentBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
-import io.realm.Realm;
 
 import static butterknife.ButterKnife.findById;
 import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.REQUEST_CHILD_SELECTED;
-import static fr.elephantasia.database.model.Elephant.ID;
 
 public class ChildrenFragment extends Fragment {
 
@@ -82,10 +81,15 @@ public class ChildrenFragment extends Fragment {
     childrenList.setAdapter(adapter);
   }
 
-  public void setChild(final int id) {
-    Realm realm = ((ManageElephantActivity) getActivity()).getRealm();
-    Elephant child = realm.where(Elephant.class).equalTo(ID, id).findFirst();
-    adapter.add(realm.copyFromRealm(child));
+  // public void setChild(final int id) {
+    // Realm realm = ((ManageElephantActivity) getActivity()).getRealm();
+    // Elephant child = realm.where(Elephant.class).equalTo(ID, id).findFirst();
+    // adapter.add(realm.copyFromRealm(child));
+    // ((ManageElephantActivity) getActivity())
+  // }
+
+  public void addChild(@NonNull Elephant elephant) {
+    adapter.add(elephant);
   }
 
 }

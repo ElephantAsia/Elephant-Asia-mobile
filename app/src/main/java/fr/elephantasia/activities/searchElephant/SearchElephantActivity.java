@@ -60,8 +60,8 @@ public class SearchElephantActivity extends AppCompatActivity {
     binding = DataBindingUtil.setContentView(this, R.layout.search_elephant_activity);
     binding.setE(elephant);
     ButterKnife.bind(this);
-    setSupportActionBar(toolbar);
 
+    setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

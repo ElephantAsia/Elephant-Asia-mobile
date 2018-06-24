@@ -37,32 +37,21 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
 import fr.elephantasia.auth.Constants;
-import fr.elephantasia.database.RealmDB;
+import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.DateHelpers;
 import fr.elephantasia.utils.DeviceHelpers;
 import fr.elephantasia.utils.Preferences;
-import io.realm.Realm;
-
-import static fr.elephantasia.database.model.Elephant.CUID;
-import static fr.elephantasia.database.model.Elephant.DB_STATE;
-import static fr.elephantasia.database.model.Elephant.ID;
-import static fr.elephantasia.database.model.Elephant.SYNC_STATE;
 
 
 public class SyncActivity extends AppCompatActivity {
-
-  // Instance fields
-  private MaterialDialog dialog;
-  private MenuItem download;
-  private MenuItem upload;
 
   // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
@@ -75,11 +64,21 @@ public class SyncActivity extends AppCompatActivity {
   @BindView(R.id.date_last_up_status) TextView dateLastUpStatus;
   @BindView(R.id.elephants_ready_to_be_uploaded) TextView elephantsReady;
 
+  private DatabaseController databaseController;
+
+  // Instance fields
+  private MaterialDialog dialog;
+  private MenuItem download;
+  private MenuItem upload;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.sync_activity);
     ButterKnife.bind(this);
+
+    databaseController = ((BaseApplication)getApplication()).getDatabaseController();
+
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -319,15 +318,17 @@ public class SyncActivity extends AppCompatActivity {
   }
 
   private void refreshElephantsReadyToBeUploaded() {
-    Realm realm = Realm.getDefaultInstance();
-    List<Elephant> elephants =
+    // Realm realm = Realm.getDefaultInstance();
+    /* List<Elephant> elephants =
       realm.where(Elephant.class)
         .isNotNull(DB_STATE)
         .isNull(SYNC_STATE)
-        .findAll();
+        .findAll(); */
 
-    elephantsReady.setText(getResources().getString(R.string.elephants_ready_to_be_upload, elephants.size()));
-    realm.close();
+    Long count = databaseController.getElephantsReadyToSyncCount();
+
+    elephantsReady.setText(getResources().getString(R.string.elephants_ready_to_be_upload, count));
+    // realm.close();
   }
 
   private void refreshOutdatedDb() {
@@ -421,34 +422,42 @@ public class SyncActivity extends AppCompatActivity {
     }
 
     protected Boolean doInBackground(URL... urls) {
-      final Realm realm = Realm.getDefaultInstance();
-      realm.beginTransaction();
+      //final Realm realm = Realm.getDefaultInstance();
+      // realm.beginTransaction();
+      DatabaseController databaseController = new DatabaseController();
+      databaseController.beginTransaction();
 
       try {
         JSONArray elephants = syncFromServerResponse.getJSONArray("elephants");
         for (int i = 0 ; i < elephants.length() ; i++) {
           publishProgress(i);
           Thread.sleep(25); // Pour la démo
-          Elephant newE = new Elephant(elephants.getJSONObject(i));
-          Elephant e = realm.where(Elephant.class).equalTo(CUID, newE.cuid).findFirst();
 
+          Elephant newE = new Elephant(elephants.getJSONObject(i));
+          // Elephant e = realm.where(Elephant.class).equalTo(CUID, newE.cuid).findFirst();
+          Elephant e = databaseController.getElephantByCuid(newE.cuid);
           if (e == null) {
             // new elephant in our local db
-            newE.id = RealmDB.getNextId(realm, Elephant.class, ID);
+            //newE.id = RealmDB.getNextId(realm, Elephant.class, ID);
             newE.syncState = Elephant.SyncState.Downloaded.name();
-            realm.insertOrUpdate(newE);
+            //realm.insertOrUpdate(newE);
+            databaseController.insertOrUpdate(newE);
           } else if (/* e.dbState == null && */ e.syncState == null) {
             // existing elephant in our local db
             newE.id = e.id;
             newE.lastVisited = e.lastVisited;
-            realm.insertOrUpdate(newE);
+            databaseController.insertOrUpdate(newE);
+            //realm.insertOrUpdate(newE);
           }
+
         }
       } catch (Exception e) {
         e.printStackTrace();
+        databaseController.cancelTransaction();
+        return false;
       }
 
-      realm.commitTransaction();
+      databaseController.commitTransaction();
       return true;
     }
 
@@ -477,6 +486,7 @@ public class SyncActivity extends AppCompatActivity {
 
     interface Listener {
       void onPreExecute();
+      // void onReceiveElephant(Elephant newE);
       void onProgress(int p);
       void onFinish();
       void onSuccess();

@@ -2,6 +2,7 @@ package fr.elephantasia.activities.sync.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,9 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
   public UploadRecyclerViewAdapter(OrderedRealmCollection<Elephant> items, @NonNull  Listener listener) {
     super(items, true);
     this.listener = listener;
+//    for (int i = 0 ; i < items.size() ; ++i) {
+//      itemStateArray.put(i, false);
+//    }
   }
 
   @Override
@@ -50,8 +54,11 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
     holder.elephantPreview.setListener(new ElephantPreviewV2.Listener() {
       @Override
       public void onSelectButtonClick(Elephant elephant) {
+        Log.w("select", "elephant " + elephant.name);
         boolean selected = !itemStateArray.get(holder.getAdapterPosition());
         itemStateArray.put(holder.getAdapterPosition(), selected);
+        Log.w("select", "position " + holder.getAdapterPosition());
+        Log.w("select", "selected " + selected);
         holder.elephantPreview.refreshSelectButtonLogo(selected);
         listener.onSelectButtonClick(selected, elephant);
       }
@@ -71,7 +78,7 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
   public int countElephantsSelected() {
     int k = 0;
 
-    for (int i = 0 ; i < itemStateArray.size() ; ++i) {
+    for (int i = 0 ; i < getItemCount() ; ++i) {
       if (itemStateArray.get(i)) ++k;
     }
     return k;
