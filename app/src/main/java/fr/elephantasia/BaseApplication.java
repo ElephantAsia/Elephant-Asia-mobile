@@ -21,7 +21,6 @@ public class BaseApplication extends MultiDexApplication {
     // addElephantDemo();
   }
 
-  // e.g ((BaseApplication)getApplication()).getDatabaseController().sayHello();
   public DatabaseController getDatabaseController() {
     return databaseController;
   }

@@ -42,10 +42,6 @@ public class HomeRecentFragment extends Fragment {
   }
 
   public void setLastVisitedElephant() {
-//    Realm realm = ((HomeActivity) getActivity()).getRealm();
-//    RealmResults<Elephant> elephants = realm.where(Elephant.class)
-//        .greaterThan(LAST_VISITED, DateHelpers.getLastWeek())
-//        .findAllSorted(LAST_VISITED, Sort.DESCENDING);
     HomeActivity homeActivity = (HomeActivity)getActivity();
 
     if (homeActivity != null) {

@@ -5,6 +5,7 @@ package fr.elephantasia.database;
  */
 
 // Unused class
+
 //public class RealmManager {
 //  private static final RealmManager ourInstance = new RealmManager();
 //  private ThreadLocal<Realm> realms;

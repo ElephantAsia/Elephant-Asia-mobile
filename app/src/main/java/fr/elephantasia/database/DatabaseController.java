@@ -9,20 +9,14 @@ import javax.annotation.Nullable;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
-import fr.elephantasia.utils.DateHelpers;
-import io.realm.Case;
-import io.realm.Realm;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
-import io.realm.Sort;
 
 /**
  * Controller to manipulate the local database.
  * Create an indirection between the application and the database library used.
  *
  * Questions:
- * Currently created in the BaseApplication class. Should it be created in each activity ?
- * What about realm.close() if we create only one realm ?
+ * What about realm.close() ?
  * copyFromRealm() ?
  **/
 public class DatabaseController {
@@ -34,39 +28,32 @@ public class DatabaseController {
     Saved
   }
 
-  private Realm realm;
+  private RealmDB realmDB;
 
   public DatabaseController() {
-    realm = Realm.getDefaultInstance();
+    realmDB = new RealmDB();
   }
 
   public void beginTransaction() {
-    realm.beginTransaction();
+    realmDB.beginTransaction();
   }
 
   public void cancelTransaction() {
-    realm.cancelTransaction();
+    realmDB.cancelTransaction();
   }
 
   public void commitTransaction() {
-    realm.commitTransaction();
-  }
-
-  public void close() {
-    realm.close();
+    realmDB.commitTransaction();
   }
 
   /* Modifiers */
 
   public void insertOrUpdate(Elephant elephant) {
-    if (elephant.id == -1) {
-      elephant.id = RealmDB.getNextId(realm, Elephant.class, Elephant.ID);
-    }
-    realm.insertOrUpdate(elephant);
+    realmDB.insertOrUpdate(elephant);
   }
 
   public void insertOrUpdate(Document document) {
-    RealmDB.insertOrUpdateDocument(document);
+    realmDB.insertOrUpdate(document);
   }
 
   public void insertOrUpdate(Elephant elephant, List<Document> documents) {
@@ -74,142 +61,67 @@ public class DatabaseController {
   }
 
   public void updateLastVisitedDateElephant(Integer id) {
-    RealmDB.updateLastVisitedDate(id);
+    realmDB.updateLastVisitedDateElephant(id);
   }
 
   public void copyOrUpdate(Contact contact) {
-    RealmDB.copyOrUpdate(contact);
+    realmDB.copyOrUpdate(contact);
   }
 
-  public void delete(final Elephant elephant) {
-    elephant.dbState = Elephant.DbState.Deleted.name();
-    realm.insertOrUpdate(elephant);
+  public void delete(Elephant elephant) {
+    realmDB.delete(elephant);
   }
 
   /* Getters */
 
+  @NonNull
   public RealmResults<Elephant> searchElephantsByState(SearchMode searchMode) {
-    RealmQuery<Elephant> query = realm.where(Elephant.class);
-
-    if (searchMode == SearchMode.Draft) {
-      query.equalTo(Elephant.DRAFT, true);
-    } else if (searchMode == SearchMode.Pending) {
-      query.equalTo(Elephant.SYNC_STATE, Elephant.SyncState.Pending.name());
-    } else if (searchMode == SearchMode.Saved) {
-      query.notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
-        .isNotNull(Elephant.DB_STATE)
-        .isNull(Elephant.SYNC_STATE)
-        .equalTo(Elephant.DRAFT, false);
-    }
-    return query.findAll();
+    return realmDB.searchElephantsByState(searchMode);
   }
 
   @NonNull
   public RealmResults<Elephant> search(Elephant e) {
-    RealmQuery<Elephant> query = realm.where(Elephant.class);
-
-    query.notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name());
-    if (e != null) {
-      query.contains(Elephant.NAME, e.name, Case.INSENSITIVE);
-      if (e.chips1 != null) {
-        query.contains(Elephant.CHIPS1, e.chips1, Case.INSENSITIVE);
-      }
-      if (e.sex != null) {
-        query.equalTo(Elephant.SEX, e.sex);
-      }
-      if (e.mteOwner) {
-        if (e.mteNumber != null) {
-          query.equalTo(Elephant.MTE_NUMBER, e.mteNumber);
-        } else {
-          query.equalTo(Elephant.MTE_OWNER, true);
-        }
-      }
-    }
-    return query.findAll();
+    return realmDB.search(e);
   }
 
   @NonNull
   public RealmResults<Contact> search(Contact c) {
-    RealmQuery<Contact> query = realm.where(Contact.class);
-
-    query.contains(Contact.LASTNAME, c.lastName, Case.INSENSITIVE)
-      .or()
-      .contains(Contact.FIRSTNAME, c.lastName, Case.INSENSITIVE);
-    if (!c.owner) {
-      query.equalTo(Contact.OWNER, false);
-    }
-    if (!c.cornac) {
-      query.equalTo(Contact.CORNAC, false);
-    }
-    if (!c.vet) {
-      query.equalTo(Contact.VET, false);
-    }
-    return query.findAll();
+    return realmDB.search(c);
   }
 
   @Nullable
   public Elephant getElephantById(Integer id) {
-    Elephant elephant = realm.where(Elephant.class)
-        .equalTo(Elephant.ID, id)
-        .findFirst();
-
-    if (elephant != null) {
-      return realm.copyFromRealm(elephant);
-    }
-    return null;
+    return realmDB.getElephantById(id);
   }
 
   @Nullable
   public Elephant getElephantByCuid(String cuid) {
-    Elephant elephant = realm.where(Elephant.class)
-      .equalTo(Elephant.CUID, cuid)
-      .findFirst();
-
-    if (elephant != null) {
-      return realm.copyFromRealm(elephant);
-    }
-    return null;
+    return realmDB.getElephantByCuid(cuid);
   }
 
   @Nullable
   public List<Document> getDocumentsByElephantId(Integer elephantId) {
-    List<Document> documents = realm.where(Document.class)
-      .equalTo(Document.ELEPHANT_ID, elephantId)
-      .findAll();
-    if (documents != null) {
-      return realm.copyFromRealm(documents);
-    }
-    return null;
+    return realmDB.getDocumentsByElephantId(elephantId);
   }
 
   public RealmResults<Elephant> getLastVisitedElephant() {
-    return realm.where(Elephant.class)
-      .greaterThan(Elephant.LAST_VISITED, DateHelpers.getLastWeek())
-      .findAllSorted(Elephant.LAST_VISITED, Sort.DESCENDING);
+    return realmDB.getLastVisitedElephant();
   }
 
   public Long getElephantsCount() {
-    return realm.where(Elephant.class).count();
+    return realmDB.getElephantsCount();
   }
 
   public Long getElephantsSyncStatePendingCount() {
-    return realm.where(Elephant.class)
-      .equalTo(Elephant.SYNC_STATE, Elephant.SyncState.Pending.name())
-      .count();
+    return realmDB.getElephantsSyncStatePendingCount();
   }
 
   public Long getElephantsReadyToSyncCount() {
-    return realm.where(Elephant.class)
-      .isNotNull(Elephant.DB_STATE)
-      .isNull(Elephant.SYNC_STATE)
-      .equalTo(Elephant.DRAFT, false)
-      .count();
+    return realmDB.getElephantsReadyToSyncCount();
   }
 
   public Long getElephantsDraftCount() {
-    return realm.where(Elephant.class)
-      .equalTo(Elephant.DRAFT, true)
-      .count();
+    return realmDB.getElephantsDraftCount();
   }
 
 }
