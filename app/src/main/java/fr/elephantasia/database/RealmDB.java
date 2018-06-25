@@ -21,12 +21,11 @@ import io.realm.Sort;
 
 import static fr.elephantasia.database.model.Elephant.ID;
 
-/**
- * Created by seb on 29/04/2017.
- */
-
 // https://realm.io/docs/java/latest/
 // https://stackoverflow.com/questions/40500944/calling-realm-from-asynctask
+/**
+ * Realm Facade
+ */
 class RealmDB {
 
   private Realm realm;
@@ -234,8 +233,7 @@ class RealmDB {
       .count();
   }
 
-	// TODO: rework
-	@Deprecated
+	@Deprecated // TODO: rework that with documents
   static void insertOrUpdateElephant(final Elephant elephant, final List<Document> documents) {
     Realm realm = Realm.getDefaultInstance();
     realm.executeTransaction(new Realm.Transaction() {

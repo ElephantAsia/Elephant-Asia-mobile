@@ -60,8 +60,8 @@ public class Elephant extends RealmObject {
   public enum SyncState {
     Downloaded,
     Pending,
-    Accepted, // osef
-    Rejected, // osef
+    // Accepted,
+    // Rejected,
   }
 
   public enum DbState {
@@ -252,6 +252,17 @@ public class Elephant extends RealmObject {
       return regID;
     }
     return "-";
+  }
+
+  public boolean isPresentInServerDb() {
+    return cuid != null;
+  }
+
+  public void copy(Elephant e) {
+    name = e.name;
+    nickName = e.nickName;
+    sex = e.sex;
+    cuid = e.cuid;
   }
 
   public JSONObject toJsonObject() throws JSONException {

@@ -232,6 +232,7 @@ public class ManageElephantActivity extends AppCompatActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.add_elephant_menu_draft && checkMandatoryFields()) {
+      // TODO: rework drafts
       elephant.dbState = Elephant.DbState.Edited.name();
       elephant.draft = true;
       saveToDb();
@@ -239,21 +240,13 @@ public class ManageElephantActivity extends AppCompatActivity {
       finish();
       return true;
     } else if (item.getItemId() == R.id.add_elephant_menu_validate && checkMandatoryFields()) {
-
       if (editing) {
-        // Editing mode
-        // does the elephant was uploaded ?
-        if (elephant.syncState != null
-          && (elephant.syncState.equals(Elephant.SyncState.Pending.name())
-          || elephant.syncState.equals(Elephant.SyncState.Downloaded.name()))) {
+        if (elephant.isPresentInServerDb()) {
           elephant.dbState = Elephant.DbState.Edited.name();
-          // mark it as edited
         } else {
-          // or still marked as created
           elephant.dbState = Elephant.DbState.Created.name();
         }
       } else {
-        // Creating mode
         elephant.dbState = Elephant.DbState.Created.name();
       }
       elephant.syncState = null;

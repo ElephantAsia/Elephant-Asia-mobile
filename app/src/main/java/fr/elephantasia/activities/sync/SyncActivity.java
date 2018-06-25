@@ -50,7 +50,6 @@ import fr.elephantasia.utils.DateHelpers;
 import fr.elephantasia.utils.DeviceHelpers;
 import fr.elephantasia.utils.Preferences;
 
-
 public class SyncActivity extends AppCompatActivity {
 
   // View binding
@@ -318,17 +317,9 @@ public class SyncActivity extends AppCompatActivity {
   }
 
   private void refreshElephantsReadyToBeUploaded() {
-    // Realm realm = Realm.getDefaultInstance();
-    /* List<Elephant> elephants =
-      realm.where(Elephant.class)
-        .isNotNull(DB_STATE)
-        .isNull(SYNC_STATE)
-        .findAll(); */
-
     Long count = databaseController.getElephantsReadyToSyncCount();
 
     elephantsReady.setText(getResources().getString(R.string.elephants_ready_to_be_upload, count));
-    // realm.close();
   }
 
   private void refreshOutdatedDb() {
@@ -422,8 +413,6 @@ public class SyncActivity extends AppCompatActivity {
     }
 
     protected Boolean doInBackground(URL... urls) {
-      //final Realm realm = Realm.getDefaultInstance();
-      // realm.beginTransaction();
       DatabaseController databaseController = new DatabaseController();
       databaseController.beginTransaction();
 
@@ -431,32 +420,31 @@ public class SyncActivity extends AppCompatActivity {
         JSONArray elephants = syncFromServerResponse.getJSONArray("elephants");
         for (int i = 0 ; i < elephants.length() ; i++) {
           publishProgress(i);
-          Thread.sleep(25); // Pour la démo
+          Thread.sleep(25); // demo
 
           Elephant newE = new Elephant(elephants.getJSONObject(i));
-          // Elephant e = realm.where(Elephant.class).equalTo(CUID, newE.cuid).findFirst();
           Elephant e = databaseController.getElephantByCuid(newE.cuid);
           if (e == null) {
             // new elephant in our local db
-            //newE.id = RealmDB.getNextId(realm, Elephant.class, ID);
             newE.syncState = Elephant.SyncState.Downloaded.name();
-            //realm.insertOrUpdate(newE);
             databaseController.insertOrUpdate(newE);
-          } else if (/* e.dbState == null && */ e.syncState == null) {
+          } else { // if (e.dbState == null && e.syncState == null) {
             // existing elephant in our local db
-            newE.id = e.id;
-            newE.lastVisited = e.lastVisited;
-            databaseController.insertOrUpdate(newE);
-            //realm.insertOrUpdate(newE);
-          }
 
+            /* newE.id = e.id;
+            newE.lastVisited = e.lastVisited;
+            databaseController.insertOrUpdate(newE); */
+            e.syncState = Elephant.SyncState.Downloaded.name();
+            e.dbState = null;
+            e.copy(newE);
+            databaseController.insertOrUpdate(e);
+          }
         }
       } catch (Exception e) {
         e.printStackTrace();
         databaseController.cancelTransaction();
         return false;
       }
-
       databaseController.commitTransaction();
       return true;
     }
@@ -486,7 +474,6 @@ public class SyncActivity extends AppCompatActivity {
 
     interface Listener {
       void onPreExecute();
-      // void onReceiveElephant(Elephant newE);
       void onProgress(int p);
       void onFinish();
       void onSuccess();

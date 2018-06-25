@@ -260,7 +260,8 @@ public class UploadActivity extends AppCompatActivity {
         for (int i = 0 ; i < editedElephants.size() ; ++i) {
           Elephant e = editedElephants.get(i);
           e.syncState = SyncState.Pending.name();
-          if (e.dbState.equals(Elephant.DbState.Created.name())) {
+          e.dbState = null;
+          if (!e.isPresentInServerDb()) {
             try {
               e.cuid = response.getJSONObject(i).getString("cuid");
             } catch (Exception er) {
