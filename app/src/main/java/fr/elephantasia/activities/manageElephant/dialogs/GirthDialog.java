@@ -1,19 +1,16 @@
-package fr.elephantasia.activities.manageElephant.dialog;
+package fr.elephantasia.activities.manageElephant.dialogs;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-
-import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +21,7 @@ import fr.elephantasia.database.model.Elephant;
  * Created by seb on 30/04/2017.
  */
 
-public class HeightDialog {
+public class GirthDialog {
 
   // View binding
   @BindView(R.id.value) EditText value;
@@ -32,39 +29,41 @@ public class HeightDialog {
 
   // Attr
   private Activity activity;
-  private ArrayAdapter<String> spinnerUnits;
   private Elephant elephant;
-  private EditText editTextTarget;
+  private TextView weightView;
+  private EditText girthView;
 
-  public HeightDialog(Activity activity, Context ctx, final Elephant elephant, final EditText editText) {
+  public GirthDialog(Activity activity, Context ctx, final Elephant elephant, final TextView weightView, final EditText girthView) {
     this.activity = activity;
-    this.spinnerUnits = new ArrayAdapter<>(ctx, R.layout.ea_spinner, Arrays.asList("cm", "m"));
     this.elephant = elephant;
-    this.editTextTarget = editText;
+    this.weightView = weightView;
+    this.girthView = girthView;
   }
 
   public void show() {
     final View view = activity.getLayoutInflater().inflate(R.layout.measurement_dialog_fragment, null);
     ButterKnife.bind(this, view);
-    unit.setAdapter(spinnerUnits);
-    value.setText(elephant.height);
+    value.setText(elephant.girth);
+    unit.setVisibility(View.GONE);
     new MaterialDialog.Builder(activity)
-        .title(R.string.set_height)
+        .title(R.string.set_girth)
         .positiveText(R.string.OK)
         .onPositive(new MaterialDialog.SingleButtonCallback() {
           @Override
           public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            elephant.height = value.getText().toString();
-            elephant.heightUnit = unit.getSelectedItem().toString();
+            elephant.girth = value.getText().toString();
           }
         })
         .dismissListener(new DialogInterface.OnDismissListener() {
           @Override
           public void onDismiss(DialogInterface dialog) {
-            if (elephant.height != null) {
-              elephant.heightUnit = TextUtils.isEmpty(elephant.height) ? "" : elephant.heightUnit;
-              editTextTarget.setText(elephant.height + " " + elephant.heightUnit);
+            if (elephant.girth != null) {
+              String res = elephant.girth.isEmpty() ? "" : elephant.girth + " cm";
+              elephant.setWeight(elephant.girth);
+              weightView.setText(elephant.getWeightText());
+              girthView.setText(res);
             }
+
           }
         })
         .negativeText(R.string.CANCEL)

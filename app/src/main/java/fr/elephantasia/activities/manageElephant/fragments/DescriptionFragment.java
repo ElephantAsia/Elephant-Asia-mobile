@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.manageElephant.fragment;
+package fr.elephantasia.activities.manageElephant.fragments;
 
 
 import android.databinding.DataBindingUtil;
@@ -19,10 +19,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
+import fr.elephantasia.activities.manageElephant.dialogs.GirthDialog;
+import fr.elephantasia.activities.manageElephant.dialogs.HeightDialog;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ManageElephantDescriptionFragmentBinding;
-import fr.elephantasia.activities.manageElephant.dialog.GirthDialog;
-import fr.elephantasia.activities.manageElephant.dialog.HeightDialog;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 

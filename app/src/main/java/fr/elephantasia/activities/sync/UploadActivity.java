@@ -34,9 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +46,7 @@ import fr.elephantasia.activities.showElephant.ShowElephantActivity;
 import fr.elephantasia.activities.sync.adapters.UploadRecyclerViewAdapter;
 import fr.elephantasia.auth.Constants;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.utils.DateHelpers;
 import fr.elephantasia.utils.Preferences;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -280,8 +279,7 @@ public class UploadActivity extends AppCompatActivity {
         dialog.dismiss();
         mAdapter.resetSelection();
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        String date = df.format(Calendar.getInstance().getTime());
+        String date = DateHelpers.GetCurrentStringDate();
         Preferences.SetLastUploadSync(UploadActivity.this, date);
         Toast.makeText(getApplicationContext(), "Upload successfull", Toast.LENGTH_SHORT).show();
         Log.w("upload", "success response: " + response);

@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.manageElephant.fragment;
+package fr.elephantasia.activities.manageElephant.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

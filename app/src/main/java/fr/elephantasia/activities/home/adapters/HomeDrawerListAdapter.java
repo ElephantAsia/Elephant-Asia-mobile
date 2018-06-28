@@ -1,4 +1,4 @@
-package fr.elephantasia.adapter;
+package fr.elephantasia.activities.home.adapters;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;

@@ -225,8 +225,7 @@ public class SyncActivity extends AppCompatActivity {
 
           @Override
           public void onSuccess() {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            String date = df.format(Calendar.getInstance().getTime());
+            String date = DateHelpers.GetCurrentStringDate();
             Preferences.SetLastDownloadSync(SyncActivity.this, date);
             Toast.makeText(getApplicationContext(), "Syncing done succesfully", Toast.LENGTH_SHORT).show();
             refresh();
@@ -329,7 +328,7 @@ public class SyncActivity extends AppCompatActivity {
       Date now = Calendar.getInstance().getTime();
       Date date = format.parse(lastSync);
 
-      long yearDiff = DateHelpers.getYearDiff(date.getTime(), now.getTime());
+      long yearDiff = DateHelpers.getNbYearsDiff(date.getTime(), now.getTime());
       if (yearDiff > 0) {
         dbOutdatedTextView.setCompoundDrawablePadding(16);
         dbOutdatedTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(
@@ -351,19 +350,9 @@ public class SyncActivity extends AppCompatActivity {
       dateLastDl.setText(getResources().getString(R.string.date_label, "Never"));
       dateLastDlStatus.setVisibility(View.GONE);
     } else {
-      String lastSync = Preferences.GetLastDownloadSync(this);
-      try {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        Date date = format.parse(lastSync);
-
-        SimpleDateFormat displayedFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-        String displayedDate = displayedFormat.format(date);
-
-        dateLastDl.setText(getResources().getString(R.string.date_label, displayedDate));
-        dateLastDlStatus.setVisibility(View.VISIBLE);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+      String lastSync = DateHelpers.FriendlyUserStringDate(Preferences.GetLastDownloadSync(this));
+      dateLastDl.setText(getResources().getString(R.string.date_label, lastSync));
+      dateLastDlStatus.setVisibility(View.VISIBLE);
     }
   }
 
@@ -372,19 +361,9 @@ public class SyncActivity extends AppCompatActivity {
       dateLastUp.setText(getResources().getString(R.string.date_label, "Never"));
       dateLastUpStatus.setVisibility(View.GONE);
     } else {
-      String lastSync = Preferences.GetLastUploadSync(this);
-      try {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        Date date = format.parse(lastSync);
-
-        SimpleDateFormat displayedFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-        String displayedDate = displayedFormat.format(date);
-
-        dateLastUp.setText(getResources().getString(R.string.date_label, displayedDate));
-        dateLastUpStatus.setVisibility(View.VISIBLE);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+      String lastSync = DateHelpers.FriendlyUserStringDate(Preferences.GetLastUploadSync(this));
+      dateLastUp.setText(getResources().getString(R.string.date_label, lastSync));
+      dateLastUpStatus.setVisibility(View.VISIBLE);
     }
   }
 

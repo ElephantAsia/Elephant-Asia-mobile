@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.manageElephant.fragment;
+package fr.elephantasia.activities.manageElephant.fragments;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -14,8 +14,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
-import fr.elephantasia.activities.manageElephant.dialog.DatePickerDialog;
-import fr.elephantasia.activities.manageElephant.dialog.LocationInputDialog;
+import fr.elephantasia.activities.manageElephant.dialogs.DatePickerDialog;
+import fr.elephantasia.activities.manageElephant.dialogs.LocationInputDialog;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ManageElephantProfilFragmentBinding;
 import fr.elephantasia.utils.KeyboardHelpers;

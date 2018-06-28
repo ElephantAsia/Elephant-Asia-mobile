@@ -32,12 +32,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.manageElephant.fragment.ChildrenFragment;
-import fr.elephantasia.activities.manageElephant.fragment.ContactFragment;
-import fr.elephantasia.activities.manageElephant.fragment.DescriptionFragment;
-import fr.elephantasia.activities.manageElephant.fragment.ParentageFragment;
-import fr.elephantasia.activities.manageElephant.fragment.ProfilFragment;
-import fr.elephantasia.activities.manageElephant.fragment.RegistrationFragment;
+import fr.elephantasia.activities.manageElephant.fragments.ChildrenFragment;
+import fr.elephantasia.activities.manageElephant.fragments.ContactFragment;
+import fr.elephantasia.activities.manageElephant.fragments.DescriptionFragment;
+import fr.elephantasia.activities.manageElephant.fragments.ParentageFragment;
+import fr.elephantasia.activities.manageElephant.fragments.ProfilFragment;
+import fr.elephantasia.activities.manageElephant.fragments.RegistrationFragment;
 import fr.elephantasia.adapter.ViewPagerAdapter;
 import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Contact;
@@ -206,15 +206,12 @@ public class ManageElephantActivity extends AppCompatActivity {
           contactFragment.addContactTolist(contact);
           break;
         case REQUEST_MOTHER_SELECTED:
-          // parentageFragment.setMother(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           setMother(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
         case REQUEST_FATHER_SELECTED:
-          // parentageFragment.setFather(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           setFather(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
         case REQUEST_CHILD_SELECTED:
-          // childrenFragment.setChild(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           addChild(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
           break;
       }

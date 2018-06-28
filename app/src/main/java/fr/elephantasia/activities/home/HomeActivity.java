@@ -24,8 +24,6 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,11 +32,12 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.home.adapters.HomeDrawerListAdapter;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
-import fr.elephantasia.adapter.HomeDrawerListAdapter;
 import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.utils.DateHelpers;
 import fr.elephantasia.utils.Preferences;
 import io.realm.RealmResults;
 import jp.wasabeef.blurry.Blurry;
@@ -169,18 +168,8 @@ public class HomeActivity extends AppCompatActivity {
     if (Preferences.IsLastDownloadSyncNeverHappened(this)) {
       lastSyncTextView.setText(getResources().getString(R.string.last_sync, "Never"));
     } else {
-      String lastSync = Preferences.GetLastDownloadSync(this);
-      try {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        Date date = format.parse(lastSync);
-
-        SimpleDateFormat displayedFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-        String displayedDate = displayedFormat.format(date);
-
-        lastSyncTextView.setText(getResources().getString(R.string.last_sync, displayedDate));
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+      String lastSync = DateHelpers.FriendlyUserStringDate(Preferences.GetLastDownloadSync(this));
+      lastSyncTextView.setText(getResources().getString(R.string.last_sync, lastSync));
     }
   }
 
