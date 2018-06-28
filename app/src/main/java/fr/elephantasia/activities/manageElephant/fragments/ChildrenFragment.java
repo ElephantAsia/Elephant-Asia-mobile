@@ -81,13 +81,6 @@ public class ChildrenFragment extends Fragment {
     childrenList.setAdapter(adapter);
   }
 
-  // public void setChild(final int id) {
-    // Realm realm = ((ManageElephantActivity) getActivity()).getRealm();
-    // Elephant child = realm.where(Elephant.class).equalTo(ID, id).findFirst();
-    // adapter.add(realm.copyFromRealm(child));
-    // ((ManageElephantActivity) getActivity())
-  // }
-
   public void addChild(@NonNull Elephant elephant) {
     adapter.add(elephant);
   }

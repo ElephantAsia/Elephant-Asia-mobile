@@ -1,77 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<FrameLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:theme="@style/AppThemeWhiteBackground">
+  android:theme="@style/AppThemeWhiteBackground"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
 
-  <!--<data>-->
-    <!--<variable-->
-      <!--name="e"-->
-      <!--type="fr.elephantasia.database.model.Elephant"/>-->
-  <!--</data>-->
-
-  <FrameLayout
+  <LinearLayout
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-      android:orientation="vertical"
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="?android:attr/actionBarSize"
+      android:background="@color/primary"
+      android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-      <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+      <TextView
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/primary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Search Elephant"
-          android:textColor="@android:color/white"
-          android:textSize="20sp"/>
-
-      </android.support.v7.widget.Toolbar>
-
-      <View
-        android:background="@color/grey_light_50"
-        android:layout_width="match_parent"
-        android:layout_height="2dp" />
-
-      <ScrollView
-        android:background="@color/background_60"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-          android:id="@+id/search_fragment"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" />
-
-      </ScrollView>
-
-    </LinearLayout>
-
-    <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
-
-      <android.support.design.widget.FloatingActionButton
-        android:id="@+id/search_button"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/accent"
-        app:fabSize="normal"
-        app:pressedTranslationZ="12dp"
-        app:rippleColor="@color/accent"/>
+        android:text="Search Elephant"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"/>
 
-    </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
 
-  </FrameLayout>
+    <View
+      android:background="@color/grey_light_50"
+      android:layout_width="match_parent"
+      android:layout_height="2dp" />
 
-</layout>
+    <ScrollView
+      android:background="@color/background_60"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <FrameLayout
+        android:id="@+id/search_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    </ScrollView>
+
+  </LinearLayout>
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.FloatingActionButton
+      android:id="@+id/search_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentEnd="true"
+      android:layout_margin="@dimen/fab_margin"
+      app:backgroundTint="@color/accent"
+      app:fabSize="normal"
+      app:pressedTranslationZ="12dp"
+      app:rippleColor="@color/accent"/>
+
+  </RelativeLayout>
+
+</FrameLayout>
