@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:theme="@style/AppThemeWhiteBackground">
+
+  <data>
+    <variable
+      name="e"
+      type="fr.elephantasia.database.model.Elephant"/>
+  </data>
+
+  <LinearLayout
+    android:padding="12dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+      android:id="@+id/title_profil"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="12dp"
+      android:text="by Profile data"
+      android:textColor="@color/accent"
+      android:textSize="18sp"
+      android:textStyle="bold" />
+
+    <android.support.design.widget.TextInputLayout
+      android:id="@+id/name_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Name *"
+        android:inputType="text"
+        android:text="@={e.name}"
+        android:textSize="16sp"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+      android:id="@+id/female_only_layout"
+      android:layout_marginTop="12dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <CheckBox
+        android:id="@+id/female_only"
+        android:text="Female only"
+        android:textSize="@dimen/font_size_normal"
+        android:textColor="@color/primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+      <CheckBox
+        android:id="@+id/male_only"
+        android:text="Male only"
+        android:textSize="@dimen/font_size_normal"
+        android:textColor="@color/primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <TextView
+      android:id="@+id/title_registration"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="12dp"
+      android:layout_marginTop="24dp"
+      android:text="by Registration data"
+      android:textColor="@color/accent"
+      android:textSize="18sp"
+      android:textStyle="bold"/>
+
+    <android.support.design.widget.TextInputLayout
+      android:id="@+id/microship_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <EditText
+        android:id="@+id/microchip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Microchip number"
+        android:inputType="numberDecimal"
+        android:text="@={e.chips1}"
+        android:textSize="16sp"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+      android:id="@+id/mte_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="visible">
+
+      <EditText
+        android:id="@+id/mte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="MTE number"
+        android:inputType="text"
+        android:ems="10"
+        android:textSize="16sp"
+        android:text="@={e.mteNumber}" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+      android:baselineAligned="false"
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <android.support.design.widget.TextInputLayout
+        android:id="@+id/registration_province_layout"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+
+        <EditText
+          android:id="@+id/registration_province"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:hint="Province"
+          android:inputType="text"
+          android:text="@={e.registrationLoc.provinceName}"
+          android:textSize="16sp"/>
+
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:id="@+id/registration_district_layout"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+
+        <EditText
+          android:id="@+id/registration_district"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:hint="District"
+          android:inputType="text"
+          android:text="@={e.registrationLoc.districtName}"
+          android:textSize="16sp"/>
+
+      </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <android.support.design.widget.TextInputLayout
+      android:id="@+id/registration_city_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <EditText
+        android:id="@+id/registration_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="City"
+        android:inputType="text"
+        android:text="@={e.registrationLoc.cityName}"
+        android:textSize="16sp"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+  </LinearLayout>
+
+</layout>

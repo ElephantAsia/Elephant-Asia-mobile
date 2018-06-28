@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
-import fr.elephantasia.adapter.SearchElephantAdapter;
+import fr.elephantasia.activities.searchElephant.adapters.SearchElephantAdapter;
 import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Elephant;
@@ -42,7 +42,6 @@ public class SearchElephantResultActivity extends AppCompatActivity {
 
   // Attr
   private SearchElephantAdapter adapter;
-  // private Realm realm;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +50,6 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     ButterKnife.bind(this);
 
     databaseController = ((BaseApplication)getApplication()).getDatabaseController();
-    // realm = Realm.getDefaultInstance();
 
     resultList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 

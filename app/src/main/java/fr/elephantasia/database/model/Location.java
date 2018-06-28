@@ -3,14 +3,14 @@ package fr.elephantasia.database.model;
 import org.apache.http.util.TextUtils;
 import org.parceler.Parcel;
 
-import io.realm.LocationRealmProxy;
 import io.realm.RealmObject;
+import io.realm.fr_elephantasia_database_model_LocationRealmProxy;
 
 /**
  * Created by seb on 29/04/2017.
  */
 
-@Parcel(implementations = {LocationRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {Location.class})
+@Parcel(implementations = {fr_elephantasia_database_model_LocationRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {Location.class})
 public class Location extends RealmObject {
   public String cityName;
   public String districtName;

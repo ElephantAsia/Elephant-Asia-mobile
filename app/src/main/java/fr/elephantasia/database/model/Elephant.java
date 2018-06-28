@@ -14,14 +14,14 @@ import fr.elephantasia.database.parceler.ContactParcelConverter;
 import fr.elephantasia.database.parceler.ElephantParcelConverter;
 import fr.elephantasia.utils.JsonHelpers;
 import fr.elephantasia.utils.TextHelpers;
-import io.realm.ElephantRealmProxy;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
+import io.realm.fr_elephantasia_database_model_ElephantRealmProxy;
 
-@Parcel(implementations = {ElephantRealmProxy.class})
+@Parcel(implementations = {fr_elephantasia_database_model_ElephantRealmProxy.class})
 public class Elephant extends RealmObject {
   // IMPORTANT: Columns' names must match attributes' names
 

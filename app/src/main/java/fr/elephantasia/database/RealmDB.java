@@ -202,7 +202,8 @@ class RealmDB {
     Realm realm = Realm.getDefaultInstance();
     return realm.where(Elephant.class)
       .greaterThan(Elephant.LAST_VISITED, DateHelpers.getLastWeek())
-      .findAllSorted(Elephant.LAST_VISITED, Sort.DESCENDING);
+      .sort(Elephant.LAST_VISITED, Sort.DESCENDING)
+      .findAll();
   }
 
   public Long getElephantsCount() {

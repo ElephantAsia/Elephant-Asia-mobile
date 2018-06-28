@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.showElephant.fragment;
+package fr.elephantasia.activities.showElephant.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

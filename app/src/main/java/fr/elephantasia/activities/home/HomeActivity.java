@@ -62,7 +62,6 @@ public class HomeActivity extends AppCompatActivity {
 
   // Attr
   private HomeDrawerListAdapter drawerListAdapter;
-  // private Realm realm;
 
   public static int getFragment(Intent intent) {
     return intent.getIntExtra(EXTRA_FRAGMENT, FRAGMENT_HOME_PAGE);
@@ -82,17 +81,16 @@ public class HomeActivity extends AppCompatActivity {
     databaseController = ((BaseApplication)getApplication()).getDatabaseController();
 
     setSupportActionBar(toolbar);
+
     initActionBarDrawer();
     initActionBarDrawerList();
 
     refreshFragment();
-    // realm = Realm.getDefaultInstance();
   }
 
   @Override
   public void onDestroy() {
     super.onDestroy();
-    // realm.close();
   }
 
   private void initActionBarDrawer() {

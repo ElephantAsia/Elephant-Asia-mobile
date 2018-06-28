@@ -4,16 +4,16 @@ import org.parceler.Parcel;
 
 import java.util.UUID;
 
-import io.realm.ContactRealmProxy;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
+import io.realm.fr_elephantasia_database_model_ContactRealmProxy;
 
 /**
  * Created by seb on 30/04/2017.
  */
 
-@Parcel(implementations = {ContactRealmProxy.class})
+@Parcel(implementations = {fr_elephantasia_database_model_ContactRealmProxy.class})
 public class Contact extends RealmObject {
   //Columns' names must match attributes' names
   @Ignore public static final String LASTNAME = "lastName";

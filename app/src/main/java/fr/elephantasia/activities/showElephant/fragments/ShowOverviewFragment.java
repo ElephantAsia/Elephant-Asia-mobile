@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.showElephant.fragment;
+package fr.elephantasia.activities.showElephant.fragments;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;

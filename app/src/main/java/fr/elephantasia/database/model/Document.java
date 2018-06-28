@@ -2,17 +2,17 @@ package fr.elephantasia.database.model;
 
 import org.parceler.Parcel;
 
-import io.realm.DocumentRealmProxy;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
+import io.realm.fr_elephantasia_database_model_DocumentRealmProxy;
 
 /**
  * Created by Stephane on 26/05/2017.
  */
 
 // TODO: discutez avec la team back end au sujet des champs bd
-@Parcel(implementations = { DocumentRealmProxy.class })
+@Parcel(implementations = { fr_elephantasia_database_model_DocumentRealmProxy.class })
 public class Document extends RealmObject {
 	@Ignore
 	public static final String ID = "id";

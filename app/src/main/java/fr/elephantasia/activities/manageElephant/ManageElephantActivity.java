@@ -81,7 +81,6 @@ public class ManageElephantActivity extends AppCompatActivity {
   // Attr
   private Elephant elephant;
   private boolean editing;
-  // private Realm realm;
   private List<Document> documents = new ArrayList<>();
 
   // Icons
@@ -129,14 +128,11 @@ public class ManageElephantActivity extends AppCompatActivity {
 
     setupViewPager(viewPager);
     tabLayout.setupWithViewPager(viewPager);
-    // realm = Realm.getDefaultInstance();
     editing = false;
 
     int id = getIntent().getIntExtra(EXTRA_ELEPHANT_ID, -1);
     if (id != -1) {
       editing = true;
-      // elephant = realm.copyFromRealm(realm.where(Elephant.class).equalTo(ID, id).findFirst());
-      // documents = realm.copyFromRealm(realm.where(Document.class).equalTo(Document.ELEPHANT_ID, id).findAll());
       elephant = databaseController.getElephantById(id);
       documents = databaseController.getDocumentsByElephantId(id);
 
@@ -174,10 +170,6 @@ public class ManageElephantActivity extends AppCompatActivity {
     return this.elephant;
   }
 
-//  public Realm getRealm() {
-//    return this.realm;
-//  }
-
   @Override
   public boolean onSupportNavigateUp() {
     confirmFinish();
@@ -192,7 +184,6 @@ public class ManageElephantActivity extends AppCompatActivity {
   @Override
   public void onDestroy() {
     super.onDestroy();
-    // realm.close();
   }
 
   @Override
@@ -328,7 +319,6 @@ public class ManageElephantActivity extends AppCompatActivity {
 
   private void saveToDb() {
     databaseController.insertOrUpdate(elephant, documents);
-    // RealmDB.insertOrUpdateElephant(elephant, documents);
     // TODO: add popup 'saving ...'
   }
 
