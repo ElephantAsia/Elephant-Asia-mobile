@@ -52,9 +52,6 @@ public class SearchElephantActivity extends AppCompatActivity {
 
     setFragment();
 
-    // KeyboardHelpers.hideKeyboardListener(binding.getRoot(), this);
-    // KeyboardHelpers.hideKeyboardListener(, this);
-
     searchButton.setImageDrawable(
       new IconicsDrawable(this)
         .icon(MaterialDesignIconic.Icon.gmi_search)

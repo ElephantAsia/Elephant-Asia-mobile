@@ -45,12 +45,7 @@ import jp.wasabeef.blurry.Blurry;
 public class HomeActivity extends AppCompatActivity {
 
   public static final int REQUEST_ADD_ELEPHANT = 1;
-  private static final String EXTRA_FRAGMENT = "main.fragment";
 
-  private static final int FRAGMENT_HOME_PAGE = 0;
-  private static final int FRAGMENT_DISCONNECT = 8;
-
-  // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.main_drawer_pic_profil_blurred) ImageView profilPicBlurred;
   @BindView(R.id.main_drawer_pic_profil) CircleImageView profilPic;
@@ -59,17 +54,7 @@ public class HomeActivity extends AppCompatActivity {
   @BindView(R.id.main_drawer_last_sync) TextView lastSyncTextView;
 
   private DatabaseController databaseController;
-
-  // Attr
   private HomeDrawerListAdapter drawerListAdapter;
-
-  public static int getFragment(Intent intent) {
-    return intent.getIntExtra(EXTRA_FRAGMENT, FRAGMENT_HOME_PAGE);
-  }
-
-  public static void setFragment(Intent intent, int value) {
-    intent.putExtra(EXTRA_FRAGMENT, value);
-  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
     initActionBarDrawer();
     initActionBarDrawerList();
 
-    refreshFragment();
+    setFragment();
   }
 
   @Override
@@ -160,9 +145,6 @@ public class HomeActivity extends AppCompatActivity {
     super.onResume();
     refreshProfilPicBlurred();
 
-    drawerListAdapter.setSelection(FRAGMENT_HOME_PAGE);
-    drawerListAdapter.notifyDataSetChanged();
-
     if (Preferences.IsLastDownloadSyncNeverHappened(this)) {
       lastSyncTextView.setText(getResources().getString(R.string.last_sync, "Never"));
     } else {
@@ -180,7 +162,6 @@ public class HomeActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.elephant_local_added, Toast.LENGTH_SHORT).show();
       }
     }
-
   }
 
   private void refreshProfilPicBlurred() {
@@ -205,19 +186,7 @@ public class HomeActivity extends AppCompatActivity {
     }, 10);
   }
 
-  private void refreshFragment() {
-    switch (getFragment(getIntent())) {
-      case FRAGMENT_HOME_PAGE:
-        setHomePageFragment();
-        break;
-      case FRAGMENT_DISCONNECT:
-        // setDisconnectFragment();
-        break;
-      default:
-    }
-  }
-
-  private void setHomePageFragment() {
+  private void setFragment() {
     HomeRecentFragment recentFragment = new HomeRecentFragment();
     recentFragment.setArguments(new Bundle());
     getSupportFragmentManager().beginTransaction().replace(R.id.recent_fragment, recentFragment).commit();
@@ -226,19 +195,6 @@ public class HomeActivity extends AppCompatActivity {
     fragment.setArguments(new Bundle());
     getSupportFragmentManager().beginTransaction().replace(R.id.overview_fragment, fragment).commit();
   }
-
-//  private void setDisconnectFragment() {
-//    // Preferences.setUsername(getApplicationContext(), null);
-//    // Preferences.setPassword(getApplicationContext(), null);
-//
-//    /* ntent intent = new Intent(this, AuthActivity.class);
-//    startActivity(intent);
-//    finish(); */
-//  }
-
-//  public Realm getRealm() {
-//    return this.realm;
-//  }
 
   public Long getElephantsCount() {
     return databaseController.getElephantsCount();
