@@ -72,7 +72,8 @@ public class ChildrenFragment extends Fragment {
     addChildButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         Intent intent = new Intent(getActivity(), SearchElephantActivity.class);
-        intent.setAction(ElephantPreview.SELECT);
+        // intent.setAction(ElephantPreview.SELECT);
+        SearchElephantActivity.SetExtraAction(intent, ElephantPreview.SELECT);
         getActivity().startActivityForResult(intent, REQUEST_CHILD_SELECTED);
       }
     });

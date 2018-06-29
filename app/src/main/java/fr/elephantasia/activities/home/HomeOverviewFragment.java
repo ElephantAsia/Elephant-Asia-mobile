@@ -18,11 +18,6 @@ import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.searchElephant.SearchElephantResultActivity;
 
-import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_ALL;
-import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_DRAFT;
-import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_PENDING;
-import static fr.elephantasia.activities.searchElephant.SearchElephantResultActivity.SEARCH_SAVED;
-
 public class HomeOverviewFragment extends Fragment {
 
   // View binding
@@ -35,29 +30,28 @@ public class HomeOverviewFragment extends Fragment {
   @OnClick(R.id.total_card)
   public void searchElephantAll() {
     Intent intent = new Intent(getContext(), SearchElephantResultActivity.class);
-    intent.setAction(SEARCH_ALL);
+    SearchElephantResultActivity.SetExtraAction(intent, SearchElephantResultActivity.SEARCH_ALL);
     startActivity(intent);
   }
 
   @OnClick(R.id.pending_card)
   public void searchElephantPending() {
     Intent intent = new Intent(getContext(), SearchElephantResultActivity.class);
-    intent.setAction(SEARCH_PENDING);
+    SearchElephantResultActivity.SetExtraAction(intent, SearchElephantResultActivity.SEARCH_PENDING);
     startActivity(intent);
   }
 
   @OnClick(R.id.draft_card)
   public void searchElephantDraft() {
     Intent intent = new Intent(getContext(), SearchElephantResultActivity.class);
-    intent.setAction(SEARCH_DRAFT);
+    SearchElephantResultActivity.SetExtraAction(intent, SearchElephantResultActivity.SEARCH_DRAFT);
     startActivity(intent);
   }
 
   @OnClick(R.id.saved_card)
   public void searchElephantSaved() {
     Intent intent = new Intent(getContext(), SearchElephantResultActivity.class);
-    intent.setAction(SEARCH_SAVED);
-    startActivity(intent);
+    SearchElephantResultActivity.SetExtraAction(intent, SearchElephantResultActivity.SEARCH_SAVED);    startActivity(intent);
   }
 
   @Override
@@ -96,19 +90,6 @@ public class HomeOverviewFragment extends Fragment {
   }
 
   public void setOverviewData() {
-    /* Realm realm = ((HomeActivity) getActivity()).getRealm();
-    int total = realm.where(Elephant.class).findAll().size();
-
-    int pending = realm.where(Elephant.class)
-        .equalTo(SYNC_STATE, Elephant.SyncState.Pending.name())
-        .findAll().size();
-
-    int readyToSync = realm.where(Elephant.class)
-        .isNotNull(DB_STATE)
-        .equalTo(DRAFT, false)
-        .findAll().size();
-
-    int draft = realm.where(Elephant.class).equalTo(DRAFT, true).findAll().size(); */
     HomeActivity homeActivity = (HomeActivity)getActivity();
 
     if (homeActivity != null) {

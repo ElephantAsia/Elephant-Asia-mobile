@@ -3,6 +3,8 @@ package fr.elephantasia.activities.searchElephant;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,8 +17,6 @@ import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
-import org.parceler.Parcels;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -25,12 +25,27 @@ import fr.elephantasia.activities.searchElephant.fragments.SearchElephantFragmen
 
 public class SearchElephantActivity extends AppCompatActivity {
 
-  // Extras
-  public static final String EXTRA_SEARCH_ELEPHANT = "extra_search_elephant";
-  public static final String EXTRA_ELEPHANT_ID = "EXTRA_ELEPHANT_ID";
+  /**
+   * Classifier
+   */
 
-  // Request code
-  public static final int REQUEST_ELEPHANT_SELECTED = 1;
+  static public final int REQUEST_ELEPHANT_SELECTED = 1;
+
+  static public final String EXTRA_ACTION = "extra.action";
+  static public final String EXTRA_ELEPHANT_ID = "EXTRA_ELEPHANT_ID";
+
+  static public void SetExtraAction(@NonNull Intent intent, String action) {
+    intent.putExtra(EXTRA_ACTION, action);
+  }
+
+  @Nullable
+  static public String GetExtraAction(@NonNull Intent intent) {
+    return intent.getStringExtra(EXTRA_ACTION);
+  }
+
+  /**
+   * Instance
+   */
 
   // Views Binding
   @BindView(R.id.toolbar) Toolbar toolbar;
@@ -58,13 +73,6 @@ public class SearchElephantActivity extends AppCompatActivity {
         .color(Color.WHITE)
         .sizeDp(22)
     );
-  }
-
-  private void setFragment() {
-    fragment = new SearchElephantFragment();
-    getSupportFragmentManager().beginTransaction()
-      .replace(R.id.search_fragment, fragment)
-      .commit();
   }
 
   @Override
@@ -116,12 +124,20 @@ public class SearchElephantActivity extends AppCompatActivity {
     }
   }
 
+  private void setFragment() {
+    fragment = new SearchElephantFragment();
+    getSupportFragmentManager().beginTransaction()
+      .replace(R.id.search_fragment, fragment)
+      .commit();
+  }
+
   @OnClick(R.id.search_button)
   void searchElephant() {
     if (fragment.isFieldsValid()) {
+      String action = SearchElephantActivity.GetExtraAction(getIntent());
       Intent intent = new Intent(this, SearchElephantResultActivity.class);
-      intent.setAction(getIntent().getAction());
-      intent.putExtra(EXTRA_SEARCH_ELEPHANT, Parcels.wrap(fragment.getElephant()));
+      SearchElephantResultActivity.SetExtraAction(intent, action);
+      SearchElephantResultActivity.SetExtraElephant(intent, fragment.getElephant());
       startActivityForResult(intent, REQUEST_ELEPHANT_SELECTED);
     } else {
       Toast.makeText(this, "You must fill at least one field", Toast.LENGTH_SHORT).show();

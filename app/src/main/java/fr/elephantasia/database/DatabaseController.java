@@ -80,7 +80,7 @@ public class DatabaseController {
   }
 
   @NonNull
-  public RealmResults<Elephant> search(Elephant e) {
+  public List<Elephant> search(Elephant e) {
     return realmDB.search(e);
   }
 

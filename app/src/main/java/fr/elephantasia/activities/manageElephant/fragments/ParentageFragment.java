@@ -39,14 +39,16 @@ public class ParentageFragment extends Fragment {
   @OnClick(R.id.mother_add_button)
   public void searchMother() {
     Intent intent = new Intent(getActivity(), SearchElephantActivity.class);
-    intent.setAction(ElephantPreview.SELECT);
+    // intent.setAction(ElephantPreview.SELECT);
+    SearchElephantActivity.SetExtraAction(intent, ElephantPreview.SELECT);
     getActivity().startActivityForResult(intent, REQUEST_MOTHER_SELECTED);
   }
 
   @OnClick(R.id.father_add_button)
   public void searchFather() {
     Intent intent = new Intent(getActivity(), SearchElephantActivity.class);
-    intent.setAction(ElephantPreview.SELECT);
+    // intent.setAction(ElephantPreview.SELECT);
+    SearchElephantActivity.SetExtraAction(intent, ElephantPreview.SELECT);
     getActivity().startActivityForResult(intent, REQUEST_FATHER_SELECTED);
   }
 

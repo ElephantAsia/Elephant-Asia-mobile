@@ -2,46 +2,70 @@ package fr.elephantasia.activities.searchElephant;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
-import fr.elephantasia.activities.searchElephant.adapters.SearchElephantAdapter;
+import fr.elephantasia.activities.searchElephant.adapters.ElephantsAdapter;
+import fr.elephantasia.activities.searchElephant.fragments.SearchElephantResultFragment;
 import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Elephant;
-import io.realm.OrderedRealmCollection;
-
-import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
-import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_SEARCH_ELEPHANT;
 
 public class SearchElephantResultActivity extends AppCompatActivity {
 
-  public static String SEARCH_ALL = "SEARCH_ALL";
-  public static String SEARCH_PENDING = "SEARCH_PENDING";
-  public static String SEARCH_DRAFT = "SEARCH_DRAFT";
-  public static String SEARCH_SAVED = "SEARCH_SAVED";
+  /**
+   * Classifier
+   */
 
-  // View Binding
-  @BindView(R.id.result_view) RecyclerView resultList;
-  @BindView(R.id.no_result) TextView noResult;
+  static public final String EXTRA_ACTION = "extra.action";
+  static public final String EXTRA_ELEPHANT = "extra.elephant";
+
+  static public final String SEARCH_ALL = "SEARCH_ALL";
+  static public final String SEARCH_PENDING = "SEARCH_PENDING";
+  static public final String SEARCH_DRAFT = "SEARCH_DRAFT";
+  static public final String SEARCH_SAVED = "SEARCH_SAVED";
+
+  static public void SetExtraAction(@NonNull Intent intent, String action) {
+    intent.putExtra(EXTRA_ACTION, action);
+  }
+
+  static public void SetExtraElephant(@NonNull Intent intent, Elephant e) {
+    intent.putExtra(EXTRA_ELEPHANT, Parcels.wrap(e));
+  }
+
+  @Nullable
+  static public String GetExtraAction(@NonNull Intent intent) {
+    return intent.getStringExtra(EXTRA_ACTION);
+  }
+
+  @Nullable
+  static public Elephant GetExtraElephant(@NonNull Intent intent) {
+    return Parcels.unwrap(intent.getParcelableExtra(EXTRA_ELEPHANT));
+  }
+
+  /**
+   * Instance
+   */
+
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.title) TextView toolbarTitle;
 
   private DatabaseController databaseController;
+  private SearchElephantResultFragment fragment;
 
-  // Attr
-  private SearchElephantAdapter adapter;
+  private ElephantsAdapter adapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -49,16 +73,13 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     setContentView(R.layout.search_elephant_result_activity);
     ButterKnife.bind(this);
 
-    databaseController = ((BaseApplication)getApplication()).getDatabaseController();
-
-    resultList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
-    displaySearchResult();
-
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+    databaseController = ((BaseApplication)getApplication()).getDatabaseController();
+    setFragment();
+    initAdapter();
   }
 
   @Override
@@ -79,15 +100,22 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     return true;
   }
 
-  private void displaySearchResult() {
-    OrderedRealmCollection<Elephant> results;
+  private void setFragment() {
+    fragment = new SearchElephantResultFragment();
+    getSupportFragmentManager().beginTransaction()
+      .replace(R.id.search_elephant_result_fragment, fragment)
+      .commit();
+  }
 
-    Elephant e = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_ELEPHANT));
+  private void displaySearchResult() {
+    List<Elephant> results;
+
+    Elephant e = GetExtraElephant(getIntent());
     if (e != null) {
       results = databaseController.search(e);
     } else {
       DatabaseController.SearchMode sm = DatabaseController.SearchMode.All;
-      String action = getIntent().getAction();
+      String action = GetExtraAction(getIntent());
       if (action != null) {
         if (action.equals(SEARCH_DRAFT))
           sm = DatabaseController.SearchMode.Draft;
@@ -101,18 +129,13 @@ public class SearchElephantResultActivity extends AppCompatActivity {
 
     toolbarTitle.setText(String.format(getString(R.string.search_result), results.size()));
 
-    if (!results.isEmpty()) {
-      initAdapter(results);
-      resultList.setAdapter(adapter);
-    } else {
-      resultList.setVisibility(View.GONE);
-      noResult.setVisibility(View.VISIBLE);
-    }
+    adapter.setData(results);
+    fragment.contentUpdated(results.isEmpty());
   }
 
-  private void initAdapter(OrderedRealmCollection<Elephant> realmResults) {
-    String action = getIntent().getAction();
-    SearchElephantAdapter.OnActionClickListener listener;
+  private void initAdapter() {
+    String action = GetExtraAction(getIntent());
+    ElephantsAdapter.ActionClickListener listener;
 
     if (action != null && action.equals(ElephantPreview.SELECT)) {
       listener = createElephantListener();
@@ -120,17 +143,19 @@ public class SearchElephantResultActivity extends AppCompatActivity {
       listener = createEditListener();
       action = getString(R.string.edit);
     }
-    adapter = new SearchElephantAdapter(realmResults, listener, action);
+
+    adapter = new ElephantsAdapter(listener, action);
+    fragment.setAdapter(adapter);
   }
 
-  SearchElephantAdapter.OnActionClickListener createElephantListener() {
-    return new SearchElephantAdapter.OnActionClickListener() {
+  ElephantsAdapter.ActionClickListener createElephantListener() {
+    return new ElephantsAdapter.ActionClickListener() {
       @Override
       public void onActionClick(Elephant elephant) {
         Intent resultIntent = getIntent();
 
         if (elephant != null) {
-          resultIntent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+          resultIntent.putExtra(SearchElephantActivity.EXTRA_ELEPHANT_ID, elephant.id);
           setResult(RESULT_OK, resultIntent);
           finish();
         }
@@ -138,14 +163,14 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     };
   }
 
-  SearchElephantAdapter.OnActionClickListener createEditListener() {
-    return new SearchElephantAdapter.OnActionClickListener() {
+  ElephantsAdapter.ActionClickListener createEditListener() {
+    return new ElephantsAdapter.ActionClickListener() {
       @Override
       public void onActionClick(Elephant elephant) {
         Intent intent = new Intent(SearchElephantResultActivity.this, ManageElephantActivity.class);
 
         if (elephant != null) {
-          intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+          intent.putExtra(SearchElephantActivity.EXTRA_ELEPHANT_ID, elephant.id);
           startActivity(intent);
         }
       }

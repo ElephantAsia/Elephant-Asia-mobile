@@ -115,7 +115,8 @@ class RealmDB {
   }
 
   @NonNull
-  public RealmResults<Elephant> search(Elephant e) {
+  // public RealmResults<Elephant> search(Elephant e) {
+  public List<Elephant> search(Elephant e) {
     Realm realm = Realm.getDefaultInstance();
     RealmQuery<Elephant> query = realm.where(Elephant.class);
 
@@ -136,7 +137,8 @@ class RealmDB {
         }
       }
     }
-    return query.findAll();
+    return realm.copyFromRealm(query.findAll());
+    // return query.findAll();
   }
 
   @NonNull

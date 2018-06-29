@@ -31,11 +31,6 @@ public class SearchElephantFragment extends Fragment {
   private Elephant elephant = new Elephant();
 
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-  }
-
-  @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     binding = DataBindingUtil.inflate(inflater, R.layout.search_elephant_fragment, container, false);
