@@ -7,12 +7,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,10 +62,10 @@ public class ManageElephantActivity extends AppCompatActivity {
   static public final int RESULT_VALIDATE = 3;
 
   // Request codes
-  static private final int REQUEST_CONTACT_SELECTED = 4;
-  static private final int REQUEST_FATHER_SELECTED = 5;
-  static private final int REQUEST_MOTHER_SELECTED = 6;
-  static private final int REQUEST_CHILD_SELECTED = 7;
+  static private final int REQUEST_SELECT_CONTACT = 4;
+  static private final int REQUEST_SELECT_FATHER = 5;
+  static private final int REQUEST_SELECT_MOTHER = 6;
+  static private final int REQUEST_SELECT_CHILD = 7;
 
   // Extra
   static private final String EXTRA_ELEPHANT_ID = "extra.eid";
@@ -82,7 +82,6 @@ public class ManageElephantActivity extends AppCompatActivity {
    * Instance
    */
 
-  // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.title) TextView toolbarTitle;
   @BindView(R.id.tabs) TabLayout tabLayout;
@@ -90,35 +89,26 @@ public class ManageElephantActivity extends AppCompatActivity {
   @BindView(R.id.add_elephant_activity) View rootView;
   @BindView(R.id.add_elephant_fab) FloatingActionButton fab;
 
+  // Controllers
   private DatabaseController databaseController;
 
-  // Fragment
+  // Fragments
   private ProfilFragment profilFragment = new ProfilFragment();
   private RegistrationFragment registrationFragment = new RegistrationFragment();
-
   private ContactFragment contactFragment = new ContactFragment();
   private ParentageFragment parentageFragment = new ParentageFragment();
   private ChildrenFragment childrenFragment = new ChildrenFragment();
-
-  // Attr
-  private Elephant elephant;
-  private boolean editing;
-  private List<Document> documents = new ArrayList<>();
 
   // Icons
   private Drawable draftIcon;
   private Drawable validateIcon;
   private Drawable nextStepIcon;
 
-  // Listener binding
-  @OnClick(R.id.add_elephant_fab)
-  public void nextPage() {
-    if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1) {
-      viewPager.setCurrentItem(0);
-    } else {
-      viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-    }
-  }
+  // Misc
+  private Elephant elephant;
+  private boolean editing = false;
+  private List<Document> documents = new ArrayList<>();
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -128,68 +118,11 @@ public class ManageElephantActivity extends AppCompatActivity {
 
     databaseController = ((BaseApplication)getApplication()).getDatabaseController();
 
+    initGlobalListener();
+    initToolbar();
     initIcon();
-
-    rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-      @Override
-      public void onGlobalLayout() {
-        boolean keyboardIsUp = KeyboardHelpers.keyboardIsDisplay(rootView);
-
-        if (keyboardIsUp) {
-          fab.hide();
-        } else {
-          fab.show();
-        }
-      }
-    });
-
-    setSupportActionBar(toolbar);
-    if (getSupportActionBar() != null) {
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    setupViewPager(viewPager);
-    tabLayout.setupWithViewPager(viewPager);
-    editing = false;
-
-    Integer id = GetExtraElephantId(getIntent());
-    if (id != -1) {
-      editing = true;
-      elephant = databaseController.getElephantById(id);
-      documents = databaseController.getDocumentsByElephantId(id);
-
-      toolbarTitle.setText(String.format(getString(R.string.edit_elephant_title), elephant.name));
-      toolbarTitle.setMaxLines(1);
-      toolbarTitle.setHorizontallyScrolling(true);
-      toolbarTitle.setEllipsize(TextUtils.TruncateAt.END);
-    } else {
-      elephant = new Elephant();
-    }
-  }
-
-  private void initIcon() {
-    draftIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_archive)
-        .color(Color.WHITE).sizeDp(24);
-    validateIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_check)
-        .color(Color.WHITE).sizeDp(24);
-    nextStepIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_chevron_right)
-        .color(Color.WHITE).sizeDp(24);
-    fab.setImageDrawable(nextStepIcon);
-  }
-
-  private void setupViewPager(ViewPager viewPager) {
-    ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-    adapter.addFragment(profilFragment, getString(R.string.profil));
-    adapter.addFragment(registrationFragment, getString(R.string.registration));
-    adapter.addFragment(contactFragment, getString(R.string.contact));
-    adapter.addFragment(new DescriptionFragment(), getString(R.string.description));
-    adapter.addFragment(parentageFragment, getString(R.string.parentage));
-    adapter.addFragment(childrenFragment, getString(R.string.children));
-    viewPager.setAdapter(adapter);
-  }
-
-  public Elephant getElephant() {
-    return this.elephant;
+    initViewPager();
+    initElephant();
   }
 
   @Override
@@ -214,17 +147,17 @@ public class ManageElephantActivity extends AppCompatActivity {
 
     if (resultCode == RESULT_OK) {
       switch (requestCode) {
-        case REQUEST_CONTACT_SELECTED:
+        case REQUEST_SELECT_CONTACT:
           Contact contact = Parcels.unwrap(data.getParcelableExtra(EXTRA_SEARCH_CONTACT));
           contactFragment.addContactTolist(contact);
           break;
-        case REQUEST_MOTHER_SELECTED:
+        case REQUEST_SELECT_MOTHER:
           setMother(SearchElephantActivity.GetExtraElephantId(data));
           break;
-        case REQUEST_FATHER_SELECTED:
+        case REQUEST_SELECT_FATHER:
           setFather(SearchElephantActivity.GetExtraElephantId(data));
           break;
-        case REQUEST_CHILD_SELECTED:
+        case REQUEST_SELECT_CHILD:
           addChild(SearchElephantActivity.GetExtraElephantId(data));
           break;
       }
@@ -317,9 +250,70 @@ public class ManageElephantActivity extends AppCompatActivity {
           .show();
     }
   }
+  private void initGlobalListener() {
+    rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+      @Override
+      public void onGlobalLayout() {
+        boolean keyboardIsUp = KeyboardHelpers.keyboardIsDisplay(rootView);
+        if (keyboardIsUp) {
+          fab.hide();
+        } else {
+          fab.show();
+        }
+      }
+    });
+  }
+
+  private void initToolbar() {
+    setSupportActionBar(toolbar);
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+  }
+
+  private void initIcon() {
+    draftIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_archive)
+      .color(Color.WHITE).sizeDp(24);
+    validateIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_check)
+      .color(Color.WHITE).sizeDp(24);
+    nextStepIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_chevron_right)
+      .color(Color.WHITE).sizeDp(24);
+    fab.setImageDrawable(nextStepIcon);
+  }
+
+  private void initViewPager() {
+    ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+    adapter.addFragment(profilFragment, getString(R.string.profil));
+    adapter.addFragment(registrationFragment, getString(R.string.registration));
+    adapter.addFragment(contactFragment, getString(R.string.contact));
+    adapter.addFragment(new DescriptionFragment(), getString(R.string.description));
+    adapter.addFragment(parentageFragment, getString(R.string.parentage));
+    adapter.addFragment(childrenFragment, getString(R.string.children));
+    viewPager.setAdapter(adapter);
+    tabLayout.setupWithViewPager(viewPager);
+  }
+
+  private void initElephant() {
+    Integer id = GetExtraElephantId(getIntent());
+    if (id != -1) {
+      editing = true;
+      elephant = databaseController.getElephantById(id);
+      documents = databaseController.getDocumentsByElephantId(id);
+
+      toolbarTitle.setText(String.format(getString(R.string.edit_elephant_title), elephant.name));
+      toolbarTitle.setMaxLines(1);
+      toolbarTitle.setHorizontallyScrolling(true);
+      toolbarTitle.setEllipsize(TextUtils.TruncateAt.END);
+    } else {
+      elephant = new Elephant();
+    }
+  }
+
+  public Elephant getElephant() {
+    return this.elephant;
+  }
 
   private void setMother(Integer id) {
-    Log.w("manage", "mother id : " + id);
     Elephant mother = databaseController.getElephantById(id);
     if (mother != null) {
       parentageFragment.setMother(mother);
@@ -342,30 +336,41 @@ public class ManageElephantActivity extends AppCompatActivity {
 
   private void saveToDb() {
     databaseController.insertOrUpdate(elephant, documents);
-    // TODO: add popup 'saving ...'
   }
 
   public void searchMother() {
     Intent intent = new Intent(this, SearchElephantActivity.class);
     SearchElephantActivity.SetExtraAction(intent, ElephantPreview.SELECT);
-    startActivityForResult(intent, REQUEST_MOTHER_SELECTED);
+    startActivityForResult(intent, REQUEST_SELECT_MOTHER);
   }
 
   public void searchFather() {
     Intent intent = new Intent(this, SearchElephantActivity.class);
     SearchElephantActivity.SetExtraAction(intent, ElephantPreview.SELECT);
-    startActivityForResult(intent, REQUEST_FATHER_SELECTED);
+    startActivityForResult(intent, REQUEST_SELECT_FATHER);
   }
 
   public void searchChild() {
     Intent intent = new Intent(this, SearchElephantActivity.class);
     SearchElephantActivity.SetExtraAction(intent, ElephantPreview.SELECT);
-    startActivityForResult(intent, REQUEST_CHILD_SELECTED);
+    startActivityForResult(intent, REQUEST_SELECT_CHILD);
   }
 
   public void searchContact() {
     Intent intent = new Intent(this, SearchContactActivity.class);
-    startActivityForResult(intent, REQUEST_CONTACT_SELECTED);
+    startActivityForResult(intent, REQUEST_SELECT_CONTACT);
+  }
+
+  @OnClick(R.id.add_elephant_fab)
+  public void nextPage() {
+    PagerAdapter adapter = viewPager.getAdapter();
+    if (adapter != null) {
+      if (viewPager.getCurrentItem() == adapter.getCount() - 1) {
+        viewPager.setCurrentItem(0);
+      } else {
+        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+      }
+    }
   }
 
 }

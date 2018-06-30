@@ -28,10 +28,26 @@ import fr.elephantasia.utils.KeyboardHelpers;
  */
 public class AuthActivity extends AccountAuthenticatorActivity {
 
-	private static final String EXTRA_LAUNCHED_BY_ACCOUNT_MANAGER = "launched_by_account_manager";
+	/**
+	 * Classifier
+	 */
 
-	public static final String EXTRA_USERNAME = "username";
-	public static final String EXTRA_AUTHTOKEN_TYPE = "authtoken_type";
+	static private final String EXTRA_LAUNCHED_BY_ACCOUNT_MANAGER = "launched_by_account_manager";
+
+	static public final String EXTRA_USERNAME = "username";
+	static public final String EXTRA_AUTHTOKEN_TYPE = "authtoken_type";
+
+	static public void setExtraLaunchedByAccountManager(Intent intent, boolean value) {
+		intent.putExtra(EXTRA_LAUNCHED_BY_ACCOUNT_MANAGER, value);
+	}
+
+	static public boolean getExtraLaunchedByAccountManager(Intent intent) {
+		return intent.getBooleanExtra(EXTRA_LAUNCHED_BY_ACCOUNT_MANAGER, false);
+	}
+
+	/**
+	 * Instance
+	 */
 
 	private GetAuthTokenAsyncRequest getAuthTokenAsyncRequest;
 
@@ -46,14 +62,6 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 	private TextInputLayout mPasswordLayout;
 	private EditText mPasswordEditText;
 	private Button mButton;
-
-	public static void setExtraLaunchedByAccountManager(Intent intent, boolean value) {
-		intent.putExtra(EXTRA_LAUNCHED_BY_ACCOUNT_MANAGER, value);
-	}
-
-	public static boolean getExtraLaunchedByAccountManager(Intent intent) {
-		return intent.getBooleanExtra(EXTRA_LAUNCHED_BY_ACCOUNT_MANAGER, false);
-	}
 
 	private boolean isGetAuthTokenRunning() {
 		return getAuthTokenAsyncRequest != null && getAuthTokenAsyncRequest.isRunning();

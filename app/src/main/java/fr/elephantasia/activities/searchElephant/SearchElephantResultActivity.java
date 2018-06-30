@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -63,9 +62,7 @@ public class SearchElephantResultActivity extends AppCompatActivity {
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.title) TextView toolbarTitle;
 
-  private DatabaseController databaseController;
   private SearchElephantResultFragment fragment;
-
   private ElephantsAdapter adapter;
 
   @Override
@@ -74,13 +71,9 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     setContentView(R.layout.search_elephant_result_activity);
     ButterKnife.bind(this);
 
-    setSupportActionBar(toolbar);
-    if (getSupportActionBar() != null) {
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-    databaseController = ((BaseApplication)getApplication()).getDatabaseController();
+    setToolbar();
     setFragment();
-    initAdapter();
+    setAdapter();
   }
 
   @Override
@@ -101,6 +94,13 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     return true;
   }
 
+  private void setToolbar() {
+    setSupportActionBar(toolbar);
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+  }
+
   private void setFragment() {
     fragment = new SearchElephantResultFragment();
     getSupportFragmentManager().beginTransaction()
@@ -108,33 +108,7 @@ public class SearchElephantResultActivity extends AppCompatActivity {
       .commit();
   }
 
-  private void displaySearchResult() {
-    List<Elephant> results;
-
-    Elephant e = GetExtraElephant(getIntent());
-    if (e != null) {
-      results = databaseController.search(e);
-    } else {
-      DatabaseController.SearchMode sm = DatabaseController.SearchMode.All;
-      String action = GetExtraAction(getIntent());
-      if (action != null) {
-        if (action.equals(SEARCH_DRAFT))
-          sm = DatabaseController.SearchMode.Draft;
-        else if (action.equals(SEARCH_PENDING))
-          sm = DatabaseController.SearchMode.Pending;
-        else if (action.equals(SEARCH_SAVED))
-          sm = DatabaseController.SearchMode.Saved;
-      }
-      results = databaseController.searchElephantsByState(sm);
-    }
-
-    toolbarTitle.setText(String.format(getString(R.string.search_result), results.size()));
-
-    adapter.setData(results);
-    fragment.contentUpdated(results.isEmpty());
-  }
-
-  private void initAdapter() {
+  private void setAdapter() {
     String action = GetExtraAction(getIntent());
     ElephantsAdapter.ActionClickListener listener;
 
@@ -147,6 +121,32 @@ public class SearchElephantResultActivity extends AppCompatActivity {
 
     adapter = new ElephantsAdapter(listener, action);
     fragment.setAdapter(adapter);
+  }
+
+  private void displaySearchResult() {
+    DatabaseController db = ((BaseApplication)getApplication()).getDatabaseController();
+    List<Elephant> results;
+
+    Elephant e = GetExtraElephant(getIntent());
+    if (e != null) {
+      results = db.search(e);
+    } else {
+      DatabaseController.SearchMode sm = DatabaseController.SearchMode.All;
+      String action = GetExtraAction(getIntent());
+      if (action != null) {
+        if (action.equals(SEARCH_DRAFT))
+          sm = DatabaseController.SearchMode.Draft;
+        else if (action.equals(SEARCH_PENDING))
+          sm = DatabaseController.SearchMode.Pending;
+        else if (action.equals(SEARCH_SAVED))
+          sm = DatabaseController.SearchMode.Saved;
+      }
+      results = db.searchElephantsByState(sm);
+    }
+
+    toolbarTitle.setText(String.format(getString(R.string.search_result), results.size()));
+    adapter.setData(results);
+    fragment.contentUpdated(results.isEmpty());
   }
 
   private ElephantsAdapter.ActionClickListener createElephantListener() {
@@ -169,8 +169,6 @@ public class SearchElephantResultActivity extends AppCompatActivity {
       @Override
       public void onActionClick(Elephant elephant) {
         Intent intent = new Intent(SearchElephantResultActivity.this, ManageElephantActivity.class);
-        Log.w("searchresult", "elephant: " + elephant);
-        Log.w("searchresult", "id: " + elephant.id);
         if (elephant != null) {
           ManageElephantActivity.SetExtraElephantId(intent, elephant.id);
           startActivity(intent);
@@ -178,4 +176,5 @@ public class SearchElephantResultActivity extends AppCompatActivity {
       }
     };
   }
+
 }

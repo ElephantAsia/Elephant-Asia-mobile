@@ -29,10 +29,10 @@ public class SearchElephantActivity extends AppCompatActivity {
    * Classifier
    */
 
-  static public final int REQUEST_ELEPHANT_SELECTED = 1;
+  static private final int REQUEST_SELECT_ELEPHANT = 1;
 
-  static private final String EXTRA_ACTION = "extra.action";
-  static private final String EXTRA_ELEPHANT_ID = "EXTRA_ELEPHANT_ID";
+  static private final String EXTRA_ACTION = "SEA.EXTRA_ACTION";
+  static private final String EXTRA_ELEPHANT_ID = "SEA.EXTRA_ELEPHANT_ID";
 
   static public void SetExtraAction(@NonNull Intent intent, String action) {
     intent.putExtra(EXTRA_ACTION, action);
@@ -56,7 +56,6 @@ public class SearchElephantActivity extends AppCompatActivity {
    * Instance
    */
 
-  // Views Binding
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.search_button) FloatingActionButton searchButton;
 
@@ -66,22 +65,11 @@ public class SearchElephantActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.search_elephant_activity);
-
     ButterKnife.bind(this);
 
-    setSupportActionBar(toolbar);
-    if (getSupportActionBar() != null) {
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
+    setToolbar();
     setFragment();
-
-    searchButton.setImageDrawable(
-      new IconicsDrawable(this)
-        .icon(MaterialDesignIconic.Icon.gmi_search)
-        .color(Color.WHITE)
-        .sizeDp(22)
-    );
+    setSearchButton();
   }
 
   @Override
@@ -124,12 +112,19 @@ public class SearchElephantActivity extends AppCompatActivity {
       Intent resultIntent = new Intent();
 
       switch (requestCode) {
-        case (REQUEST_ELEPHANT_SELECTED):
+        case (REQUEST_SELECT_ELEPHANT):
           SetExtraElephantId(resultIntent, GetExtraElephantId(data));
           setResult(RESULT_OK, resultIntent);
           finish();
           break;
       }
+    }
+  }
+
+  private void setToolbar() {
+    setSupportActionBar(toolbar);
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
   }
 
@@ -140,6 +135,15 @@ public class SearchElephantActivity extends AppCompatActivity {
       .commit();
   }
 
+  private void setSearchButton() {
+    searchButton.setImageDrawable(
+      new IconicsDrawable(this)
+        .icon(MaterialDesignIconic.Icon.gmi_search)
+        .color(Color.WHITE)
+        .sizeDp(22)
+    );
+  }
+
   @OnClick(R.id.search_button)
   void searchElephant() {
     if (fragment.isFieldsValid()) {
@@ -147,7 +151,7 @@ public class SearchElephantActivity extends AppCompatActivity {
       Intent intent = new Intent(this, SearchElephantResultActivity.class);
       SearchElephantResultActivity.SetExtraAction(intent, action);
       SearchElephantResultActivity.SetExtraElephant(intent, fragment.getElephant());
-      startActivityForResult(intent, REQUEST_ELEPHANT_SELECTED);
+      startActivityForResult(intent, REQUEST_SELECT_ELEPHANT);
     } else {
       Toast.makeText(this, "You must fill at least one field", Toast.LENGTH_SHORT).show();
     }

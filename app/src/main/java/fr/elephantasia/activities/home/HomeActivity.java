@@ -46,7 +46,15 @@ import jp.wasabeef.blurry.Blurry;
 
 public class HomeActivity extends AppCompatActivity {
 
-  public static final int REQUEST_ADD_ELEPHANT = 1;
+  /**
+   * Classifier
+   */
+
+  static private final int REQUEST_ADD_ELEPHANT = 1;
+
+  /**
+   * Instance
+   */
 
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.main_drawer_pic_profil_blurred) ImageView profilPicBlurred;
