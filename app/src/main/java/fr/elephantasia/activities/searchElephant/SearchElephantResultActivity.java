@@ -19,9 +19,9 @@ import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.adapters.ElephantsAdapter;
 import fr.elephantasia.activities.searchElephant.fragments.SearchElephantResultFragment;
-import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.view.ElephantPreview;
 
 public class SearchElephantResultActivity extends AppCompatActivity {
 

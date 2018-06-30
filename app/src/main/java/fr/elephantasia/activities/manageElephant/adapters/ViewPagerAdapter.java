@@ -1,4 +1,4 @@
-package fr.elephantasia.adapter;
+package fr.elephantasia.activities.manageElephant.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

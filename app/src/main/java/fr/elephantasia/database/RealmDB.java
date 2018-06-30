@@ -198,12 +198,13 @@ class RealmDB {
     return null;
   }
 
-  public RealmResults<Elephant> getLastVisitedElephant() {
+  public List<Elephant> getLastVisitedElephant() {
     Realm realm = Realm.getDefaultInstance();
-    return realm.where(Elephant.class)
+    RealmResults<Elephant> results = realm.where(Elephant.class)
       .greaterThan(Elephant.LAST_VISITED, DateHelpers.getLastWeek())
       .sort(Elephant.LAST_VISITED, Sort.DESCENDING)
       .findAll();
+    return realm.copyFromRealm(results);
   }
 
   public Long getElephantsCount() {

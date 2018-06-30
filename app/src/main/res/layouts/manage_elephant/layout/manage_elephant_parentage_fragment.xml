@@ -45,7 +45,7 @@
           android:src="@drawable/add_picture"
           android:visibility="@{e.mother != null ? View.GONE : View.VISIBLE}"/>
 
-        <fr.elephantasia.customView.ElephantPreviewFull
+        <fr.elephantasia.view.ElephantPreviewFull
           android:id="@+id/mother_preview"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
           android:src="@drawable/add_picture"
           android:visibility="@{e.father != null ? View.GONE : View.VISIBLE}"/>
 
-        <fr.elephantasia.customView.ElephantPreviewFull
+        <fr.elephantasia.view.ElephantPreviewFull
           android:id="@+id/father_preview"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

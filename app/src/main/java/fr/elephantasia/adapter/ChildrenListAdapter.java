@@ -6,9 +6,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import fr.elephantasia.R;
-import fr.elephantasia.customView.ElephantPreview;
-import fr.elephantasia.customView.ElephantPreviewFull;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.view.ElephantPreview;
+import fr.elephantasia.view.ElephantPreviewFull;
 import io.realm.RealmList;
 
 

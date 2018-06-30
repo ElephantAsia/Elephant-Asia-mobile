@@ -9,17 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.home.HomeActivity;
-import fr.elephantasia.adapter.RecentElephantAdapter;
+import fr.elephantasia.activities.home.adapters.RecentElephantsAdapter;
 import fr.elephantasia.database.model.Elephant;
-import io.realm.RealmResults;
 
 public class HomeRecentFragment extends Fragment {
 
-  // View binding
   @BindView(R.id.recent_list) RecyclerView recentList;
   @BindView(R.id.no_recent_items) TextView noItemsYet;
 
@@ -30,9 +30,6 @@ public class HomeRecentFragment extends Fragment {
     ButterKnife.bind(this, view);
 
     recentList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-    setLastVisitedElephant();
-
     return (view);
   }
 
@@ -46,13 +43,18 @@ public class HomeRecentFragment extends Fragment {
     HomeActivity homeActivity = (HomeActivity)getActivity();
 
     if (homeActivity != null) {
-      RealmResults<Elephant> elephants = homeActivity.getLastVisitedElephants();
+      List<Elephant> elephants = homeActivity.getLastVisitedElephants();
 
       if (elephants.size() == 0) {
         noItemsYet.setVisibility(View.VISIBLE);
       } else {
         noItemsYet.setVisibility(View.GONE);
-        recentList.setAdapter(new RecentElephantAdapter(elephants));
+        recentList.setAdapter(new RecentElephantsAdapter(elephants, new RecentElephantsAdapter.Listener() {
+          @Override
+          public void onClick(Elephant e) {
+            ((HomeActivity)getActivity()).showElephant(e.id);
+          }
+        }));
       }
     }
 

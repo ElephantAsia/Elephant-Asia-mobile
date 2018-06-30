@@ -7,8 +7,8 @@ import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import fr.elephantasia.customView.ElephantPreviewV2;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.view.ElephantPreviewV2;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 

@@ -1,4 +1,4 @@
-package fr.elephantasia.customView;
+package fr.elephantasia.view;
 
 import android.content.Context;
 import android.content.Intent;

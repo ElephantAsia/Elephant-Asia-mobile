@@ -11,9 +11,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.showElephant.ShowElephantActivity;
-import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ShowParentageFragmentBinding;
+import fr.elephantasia.view.ElephantPreview;
 
 public class ShowParentageFragment extends Fragment {
 

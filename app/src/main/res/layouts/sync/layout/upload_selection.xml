@@ -4,7 +4,7 @@
               android:layout_height="wrap_content"
               android:orientation="horizontal">
 
-  <fr.elephantasia.customView.ElephantPreviewFull
+  <fr.elephantasia.view.ElephantPreviewFull
     android:id="@+id/preview"
     android:clickable="true"
     android:focusable="true"

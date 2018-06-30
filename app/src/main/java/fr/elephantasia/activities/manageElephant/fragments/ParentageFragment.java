@@ -14,10 +14,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
-import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ManageElephantParentageFragmentBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
+import fr.elephantasia.view.ElephantPreview;
 
 public class ParentageFragment extends Fragment {
 

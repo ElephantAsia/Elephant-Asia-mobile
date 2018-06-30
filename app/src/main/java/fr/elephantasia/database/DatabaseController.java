@@ -103,7 +103,7 @@ public class DatabaseController {
     return realmDB.getDocumentsByElephantId(elephantId);
   }
 
-  public RealmResults<Elephant> getLastVisitedElephant() {
+  public List<Elephant> getLastVisitedElephant() {
     return realmDB.getLastVisitedElephant();
   }
 

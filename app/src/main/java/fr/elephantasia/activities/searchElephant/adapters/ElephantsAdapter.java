@@ -6,9 +6,9 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import fr.elephantasia.customView.ElephantPreview;
-import fr.elephantasia.customView.ElephantPreviewFull;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.view.ElephantPreview;
+import fr.elephantasia.view.ElephantPreviewFull;
 
 
 public class ElephantsAdapter extends RecyclerView.Adapter<ElephantsAdapter.ViewHolder> {

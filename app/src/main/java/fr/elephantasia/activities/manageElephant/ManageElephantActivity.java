@@ -34,6 +34,7 @@ import butterknife.OnClick;
 import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.contact.SearchContactActivity;
+import fr.elephantasia.activities.manageElephant.adapters.ViewPagerAdapter;
 import fr.elephantasia.activities.manageElephant.fragments.ChildrenFragment;
 import fr.elephantasia.activities.manageElephant.fragments.ContactFragment;
 import fr.elephantasia.activities.manageElephant.fragments.DescriptionFragment;
@@ -41,13 +42,12 @@ import fr.elephantasia.activities.manageElephant.fragments.ParentageFragment;
 import fr.elephantasia.activities.manageElephant.fragments.ProfilFragment;
 import fr.elephantasia.activities.manageElephant.fragments.RegistrationFragment;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
-import fr.elephantasia.adapter.ViewPagerAdapter;
-import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.KeyboardHelpers;
+import fr.elephantasia.view.ElephantPreview;
 
 import static fr.elephantasia.activities.contact.SearchContactActivity.EXTRA_SEARCH_CONTACT;
 

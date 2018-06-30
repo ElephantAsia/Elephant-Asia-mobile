@@ -24,6 +24,7 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -37,11 +38,11 @@ import fr.elephantasia.activities.home.fragments.HomeOverviewFragment;
 import fr.elephantasia.activities.home.fragments.HomeRecentFragment;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
+import fr.elephantasia.activities.showElephant.ShowElephantActivity;
 import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.DateHelpers;
 import fr.elephantasia.utils.Preferences;
-import io.realm.RealmResults;
 import jp.wasabeef.blurry.Blurry;
 
 public class HomeActivity extends AppCompatActivity {
@@ -206,6 +207,12 @@ public class HomeActivity extends AppCompatActivity {
     getSupportFragmentManager().beginTransaction().replace(R.id.overview_fragment, fragment).commit();
   }
 
+  public void showElephant(Integer id) {
+    Intent intent = new Intent(this, ShowElephantActivity.class);
+    ShowElephantActivity.SetExtraElephantId(intent, id);
+    startActivity(intent);
+  }
+
   public Long getElephantsCount() {
     return databaseController.getElephantsCount();
   }
@@ -222,7 +229,7 @@ public class HomeActivity extends AppCompatActivity {
     return databaseController.getElephantsDraftCount();
   }
 
-  public RealmResults<Elephant> getLastVisitedElephants() {
+  public List<Elephant> getLastVisitedElephants() {
     return databaseController.getLastVisitedElephant();
   }
 
