@@ -31,16 +31,25 @@ public class SearchElephantActivity extends AppCompatActivity {
 
   static public final int REQUEST_ELEPHANT_SELECTED = 1;
 
-  static public final String EXTRA_ACTION = "extra.action";
-  static public final String EXTRA_ELEPHANT_ID = "EXTRA_ELEPHANT_ID";
+  static private final String EXTRA_ACTION = "extra.action";
+  static private final String EXTRA_ELEPHANT_ID = "EXTRA_ELEPHANT_ID";
 
   static public void SetExtraAction(@NonNull Intent intent, String action) {
     intent.putExtra(EXTRA_ACTION, action);
   }
 
+  static public void SetExtraElephantId(@NonNull Intent intent, Integer id) {
+    intent.putExtra(EXTRA_ELEPHANT_ID, id);
+  }
+
   @Nullable
   static public String GetExtraAction(@NonNull Intent intent) {
     return intent.getStringExtra(EXTRA_ACTION);
+  }
+
+  @NonNull
+  static public Integer GetExtraElephantId(@NonNull Intent intent) {
+    return intent.getIntExtra(EXTRA_ELEPHANT_ID, -1);
   }
 
   /**
@@ -116,7 +125,7 @@ public class SearchElephantActivity extends AppCompatActivity {
 
       switch (requestCode) {
         case (REQUEST_ELEPHANT_SELECTED):
-          resultIntent.putExtra(EXTRA_ELEPHANT_ID, data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
+          SetExtraElephantId(resultIntent, GetExtraElephantId(data));
           setResult(RESULT_OK, resultIntent);
           finish();
           break;

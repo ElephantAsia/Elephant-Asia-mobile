@@ -17,7 +17,6 @@ import io.realm.RealmResults;
  *
  * Questions:
  * What about realm.close() ?
- * copyFromRealm() ?
  **/
 public class DatabaseController {
 
@@ -75,7 +74,7 @@ public class DatabaseController {
   /* Getters */
 
   @NonNull
-  public RealmResults<Elephant> searchElephantsByState(SearchMode searchMode) {
+  public List<Elephant> searchElephantsByState(SearchMode searchMode) {
     return realmDB.searchElephantsByState(searchMode);
   }
 

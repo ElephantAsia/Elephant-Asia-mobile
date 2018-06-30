@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.home;
+package fr.elephantasia.activities.home.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.home.HomeActivity;
 import fr.elephantasia.adapter.RecentElephantAdapter;
 import fr.elephantasia.database.model.Elephant;
 import io.realm.RealmResults;

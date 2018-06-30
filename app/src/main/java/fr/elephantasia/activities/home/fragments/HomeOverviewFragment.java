@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.home;
+package fr.elephantasia.activities.home.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.home.HomeActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantResultActivity;
 
 public class HomeOverviewFragment extends Fragment {

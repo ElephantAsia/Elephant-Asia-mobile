@@ -19,8 +19,6 @@ import fr.elephantasia.R;
 import fr.elephantasia.activities.showElephant.ShowElephantActivity;
 import fr.elephantasia.database.model.Elephant;
 
-import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
-
 /**
  * Created by seb on 27/05/2017.
  */
@@ -86,7 +84,8 @@ public abstract class ElephantPreview extends FrameLayout {
           new View.OnClickListener() {
             public void onClick(View v) {
               Intent intent = new Intent(v.getContext(), ShowElephantActivity.class);
-              intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+              ShowElephantActivity.SetExtraElephantId(intent, elephant.id);
+              // intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
               getContext().startActivity(intent);
             }
           });

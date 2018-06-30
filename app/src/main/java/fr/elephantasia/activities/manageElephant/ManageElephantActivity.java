@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,13 +33,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.contact.SearchContactActivity;
 import fr.elephantasia.activities.manageElephant.fragments.ChildrenFragment;
 import fr.elephantasia.activities.manageElephant.fragments.ContactFragment;
 import fr.elephantasia.activities.manageElephant.fragments.DescriptionFragment;
 import fr.elephantasia.activities.manageElephant.fragments.ParentageFragment;
 import fr.elephantasia.activities.manageElephant.fragments.ProfilFragment;
 import fr.elephantasia.activities.manageElephant.fragments.RegistrationFragment;
+import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.adapter.ViewPagerAdapter;
+import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Document;
@@ -46,19 +50,37 @@ import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 import static fr.elephantasia.activities.contact.SearchContactActivity.EXTRA_SEARCH_CONTACT;
-import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
 
 public class ManageElephantActivity extends AppCompatActivity {
 
+  /**
+   * Classifier
+   */
+
   // Result code
-  public static final int RESULT_DRAFT = 2;
-  public static final int RESULT_VALIDATE = 3;
+  static public final int RESULT_DRAFT = 2;
+  static public final int RESULT_VALIDATE = 3;
 
   // Request codes
-  public static final int REQUEST_CONTACT_SELECTED = 4;
-  public static final int REQUEST_FATHER_SELECTED = 5;
-  public static final int REQUEST_MOTHER_SELECTED = 6;
-  public static final int REQUEST_CHILD_SELECTED = 7;
+  static private final int REQUEST_CONTACT_SELECTED = 4;
+  static private final int REQUEST_FATHER_SELECTED = 5;
+  static private final int REQUEST_MOTHER_SELECTED = 6;
+  static private final int REQUEST_CHILD_SELECTED = 7;
+
+  // Extra
+  static private final String EXTRA_ELEPHANT_ID = "extra.eid";
+
+  static public void SetExtraElephantId(Intent intent, Integer id) {
+    intent.putExtra(EXTRA_ELEPHANT_ID, id);
+  }
+
+  static public Integer GetExtraElephantId(Intent intent) {
+    return intent.getIntExtra(EXTRA_ELEPHANT_ID, -1);
+  }
+
+  /**
+   * Instance
+   */
 
   // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
@@ -130,7 +152,7 @@ public class ManageElephantActivity extends AppCompatActivity {
     tabLayout.setupWithViewPager(viewPager);
     editing = false;
 
-    int id = getIntent().getIntExtra(EXTRA_ELEPHANT_ID, -1);
+    Integer id = GetExtraElephantId(getIntent());
     if (id != -1) {
       editing = true;
       elephant = databaseController.getElephantById(id);
@@ -197,13 +219,13 @@ public class ManageElephantActivity extends AppCompatActivity {
           contactFragment.addContactTolist(contact);
           break;
         case REQUEST_MOTHER_SELECTED:
-          setMother(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
+          setMother(SearchElephantActivity.GetExtraElephantId(data));
           break;
         case REQUEST_FATHER_SELECTED:
-          setFather(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
+          setFather(SearchElephantActivity.GetExtraElephantId(data));
           break;
         case REQUEST_CHILD_SELECTED:
-          addChild(data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
+          addChild(SearchElephantActivity.GetExtraElephantId(data));
           break;
       }
     }
@@ -297,6 +319,7 @@ public class ManageElephantActivity extends AppCompatActivity {
   }
 
   private void setMother(Integer id) {
+    Log.w("manage", "mother id : " + id);
     Elephant mother = databaseController.getElephantById(id);
     if (mother != null) {
       parentageFragment.setMother(mother);
@@ -320,6 +343,29 @@ public class ManageElephantActivity extends AppCompatActivity {
   private void saveToDb() {
     databaseController.insertOrUpdate(elephant, documents);
     // TODO: add popup 'saving ...'
+  }
+
+  public void searchMother() {
+    Intent intent = new Intent(this, SearchElephantActivity.class);
+    SearchElephantActivity.SetExtraAction(intent, ElephantPreview.SELECT);
+    startActivityForResult(intent, REQUEST_MOTHER_SELECTED);
+  }
+
+  public void searchFather() {
+    Intent intent = new Intent(this, SearchElephantActivity.class);
+    SearchElephantActivity.SetExtraAction(intent, ElephantPreview.SELECT);
+    startActivityForResult(intent, REQUEST_FATHER_SELECTED);
+  }
+
+  public void searchChild() {
+    Intent intent = new Intent(this, SearchElephantActivity.class);
+    SearchElephantActivity.SetExtraAction(intent, ElephantPreview.SELECT);
+    startActivityForResult(intent, REQUEST_CHILD_SELECTED);
+  }
+
+  public void searchContact() {
+    Intent intent = new Intent(this, SearchContactActivity.class);
+    startActivityForResult(intent, REQUEST_CONTACT_SELECTED);
   }
 
 }

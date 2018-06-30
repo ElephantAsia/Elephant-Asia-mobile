@@ -14,13 +14,11 @@ import fr.elephantasia.database.model.Elephant;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
-import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
-
 /**
  * Created by seb on 15/10/2017.
  * https://github.com/realm/realm-android-adapters/blob/master/example/src/main/java/io/realm/examples/adapters/ui/recyclerview/MyRecyclerViewAdapter.java
  */
-
+// TODO: refactor
 public class RecentElephantAdapter extends RealmRecyclerViewAdapter<Elephant, RecentElephantAdapter.ViewHolder> {
 
   // ViewHolder inner class
@@ -38,8 +36,9 @@ public class RecentElephantAdapter extends RealmRecyclerViewAdapter<Elephant, Re
           Elephant elephant = getItem(getAdapterPosition());
 
           if (elephant != null) {
-            intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
-            elephantPreview.getContext().startActivity(intent);
+            // intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+            ShowElephantActivity.SetExtraElephantId(intent, elephant.id);
+            elephantPreview.getContext().startActivity(intent); // TODO: adapter shouldnt do that directly
           }
         }
       });
@@ -54,8 +53,7 @@ public class RecentElephantAdapter extends RealmRecyclerViewAdapter<Elephant, Re
   @Override
   public RecentElephantAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     ElephantPreview v = new ElephantPreviewSmall(parent.getContext());
-//    View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.elephant_preview_small, parent, false);
-
+    // View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.elephant_preview_small, parent, false);
     return new ViewHolder(v);
   }
 

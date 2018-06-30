@@ -33,6 +33,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.home.adapters.HomeDrawerListAdapter;
+import fr.elephantasia.activities.home.fragments.HomeOverviewFragment;
+import fr.elephantasia.activities.home.fragments.HomeRecentFragment;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.database.DatabaseController;

@@ -1,6 +1,5 @@
 package fr.elephantasia.activities.manageElephant.fragments;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,15 +18,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
-import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.adapter.ChildrenListAdapter;
-import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ManageElephantChildrenFragmentBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 import static butterknife.ButterKnife.findById;
-import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.REQUEST_CHILD_SELECTED;
 
 public class ChildrenFragment extends Fragment {
 
@@ -71,10 +67,7 @@ public class ChildrenFragment extends Fragment {
 
     addChildButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        Intent intent = new Intent(getActivity(), SearchElephantActivity.class);
-        // intent.setAction(ElephantPreview.SELECT);
-        SearchElephantActivity.SetExtraAction(intent, ElephantPreview.SELECT);
-        getActivity().startActivityForResult(intent, REQUEST_CHILD_SELECTED);
+        ((ManageElephantActivity)getActivity()).searchChild();
       }
     });
 

@@ -1,7 +1,6 @@
 package fr.elephantasia.activities.manageElephant.fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,14 +17,12 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.contact.SearchContactActivity;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.adapter.ContactPreviewAdapter;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Elephant;
 
 import static butterknife.ButterKnife.findById;
-import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.REQUEST_CONTACT_SELECTED;
 
 public class ContactFragment extends Fragment {
 
@@ -58,8 +55,7 @@ public class ContactFragment extends Fragment {
     addButton.setHint(getString(R.string.add_contact));
     addButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        Intent intent = new Intent(getActivity(), SearchContactActivity.class);
-        getActivity().startActivityForResult(intent, REQUEST_CONTACT_SELECTED);
+        ((ManageElephantActivity)getActivity()).searchContact();
       }
     });
 

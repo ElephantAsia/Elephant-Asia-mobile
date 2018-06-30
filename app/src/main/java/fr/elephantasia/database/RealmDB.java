@@ -97,7 +97,7 @@ class RealmDB {
   }
 
   @NonNull
-  public RealmResults<Elephant> searchElephantsByState(DatabaseController.SearchMode searchMode) {
+  public List<Elephant> searchElephantsByState(DatabaseController.SearchMode searchMode) {
     Realm realm = Realm.getDefaultInstance();
     RealmQuery<Elephant> query = realm.where(Elephant.class);
 
@@ -111,11 +111,10 @@ class RealmDB {
         .isNull(Elephant.SYNC_STATE)
         .equalTo(Elephant.DRAFT, false);
     }
-    return query.findAll();
+    return realm.copyFromRealm(query.findAll());
   }
 
   @NonNull
-  // public RealmResults<Elephant> search(Elephant e) {
   public List<Elephant> search(Elephant e) {
     Realm realm = Realm.getDefaultInstance();
     RealmQuery<Elephant> query = realm.where(Elephant.class);
@@ -138,7 +137,6 @@ class RealmDB {
       }
     }
     return realm.copyFromRealm(query.findAll());
-    // return query.findAll();
   }
 
   @NonNull

@@ -51,10 +51,11 @@ import fr.elephantasia.utils.Preferences;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
 import static fr.elephantasia.database.model.Elephant.DB_STATE;
 import static fr.elephantasia.database.model.Elephant.SYNC_STATE;
 import static fr.elephantasia.database.model.Elephant.SyncState;
+
+// import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
 
 public class UploadActivity extends AppCompatActivity {
 
@@ -169,7 +170,8 @@ public class UploadActivity extends AppCompatActivity {
         @Override
         public void onConsultationButtonClick(Elephant elephant) {
           Intent intent = new Intent(UploadActivity.this, ShowElephantActivity.class);
-          intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+          // intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+          ShowElephantActivity.SetExtraElephantId(intent, elephant.id);
           startActivity(intent);
         }
       });

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -148,14 +149,14 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     fragment.setAdapter(adapter);
   }
 
-  ElephantsAdapter.ActionClickListener createElephantListener() {
+  private ElephantsAdapter.ActionClickListener createElephantListener() {
     return new ElephantsAdapter.ActionClickListener() {
       @Override
       public void onActionClick(Elephant elephant) {
         Intent resultIntent = getIntent();
 
         if (elephant != null) {
-          resultIntent.putExtra(SearchElephantActivity.EXTRA_ELEPHANT_ID, elephant.id);
+          SearchElephantActivity.SetExtraElephantId(resultIntent, elephant.id);
           setResult(RESULT_OK, resultIntent);
           finish();
         }
@@ -163,14 +164,15 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     };
   }
 
-  ElephantsAdapter.ActionClickListener createEditListener() {
+  private ElephantsAdapter.ActionClickListener createEditListener() {
     return new ElephantsAdapter.ActionClickListener() {
       @Override
       public void onActionClick(Elephant elephant) {
         Intent intent = new Intent(SearchElephantResultActivity.this, ManageElephantActivity.class);
-
+        Log.w("searchresult", "elephant: " + elephant);
+        Log.w("searchresult", "id: " + elephant.id);
         if (elephant != null) {
-          intent.putExtra(SearchElephantActivity.EXTRA_ELEPHANT_ID, elephant.id);
+          ManageElephantActivity.SetExtraElephantId(intent, elephant.id);
           startActivity(intent);
         }
       }

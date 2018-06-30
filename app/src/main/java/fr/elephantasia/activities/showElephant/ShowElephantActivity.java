@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -47,17 +48,42 @@ import fr.elephantasia.databinding.ShowElephantActivityBinding;
 
 import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.RESULT_DRAFT;
 import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.RESULT_VALIDATE;
-import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
 
 /**
- ** STEPH NOTE : That would be nice if we make a class pour the fab menu. I will do that if we use fab menu again in an other part of the app.
+ ** STEPH NOTE : That would be nice if we make a class pour the fab menu.
+ * I will do that if we use fab menu again in an other part of the app.
  **/
 public class ShowElephantActivity extends AppCompatActivity implements DocumentAdapter.Listener {
 
-  public static final String EXTRA_EDIT_ELEPHANT_ID = "EXTRA_EDIT_ELEPHANT_ID";
+  private void loadExtraElephant() {
+    Integer id = GetExtraElephantId(getIntent());
+    if (id != -1) {
+      elephant = databaseController.getElephantById(id);
+    }
+    Log.w("ShowElephantActivity", "Incorrect ID");
+  }
 
-  private static final int REQUEST_ELEPHANT_EDITED = 0;
-	private static final int REQUEST_ADD_DOCUMENT = 1;
+  /**
+   * Classifier
+   */
+
+  static private final String EXTRA_ELEPHANT_ID = "EXTRA_EDIT_ELEPHANT_ID";
+
+  static private final int REQUEST_ELEPHANT_EDITED = 0;
+  static private final int REQUEST_ADD_DOCUMENT = 1;
+
+  static public void SetExtraElephantId(Intent intent, Integer id) {
+    intent.putExtra(EXTRA_ELEPHANT_ID, id);
+  }
+
+  @NonNull
+  static public Integer GetExtraElephantId(Intent intent) {
+    return intent.getIntExtra(EXTRA_ELEPHANT_ID, -1);
+  }
+
+  /**
+   * Instance
+   */
 
   // View Binding
   @BindView(R.id.toolbar) Toolbar toolbar;
@@ -99,7 +125,8 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 		databaseController = ((BaseApplication)getApplication()).getDatabaseController();
 
     // realm = Realm.getDefaultInstance();
-    elephant = getExtraElephant();
+    // elephant = getExtraElephant();
+    loadExtraElephant();
 		databaseController.updateLastVisitedDateElephant(elephant.id);
     // RealmDB.updateLastVisitedDate(elephant.id);
 
@@ -292,16 +319,6 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
     return elephant;
   }
 
-  private Elephant getExtraElephant() {
-    Intent intent = getIntent();
-    Integer id = intent.getIntExtra(EXTRA_ELEPHANT_ID, -1);
-    if (id != -1) {
-    	return databaseController.getElephantById(id);
-      // return realm.where(Elephant.class).equalTo(ID, id).findFirst();
-    }
-    throw new RuntimeException("ShowElephantActivity:getExtraElephant: incorrect ID");
-  }
-
   private void setupViewPager(ViewPager viewPager) {
   	showDocumentFragment = new ShowDocumentFragment();
 
@@ -358,7 +375,8 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 	@OnClick(R.id.minifab_edit)
 	public void onEditClick() {
 		Intent intent = new Intent(this, ManageElephantActivity.class);
-		intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+		// intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id); // !
+		ManageElephantActivity.SetExtraElephantId(intent, elephant.id);
 		startActivityForResult(intent, REQUEST_ELEPHANT_EDITED);
 	}
 

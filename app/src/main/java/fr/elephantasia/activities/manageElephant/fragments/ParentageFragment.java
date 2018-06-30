@@ -1,6 +1,5 @@
 package fr.elephantasia.activities.manageElephant.fragments;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,14 +14,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
-import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
 import fr.elephantasia.customView.ElephantPreview;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ManageElephantParentageFragmentBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
-
-import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.REQUEST_FATHER_SELECTED;
-import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.REQUEST_MOTHER_SELECTED;
 
 public class ParentageFragment extends Fragment {
 
@@ -38,18 +33,20 @@ public class ParentageFragment extends Fragment {
   // Listener binding
   @OnClick(R.id.mother_add_button)
   public void searchMother() {
-    Intent intent = new Intent(getActivity(), SearchElephantActivity.class);
-    // intent.setAction(ElephantPreview.SELECT);
-    SearchElephantActivity.SetExtraAction(intent, ElephantPreview.SELECT);
-    getActivity().startActivityForResult(intent, REQUEST_MOTHER_SELECTED);
+//    Intent intent = new Intent(getActivity(), SearchElephantActivity.class);
+////    // intent.setAction(ElephantPreview.SELECT);
+////    SearchElephantActivity.SetExtraAction(intent, ElephantPreview.SELECT);
+////    getActivity().startActivityForResult(intent, REQUEST_MOTHER_SELECTED);
+    ((ManageElephantActivity)getActivity()).searchMother();
   }
 
   @OnClick(R.id.father_add_button)
   public void searchFather() {
-    Intent intent = new Intent(getActivity(), SearchElephantActivity.class);
-    // intent.setAction(ElephantPreview.SELECT);
-    SearchElephantActivity.SetExtraAction(intent, ElephantPreview.SELECT);
-    getActivity().startActivityForResult(intent, REQUEST_FATHER_SELECTED);
+//    Intent intent = new Intent(getActivity(), SearchElephantActivity.class);
+//    // intent.setAction(ElephantPreview.SELECT);
+//    SearchElephantActivity.SetExtraAction(intent, ElephantPreview.SELECT);
+//    getActivity().startActivityForResult(intent, REQUEST_FATHER_SELECTED);
+    ((ManageElephantActivity)getActivity()).searchFather();
   }
 
   @Override
