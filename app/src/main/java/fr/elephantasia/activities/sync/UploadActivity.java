@@ -2,6 +2,7 @@ package fr.elephantasia.activities.sync;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -55,6 +56,8 @@ public class UploadActivity extends AppCompatActivity {
   // Attributes
   private SelectElephantsAdapter adapter;
   private List<Elephant> editedElephants;
+
+  private SyncToServerAsyncRequest request;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +116,9 @@ public class UploadActivity extends AppCompatActivity {
 
   @Override
   public void onDestroy() {
+    if (isUploading()) {
+      request.cancel(true);
+     }
     super.onDestroy();
   }
 
@@ -132,14 +138,16 @@ public class UploadActivity extends AppCompatActivity {
   }
 
   void startUploadSync() {
-    if (adapter.countElephantsSelected() > 0) {
-      displayUploadConfirmation();
-    } else {
-      new MaterialDialog.Builder(this)
-        .title("Error")
-        .content("No elephant selected.")
-        .neutralText("OK")
-        .show();
+    if (!isUploading()) {
+      if (adapter.countElephantsSelected() > 0) {
+        displayUploadConfirmation();
+      } else {
+        new MaterialDialog.Builder(this)
+          .title("Error")
+          .content("No elephant selected.")
+          .neutralText("OK")
+          .show();
+      }
     }
   }
 
@@ -176,6 +184,15 @@ public class UploadActivity extends AppCompatActivity {
     dialog = dialog.getBuilder()
       .progress(false, 100, true)
       .content("Serializing data")
+      .dismissListener(new DialogInterface.OnDismissListener() {
+        @Override
+        public void onDismiss(DialogInterface dialog) {
+          if (isUploading()) {
+            request.cancel(true);
+            request = null;
+          }
+        }
+      })
       .show();
 
     List<Elephant> selectedElephants = new ArrayList<>();
@@ -187,7 +204,7 @@ public class UploadActivity extends AppCompatActivity {
       }
     }
 
-    new SyncToServerAsyncRequest(selectedElephants, new SyncToServerAsyncRequest.Listener() {
+    request = new SyncToServerAsyncRequest(selectedElephants, new SyncToServerAsyncRequest.Listener() {
       @Override
       public String getAuthToken() throws Exception {
         AccountManager accountManager = AccountManager.get(UploadActivity.this);
@@ -227,7 +244,12 @@ public class UploadActivity extends AppCompatActivity {
           Log.w(getClass().getName(), "error response: " + jsonObject.toString());
         }
       }
-    }).execute();
+    });
+    request.execute();
+  }
+
+  private boolean isUploading() {
+    return request != null && request.isRunning();
   }
 
 }

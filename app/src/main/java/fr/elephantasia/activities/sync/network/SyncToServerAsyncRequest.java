@@ -50,7 +50,8 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
   @Override
   protected Boolean doInBackground(@Nullable Void... params) {
     serialize();
-    upload();
+    if (!upload())
+      return false;
     updateLocalDb();
     return true;
   }
@@ -72,9 +73,10 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
     }
   }
 
-  private void upload() {
+  private boolean upload() {
     this.listener.onUploading();
     POSTJSON(URL);
+    return getResponseCode() != null && getResponseCode() == 200;
   }
 
   private void updateLocalDb() {
