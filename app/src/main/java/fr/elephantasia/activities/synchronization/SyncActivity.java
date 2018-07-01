@@ -1,16 +1,15 @@
-package fr.elephantasia.activities.sync;
+package fr.elephantasia.activities.synchronization;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,32 +19,22 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.synchronization.network.SyncFromServerAsyncRequest;
 import fr.elephantasia.auth.Constants;
 import fr.elephantasia.database.DatabaseController;
-import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.DateHelpers;
 import fr.elephantasia.utils.DeviceHelpers;
 import fr.elephantasia.utils.Preferences;
@@ -84,13 +73,11 @@ public class SyncActivity extends AppCompatActivity {
     }
 
     dialog = new MaterialDialog.Builder(SyncActivity.this).title("Progress dialog").build();
-    refresh();
   }
 
   @Override
   public void onResume() {
     super.onResume();
-
     refresh();
   }
 
@@ -114,7 +101,6 @@ public class SyncActivity extends AppCompatActivity {
       .color(Color.WHITE)
       .sizeDp(22)
     );
-
     return true;
   }
 
@@ -169,90 +155,50 @@ public class SyncActivity extends AppCompatActivity {
   }
 
   private void syncFromServer() {
-    dialog = dialog.getBuilder().progress(true, 0).content(R.string.downloading_data).show();
-
-    RequestQueue queue = Volley.newRequestQueue(SyncActivity.this);
     String lastSync = Preferences.GetLastDownloadSync(this);
-    String url = "https://elephant-asia.herokuapp.com/api/sync/download/" + lastSync; // TODO: use api URL in constants
-    JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
-      createOnSuccessListener(),
-      createOnErrorListener()) {
-        @Override
-        public Map<String, String> getHeaders() {
-          AccountManager accountManager = AccountManager.get(SyncActivity.this);
-          Account[] accounts = accountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
-          Map<String, String> headers = new HashMap<>();
+    dialog = dialog.getBuilder()
+      .progress(true, 0)
+      .content(R.string.downloading_data)
+      .show();
 
-          try {
-              String authToken = accountManager.blockingGetAuthToken(accounts[0], Constants.AUTHTOKEN_TYPE, true);
-              headers.put("Api-Key", authToken);
-          } catch (Exception e) {
-              e.printStackTrace();
-          }
-          return headers;
-        }
-    };
-
-    queue.add(req);
+    new SyncFromServerAsyncRequest(lastSync, new SyncFromServerAsyncRequest.Listener() {
+      @Override
+      public String getAuthToken() throws Exception {
+        AccountManager accountManager = AccountManager.get(SyncActivity.this);
+        Account account = accountManager.getAccountsByType(Constants.ACCOUNT_TYPE)[0];
+        return accountManager.blockingGetAuthToken(account, Constants.AUTHTOKEN_TYPE, true);
+      }
+      @Override
+      public void onDownloading() {
+        dialog.setContent("Downloading elephants ...");
+      }
+      @Override
+      public void onSaving() {
+        dialog.setContent("Saving to local database ...");
+      }
+      @Override
+      public void onProgress(int p) {
+        dialog.setProgress(p);
+      }
+      @Override
+      public void onSuccess(JSONObject jsonObject) {
+        dialog.dismiss();
+        String date = DateHelpers.GetCurrentStringDate();
+        Preferences.SetLastDownloadSync(SyncActivity.this, date);
+        Toast.makeText(getApplicationContext(), "Syncing done succesfully", Toast.LENGTH_SHORT).show();
+        refresh();
+      }
+      @Override
+      public void onError(Integer code, @Nullable JSONObject jsonObject) {
+        dialog.dismiss();
+        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+      }
+    }).execute();
   }
 
   public void startUploadActivity() {
     final Intent intent = new Intent(this, UploadActivity.class);
     startActivity(intent);
-  }
-
-  private Response.Listener<JSONObject> createOnSuccessListener() {
-    return new Response.Listener<JSONObject>() {
-      @Override
-      public void onResponse(JSONObject response) {
-        SyncFromServerTask task = new SyncFromServerTask(response, new SyncFromServerTask.Listener() {
-          @Override
-          public void onPreExecute() {
-            dialog.dismiss();
-            dialog = dialog.getBuilder().progress(false, 100, true).content(R.string.updating_local).show();
-          }
-
-          @Override
-          public void onProgress(int p) {
-            dialog.setProgress(p);
-          }
-
-          @Override
-          public void onFinish() {
-            dialog.dismiss();
-            // enableMenuItems();
-          }
-
-          @Override
-          public void onSuccess() {
-            String date = DateHelpers.GetCurrentStringDate();
-            Preferences.SetLastDownloadSync(SyncActivity.this, date);
-            Toast.makeText(getApplicationContext(), "Syncing done succesfully", Toast.LENGTH_SHORT).show();
-            refresh();
-          }
-
-          @Override
-          public void onFailure() {
-            Toast.makeText(getApplicationContext(), "Error during sync, please try again", Toast.LENGTH_SHORT).show();
-            refresh();
-          }
-        });
-        task.execute();
-
-        Log.w("onResponse", response.toString());
-      }
-    };
-  }
-
-  private Response.ErrorListener createOnErrorListener() {
-    return new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError error) {
-        dialog.dismiss();
-        // enableMenuItems();
-        Toast.makeText(getApplicationContext(), "Error during the request try again", Toast.LENGTH_SHORT).show();
-      }
-    };
   }
 
   private boolean valid() {
@@ -364,99 +310,6 @@ public class SyncActivity extends AppCompatActivity {
       String lastSync = DateHelpers.FriendlyUserStringDate(Preferences.GetLastUploadSync(this));
       dateLastUp.setText(getResources().getString(R.string.date_label, lastSync));
       dateLastUpStatus.setVisibility(View.VISIBLE);
-    }
-  }
-
-  /* private void disableMenuItems() {
-    if (download != null && upload != null) {
-      download.setEnabled(false);
-      upload.setEnabled(false);
-    }
-  }
-
-  private void enableMenuItems() {
-    if (download != null && upload != null) {
-      download.setEnabled(true);
-      upload.setEnabled(true);
-    }
-  } */
-
-  static private class SyncFromServerTask extends AsyncTask<URL, Integer, Boolean> {
-
-    private JSONObject syncFromServerResponse;
-    private Listener listener;
-
-    SyncFromServerTask(JSONObject syncFromServerResponse, Listener listener) {
-      this.syncFromServerResponse = syncFromServerResponse;
-      this.listener = listener;
-    }
-
-    protected Boolean doInBackground(URL... urls) {
-      DatabaseController databaseController = new DatabaseController();
-      databaseController.beginTransaction();
-
-      try {
-        JSONArray elephants = syncFromServerResponse.getJSONArray("elephants");
-        for (int i = 0 ; i < elephants.length() ; i++) {
-          publishProgress(i);
-          Thread.sleep(25); // demo
-
-          Elephant newE = new Elephant(elephants.getJSONObject(i));
-          Elephant e = databaseController.getElephantByCuid(newE.cuid);
-          if (e == null) {
-            // new elephant in our local db
-            newE.syncState = Elephant.SyncState.Downloaded.name();
-            databaseController.insertOrUpdate(newE);
-          } else { // if (e.dbState == null && e.syncState == null) {
-            // existing elephant in our local db
-
-            /* newE.id = e.id;
-            newE.lastVisited = e.lastVisited;
-            databaseController.insertOrUpdate(newE); */
-            e.syncState = Elephant.SyncState.Downloaded.name();
-            e.dbState = null;
-            e.copy(newE);
-            databaseController.insertOrUpdate(e);
-          }
-        }
-      } catch (Exception e) {
-        e.printStackTrace();
-        databaseController.cancelTransaction();
-        return false;
-      }
-      databaseController.commitTransaction();
-      return true;
-    }
-
-    @Override
-    protected void onPreExecute() {
-      super.onPreExecute();
-      listener.onPreExecute();
-    }
-
-    protected void onProgressUpdate(Integer... progress) {
-      try {
-        JSONArray elephants = syncFromServerResponse.getJSONArray("elephants");
-        int i = progress[0] > 0 ? (int) (((double) progress[0] / (double) elephants.length()) * 100) : 0;
-        listener.onProgress(i);
-      } catch (Exception e) {}
-    }
-
-    protected void onPostExecute(Boolean result) {
-      listener.onFinish();
-      if (result) {
-        listener.onSuccess();
-      } else {
-        listener.onFailure();
-      }
-    }
-
-    interface Listener {
-      void onPreExecute();
-      void onProgress(int p);
-      void onFinish();
-      void onSuccess();
-      void onFailure();
     }
   }
 

@@ -1,6 +1,5 @@
 package fr.elephantasia.network;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 
 import org.json.JSONObject;
@@ -13,7 +12,7 @@ import java.util.HashMap;
 
 public class GetAuthTokenAsyncRequest extends RequestAsyncTask<String> {
 
-  private static final String URL = "/login";
+  static private final String URL = "/login";
 
   private String username;
   private String password;

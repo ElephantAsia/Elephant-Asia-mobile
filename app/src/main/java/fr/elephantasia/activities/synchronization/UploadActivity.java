@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.sync;
+package fr.elephantasia.activities.synchronization;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -43,7 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.showElephant.ShowElephantActivity;
-import fr.elephantasia.activities.sync.adapters.UploadRecyclerViewAdapter;
+import fr.elephantasia.activities.synchronization.adapters.UploadRecyclerViewAdapter;
 import fr.elephantasia.auth.Constants;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.utils.DateHelpers;
@@ -170,7 +170,6 @@ public class UploadActivity extends AppCompatActivity {
         @Override
         public void onConsultationButtonClick(Elephant elephant) {
           Intent intent = new Intent(UploadActivity.this, ShowElephantActivity.class);
-          // intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
           ShowElephantActivity.SetExtraElephantId(intent, elephant.id);
           startActivity(intent);
         }
@@ -186,21 +185,21 @@ public class UploadActivity extends AppCompatActivity {
   }
 
   void syncToServer() {
-    dialog = dialog.getBuilder().progress(false, 100, true).content("Serializing data").show();
+    dialog = dialog.getBuilder()
+      .progress(false, 100, true)
+      .content("Serializing data")
+      .show();
 
     SyncToServerTask task = new SyncToServerTask(
       realm.copyFromRealm(editedElephantsLive),
       mAdapter.getSelectedElephants(),
       new SyncToServerTask.Listener() {
         @Override
-        public void onPreExecute() {
-        }
-
+        public void onPreExecute() {}
         @Override
         public void onProgressUpdate(int p) {
           dialog.setProgress(p);
         }
-
         @Override
         public void onFinish(boolean result, final List<Elephant> editedElephants, JSONArray serialized) {
           if (result) {

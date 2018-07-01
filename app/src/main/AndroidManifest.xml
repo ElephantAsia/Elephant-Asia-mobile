@@ -53,8 +53,8 @@
     <activity android:name=".activities.showElephant.ShowElephantActivity"/>
     <activity android:name=".activities.showDocument.ShowDocumentActivity"/>
     <activity android:name=".activities.addDocument.AddDocumentActivity"/>
-    <activity android:name=".activities.sync.SyncActivity"/>
-    <activity android:name=".activities.sync.UploadActivity"/>
+    <activity android:name=".activities.synchronization.SyncActivity"/>
+    <activity android:name=".activities.synchronization.UploadActivity"/>
 
 
     <!-- android:windowSoftInputMode="stateVisible"/> -->

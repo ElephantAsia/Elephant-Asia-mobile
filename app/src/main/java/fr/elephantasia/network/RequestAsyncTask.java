@@ -1,9 +1,7 @@
 package fr.elephantasia.network;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.json.JSONObject;
@@ -32,9 +30,23 @@ public abstract class RequestAsyncTask<ResultType> extends AsyncTask<Void, Integ
 		running = true;
 	}
 
-	void POSTUrlEncoded(String url, Map<String, String> params) {
+	protected void POSTUrlEncoded(String url, Map<String, String> params) {
 		request.POSTUrlEncoded(url, params);
 	}
+
+	protected void GET(String url) {
+		request.GET(url, getHeader(), getParams());
+	}
+
+	@Nullable
+	protected Map<String, String> getParams() {
+    return null;
+  }
+
+  @Nullable
+  protected Map<String, String> getHeader() {
+    return null;
+  }
 
 	@Override
 	@Nullable

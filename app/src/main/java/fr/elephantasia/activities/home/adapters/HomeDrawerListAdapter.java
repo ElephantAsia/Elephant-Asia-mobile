@@ -22,7 +22,7 @@ import fr.elephantasia.R;
 import fr.elephantasia.activities.contact.AddContactActivity;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
-import fr.elephantasia.activities.sync.SyncActivity;
+import fr.elephantasia.activities.synchronization.SyncActivity;
 import fr.elephantasia.auth.AuthActivity;
 import fr.elephantasia.auth.Constants;
 
