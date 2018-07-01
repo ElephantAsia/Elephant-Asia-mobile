@@ -14,9 +14,6 @@ import io.realm.RealmResults;
 /**
  * Controller to manipulate the local database.
  * Create an indirection between the application and the database library used.
- *
- * Questions:
- * What about realm.close() ?
  **/
 public class DatabaseController {
 
@@ -44,6 +41,8 @@ public class DatabaseController {
   public void commitTransaction() {
     realmDB.commitTransaction();
   }
+
+  public void close() { realmDB.close(); }
 
   /* Modifiers */
 
@@ -105,6 +104,10 @@ public class DatabaseController {
 
   public List<Elephant> getLastVisitedElephant() {
     return realmDB.getLastVisitedElephant();
+  }
+
+  public List<Elephant> getElephantReadyToUpload() {
+    return realmDB.getElephantReadyToUpload();
   }
 
   public Long getElephantsCount() {

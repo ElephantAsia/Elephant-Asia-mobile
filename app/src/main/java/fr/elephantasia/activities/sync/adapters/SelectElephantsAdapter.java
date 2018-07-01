@@ -1,49 +1,39 @@
-package fr.elephantasia.activities.synchronization.adapters;
+package fr.elephantasia.activities.sync.adapters;
 
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.view.ElephantPreviewV2;
-import io.realm.OrderedRealmCollection;
-import io.realm.RealmRecyclerViewAdapter;
 
-public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant, UploadRecyclerViewAdapter.ViewHolder> {
+public class SelectElephantsAdapter extends RecyclerView.Adapter<SelectElephantsAdapter.ViewHolder> {
 
-  // Attributes
   private SparseBooleanArray itemStateArray = new SparseBooleanArray();
+  private List<Elephant> data;
   private Listener listener;
 
-  // View holder
-  class ViewHolder extends RecyclerView.ViewHolder {
-    ElephantPreviewV2 elephantPreview;
-
-    ViewHolder(View v) {
-      super(v);
-      elephantPreview = (ElephantPreviewV2) v;
-    }
+  public SelectElephantsAdapter(Listener listener) {
+    this.data = data;
+    this.listener = listener;
   }
 
-  public UploadRecyclerViewAdapter(OrderedRealmCollection<Elephant> items, @NonNull  Listener listener) {
-    super(items, true);
-    this.listener = listener;
-//    for (int i = 0 ; i < items.size() ; ++i) {
-//      itemStateArray.put(i, false);
-//    }
+  public void setElephants(List<Elephant> data) {
+    this.data = data;
+    notifyDataSetChanged();
   }
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View view = new ElephantPreviewV2(parent.getContext());
     view.setLayoutParams(new RecyclerView.LayoutParams(
-        RecyclerView.LayoutParams.MATCH_PARENT,
-        RecyclerView.LayoutParams.MATCH_PARENT
+      RecyclerView.LayoutParams.MATCH_PARENT,
+      RecyclerView.LayoutParams.MATCH_PARENT
     ));
-    return new ViewHolder(view);
+    return new SelectElephantsAdapter.ViewHolder(view);
   }
 
   @Override
@@ -54,21 +44,26 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
     holder.elephantPreview.setListener(new ElephantPreviewV2.Listener() {
       @Override
       public void onSelectButtonClick(Elephant elephant) {
-        Log.w("select", "elephant " + elephant.name);
         boolean selected = !itemStateArray.get(holder.getAdapterPosition());
         itemStateArray.put(holder.getAdapterPosition(), selected);
-        Log.w("select", "position " + holder.getAdapterPosition());
-        Log.w("select", "selected " + selected);
         holder.elephantPreview.refreshSelectButtonLogo(selected);
         listener.onSelectButtonClick(selected, elephant);
       }
-
       @Override
       public void onConsultationButtonClick(Elephant elephant) {
         listener.onConsultationButtonClick(elephant);
       }
     });
     holder.elephantPreview.refreshView(selected);
+  }
+
+  @Override
+  public int getItemCount() {
+    return (data == null) ? 0 : data.size();
+  }
+
+  private Elephant getItem(int index) {
+    return data.get(index);
   }
 
   public SparseBooleanArray getSelectedElephants() {
@@ -89,8 +84,18 @@ public class UploadRecyclerViewAdapter extends RealmRecyclerViewAdapter<Elephant
     notifyDataSetChanged();
   }
 
+  class ViewHolder extends RecyclerView.ViewHolder {
+    ElephantPreviewV2 elephantPreview;
+
+    ViewHolder(View v) {
+      super(v);
+      elephantPreview = (ElephantPreviewV2) v;
+    }
+  }
+
   public interface Listener {
     void onSelectButtonClick(boolean selected, Elephant elephant);
     void onConsultationButtonClick(Elephant elephant);
   }
+
 }

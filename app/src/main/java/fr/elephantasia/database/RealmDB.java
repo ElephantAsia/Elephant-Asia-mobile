@@ -22,7 +22,6 @@ import io.realm.Sort;
 import static fr.elephantasia.database.model.Elephant.ID;
 
 // https://realm.io/docs/java/latest/
-// https://stackoverflow.com/questions/40500944/calling-realm-from-asynctask
 /**
  * Realm Facade
  */
@@ -52,6 +51,13 @@ class RealmDB {
     realm.commitTransaction();
     realm.close();
     inTransaction = false;
+  }
+
+  void close() {
+    if (realm != null) {
+      realm.close();
+      realm = null;
+    }
   }
 
   void insertOrUpdate(Elephant e) {
@@ -111,7 +117,9 @@ class RealmDB {
         .isNull(Elephant.SYNC_STATE)
         .equalTo(Elephant.DRAFT, false);
     }
-    return realm.copyFromRealm(query.findAll());
+    List<Elephant> results = realm.copyFromRealm(query.findAll());
+    realm.close();
+    return results;
   }
 
   @NonNull
@@ -136,11 +144,13 @@ class RealmDB {
         }
       }
     }
-    return realm.copyFromRealm(query.findAll());
+    List<Elephant> results = realm.copyFromRealm(query.findAll());
+    realm.close();
+    return results;
   }
 
   @NonNull
-  public RealmResults<Contact> search(Contact c) {
+  public RealmResults<Contact> search(Contact c) { // TODO: return List
     Realm realm = Realm.getDefaultInstance();
     RealmQuery<Contact> query = realm.where(Contact.class);
 
@@ -167,7 +177,9 @@ class RealmDB {
       .findFirst();
 
     if (elephant != null) {
-      return realm.copyFromRealm(elephant);
+      elephant = realm.copyFromRealm(elephant);
+      realm.close();
+      return elephant;
     }
     return null;
   }
@@ -180,7 +192,9 @@ class RealmDB {
       .findFirst();
 
     if (elephant != null) {
-      return realm.copyFromRealm(elephant);
+      elephant = realm.copyFromRealm(elephant);
+      realm.close();
+      return elephant;
     }
     return null;
   }
@@ -193,46 +207,72 @@ class RealmDB {
       .findAll();
 
     if (documents != null) {
-      return realm.copyFromRealm(documents);
+      documents = realm.copyFromRealm(documents);
+      realm.close();
+      return documents;
     }
     return null;
   }
 
   public List<Elephant> getLastVisitedElephant() {
     Realm realm = Realm.getDefaultInstance();
-    RealmResults<Elephant> results = realm.where(Elephant.class)
+    List<Elephant> results = realm.copyFromRealm(
+      realm.where(Elephant.class)
       .greaterThan(Elephant.LAST_VISITED, DateHelpers.getLastWeek())
       .sort(Elephant.LAST_VISITED, Sort.DESCENDING)
-      .findAll();
-    return realm.copyFromRealm(results);
+      .findAll()
+    );
+    realm.close();
+    return results;
+  }
+
+  public List<Elephant> getElephantReadyToUpload() {
+    Realm realm = Realm.getDefaultInstance();
+    List<Elephant> elephants = realm.copyFromRealm(
+      realm.where(Elephant.class)
+      .isNotNull(Elephant.DB_STATE)
+      .isNull(Elephant.SYNC_STATE)
+      .equalTo(Elephant.DRAFT, false)
+      .findAll()
+    );
+    realm.close();
+    return elephants;
   }
 
   public Long getElephantsCount() {
     Realm realm = Realm.getDefaultInstance();
-    return realm.where(Elephant.class).count();
+    Long count = realm.where(Elephant.class).count();
+    realm.close();
+    return count;
   }
 
   public Long getElephantsSyncStatePendingCount() {
     Realm realm = Realm.getDefaultInstance();
-    return realm.where(Elephant.class)
+    Long count = realm.where(Elephant.class)
       .equalTo(Elephant.SYNC_STATE, Elephant.SyncState.Pending.name())
       .count();
+    realm.close();
+    return count;
   }
 
   public Long getElephantsReadyToSyncCount() {
     Realm realm = Realm.getDefaultInstance();
-    return realm.where(Elephant.class)
+    Long count = realm.where(Elephant.class)
       .isNotNull(Elephant.DB_STATE)
       .isNull(Elephant.SYNC_STATE)
       .equalTo(Elephant.DRAFT, false)
       .count();
+    realm.close();
+    return count;
   }
 
   public Long getElephantsDraftCount() {
     Realm realm = Realm.getDefaultInstance();
-    return realm.where(Elephant.class)
+    Long count = realm.where(Elephant.class)
       .equalTo(Elephant.DRAFT, true)
       .count();
+    realm.close();
+    return count;
   }
 
 	@Deprecated // TODO: rework that with documents

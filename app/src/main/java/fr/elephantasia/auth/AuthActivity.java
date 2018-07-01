@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 import fr.elephantasia.R;
 import fr.elephantasia.activities.home.HomeActivity;
-import fr.elephantasia.network.GetAuthTokenAsyncRequest;
+import fr.elephantasia.auth.network.GetAuthTokenAsyncRequest;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 /**

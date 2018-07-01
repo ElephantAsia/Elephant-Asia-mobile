@@ -1,10 +1,12 @@
-package fr.elephantasia.network;
+package fr.elephantasia.auth.network;
 
 import android.support.annotation.Nullable;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
+
+import fr.elephantasia.network.RequestAsyncTask;
 
 /**
  * Created by Stephane on 09/01/2018.
@@ -39,7 +41,7 @@ public class GetAuthTokenAsyncRequest extends RequestAsyncTask<String> {
   protected void onPostExecute(final String result) {
     super.onPostExecute(result);
     if (getResponseCode() != null && getResponseCode() == 200) {
-      listener.onSuccess(getJson());
+      listener.onSuccess(getJsonObject());
     } else {
       listener.onError(getResponseCode(), null);
     }

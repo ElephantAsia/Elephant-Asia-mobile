@@ -59,8 +59,9 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
     Integer id = GetExtraElephantId(getIntent());
     if (id != -1) {
       elephant = databaseController.getElephantById(id);
-    }
-    Log.w("ShowElephantActivity", "Incorrect ID");
+    } else {
+			Log.w("ShowElephantActivity", "Incorrect ID");
+		}
   }
 
   /**
@@ -114,7 +115,6 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 
   // Attr
   private Elephant elephant;
-  // private Realm realm;
 	private ViewPagerAdapter adapter;
 
   @Override
@@ -124,11 +124,8 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 
 		databaseController = ((BaseApplication)getApplication()).getDatabaseController();
 
-    // realm = Realm.getDefaultInstance();
-    // elephant = getExtraElephant();
     loadExtraElephant();
 		databaseController.updateLastVisitedDateElephant(elephant.id);
-    // RealmDB.updateLastVisitedDate(elephant.id);
 
     binding.setE(elephant);
     ButterKnife.bind(this);
@@ -224,12 +221,6 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 			.color(Color.WHITE)
 			.sizeDp(16)
 		);
-  }
-
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    // realm.close();
   }
 
   @Override
@@ -388,12 +379,6 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 			.onPositive(new MaterialDialog.SingleButtonCallback() {
 				@Override
 				public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//					realm.executeTransaction(new Realm.Transaction() {
-//						@Override
-//						public void execute(Realm realm) {
-//							elephant.deleteFromRealm();
-//						}
-//					});
           databaseController.delete(elephant);
 					finish();
 				}

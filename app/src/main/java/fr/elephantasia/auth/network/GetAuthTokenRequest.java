@@ -1,10 +1,12 @@
-package fr.elephantasia.network;
+package fr.elephantasia.auth.network;
 
 import android.support.annotation.Nullable;
 
 import org.json.JSONException;
 
 import java.util.HashMap;
+
+import fr.elephantasia.network.RequestSyncTask;
 
 /**
  * Created by Stephane on 05/01/2018.
@@ -33,7 +35,7 @@ public class GetAuthTokenRequest extends RequestSyncTask<String> {
     POSTUrlEncoded(URL, requestParams);
 
     try {
-      return getJson().getString("token");
+      return getJsonObject().getString("token");
     } catch (JSONException e) {
       e.printStackTrace();
     }

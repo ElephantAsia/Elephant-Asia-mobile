@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.synchronization.network;
+package fr.elephantasia.activities.sync.network;
 
 import android.support.annotation.Nullable;
 
@@ -69,7 +69,7 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
   protected void onPostExecute(Boolean result) {
     super.onPostExecute(result);
     if (result && getResponseCode() != null && getResponseCode() == 200) {
-      listener.onSuccess(getJson());
+      listener.onSuccess(getJsonObject());
     } else {
       listener.onError(getResponseCode(), getJsonError());
     }
@@ -90,7 +90,7 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
     listener.onSaving();
     DatabaseController dbController = new DatabaseController();
     try {
-      JSONObject result = getJson();
+      JSONObject result = getJsonObject();
       JSONArray elephants = result.getJSONArray("elephants");
       dbController.beginTransaction();
       for (int i = 0 ; i < elephants.length() ; ++i) {
@@ -109,7 +109,7 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
           /* newE.id = e.id;
           newE.lastVisited = e.lastVisited;
           databaseController.insertOrUpdate(newE); */
-          e.syncState = Elephant.SyncState.Downloaded.name();
+          e.syncState = Elephant.SyncState.Downloaded.name(); // accepted ?
           e.dbState = null;
           e.copy(newE);
           dbController.insertOrUpdate(e);

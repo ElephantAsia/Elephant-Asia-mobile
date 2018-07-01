@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -34,42 +35,17 @@ class Request {
   private static final Integer POST_READ_TIMEOUT = 10 * SECONDE;
 
   private HttpsURLConnection httpsURLConnection;
-  private Integer httpResponseCode = null;
-  private JSONObject json = null;
-  private JSONObject jsonError = null;
-
-//  private AccountManager accountManager = null;
-//  private Account account = null;
-//
-//  AccountManagerCallback<Bundle> onTokenAcquired = new AccountManagerCallback<Bundle>() {
-//    @Override
-//    public void run(AccountManagerFuture<Bundle> future) {
-//      try {
-//        Bundle bundle = future.getResult();
-//        String authToken = bundle.getString(AccountManager.KEY_AUTHTOKEN);
-//        if (authToken != null && !authToken.isEmpty()) {
-//          Log.i("", "run: token: " + authToken);
-//        }
-//      } catch (Throwable e) {
-//        Log.i("", "run: token failed with erro: ", e);
-//      }
-//    }
-//  };
+  private Integer httpResponseCode;
+  private JSONObject jsonObject;
+  private JSONArray jsonArray;
+  private JSONObject jsonError;
 
   protected void GET(@NonNull String url,
                      @Nullable Map<String, String> header,
                      @Nullable Map<String, String> params) {
-
     try {
       initHttp(String.format(BASE_URL, url));
-
-      if (header != null) {
-        for (Map.Entry<String, String> entry : header.entrySet()) {
-          String key = entry.getKey();
-          String value = entry.getValue();
-          httpsURLConnection.setRequestProperty(key, value);
-        }
-      }
+      setHeader(header);
       httpsURLConnection.setConnectTimeout(GET_CONNECTION_TIMEOUT);
       httpsURLConnection.setReadTimeout(GET_READ_TIMEOUT);
       httpsURLConnection.setRequestMethod("GET");
@@ -86,12 +62,13 @@ class Request {
       e.printStackTrace();
     }
     Log.i(getClass().getName(), String.format("GET %s", String.format(BASE_URL, url)));
-    Log.i(getClass().getName(), String.format("BODY RESPONSE CODE %s", getResponseCode()));
-    Log.i(getClass().getName(), String.format("BODY JSON %s", getJson()));
-    Log.i(getClass().getName(), String.format("BODY ERROR JSON %s", getJsonError()));
+    Log.i(getClass().getName(), String.format("RESPONSE CODE %s", getResponseCode()));
+    Log.i(getClass().getName(), String.format("JSON OBJECT RESPONSE %s", getJsonObject()));
+    Log.i(getClass().getName(), String.format("JSON ARRAY RESPONSE %s", getJsonArray()));
+    Log.i(getClass().getName(), String.format("ERROR JSON RESPONSE %s", getJsonError()));
   }
 
-  void POSTUrlEncoded(String url, Map<String, String> params) {
+  protected void POSTUrlEncoded(String url, Map<String, String> params) {
     try {
       initHttp(String.format(BASE_URL, url));
 
@@ -102,29 +79,58 @@ class Request {
       httpsURLConnection.setDoInput(true);
       httpsURLConnection.setDoOutput(true);
       httpsURLConnection.setUseCaches(false);
-
-      // Map<String, String> params = getParams();
       String paramsEncoded = TextHelpers.UrlEncoder(params);
       DataOutputStream wr = new DataOutputStream(httpsURLConnection.getOutputStream());
       wr.write(paramsEncoded.getBytes("UTF-8"));
       wr.flush();
       wr.close();
-
       try {
         getResponse();
         closeHttpClient();
       } catch (Exception e) {
         e.printStackTrace();
       }
-
+      Log.i(getClass().getName(), String.format("POST %s", String.format(BASE_URL, url)));
+      Log.i(getClass().getName(), String.format("BODY %s", paramsEncoded));
+      Log.i(getClass().getName(), String.format("RESPONSE CODE %s", getResponseCode()));
+      Log.i(getClass().getName(), String.format("JSON OBJECT RESPONSE %s", getJsonObject()));
+      Log.i(getClass().getName(), String.format("JSON ARRAY RESPONSE %s", getJsonArray()));
+      Log.i(getClass().getName(), String.format("ERROR JSON RESPONSE %s", getJsonError()));
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
 
-    Log.i(getClass().getName(), String.format("POST %s", String.format(BASE_URL, url)));
-    Log.i(getClass().getName(), String.format("BODY RESPONSE CODE %s", getResponseCode()));
-    Log.i(getClass().getName(), String.format("BODY JSON %s", getJson()));
-    Log.i(getClass().getName(), String.format("BODY ERROR JSON %s", getJsonError()));
+  protected void POSTJSON(String url, Map<String, String> header, byte[] body) {
+    try {
+      initHttp(String.format(BASE_URL, url));
+      setHeader(header);
+      httpsURLConnection.setConnectTimeout(POST_CONNECTION_TIMEOUT);
+      httpsURLConnection.setReadTimeout(POST_READ_TIMEOUT);
+      httpsURLConnection.setRequestMethod("POST");
+      httpsURLConnection.setRequestProperty("Content-Type", "application/javascript");
+      httpsURLConnection.setDoInput(true);
+      httpsURLConnection.setDoOutput(true);
+      httpsURLConnection.setUseCaches(false);
+      DataOutputStream wr = new DataOutputStream(httpsURLConnection.getOutputStream());
+      wr.write(body);
+      wr.flush();
+      wr.close();
+      try {
+        getResponse();
+        closeHttpClient();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      Log.i(getClass().getName(), String.format("POST %s", String.format(BASE_URL, url)));
+      Log.i(getClass().getName(), String.format("BODY %s", body));
+      Log.i(getClass().getName(), String.format("RESPONSE CODE %s", getResponseCode()));
+      Log.i(getClass().getName(), String.format("JSON OBJECT RESPONSE %s", getJsonObject()));
+      Log.i(getClass().getName(), String.format("JSON ARRAY RESPONSE %s", getJsonArray()));
+      Log.i(getClass().getName(), String.format("ERROR JSON RESPONSE %s", getJsonError()));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   private void getResponse() {
@@ -145,7 +151,12 @@ class Request {
             responseStrBuilder.append(inputStr);
           }
           if (httpResponseCode == 200) {
-            json = (JSONObject) (new JSONTokener(responseStrBuilder.toString()).nextValue());
+            try {
+              jsonObject = (JSONObject) (new JSONTokener(responseStrBuilder.toString()).nextValue());
+            } catch (Exception e) {}
+            try {
+              jsonArray = (JSONArray)(new JSONTokener(responseStrBuilder.toString()).nextValue());
+            } catch (Exception e) {}
           } else {
             jsonError = new JSONObject(responseStrBuilder.toString());
           }
@@ -161,11 +172,20 @@ class Request {
 
   private void initHttp(String path) throws IOException {
     try {
-      Log.i("initHttp", "url : " + path);
       URL url = new URL(path);
       httpsURLConnection = (HttpsURLConnection) url.openConnection();
     } catch (IOException e) {
       throw e;
+    }
+  }
+
+  private void setHeader(Map<String, String> header) {
+    if (header != null) {
+      for (Map.Entry<String, String> entry : header.entrySet()) {
+        String key = entry.getKey();
+        String value = entry.getValue();
+        httpsURLConnection.setRequestProperty(key, value);
+      }
     }
   }
 
@@ -179,15 +199,19 @@ class Request {
     }
   }
 
-  Integer getResponseCode() {
+  protected Integer getResponseCode() {
     return httpResponseCode;
   }
 
-  JSONObject getJson() {
-    return json;
+  protected JSONObject getJsonObject() {
+    return jsonObject;
   }
 
-  JSONObject getJsonError() {
+  protected JSONArray getJsonArray() {
+    return jsonArray;
+  }
+
+  protected JSONObject getJsonError() {
     return jsonError;
   }
 

@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -38,6 +39,8 @@ public abstract class RequestAsyncTask<ResultType> extends AsyncTask<Void, Integ
 		request.GET(url, getHeader(), getParams());
 	}
 
+	protected void POSTJSON(String url) { request.POSTJSON(url, getHeader(), getBody()); }
+
 	@Nullable
 	protected Map<String, String> getParams() {
     return null;
@@ -47,6 +50,9 @@ public abstract class RequestAsyncTask<ResultType> extends AsyncTask<Void, Integ
   protected Map<String, String> getHeader() {
     return null;
   }
+
+  @Nullable
+	protected byte[] getBody() { return null; }
 
 	@Override
 	@Nullable
@@ -68,9 +74,11 @@ public abstract class RequestAsyncTask<ResultType> extends AsyncTask<Void, Integ
 		return request.getResponseCode();
 	}
 
-	protected JSONObject getJson() {
-		return request.getJson();
+	protected JSONObject getJsonObject() {
+		return request.getJsonObject();
 	}
+
+	protected JSONArray getJsonArray() { return  request.getJsonArray(); }
 
 	protected JSONObject getJsonError() {
 		return request.getJsonError();

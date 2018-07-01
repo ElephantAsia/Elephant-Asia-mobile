@@ -1,4 +1,4 @@
-package fr.elephantasia.activities.synchronization;
+package fr.elephantasia.activities.sync;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -32,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
-import fr.elephantasia.activities.synchronization.network.SyncFromServerAsyncRequest;
+import fr.elephantasia.activities.sync.network.SyncFromServerAsyncRequest;
 import fr.elephantasia.auth.Constants;
 import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.utils.DateHelpers;
@@ -157,7 +157,7 @@ public class SyncActivity extends AppCompatActivity {
   private void syncFromServer() {
     String lastSync = Preferences.GetLastDownloadSync(this);
     dialog = dialog.getBuilder()
-      .progress(true, 0)
+      .progress(false, 100)
       .content(R.string.downloading_data)
       .show();
 
@@ -191,7 +191,7 @@ public class SyncActivity extends AppCompatActivity {
       @Override
       public void onError(Integer code, @Nullable JSONObject jsonObject) {
         dialog.dismiss();
-        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "An Error occured, please try again later", Toast.LENGTH_SHORT).show();
       }
     }).execute();
   }
