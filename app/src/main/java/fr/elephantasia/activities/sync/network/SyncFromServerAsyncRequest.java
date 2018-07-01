@@ -56,12 +56,8 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
   protected void onProgressUpdate(Integer... progress) {
     super.onProgressUpdate(progress);
     try {
-//      JSONArray elephants = syncFromServerResponse.getJSONArray("elephants");
-//      int i = progress[0] > 0 ? (int) (((double) progress[0] / (double) elephants.length()) * 100) : 0;
-//      listener.onProgress(i);
-
       // waiting for HTTP header fields 'Current-Length'
-      listener.onProgress(50);
+      listener.onProgress(progress[0]);
     } catch (Exception e) {}
   }
 
@@ -94,7 +90,7 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
       JSONArray elephants = result.getJSONArray("elephants");
       dbController.beginTransaction();
       for (int i = 0 ; i < elephants.length() ; ++i) {
-        publishProgress(i);
+        publishProgress(i * 100 / elephants.length());
         Thread.sleep(25); // demo
 
         Elephant newE = new Elephant(elephants.getJSONObject(i));
