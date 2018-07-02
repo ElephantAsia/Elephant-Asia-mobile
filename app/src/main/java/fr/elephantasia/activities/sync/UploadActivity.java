@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,7 +25,6 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -188,14 +186,15 @@ public class UploadActivity extends AppCompatActivity {
       .cancelable(false)
       .show();
 
-    List<Elephant> selectedElephants = new ArrayList<>();
-    SparseBooleanArray selections = adapter.getSelectedElephants();
-    for (int i = 0; i < selections.size(); i++) {
-      boolean isSelected = selections.valueAt(i);
-      if (isSelected) {
-        selectedElephants.add(editedElephants.get(selections.keyAt(i)));
-      }
-    }
+//    List<Elephant> selectedElephants = new ArrayList<>();
+//    SparseBooleanArray selections = adapter.getSelectedElephants();
+//    for (int i = 0; i < selections.size(); i++) {
+//      boolean isSelected = selections.valueAt(i);
+//      if (isSelected) {
+//        selectedElephants.add(editedElephants.get(selections.keyAt(i)));
+//      }
+//    }
+    List<Elephant> selectedElephants = adapter.getSelectedElephants();
 
     request = new SyncToServerAsyncRequest(selectedElephants, new SyncToServerAsyncRequest.Listener() {
       @Override
@@ -206,15 +205,15 @@ public class UploadActivity extends AppCompatActivity {
       }
       @Override
       public void onSerializing() {
-        dialog.setContent("Serializing data ...\nDO NOT EXIT the application");
+        dialog.setContent("1/3 Serializing data ...\nDO NOT CLOSE the application");
       }
       @Override
       public void onUploading() {
-        dialog.setContent("Uploading data ...\nDO NOT EXIT the application");
+        dialog.setContent("2/3 Uploading data ...\nDO NOT CLOSE the application");
       }
       @Override
       public void onUpdatingLocalDb() {
-        dialog.setContent("Updating local database ...\nDO NOT EXIT the application");
+        dialog.setContent("3/3 Updating local database ...\nDO NOT CLOSE the application");
       }
       @Override
       public void onProgress(int p) {

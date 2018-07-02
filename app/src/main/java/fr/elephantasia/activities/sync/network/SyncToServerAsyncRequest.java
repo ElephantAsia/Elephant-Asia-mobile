@@ -76,14 +76,22 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
     }
     publishProgress(elephants.size());
     try {
-      Thread.sleep(250); // demo
+      Thread.sleep(500); // demo
     } catch (Exception e) {}
   }
 
   private boolean upload() {
     this.listener.onUploading();
+
     POSTJSON(URL);
-    return getResponseCode() != null && getResponseCode() == 200;
+
+    if (getResponseCode() != null && getResponseCode() ==  200) {
+      try {
+        Thread.sleep(500); // demo
+      } catch (Exception e) {}
+      return true;
+    }
+    return false;
   }
 
   private void updateLocalDb() {
@@ -112,7 +120,7 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
     publishProgress(elephants.size());
     dbController.commitTransaction();
     try {
-      Thread.sleep(250); // demo
+      Thread.sleep(500); // demo
     } catch (Exception e) {}
   }
 

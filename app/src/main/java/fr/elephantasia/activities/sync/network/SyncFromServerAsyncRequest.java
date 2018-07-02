@@ -88,6 +88,9 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
     try {
       JSONObject result = getJsonObject();
       JSONArray elephants = result.getJSONArray("elephants");
+      if (elephants.length() == 0) {
+        return true;
+      }
       dbController.beginTransaction();
       for (int i = 0 ; i < elephants.length() ; ++i) {
         publishProgress(i * 100 / elephants.length());

@@ -5,6 +5,7 @@ import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.elephantasia.database.model.Elephant;
@@ -12,7 +13,7 @@ import fr.elephantasia.view.ElephantPreviewV2;
 
 public class SelectElephantsAdapter extends RecyclerView.Adapter<SelectElephantsAdapter.ViewHolder> {
 
-  private SparseBooleanArray itemStateArray = new SparseBooleanArray();
+  private SparseBooleanArray selections = new SparseBooleanArray();
   private List<Elephant> data;
   private Listener listener;
 
@@ -38,14 +39,14 @@ public class SelectElephantsAdapter extends RecyclerView.Adapter<SelectElephants
 
   @Override
   public void onBindViewHolder(final ViewHolder holder, int position) {
-    boolean selected = itemStateArray.get(position);
+    boolean selected = selections.get(position);
 
     holder.elephantPreview.setElephant(getItem(position));
     holder.elephantPreview.setListener(new ElephantPreviewV2.Listener() {
       @Override
       public void onSelectButtonClick(Elephant elephant) {
-        boolean selected = !itemStateArray.get(holder.getAdapterPosition());
-        itemStateArray.put(holder.getAdapterPosition(), selected);
+        boolean selected = !selections.get(holder.getAdapterPosition());
+        selections.put(holder.getAdapterPosition(), selected);
         holder.elephantPreview.refreshSelectButtonLogo(selected);
         listener.onSelectButtonClick(selected, elephant);
       }
@@ -66,21 +67,33 @@ public class SelectElephantsAdapter extends RecyclerView.Adapter<SelectElephants
     return data.get(index);
   }
 
-  public SparseBooleanArray getSelectedElephants() {
-    return itemStateArray;
+//  public SparseBooleanArray getSelectedElephants() {
+//    return itemStateArray;
+//  }
+
+  public List<Elephant> getSelectedElephants() {
+    List<Elephant> selectedElephants = new ArrayList<>();
+
+    for (int i = 0; i < selections.size(); i++) {
+      boolean isSelected = selections.valueAt(i);
+      if (isSelected) {
+        selectedElephants.add(data.get(selections.keyAt(i)));
+      }
+    }
+    return selectedElephants;
   }
 
   public int countElephantsSelected() {
     int k = 0;
 
     for (int i = 0 ; i < getItemCount() ; ++i) {
-      if (itemStateArray.get(i)) ++k;
+      if (selections.get(i)) ++k;
     }
     return k;
   }
 
   public void resetSelection() {
-    itemStateArray.clear();
+    selections.clear();
     notifyDataSetChanged();
   }
 
