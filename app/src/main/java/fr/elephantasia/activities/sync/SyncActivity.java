@@ -15,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -53,6 +52,7 @@ public class SyncActivity extends AppCompatActivity {
   @BindView(R.id.elephants_ready_to_be_uploaded) TextView elephantsReady;
 
   private DatabaseController databaseController;
+  private SyncFromServerAsyncRequest request;
 
   // Instance fields
   private MaterialDialog dialog;
@@ -107,7 +107,6 @@ public class SyncActivity extends AppCompatActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.download) {
-      // disableMenuItems();
       startDownloadSync();
       return true;
     } else if (item.getItemId() == R.id.upload) {
@@ -124,14 +123,16 @@ public class SyncActivity extends AppCompatActivity {
   }
 
   private void startDownloadSync() {
-    if (valid()) {
-      displayDownloadConfirmation();
-    } else {
-      new MaterialDialog.Builder(this)
-        .title("Error")
-        .neutralText("OK")
-        .content("Please check your internet connection or recharge your device.")
-        .show();
+    if (!isDownloading()) {
+      if (valid()) {
+        displayDownloadConfirmation();
+      } else {
+        new MaterialDialog.Builder(this)
+          .title("Error")
+          .neutralText("OK")
+          .content("Please check your internet connection or recharge your device.")
+          .show();
+      }
     }
   }
 
@@ -159,9 +160,10 @@ public class SyncActivity extends AppCompatActivity {
     dialog = dialog.getBuilder()
       .progress(false, 100)
       .content(R.string.downloading_data)
+      .cancelable(false)
       .show();
 
-    new SyncFromServerAsyncRequest(lastSync, new SyncFromServerAsyncRequest.Listener() {
+    request = new SyncFromServerAsyncRequest(lastSync, new SyncFromServerAsyncRequest.Listener() {
       @Override
       public String getAuthToken() throws Exception {
         AccountManager accountManager = AccountManager.get(SyncActivity.this);
@@ -170,11 +172,11 @@ public class SyncActivity extends AppCompatActivity {
       }
       @Override
       public void onDownloading() {
-        dialog.setContent("Downloading elephants ...");
+        dialog.setContent("Downloading elephants ...\nDO NOT EXIT the application");
       }
       @Override
       public void onSaving() {
-        dialog.setContent("Saving to local database ...");
+        dialog.setContent("Saving to local database ...\nDO NOT EXIT the application");
       }
       @Override
       public void onProgress(int p) {
@@ -185,15 +187,24 @@ public class SyncActivity extends AppCompatActivity {
         dialog.dismiss();
         String date = DateHelpers.GetCurrentStringDate();
         Preferences.SetLastDownloadSync(SyncActivity.this, date);
-        Toast.makeText(getApplicationContext(), "Syncing done succesfully", Toast.LENGTH_SHORT).show();
         refresh();
+        new MaterialDialog.Builder(SyncActivity.this)
+          .title(dialog.getTitleView().getText())
+          .content("Download done successfully !")
+          .neutralText("OK")
+          .show();
       }
       @Override
       public void onError(Integer code, @Nullable JSONObject jsonObject) {
         dialog.dismiss();
-        Toast.makeText(getApplicationContext(), "An Error occured, please try again later", Toast.LENGTH_SHORT).show();
+        new MaterialDialog.Builder(SyncActivity.this)
+          .title(dialog.getTitleView().getText())
+          .content("An error occured, please try again later.")
+          .neutralText("OK")
+          .show();
       }
-    }).execute();
+    });
+    request.execute();
   }
 
   public void startUploadActivity() {
@@ -311,6 +322,10 @@ public class SyncActivity extends AppCompatActivity {
       dateLastUp.setText(getResources().getString(R.string.date_label, lastSync));
       dateLastUpStatus.setVisibility(View.VISIBLE);
     }
+  }
+
+  private boolean isDownloading() {
+    return request != null && request.isRunning();
   }
 
 }

@@ -99,7 +99,8 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
           // new elephant in our local db
           newE.syncState = Elephant.SyncState.Downloaded.name();
           dbController.insertOrUpdate(newE);
-        } else { // if (e.dbState == null && e.syncState == null) {
+        } else {
+          // if (e.dbState == null && e.syncState == null) {
           // existing elephant in our local db
 
           /* newE.id = e.id;
@@ -117,6 +118,8 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
       return false;
     }
     dbController.commitTransaction();
+    publishProgress(100);
+    try { Thread.sleep(250); } catch (Exception e) {}
     return  true;
   }
 

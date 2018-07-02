@@ -35,7 +35,7 @@ public class GetAuthTokenRequest extends RequestSyncTask<String> {
     POSTUrlEncoded(URL, requestParams);
 
     try {
-      return getJsonObject().getString("token");
+      return getJsonObjectResponse().getString("token");
     } catch (JSONException e) {
       e.printStackTrace();
     }

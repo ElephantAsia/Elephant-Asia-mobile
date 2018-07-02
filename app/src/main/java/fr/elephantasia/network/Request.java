@@ -40,6 +40,12 @@ class Request {
   private JSONArray jsonArray;
   private JSONObject jsonError;
 
+  private Listener listener;
+
+  Request(@Nullable Listener listener) {
+    this.listener = listener;
+  }
+
   protected void GET(@NonNull String url,
                      @Nullable Map<String, String> header,
                      @Nullable Map<String, String> params) {
@@ -63,9 +69,9 @@ class Request {
     }
     Log.i(getClass().getName(), String.format("GET %s", String.format(BASE_URL, url)));
     Log.i(getClass().getName(), String.format("RESPONSE CODE %s", getResponseCode()));
-    Log.i(getClass().getName(), String.format("JSON OBJECT RESPONSE %s", getJsonObject()));
-    Log.i(getClass().getName(), String.format("JSON ARRAY RESPONSE %s", getJsonArray()));
-    Log.i(getClass().getName(), String.format("ERROR JSON RESPONSE %s", getJsonError()));
+    Log.i(getClass().getName(), String.format("JSON OBJECT RESPONSE %s", getJsonObjectResponse()));
+    Log.i(getClass().getName(), String.format("JSON ARRAY RESPONSE %s", getJsonArrayResponse()));
+    Log.i(getClass().getName(), String.format("ERROR JSON RESPONSE %s", getJsonErrorResponse()));
   }
 
   protected void POSTUrlEncoded(String url, Map<String, String> params) {
@@ -93,9 +99,9 @@ class Request {
       Log.i(getClass().getName(), String.format("POST %s", String.format(BASE_URL, url)));
       Log.i(getClass().getName(), String.format("BODY %s", paramsEncoded));
       Log.i(getClass().getName(), String.format("RESPONSE CODE %s", getResponseCode()));
-      Log.i(getClass().getName(), String.format("JSON OBJECT RESPONSE %s", getJsonObject()));
-      Log.i(getClass().getName(), String.format("JSON ARRAY RESPONSE %s", getJsonArray()));
-      Log.i(getClass().getName(), String.format("ERROR JSON RESPONSE %s", getJsonError()));
+      Log.i(getClass().getName(), String.format("JSON OBJECT RESPONSE %s", getJsonObjectResponse()));
+      Log.i(getClass().getName(), String.format("JSON ARRAY RESPONSE %s", getJsonArrayResponse()));
+      Log.i(getClass().getName(), String.format("ERROR JSON RESPONSE %s", getJsonErrorResponse()));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -123,11 +129,11 @@ class Request {
         e.printStackTrace();
       }
       Log.i(getClass().getName(), String.format("POST %s", String.format(BASE_URL, url)));
-      Log.i(getClass().getName(), String.format("BODY %s", body));
+      Log.i(getClass().getName(), String.format("BODY %s", new String(body)));
       Log.i(getClass().getName(), String.format("RESPONSE CODE %s", getResponseCode()));
-      Log.i(getClass().getName(), String.format("JSON OBJECT RESPONSE %s", getJsonObject()));
-      Log.i(getClass().getName(), String.format("JSON ARRAY RESPONSE %s", getJsonArray()));
-      Log.i(getClass().getName(), String.format("ERROR JSON RESPONSE %s", getJsonError()));
+      Log.i(getClass().getName(), String.format("JSON OBJECT RESPONSE %s", getJsonObjectResponse()));
+      Log.i(getClass().getName(), String.format("JSON ARRAY RESPONSE %s", getJsonArrayResponse()));
+      Log.i(getClass().getName(), String.format("ERROR JSON RESPONSE %s", getJsonErrorResponse()));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -149,10 +155,13 @@ class Request {
 
           while ((inputStr = streamReader.readLine()) != null) {
             responseStrBuilder.append(inputStr);
+//            if (listener != null) {
+//              listener.notifyProgressUpdate(inputStr.length()/* , CL */);
+//            }
           }
           if (httpResponseCode == 200) {
             try {
-              jsonObject = (JSONObject) (new JSONTokener(responseStrBuilder.toString()).nextValue());
+              jsonObject = (JSONObject)(new JSONTokener(responseStrBuilder.toString()).nextValue());
             } catch (Exception e) {}
             try {
               jsonArray = (JSONArray)(new JSONTokener(responseStrBuilder.toString()).nextValue());
@@ -203,16 +212,20 @@ class Request {
     return httpResponseCode;
   }
 
-  protected JSONObject getJsonObject() {
+  protected JSONObject getJsonObjectResponse() {
     return jsonObject;
   }
 
-  protected JSONArray getJsonArray() {
+  protected JSONArray getJsonArrayResponse() {
     return jsonArray;
   }
 
-  protected JSONObject getJsonError() {
+  protected JSONObject getJsonErrorResponse() {
     return jsonError;
+  }
+
+  public interface Listener {
+    void notifyProgressUpdate(int currentProgress, int contentLength);
   }
 
 }

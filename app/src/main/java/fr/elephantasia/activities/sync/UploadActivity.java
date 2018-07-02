@@ -2,7 +2,6 @@ package fr.elephantasia.activities.sync;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -110,15 +109,17 @@ public class UploadActivity extends AppCompatActivity {
 
   @Override
   public boolean onSupportNavigateUp() {
+    if (isUploading()) {
+      Toast.makeText(this, "Uploading is not finished", Toast.LENGTH_SHORT).show();
+      return false;
+    }
     onBackPressed();
     return true;
   }
 
   @Override
   public void onDestroy() {
-    if (isUploading()) {
-      request.cancel(true);
-     }
+    // isUploading => finish in background
     super.onDestroy();
   }
 
@@ -184,15 +185,7 @@ public class UploadActivity extends AppCompatActivity {
     dialog = dialog.getBuilder()
       .progress(false, 100, true)
       .content("Serializing data")
-      .dismissListener(new DialogInterface.OnDismissListener() {
-        @Override
-        public void onDismiss(DialogInterface dialog) {
-          if (isUploading()) {
-            request.cancel(true);
-            request = null;
-          }
-        }
-      })
+      .cancelable(false)
       .show();
 
     List<Elephant> selectedElephants = new ArrayList<>();
@@ -213,15 +206,15 @@ public class UploadActivity extends AppCompatActivity {
       }
       @Override
       public void onSerializing() {
-        dialog.setContent("Serializing data ...");
+        dialog.setContent("Serializing data ...\nDO NOT EXIT the application");
       }
       @Override
       public void onUploading() {
-        dialog.setContent("Uploading data ...");
+        dialog.setContent("Uploading data ...\nDO NOT EXIT the application");
       }
       @Override
       public void onUpdatingLocalDb() {
-        dialog.setContent("Updating local database ...");
+        dialog.setContent("Updating local database ...\nDO NOT EXIT the application");
       }
       @Override
       public void onProgress(int p) {
@@ -234,7 +227,11 @@ public class UploadActivity extends AppCompatActivity {
         refreshList();
         String date = DateHelpers.GetCurrentStringDate();
         Preferences.SetLastUploadSync(UploadActivity.this, date);
-        Toast.makeText(getApplicationContext(), "Upload successfull", Toast.LENGTH_SHORT).show();
+        new MaterialDialog.Builder(UploadActivity.this)
+          .title(dialog.getTitleView().getText())
+          .content("Upload done successfully !")
+          .neutralText("OK")
+          .show();
       }
       @Override
       public void onError(Integer code, @Nullable JSONObject jsonObject) {

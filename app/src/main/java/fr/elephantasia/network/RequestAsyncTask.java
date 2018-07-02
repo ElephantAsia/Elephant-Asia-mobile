@@ -9,13 +9,19 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
-/**
- * Created by Stephane on 05/01/2018.
- */
 public abstract class RequestAsyncTask<ResultType> extends AsyncTask<Void, Integer, ResultType> {
 
-	private Request request = new Request();
+	private Request request; // NO F*CKING MULTIPLE INHERITANCE - JAVA SUCKS !
 	private boolean running;
+
+	protected RequestAsyncTask() {
+		request = new Request(new Request.Listener() {
+			@Override
+			public void notifyProgressUpdate(int currentProgress, int contentLength) {
+				publishProgress(currentProgress, contentLength);
+			}
+		});
+	}
 
 	public void execute() {
 		executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -75,13 +81,13 @@ public abstract class RequestAsyncTask<ResultType> extends AsyncTask<Void, Integ
 	}
 
 	protected JSONObject getJsonObject() {
-		return request.getJsonObject();
+		return request.getJsonObjectResponse();
 	}
 
-	protected JSONArray getJsonArray() { return  request.getJsonArray(); }
+	protected JSONArray getJsonArray() { return  request.getJsonArrayResponse(); }
 
 	protected JSONObject getJsonError() {
-		return request.getJsonError();
+		return request.getJsonErrorResponse();
 	}
 
 	@Override

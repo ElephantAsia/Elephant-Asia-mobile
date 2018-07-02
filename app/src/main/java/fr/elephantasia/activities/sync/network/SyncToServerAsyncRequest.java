@@ -61,6 +61,9 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
     for (int i = 0 ; i < elephants.size() ; ++i) {
       publishProgress(i);
       try {
+        Thread.sleep(250); // demo
+      } catch (Exception e) {}
+      try {
         Elephant e = elephants.get(i);
         String action = ((e.dbState.equals(Elephant.DbState.Created.name())) ? "CREATE" : "EDIT");
         JSONObject obj = e.toJsonObject();
@@ -71,6 +74,10 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
         e.printStackTrace();
       }
     }
+    publishProgress(elephants.size());
+    try {
+      Thread.sleep(250); // demo
+    } catch (Exception e) {}
   }
 
   private boolean upload() {
@@ -87,6 +94,9 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
     dbController.beginTransaction();
     for (int i = 0 ; i < elephants.size() ; ++i) {
       publishProgress(i);
+      try {
+        Thread.sleep(250); // demo
+      } catch (Exception e) {}
       Elephant elephant = elephants.get(i);
       elephant.syncState = Elephant.SyncState.Pending.name();
       elephant.dbState = null;
@@ -99,7 +109,11 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
       }
       dbController.insertOrUpdate(elephant);
     }
+    publishProgress(elephants.size());
     dbController.commitTransaction();
+    try {
+      Thread.sleep(250); // demo
+    } catch (Exception e) {}
   }
 
   @Override

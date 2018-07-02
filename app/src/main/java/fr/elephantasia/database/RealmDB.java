@@ -21,9 +21,9 @@ import io.realm.Sort;
 
 import static fr.elephantasia.database.model.Elephant.ID;
 
-// https://realm.io/docs/java/latest/
 /**
  * Realm Facade
+ * https://realm.io/docs/java/latest/
  */
 class RealmDB {
 
