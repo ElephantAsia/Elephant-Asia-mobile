@@ -3,6 +3,7 @@ package fr.elephantasia.utils;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.annotation.Nullable;
 
@@ -38,6 +39,22 @@ public class DateHelpers {
       e.printStackTrace();
     }
     return null;
+  }
+
+  @Nullable
+  static public String GetUtcStringDate(String stringDate) {
+    String test = null;
+    try {
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+      Date date = format.parse(stringDate);
+
+      SimpleDateFormat displayedFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+      displayedFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+      test = displayedFormat.format(date);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return test;
   }
 
 }

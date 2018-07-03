@@ -156,7 +156,7 @@ public class SyncActivity extends AppCompatActivity {
   }
 
   private void syncFromServer() {
-    String lastSync = Preferences.GetLastDownloadSync(this);
+    String lastSync = DateHelpers.GetUtcStringDate(Preferences.GetLastDownloadSync(this));
     dialog = dialog.getBuilder()
       .progress(false, 100)
       .content(R.string.downloading_data)

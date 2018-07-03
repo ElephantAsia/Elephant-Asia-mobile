@@ -2,6 +2,7 @@ package fr.elephantasia.activities.sync;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -78,7 +79,7 @@ public class UploadActivity extends AppCompatActivity {
   @Override
   public void onResume() {
     super.onResume();
-    refreshList();
+    refreshList(false);
   }
 
   @Override
@@ -107,17 +108,12 @@ public class UploadActivity extends AppCompatActivity {
 
   @Override
   public boolean onSupportNavigateUp() {
-    if (isUploading()) {
-      Toast.makeText(this, "Uploading is not finished", Toast.LENGTH_SHORT).show();
-      return false;
-    }
     onBackPressed();
     return true;
   }
 
   @Override
   public void onDestroy() {
-    // isUploading => finish in background
     super.onDestroy();
   }
 
@@ -165,7 +161,7 @@ public class UploadActivity extends AppCompatActivity {
       .show();
   }
 
-  void refreshList() {
+  void refreshList(boolean closeIfEmpty) {
     DatabaseController dbController = new DatabaseController();
     editedElephants = dbController.getElephantReadyToUpload();
 
@@ -177,25 +173,20 @@ public class UploadActivity extends AppCompatActivity {
       emptyLayout.setVisibility(View.VISIBLE);
     }
     dbController.close();
+    if (closeIfEmpty && editedElephants.isEmpty()) {
+      setResult(RESULT_OK);
+      finish();
+    }
   }
 
   void syncToServer() {
     dialog = dialog.getBuilder()
       .progress(false, 100, true)
-      .content("Serializing data")
+      .content("0/3 Starting ...")
       .cancelable(false)
       .show();
 
-//    List<Elephant> selectedElephants = new ArrayList<>();
-//    SparseBooleanArray selections = adapter.getSelectedElephants();
-//    for (int i = 0; i < selections.size(); i++) {
-//      boolean isSelected = selections.valueAt(i);
-//      if (isSelected) {
-//        selectedElephants.add(editedElephants.get(selections.keyAt(i)));
-//      }
-//    }
     List<Elephant> selectedElephants = adapter.getSelectedElephants();
-
     request = new SyncToServerAsyncRequest(selectedElephants, new SyncToServerAsyncRequest.Listener() {
       @Override
       public String getAuthToken() throws Exception {
@@ -223,13 +214,18 @@ public class UploadActivity extends AppCompatActivity {
       public void onSuccess() {
         dialog.dismiss();
         adapter.resetSelection();
-        refreshList();
         String date = DateHelpers.GetCurrentStringDate();
         Preferences.SetLastUploadSync(UploadActivity.this, date);
         new MaterialDialog.Builder(UploadActivity.this)
           .title(dialog.getTitleView().getText())
           .content("Upload done successfully !")
           .neutralText("OK")
+          .dismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+              refreshList(true);
+            }
+          })
           .show();
       }
       @Override

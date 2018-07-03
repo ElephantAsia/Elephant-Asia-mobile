@@ -65,7 +65,6 @@ public class HomeOverviewFragment extends Fragment {
   }
 
   private void initIcon() {
-
     totalValue.setCompoundDrawables(new IconicsDrawable(getContext()).
         icon(MaterialDesignIconic.Icon.gmi_collection_text)
         .color(ContextCompat.getColor(getContext(), R.color.md_indigo)).sizeDp(28), null, null, null);
