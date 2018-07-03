@@ -84,7 +84,6 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
     this.listener.onUploading();
 
     POSTJSON(URL);
-
     if (getResponseCode() != null && getResponseCode() ==  200) {
       try {
         Thread.sleep(500); // demo
@@ -127,7 +126,21 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
   @Override
   protected void onProgressUpdate(Integer... progress) {
     super.onProgressUpdate(progress);
-    int i = progress[0] > 0 ? (int) (((double) progress[0] / (double) elephants.size()) * 100) : 0;
+    int i = 0;
+    int type = 0;
+    if (progress.length > 1) {
+      type = progress[1];
+    }
+    Integer value = progress[0];
+    switch (type) {
+      case PROGRESS_UPLOAD:
+        i = value;
+        break;
+      case PROGRESS_RESPONSE:
+        break;
+      default:
+        i = (progress[0] > 0) ? (int) (((double) progress[0] / (double) elephants.size()) * 100) : 0;
+    }
     listener.onProgress(i);
   }
 

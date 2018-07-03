@@ -119,7 +119,24 @@ class Request {
       httpsURLConnection.setDoOutput(true);
       httpsURLConnection.setUseCaches(false);
       DataOutputStream wr = new DataOutputStream(httpsURLConnection.getOutputStream());
-      wr.write(body);
+      int offset = 0;
+      int buflen = body.length / 100;
+      for (int i = 0 ; i < 100 ; i++) {
+        wr.write(body, offset,  buflen);
+        offset += buflen;
+        if (listener != null) {
+          listener.uploadProgressUpdate(i);
+        }
+        try {
+          Thread.sleep(1);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+      wr.write(body, offset, body.length % 100);
+      if (listener != null) {
+        listener.uploadProgressUpdate(100);
+      }
       wr.flush();
       wr.close();
       try {
@@ -142,22 +159,20 @@ class Request {
   private void getResponse() {
     try {
       httpResponseCode = httpsURLConnection.getResponseCode();
-
-      // Log.i("get", "size: " + httpsURLConnection.getHeaderField("Content-Length"));
-      // Log.i("get", "headerfields: " + httpsURLConnection.getHeaderFields());
-
+      Integer contentLength = Integer.valueOf(httpsURLConnection.getHeaderField("File-Size"));
       InputStream input = httpsURLConnection.getInputStream();
+
       if (input != null) {
         try {
           StringBuilder responseStrBuilder = new StringBuilder();
-          BufferedReader streamReader = new BufferedReader(new InputStreamReader(input, "UTF-8"));
+          InputStreamReader isr = new InputStreamReader(input, "UTF-8");
+          BufferedReader streamReader = new BufferedReader(isr);
           String inputStr;
-
           while ((inputStr = streamReader.readLine()) != null) {
             responseStrBuilder.append(inputStr);
-//            if (listener != null) {
-//              listener.notifyProgressUpdate(inputStr.length()/* , CL */);
-//            }
+            if (listener != null) {
+              listener.responseProgressUpdate((inputStr.length() * 100) / contentLength);
+            }
           }
           if (httpResponseCode == 200) {
             try {
@@ -225,7 +240,8 @@ class Request {
   }
 
   public interface Listener {
-    void notifyProgressUpdate(int currentProgress, int contentLength);
+    void uploadProgressUpdate(int currentProgress);
+    void responseProgressUpdate(int currentProgress);
   }
 
 }

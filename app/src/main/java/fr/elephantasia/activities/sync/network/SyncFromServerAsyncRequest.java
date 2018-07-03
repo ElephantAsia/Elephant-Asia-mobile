@@ -77,7 +77,13 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
 
     listener.onDownloading();
     GET(url);
-    return getResponseCode() != null && getResponseCode() == 200;
+    if (getResponseCode() != null && getResponseCode() ==  200) {
+      try {
+        Thread.sleep(500); // demo
+      } catch (Exception e) {}
+      return true;
+    }
+    return false;
   }
 
   private boolean save() {

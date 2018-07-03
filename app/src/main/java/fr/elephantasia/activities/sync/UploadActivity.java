@@ -42,20 +42,15 @@ import fr.elephantasia.utils.Preferences;
 
 public class UploadActivity extends AppCompatActivity {
 
-  // Instance fields
-  private MaterialDialog dialog;
-  private MenuItem upload;
-
-  // View binding
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.list) RecyclerView recyclerView;
   @BindView(R.id.empty_layout) View emptyLayout;
 
-  // Attributes
   private SelectElephantsAdapter adapter;
-  private List<Elephant> editedElephants;
-
   private SyncToServerAsyncRequest request;
+
+  private MaterialDialog dialog;
+  private MenuItem upload;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -163,25 +158,26 @@ public class UploadActivity extends AppCompatActivity {
 
   void refreshList(boolean closeIfEmpty) {
     DatabaseController dbController = new DatabaseController();
-    editedElephants = dbController.getElephantReadyToUpload();
+    List<Elephant> editedElephants = dbController.getElephantReadyToUpload();
+    dbController.close();
 
     adapter.setElephants(editedElephants);
     adapter.resetSelection();
-    if (editedElephants != null && editedElephants.size() > 0) {
+    if (editedElephants != null && !editedElephants.isEmpty()) {
       emptyLayout.setVisibility(View.GONE);
     } else {
       emptyLayout.setVisibility(View.VISIBLE);
-    }
-    dbController.close();
-    if (closeIfEmpty && editedElephants.isEmpty()) {
-      setResult(RESULT_OK);
-      finish();
+      if (closeIfEmpty) {
+        setResult(RESULT_OK);
+        finish();
+      }
     }
   }
 
   void syncToServer() {
     dialog = dialog.getBuilder()
       .progress(false, 100, true)
+      .title("Upload")
       .content("0/3 Starting ...")
       .cancelable(false)
       .show();

@@ -11,14 +11,21 @@ import java.util.Map;
 
 public abstract class RequestAsyncTask<ResultType> extends AsyncTask<Void, Integer, ResultType> {
 
-	private Request request; // NO F*CKING MULTIPLE INHERITANCE - JAVA SUCKS !
+	private Request request; // BECAUSE NO MULTIPLE INHERITANCE - JAVA SUCKS !
 	private boolean running;
+
+	static protected final int PROGRESS_UPLOAD = 1;
+	static protected final int PROGRESS_RESPONSE = 2;
 
 	protected RequestAsyncTask() {
 		request = new Request(new Request.Listener() {
 			@Override
-			public void notifyProgressUpdate(int currentProgress, int contentLength) {
-				publishProgress(currentProgress, contentLength);
+			public void uploadProgressUpdate(int currentProgress) {
+				publishProgress(currentProgress, PROGRESS_UPLOAD);
+			}
+			@Override
+			public void responseProgressUpdate(int currentProgress) {
+				publishProgress(currentProgress, PROGRESS_RESPONSE);
 			}
 		});
 	}
