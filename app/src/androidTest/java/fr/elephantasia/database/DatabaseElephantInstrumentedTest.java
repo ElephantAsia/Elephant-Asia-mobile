@@ -66,9 +66,18 @@ public class DatabaseElephantInstrumentedTest {
     michel.dbState = Elephant.DbState.Created.name();
     michel.draft = true;
 
+    Elephant sardou = new Elephant();
+    sardou.name = "sardou";
+    sardou.nickName = "sardine";
+    sardou.cuid = "sardou_cuid";
+    sardou.sex = "M";
+    sardou.dbState = Elephant.DbState.Created.name();
+    sardou.syncState = Elephant.SyncState.Pending.name();
+
     dbController.beginTransaction();
     dbController.insertOrUpdate(jackie);
     dbController.insertOrUpdate(michel);
+    dbController.insertOrUpdate(sardou);
     dbController.commitTransaction();
 
     Elephant mustBeJackie = dbController.getElephantById(1);
@@ -103,7 +112,7 @@ public class DatabaseElephantInstrumentedTest {
     assertEquals("M", michel.sex);
 
     long elephantsCount = dbController.getElephantsCount();
-    assertEquals(2, elephantsCount);
+    assertEquals(3, elephantsCount);
 
     long readyToSyncCount = dbController.getElephantsReadyToSyncCount();
     assertEquals(1, readyToSyncCount);
@@ -112,7 +121,7 @@ public class DatabaseElephantInstrumentedTest {
     assertEquals(1, draftCount);
 
     long pendingCount = dbController.getElephantsSyncStatePendingCount();
-    assertEquals(0, pendingCount);
+    assertEquals(1, pendingCount);
   }
 
   @Test
