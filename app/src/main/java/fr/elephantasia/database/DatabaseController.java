@@ -44,6 +44,10 @@ public class DatabaseController {
 
   public void close() { realmDB.close(); }
 
+  public void delete() {
+    realmDB.delete();
+  }
+
   /* Modifiers */
 
   public void insertOrUpdate(Elephant elephant) {

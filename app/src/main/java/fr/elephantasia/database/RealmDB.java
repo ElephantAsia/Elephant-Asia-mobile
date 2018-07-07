@@ -44,12 +44,14 @@ class RealmDB {
   void cancelTransaction() {
     realm.cancelTransaction();
     realm.close();
+    realm = null;
     inTransaction = false;
   }
 
   void commitTransaction() {
     realm.commitTransaction();
     realm.close();
+    realm = null;
     inTransaction = false;
   }
 
@@ -58,6 +60,14 @@ class RealmDB {
       realm.close();
       realm = null;
     }
+  }
+
+  void delete() {
+    if (realm != null) {
+      realm.close();
+      realm = null;
+    }
+    Realm.deleteRealm(Realm.getDefaultConfiguration());
   }
 
   void insertOrUpdate(Elephant e) {
@@ -181,6 +191,7 @@ class RealmDB {
       realm.close();
       return elephant;
     }
+    realm.close();
     return null;
   }
 
@@ -196,6 +207,7 @@ class RealmDB {
       realm.close();
       return elephant;
     }
+    realm.close();
     return null;
   }
 
@@ -211,6 +223,7 @@ class RealmDB {
       realm.close();
       return documents;
     }
+    realm.close();
     return null;
   }
 

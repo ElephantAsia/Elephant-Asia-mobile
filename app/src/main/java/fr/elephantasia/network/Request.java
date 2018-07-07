@@ -159,7 +159,12 @@ class Request {
   private void getResponse() {
     try {
       httpResponseCode = httpsURLConnection.getResponseCode();
-      Integer contentLength = Integer.valueOf(httpsURLConnection.getHeaderField("File-Size"));
+      Integer contentLength = null;
+      try {
+        contentLength = Integer.valueOf(httpsURLConnection.getHeaderField("File-Size"));
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       InputStream input = httpsURLConnection.getInputStream();
 
       if (input != null) {
@@ -170,7 +175,7 @@ class Request {
           String inputStr;
           while ((inputStr = streamReader.readLine()) != null) {
             responseStrBuilder.append(inputStr);
-            if (listener != null) {
+            if (listener != null && contentLength != null) {
               listener.responseProgressUpdate((inputStr.length() * 100) / contentLength);
             }
           }

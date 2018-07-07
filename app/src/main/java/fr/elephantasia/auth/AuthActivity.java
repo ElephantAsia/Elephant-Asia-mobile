@@ -183,6 +183,9 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 					} else if (code == 401) {
 						okDialog("Bad credentials", "Enter correct credentials");
 					}
+					else if (code == 200) {
+						okDialog("Server error", "No response from the server");
+					}
 					Log.i("getAuthToken", "error");
 					refreshLoginButton();
 				}

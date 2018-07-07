@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
-def supportVersion = "27.0.2"
+def supportVersion = "27.1.1"
 
 android {
     compileSdkVersion 27
@@ -46,18 +46,13 @@ android {
         }
     }
 
-
     dataBinding {
         enabled = true
     }
-    //useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
     implementation "com.android.support:design:$supportVersion"
     implementation "com.android.support:appcompat-v7:$supportVersion"
     implementation "com.android.support:support-v4:$supportVersion"
@@ -65,8 +60,8 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$supportVersion"
     implementation "com.android.support:cardview-v7:$supportVersion"
     implementation "com.android.support:gridlayout-v7:$supportVersion"
-    implementation 'com.android.support:multidex:1.0.2'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     implementation 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
@@ -74,23 +69,30 @@ dependencies {
     implementation 'jp.wasabeef:blurry:2.0.3'
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:2.3.0'
     implementation 'commons-io:commons-io:2.4'
-    implementation 'com.google.android.gms:play-services-location:11.8.0'
-    implementation 'com.google.android.gms:play-services-places:11.8.0'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'com.google.android.gms:play-services-places:15.0.1'
     // Do not use higher version at the moment, it will cause cast type bug
     implementation 'com.jakewharton:butterknife:8.6.0'
     implementation 'org.parceler:parceler-api:1.1.6'
     implementation 'io.realm:android-adapters:2.0.0'
-    testImplementation 'junit:junit:4.12'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    annotationProcessor 'org.parceler:parceler:1.1.6'
-    // the core iconcis library (without any widgets)
     implementation 'com.mikepenz:iconics-core:2.9.3@aar'
     // http://zavoloklom.github.io/material-design-iconic-font/icons.html
     implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.3@aar'
     implementation 'com.mikepenz:fontawesome-typeface:5.0.6.0@aar'
     implementation 'com.mikepenz:community-material-typeface:1.9.32.2@aar'
     // MpAndroidCharts https://github.com/PhilJay/MPAndroidChart
-    //    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+    // implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+    // implementation 'com.android.volley:volley:1.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    annotationProcessor 'org.parceler:parceler:1.1.6'
 
-    implementation 'com.android.volley:volley:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.7.22'
+
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestImplementation 'com.android.support:support-annotations:27.1.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
 }

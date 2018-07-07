@@ -40,10 +40,11 @@ public class GetAuthTokenAsyncRequest extends RequestAsyncTask<String> {
   @Override
   protected void onPostExecute(final String result) {
     super.onPostExecute(result);
-    if (getResponseCode() != null && getResponseCode() == 200) {
-      listener.onSuccess(getJsonObject());
+    JSONObject jsonObject = getJsonObject();
+    if (getResponseCode() != null && getResponseCode() == 200 && jsonObject != null) {
+      listener.onSuccess(jsonObject);
     } else {
-      listener.onError(getResponseCode(), null);
+      listener.onError(getResponseCode(), getJsonError());
     }
   }
 
