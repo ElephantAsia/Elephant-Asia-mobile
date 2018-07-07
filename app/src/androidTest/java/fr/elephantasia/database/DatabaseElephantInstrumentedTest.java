@@ -4,8 +4,8 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -25,7 +25,7 @@ import static org.junit.Assert.assertNotNull;
  *  Multiple threads        No        Yes               Yes
  *  Sleep statements        No        Yes               Yes
  *  System properties       No        Yes               Yes
- *  Time limit (ms)         100       2000              120000
+ *  Time limit (seconds)    0.1       2                 120
  *
  *  Source:
  *  https://stackoverflow.com/a/4671991/4643265
@@ -34,17 +34,17 @@ import static org.junit.Assert.assertNotNull;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DatabaseElephantInstrumentedTest {
 
-  private DatabaseController dbController;
+  static private DatabaseController dbController;
 
-  @Before
-  public void init() {
+  @BeforeClass
+  static public void init() {
     Context context = InstrumentationRegistry.getTargetContext();
     Realm.init(context);
     dbController = new DatabaseController();
   }
 
-  @After
-  public void deleteDatabase() {
+  @AfterClass
+  static public void deleteDatabase() {
     dbController.close();
     dbController.delete();
   }
@@ -55,10 +55,17 @@ public class DatabaseElephantInstrumentedTest {
     jackie.name = "jackie";
     jackie.nickName = "kiki";
     jackie.cuid = "jackie_cuid";
-    jackie.sex = "M";
+    jackie.sex = "F";
+
+    Elephant michel = new Elephant();
+    michel.name = "michel";
+    michel.nickName = "michou";
+    michel.cuid = "michel_cuid";
+    michel.sex = "M";
 
     dbController.beginTransaction();
     dbController.insertOrUpdate(jackie);
+    dbController.insertOrUpdate(michel);
     dbController.commitTransaction();
 
     Elephant mustBeJackie = dbController.getElephantById(1);
@@ -66,11 +73,31 @@ public class DatabaseElephantInstrumentedTest {
     assertEquals("jackie", mustBeJackie.name);
     assertEquals("kiki", mustBeJackie.nickName);
     assertEquals("jackie_cuid", mustBeJackie.cuid);
-    assertEquals("M", mustBeJackie.sex);
+    assertEquals("F", mustBeJackie.sex);
+
+    Elephant mustBeMichel = dbController.getElephantById(2);
+    assertNotNull(mustBeMichel);
+    assertEquals("michel", mustBeMichel.name);
+    assertEquals("michou", mustBeMichel.nickName);
+    assertEquals("michel_cuid", mustBeMichel.cuid);
+    assertEquals("M", mustBeMichel.sex);
   }
 
   @Test
   public void Test1_select() {
+    Elephant jackie = dbController.getElephantByCuid("jackie_cuid");
+    assertNotNull(jackie);
+    assertEquals("jackie", jackie.name);
+    assertEquals("kiki", jackie.nickName);
+    assertEquals("jackie_cuid", jackie.cuid);
+    assertEquals("F", jackie.sex);
+
+    Elephant michel = dbController.getElephantByCuid("michel_cuid");
+    assertNotNull(michel);
+    assertEquals("michel", michel.name);
+    assertEquals("michou", michel.nickName);
+    assertEquals("michel_cuid", michel.cuid);
+    assertEquals("M", michel.sex);
   }
 
   @Test
