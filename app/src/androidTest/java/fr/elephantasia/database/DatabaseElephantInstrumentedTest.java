@@ -37,7 +37,7 @@ public class DatabaseElephantInstrumentedTest {
   static private DatabaseController dbController;
 
   @BeforeClass
-  static public void init() {
+  static public void createDatabase() {
     Context context = InstrumentationRegistry.getTargetContext();
     Realm.init(context);
     dbController = new DatabaseController();
@@ -56,12 +56,15 @@ public class DatabaseElephantInstrumentedTest {
     jackie.nickName = "kiki";
     jackie.cuid = "jackie_cuid";
     jackie.sex = "F";
+    jackie.dbState = Elephant.DbState.Created.name();
 
     Elephant michel = new Elephant();
     michel.name = "michel";
     michel.nickName = "michou";
     michel.cuid = "michel_cuid";
     michel.sex = "M";
+    michel.dbState = Elephant.DbState.Created.name();
+    michel.draft = true;
 
     dbController.beginTransaction();
     dbController.insertOrUpdate(jackie);
@@ -98,6 +101,18 @@ public class DatabaseElephantInstrumentedTest {
     assertEquals("michou", michel.nickName);
     assertEquals("michel_cuid", michel.cuid);
     assertEquals("M", michel.sex);
+
+    long elephantsCount = dbController.getElephantsCount();
+    assertEquals(2, elephantsCount);
+
+    long readyToSyncCount = dbController.getElephantsReadyToSyncCount();
+    assertEquals(1, readyToSyncCount);
+
+    long draftCount = dbController.getElephantsDraftCount();
+    assertEquals(1, draftCount);
+
+    long pendingCount = dbController.getElephantsSyncStatePendingCount();
+    assertEquals(0, pendingCount);
   }
 
   @Test
