@@ -110,8 +110,8 @@ public class DatabaseController {
     return realmDB.getLastVisitedElephant();
   }
 
-  public List<Elephant> getElephantReadyToUpload() {
-    return realmDB.getElephantReadyToUpload();
+  public List<Elephant> getElephantsReadyToUpload() {
+    return realmDB.getElephantsReadyToUpload();
   }
 
   public Long getElephantsCount() {

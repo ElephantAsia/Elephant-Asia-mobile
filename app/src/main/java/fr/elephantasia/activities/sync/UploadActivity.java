@@ -158,7 +158,7 @@ public class UploadActivity extends AppCompatActivity {
 
   void refreshList(boolean closeIfEmpty) {
     DatabaseController dbController = new DatabaseController();
-    List<Elephant> editedElephants = dbController.getElephantReadyToUpload();
+    List<Elephant> editedElephants = dbController.getElephantsReadyToUpload();
     dbController.close();
 
     adapter.setElephants(editedElephants);

@@ -19,8 +19,6 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
-import static fr.elephantasia.database.model.Elephant.ID;
-
 /**
  * Realm Facade
  * https://realm.io/docs/java/latest/
@@ -90,7 +88,10 @@ class RealmDB {
 
   void updateLastVisitedDateElephant(Integer id) {
     Realm realm = Realm.getDefaultInstance();
-    Elephant elephant = realm.where(Elephant.class).equalTo(ID, id).findFirst();
+    Elephant elephant = realm.where(Elephant.class)
+      .equalTo(Elephant.ID, id)
+      .findFirst();
+
     if (elephant != null) {
       realm.beginTransaction();
       elephant.lastVisited = new Date();
@@ -113,7 +114,7 @@ class RealmDB {
   }
 
   @NonNull
-  public List<Elephant> searchElephantsByState(DatabaseController.SearchMode searchMode) {
+  List<Elephant> searchElephantsByState(DatabaseController.SearchMode searchMode) {
     Realm realm = Realm.getDefaultInstance();
     RealmQuery<Elephant> query = realm.where(Elephant.class);
 
@@ -133,7 +134,7 @@ class RealmDB {
   }
 
   @NonNull
-  public List<Elephant> search(Elephant e) {
+  List<Elephant> search(Elephant e) {
     Realm realm = Realm.getDefaultInstance();
     RealmQuery<Elephant> query = realm.where(Elephant.class);
 
@@ -160,7 +161,7 @@ class RealmDB {
   }
 
   @NonNull
-  public RealmResults<Contact> search(Contact c) { // TODO: return List
+  RealmResults<Contact> search(Contact c) { // TODO: return List
     Realm realm = Realm.getDefaultInstance();
     RealmQuery<Contact> query = realm.where(Contact.class);
 
@@ -180,7 +181,7 @@ class RealmDB {
   }
 
   @Nullable
-  public Elephant getElephantById(Integer id) {
+  Elephant getElephantById(Integer id) {
     Realm realm = Realm.getDefaultInstance();
     Elephant elephant = realm.where(Elephant.class)
       .equalTo(Elephant.ID, id)
@@ -196,7 +197,7 @@ class RealmDB {
   }
 
   @Nullable
-  public Elephant getElephantByCuid(String cuid) {
+  Elephant getElephantByCuid(String cuid) {
     Realm realm = Realm.getDefaultInstance();
     Elephant elephant = realm.where(Elephant.class)
       .equalTo(Elephant.CUID, cuid)
@@ -212,7 +213,7 @@ class RealmDB {
   }
 
   @Nullable
-  public List<Document> getDocumentsByElephantId(Integer elephantId) {
+  List<Document> getDocumentsByElephantId(Integer elephantId) {
     Realm realm = Realm.getDefaultInstance();
     List<Document> documents = realm.where(Document.class)
       .equalTo(Document.ELEPHANT_ID, elephantId)
@@ -227,19 +228,20 @@ class RealmDB {
     return null;
   }
 
-  public List<Elephant> getLastVisitedElephant() {
+  List<Elephant> getLastVisitedElephant() {
     Realm realm = Realm.getDefaultInstance();
     List<Elephant> results = realm.copyFromRealm(
       realm.where(Elephant.class)
       .greaterThan(Elephant.LAST_VISITED, DateHelpers.getLastWeek())
       .sort(Elephant.LAST_VISITED, Sort.DESCENDING)
+      .notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
       .findAll()
     );
     realm.close();
     return results;
   }
 
-  public List<Elephant> getElephantReadyToUpload() {
+  List<Elephant> getElephantsReadyToUpload() {
     Realm realm = Realm.getDefaultInstance();
     List<Elephant> elephants = realm.copyFromRealm(
       realm.where(Elephant.class)
@@ -252,23 +254,24 @@ class RealmDB {
     return elephants;
   }
 
-  public Long getElephantsCount() {
+  Long getElephantsCount() {
     Realm realm = Realm.getDefaultInstance();
     Long count = realm.where(Elephant.class).count();
     realm.close();
     return count;
   }
 
-  public Long getElephantsSyncStatePendingCount() {
+  Long getElephantsSyncStatePendingCount() {
     Realm realm = Realm.getDefaultInstance();
     Long count = realm.where(Elephant.class)
       .equalTo(Elephant.SYNC_STATE, Elephant.SyncState.Pending.name())
+      .notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
       .count();
     realm.close();
     return count;
   }
 
-  public Long getElephantsReadyToSyncCount() {
+  Long getElephantsReadyToSyncCount() {
     Realm realm = Realm.getDefaultInstance();
     Long count = realm.where(Elephant.class)
       .isNotNull(Elephant.DB_STATE)
@@ -279,10 +282,11 @@ class RealmDB {
     return count;
   }
 
-  public Long getElephantsDraftCount() {
+  Long getElephantsDraftCount() {
     Realm realm = Realm.getDefaultInstance();
     Long count = realm.where(Elephant.class)
       .equalTo(Elephant.DRAFT, true)
+      .notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
       .count();
     realm.close();
     return count;
@@ -295,7 +299,7 @@ class RealmDB {
       @Override
       public void execute(@NonNull Realm bgRealm) {
         if (elephant.id == -1) {
-          elephant.id = GetNextId(bgRealm, Elephant.class, ID);
+          elephant.id = GetNextId(bgRealm, Elephant.class, Elephant.ID);
         }
         elephant.lastVisited = new Date();
         bgRealm.insertOrUpdate(elephant);
