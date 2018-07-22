@@ -88,9 +88,19 @@ public class DatabaseElephantInstrumentedTest {
     dbController.insertOrUpdate(michel);
     dbController.insertOrUpdate(gilles);
     dbController.insertOrUpdate(sardou);
-    dbController.commitTransaction();
+    dbController.cancelTransaction();
 
     long count = dbController.getElephantsCount();
+    assertEquals(0, count);
+
+    dbController.beginTransaction();
+    dbController.insertOrUpdate(jackie);
+    dbController.insertOrUpdate(michel);
+    dbController.insertOrUpdate(gilles);
+    dbController.insertOrUpdate(sardou);
+    dbController.commitTransaction();
+
+    count = dbController.getElephantsCount();
     assertEquals(4, count);
   }
 
@@ -148,8 +158,10 @@ public class DatabaseElephantInstrumentedTest {
 
   @Test
   public void Test3_elephantsReadyToUpload() {
-    List<Elephant> elephants = dbController.getElephantsReadyToUpload();
+    long count = dbController.getElephantsReadyToSyncCount();
+    assertEquals(2, count);
 
+    List<Elephant> elephants = dbController.getElephantsReadyToUpload();
     assertNotNull(elephants);
     assertEquals(2, elephants.size());
     assertEquals("jackie", elephants.get(0).name);
@@ -157,23 +169,47 @@ public class DatabaseElephantInstrumentedTest {
   }
 
   @Test
-  public void Test3_update() {
+  public void Test4_update() {
+    Elephant jackie = dbController.getElephantByCuid("jackie_cuid");
+    assertNotNull(jackie);
+
+    jackie.name = "jackie_edited";
+    dbController.beginTransaction();
+    dbController.insertOrUpdate(jackie);
+    dbController.commitTransaction();
+
+    Elephant edited = dbController.getElephantByCuid("jackie_cuid");
+    assertNotNull(edited);
+    assertEquals("jackie_edited", edited.name);
+  }
+
+  @Test
+  public void Test5_search() {
+    Elephant e = new Elephant();
+    e.name = "jackouille";
+    e.sex = "M";
+
+    List<Elephant> results = dbController.search(e);
+    assertNotNull(results);
+    assertEquals(0, results.size());
+
+    e.name = "jack";
+    e.sex = "F";
+    results = dbController.search(e);
+    assertNotNull(results);
+    assertEquals(1, results.size());
   }
 
 //  @Test
-//  public void Test4_search() {
+//  public void Test6_parentage() {
 //  }
 //
 //  @Test
-//  public void Test5_parentage() {
+//  public void Test7_children() {
 //  }
 //
 //  @Test
-//  public void Test6_children() {
-//  }
-//
-//  @Test
-//  public void Test7_delete() {
+//  public void Test8_delete() {
 //  }
 
 }

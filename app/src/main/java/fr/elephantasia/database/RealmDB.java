@@ -138,6 +138,7 @@ class RealmDB {
     Realm realm = Realm.getDefaultInstance();
     RealmQuery<Elephant> query = realm.where(Elephant.class);
 
+    // TODO: What we do with deleted elephants ?
     query.notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name());
     if (e != null) {
       query.contains(Elephant.NAME, e.name, Case.INSENSITIVE);
