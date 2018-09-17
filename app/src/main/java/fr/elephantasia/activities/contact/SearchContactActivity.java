@@ -16,8 +16,7 @@ import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.databinding.SearchContactActivityBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
 
-import static fr.elephantasia.activities.contact.AddContactActivity.EXTRA_CONTACT_CREATED;
-import static fr.elephantasia.activities.contact.SearchContactResultActivity.EXTRA_CONTACT_SELECTED;
+// import static fr.elephantasia.activities.contact.AddContactActivity.EXTRA_CONTACT_CREATED;
 
 public class SearchContactActivity extends AppCompatActivity {
 
@@ -86,12 +85,12 @@ public class SearchContactActivity extends AppCompatActivity {
 
       switch (requestCode) {
         case (REQUEST_CONTACT_SELECTED):
-          resultIntent.putExtra(EXTRA_SEARCH_CONTACT, data.getParcelableExtra(EXTRA_CONTACT_SELECTED));
+          resultIntent.putExtra(EXTRA_SEARCH_CONTACT, data.getStringExtra(SearchContactResultActivity.EXTRA_CONTACT_SELECTED));
           setResult(RESULT_OK, resultIntent);
           finish();
           break;
         case (REQUEST_CONTACT_CREATED):
-          resultIntent.putExtra(EXTRA_SEARCH_CONTACT, data.getParcelableExtra(EXTRA_CONTACT_CREATED));
+          resultIntent.putExtra(EXTRA_SEARCH_CONTACT, data.getStringExtra(AddContactActivity.EXTRA_CONTACT_CREATED));
           setResult(RESULT_OK, resultIntent);
           finish();
           break;

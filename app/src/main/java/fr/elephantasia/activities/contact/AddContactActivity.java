@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import org.parceler.Parcels;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,16 +29,20 @@ public class AddContactActivity extends AppCompatActivity {
   private DatabaseController databaseController;
 
   // Attr
-  //private Realm realm;
   private Contact contact = new Contact();
 
   // Listener binding
   @OnClick(R.id.validate_button)
   public void addNewContact() {
-    // RealmDB.copyOrUpdate(contact);
-    databaseController.copyOrUpdate(contact);
+    contact.setCuid(UUID.randomUUID().toString());
+    contact.setDbState(Contact.DbState.Created);
+
+    databaseController.beginTransaction();
+    databaseController.insertOrUpdate(contact);
+    databaseController.commitTransaction();
+
     Intent resultIntent = getIntent();
-    resultIntent.putExtra(EXTRA_CONTACT_CREATED, Parcels.wrap(contact));
+    resultIntent.putExtra(EXTRA_CONTACT_CREATED, contact.getCuid());
     setResult(RESULT_OK, resultIntent);
     finish();
   }

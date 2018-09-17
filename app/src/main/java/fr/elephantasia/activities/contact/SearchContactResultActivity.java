@@ -21,8 +21,6 @@ import fr.elephantasia.database.model.Contact;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
-import static fr.elephantasia.activities.contact.SearchContactActivity.EXTRA_SEARCH_FILTERS;
-
 public class SearchContactResultActivity extends AppCompatActivity {
 
   // Extra code
@@ -55,7 +53,7 @@ public class SearchContactResultActivity extends AppCompatActivity {
       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent resultIntent = getIntent();
         Contact contact = adapter.getItem(i);
-        resultIntent.putExtra(EXTRA_CONTACT_SELECTED, Parcels.wrap(contact));
+        resultIntent.putExtra(EXTRA_CONTACT_SELECTED, contact.getCuid());
         setResult(RESULT_OK, resultIntent);
         finish();
       }
@@ -84,7 +82,7 @@ public class SearchContactResultActivity extends AppCompatActivity {
   }
 
   private RealmResults<Contact> searchContacts() {
-    Contact c = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_FILTERS));
+    Contact c = Parcels.unwrap(getIntent().getParcelableExtra(SearchContactActivity.EXTRA_SEARCH_FILTERS));
     return databaseController.search(c);
   }
 }

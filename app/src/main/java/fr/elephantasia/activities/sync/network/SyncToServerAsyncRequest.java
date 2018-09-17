@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import fr.elephantasia.database.DatabaseController;
+import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.network.RequestAsyncTask;
 
@@ -19,6 +20,7 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
   static private final String URL = "/sync/upload";
 
   private List<Elephant> elephants;
+  private Map<String, Contact> contacts = new HashMap<>();
   private Listener listener;
   private JSONArray serialized;
 
@@ -50,14 +52,15 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
   @Override
   protected Boolean doInBackground(@Nullable Void... params) {
     serialize();
-    if (!upload())
-      return false;
-    updateLocalDb();
+//    if (!upload())
+//      return false;
+//    updateLocalDb();
     return true;
   }
 
   private void serialize() {
     this.listener.onSerializing();
+
     for (int i = 0 ; i < elephants.size() ; ++i) {
       publishProgress(i);
       try {
@@ -66,7 +69,7 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
       try {
         Elephant e = elephants.get(i);
         String action = ((e.dbState.equals(Elephant.DbState.Created.name())) ? "CREATE" : "EDIT");
-        JSONObject obj = e.toJsonObject();
+        JSONObject obj = e.toJsonObject(contacts);
         obj.put("action", action);
         obj.put("type", "elephant");
         serialized.put(obj);
@@ -74,6 +77,21 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
         e.printStackTrace();
       }
     }
+    for (Map.Entry<String, Contact> entry : contacts.entrySet()) {
+      Contact c = entry.getValue();
+      String action = ((c.isCreated()) ? "CREATE" : (c.isEdited()) ? "EDIT" : null);
+      if (c.getSyncState() == null && action != null) {
+        try {
+          JSONObject obj = c.toJsonObject();
+          obj.put("action", action);
+          obj.put("type", "contact");
+          serialized.put(obj);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    }
+    Log.w("serialized", serialized.toString());
     publishProgress(elephants.size());
     try {
       Thread.sleep(500); // demo
@@ -116,6 +134,10 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
       }
       dbController.insertOrUpdate(elephant);
     }
+    // for each contact in contacts
+    //  contact.setSyncState(Contact.SyncState.Pending);
+    //  contact.setDbState(null);
+    //  insertOrUpdate(contact)
     publishProgress(elephants.size());
     dbController.commitTransaction();
     try {
@@ -140,6 +162,7 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
         break;
       default:
         i = (progress[0] > 0) ? (int) (((double) progress[0] / (double) elephants.size()) * 100) : 0;
+        // + contacts.size()
     }
     listener.onProgress(i);
   }

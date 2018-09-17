@@ -163,7 +163,7 @@ class Request {
       try {
         contentLength = Integer.valueOf(httpsURLConnection.getHeaderField("File-Size"));
       } catch (Exception e) {
-        e.printStackTrace();
+        Log.i("contentLength", "null");
       }
       InputStream input = httpsURLConnection.getInputStream();
 

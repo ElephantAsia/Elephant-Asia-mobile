@@ -66,8 +66,8 @@ public class DatabaseController {
     realmDB.updateLastVisitedDateElephant(id);
   }
 
-  public void copyOrUpdate(Contact contact) {
-    realmDB.copyOrUpdate(contact);
+  public void insertOrUpdate(Contact contact) {
+    realmDB.insertOrUpdate(contact);
   }
 
   public void delete(Elephant elephant) {
@@ -100,6 +100,9 @@ public class DatabaseController {
   public Elephant getElephantByCuid(String cuid) {
     return realmDB.getElephantByCuid(cuid);
   }
+
+  @Nullable
+  public Contact getContactByCuid(String cuid) { return realmDB.getContactByCuid(cuid); }
 
   @Nullable
   public List<Document> getDocumentsByElephantId(Integer elephantId) {

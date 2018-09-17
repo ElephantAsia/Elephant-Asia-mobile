@@ -86,6 +86,15 @@ class RealmDB {
     end();
   }
 
+  void insertOrUpdate(Contact c) {
+    begin();
+    if (c.id == -1) {
+      c.id = GetNextId(realm, Contact.class, Contact.ID);
+    }
+    realm.insertOrUpdate(c);
+    end();
+  }
+
   void updateLastVisitedDateElephant(Integer id) {
     Realm realm = Realm.getDefaultInstance();
     Elephant elephant = realm.where(Elephant.class)
@@ -100,11 +109,11 @@ class RealmDB {
     realm.close();
   }
 
-  void copyOrUpdate(Contact c) {
-    beginTransaction();
-    realm.copyToRealmOrUpdate(c);
-    commitTransaction();
-  }
+//  void insertOrUpdate(Contact c) {
+//    beginTransaction();
+//    realm.insertOrUpdate(c);
+//    commitTransaction();
+//  }
 
   void delete(Elephant e) {
     begin();
@@ -203,11 +212,25 @@ class RealmDB {
     Elephant elephant = realm.where(Elephant.class)
       .equalTo(Elephant.CUID, cuid)
       .findFirst();
-
     if (elephant != null) {
       elephant = realm.copyFromRealm(elephant);
       realm.close();
       return elephant;
+    }
+    realm.close();
+    return null;
+  }
+
+  @Nullable
+  Contact getContactByCuid(String cuid) {
+    Realm realm = Realm.getDefaultInstance();
+    Contact contact = realm.where(Contact.class)
+      .equalTo(Contact.CUID, cuid)
+      .findFirst();
+    if (contact != null) {
+      contact = realm.copyFromRealm(contact);
+      realm.close();
+      return contact;
     }
     realm.close();
     return null;

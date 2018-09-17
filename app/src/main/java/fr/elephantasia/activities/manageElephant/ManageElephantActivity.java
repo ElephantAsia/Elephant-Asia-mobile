@@ -23,8 +23,6 @@ import android.widget.Toast;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,7 +146,8 @@ public class ManageElephantActivity extends AppCompatActivity {
     if (resultCode == RESULT_OK) {
       switch (requestCode) {
         case REQUEST_SELECT_CONTACT:
-          Contact contact = Parcels.unwrap(data.getParcelableExtra(EXTRA_SEARCH_CONTACT));
+          String contactCuid = data.getStringExtra(EXTRA_SEARCH_CONTACT);
+          Contact contact = databaseController.getContactByCuid(contactCuid);
           contactFragment.addContactTolist(contact);
           break;
         case REQUEST_SELECT_MOTHER:

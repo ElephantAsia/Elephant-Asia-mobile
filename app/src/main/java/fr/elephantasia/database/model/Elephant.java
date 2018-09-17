@@ -7,8 +7,13 @@ import org.json.JSONObject;
 import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nullable;
 
 import fr.elephantasia.database.parceler.ContactParcelConverter;
 import fr.elephantasia.database.parceler.ElephantParcelConverter;
@@ -22,40 +27,29 @@ import io.realm.annotations.PrimaryKey;
 import io.realm.fr_elephantasia_database_model_ElephantRealmProxy;
 
 @Parcel(implementations = {fr_elephantasia_database_model_ElephantRealmProxy.class})
-public class Elephant extends RealmObject {
+public class Elephant extends RealmObject
+{
   // IMPORTANT: Columns' names must match attributes' names
+  // ID
+  @Ignore public static final String ID = "id";
+  @Ignore public static final String CUID = "cuid";
 
-  // Profil
-  @Ignore
-  public static final String ID = "id";
-  @Ignore
-  public static final String NAME = "name";
-  @Ignore
-  public static final String CHIPS1 = "chips1";
-  @Ignore
-  public static final String SEX = "sex";
+  // Profile
+  @Ignore public static final String NAME = "name";
+  @Ignore public static final String CHIPS1 = "chips1";
+  @Ignore public static final String SEX = "sex";
 
   // Registration
-  @Ignore
-  public static final String MTE_OWNER = "mteOwner";
-  @Ignore
-  public static final String MTE_NUMBER = "mteNumber";
+  @Ignore public static final String MTE_OWNER = "mteOwner";
+  @Ignore public static final String MTE_NUMBER = "mteNumber";
 
   // Sync
-  @Ignore
-  public static final String DRAFT = "draft";
-  @Ignore
-  public static final String SYNC_STATE = "syncState";
-  @Ignore
-  public static final String DB_STATE = "dbState";
+  @Ignore public static final String DRAFT = "draft";
+  @Ignore public static final String SYNC_STATE = "syncState";
+  @Ignore public static final String DB_STATE = "dbState";
 
   // Metadata
-  @Ignore
-  public static final String LAST_VISITED = "lastVisited";
-
-  // Server data
-  @Ignore
-  public static final String CUID = "cuid";
+  @Ignore public static final String LAST_VISITED = "lastVisited";
 
   public enum SyncState {
     Downloaded,
@@ -265,14 +259,24 @@ public class Elephant extends RealmObject {
     cuid = e.cuid;
   }
 
-  public JSONObject toJsonObject() throws JSONException {
+  public JSONObject toJsonObject(@Nullable Map<String, Contact> added) throws JSONException {
     JSONObject jsonObject = new JSONObject();
+    List<String> cuids = new ArrayList<>();
 
     jsonObject.put("name", name);
     jsonObject.put("nickname", nickName);
-    // jsonObject.put("id", id);
     jsonObject.put("sex", sex);
     jsonObject.put("cuid", cuid);
+    for (Contact contact : contacts) {
+      // contact.setSyncState(Pending) => upload response
+      // contact.setSyncState(null) => download
+      if (added != null) {
+        added.put(contact.getCuid(), contact);
+      }
+      cuids.add(contact.getCuid());
+    }
+    jsonObject.put("contacts", cuids);
     return jsonObject;
   }
+
 }
