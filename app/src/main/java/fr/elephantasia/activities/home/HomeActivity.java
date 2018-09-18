@@ -1,10 +1,7 @@
 package fr.elephantasia.activities.home;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -20,54 +17,55 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
+import fr.elephantasia.activities.home.adapters.HomeDrawerListAdapter;
+import fr.elephantasia.activities.home.fragments.HomeOverviewFragment;
+import fr.elephantasia.activities.home.fragments.HomeRecentFragment;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.searchElephant.SearchElephantActivity;
-import fr.elephantasia.adapter.HomeDrawerListAdapter;
-import fr.elephantasia.auth.AuthActivity;
-import fr.elephantasia.auth.Constants;
-import io.realm.Realm;
+import fr.elephantasia.activities.showElephant.ShowElephantActivity;
+import fr.elephantasia.database.DatabaseController;
+import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.utils.DateHelpers;
+import fr.elephantasia.utils.Preferences;
 import jp.wasabeef.blurry.Blurry;
 
 public class HomeActivity extends AppCompatActivity {
 
-  public static final int REQUEST_ADD_ELEPHANT = 1;
-  private static final String EXTRA_FRAGMENT = "main.fragment";
+  /**
+   * Classifier
+   */
 
-  private static final int FRAGMENT_HOME_PAGE = 0;
-  private static final int FRAGMENT_DISCONNECT = 8;
+  static private final int REQUEST_ADD_ELEPHANT = 1;
 
-  // View binding
+  /**
+   * Instance
+   */
+
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.main_drawer_pic_profil_blurred) ImageView profilPicBlurred;
   @BindView(R.id.main_drawer_pic_profil) CircleImageView profilPic;
   @BindView(R.id.main_drawer) DrawerLayout drawer;
   @BindView(R.id.main_drawer_list) ListView drawerList;
+  @BindView(R.id.main_drawer_last_sync) TextView lastSyncTextView;
 
-  // Attr
+  private DatabaseController databaseController;
   private HomeDrawerListAdapter drawerListAdapter;
-  private Realm realm;
-
-
-  public static int getFragment(Intent intent) {
-    return intent.getIntExtra(EXTRA_FRAGMENT, FRAGMENT_HOME_PAGE);
-  }
-
-  public static void setFragment(Intent intent, int value) {
-    intent.putExtra(EXTRA_FRAGMENT, value);
-  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -76,20 +74,20 @@ public class HomeActivity extends AppCompatActivity {
     setContentView(R.layout.home_activity);
     ButterKnife.bind(this);
 
+    databaseController = ((BaseApplication)getApplication()).getDatabaseController();
+
     setSupportActionBar(toolbar);
+
     initActionBarDrawer();
     initActionBarDrawerList();
 
-    refreshFragment();
-    realm = Realm.getDefaultInstance();
+    setFragment();
   }
 
   @Override
   public void onDestroy() {
     super.onDestroy();
-    realm.close();
   }
-
 
   private void initActionBarDrawer() {
     ActionBarDrawerToggle actionBarDrawer = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close);
@@ -158,8 +156,12 @@ public class HomeActivity extends AppCompatActivity {
     super.onResume();
     refreshProfilPicBlurred();
 
-    drawerListAdapter.setSelection(FRAGMENT_HOME_PAGE);
-    drawerListAdapter.notifyDataSetChanged();
+    if (Preferences.IsLastDownloadSyncNeverHappened(this)) {
+      lastSyncTextView.setText(getResources().getString(R.string.last_sync, "Never"));
+    } else {
+      String lastSync = DateHelpers.FriendlyUserStringDate(Preferences.GetLastDownloadSync(this));
+      lastSyncTextView.setText(getResources().getString(R.string.last_sync, lastSync));
+    }
   }
 
   @Override
@@ -181,7 +183,11 @@ public class HomeActivity extends AppCompatActivity {
           @Override
           public void run() {
             try {
-              Blurry.with(HomeActivity.this).radius(25).sampling(2).capture(profilPic).into(profilPicBlurred);
+              Blurry.with(HomeActivity.this)
+                .radius(25)
+                .sampling(2)
+                .capture(profilPic)
+                .into(profilPicBlurred);
             } catch (Exception e) {
               e.printStackTrace();
             }
@@ -191,19 +197,7 @@ public class HomeActivity extends AppCompatActivity {
     }, 10);
   }
 
-  private void refreshFragment() {
-    switch (getFragment(getIntent())) {
-      case FRAGMENT_HOME_PAGE:
-        setHomePageFragment();
-        break;
-      case FRAGMENT_DISCONNECT:
-        setDisconnectFragment();
-        break;
-      default:
-    }
-  }
-
-  private void setHomePageFragment() {
+  private void setFragment() {
     HomeRecentFragment recentFragment = new HomeRecentFragment();
     recentFragment.setArguments(new Bundle());
     getSupportFragmentManager().beginTransaction().replace(R.id.recent_fragment, recentFragment).commit();
@@ -213,16 +207,30 @@ public class HomeActivity extends AppCompatActivity {
     getSupportFragmentManager().beginTransaction().replace(R.id.overview_fragment, fragment).commit();
   }
 
-  private void setDisconnectFragment() {
-    // Preferences.setUsername(getApplicationContext(), null);
-    // Preferences.setPassword(getApplicationContext(), null);
-
-    /* ntent intent = new Intent(this, AuthActivity.class);
+  public void showElephant(Integer id) {
+    Intent intent = new Intent(this, ShowElephantActivity.class);
+    ShowElephantActivity.SetExtraElephantId(intent, id);
     startActivity(intent);
-    finish(); */
   }
 
-  public Realm getRealm() {
-    return this.realm;
+  public Long getElephantsCount() {
+    return databaseController.getElephantsCount();
   }
+
+  public Long getElephantsSyncStatePendingCount() {
+    return databaseController.getElephantsSyncStatePendingCount();
+  }
+
+  public Long getElephantsReadyToSyncCount() {
+    return databaseController.getElephantsReadyToSyncCount();
+  }
+
+  public Long getElephantsInDraftCount() {
+    return databaseController.getElephantsDraftCount();
+  }
+
+  public List<Elephant> getLastVisitedElephants() {
+    return databaseController.getLastVisitedElephant();
+  }
+
 }

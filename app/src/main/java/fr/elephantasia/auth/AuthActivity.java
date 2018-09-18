@@ -6,6 +6,7 @@ import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +20,7 @@ import org.json.JSONObject;
 
 import fr.elephantasia.R;
 import fr.elephantasia.activities.home.HomeActivity;
-import fr.elephantasia.network.GetAuthTokenAsyncRequest;
+import fr.elephantasia.auth.network.GetAuthTokenAsyncRequest;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 /**
@@ -27,10 +28,26 @@ import fr.elephantasia.utils.KeyboardHelpers;
  */
 public class AuthActivity extends AccountAuthenticatorActivity {
 
-	private static final String EXTRA_LAUNCHED_BY_ACCOUNT_MANAGER = "launched_by_account_manager";
+	/**
+	 * Classifier
+	 */
 
-	public static final String EXTRA_USERNAME = "username";
-	public static final String EXTRA_AUTHTOKEN_TYPE = "authtoken_type";
+	static private final String EXTRA_LAUNCHED_BY_ACCOUNT_MANAGER = "launched_by_account_manager";
+
+	static public final String EXTRA_USERNAME = "username";
+	static public final String EXTRA_AUTHTOKEN_TYPE = "authtoken_type";
+
+	static public void setExtraLaunchedByAccountManager(Intent intent, boolean value) {
+		intent.putExtra(EXTRA_LAUNCHED_BY_ACCOUNT_MANAGER, value);
+	}
+
+	static public boolean getExtraLaunchedByAccountManager(Intent intent) {
+		return intent.getBooleanExtra(EXTRA_LAUNCHED_BY_ACCOUNT_MANAGER, false);
+	}
+
+	/**
+	 * Instance
+	 */
 
 	private GetAuthTokenAsyncRequest getAuthTokenAsyncRequest;
 
@@ -40,18 +57,11 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 	private String username;
 	private String password;
 
+	private TextInputLayout mUsernameLayout;
 	private EditText mUsernameEditText;
+	private TextInputLayout mPasswordLayout;
 	private EditText mPasswordEditText;
 	private Button mButton;
-
-
-	public static void setExtraLaunchedByAccountManager(Intent intent, boolean value) {
-		intent.putExtra(EXTRA_LAUNCHED_BY_ACCOUNT_MANAGER, value);
-	}
-
-	public static boolean getExtraLaunchedByAccountManager(Intent intent) {
-		return intent.getBooleanExtra(EXTRA_LAUNCHED_BY_ACCOUNT_MANAGER, false);
-	}
 
 	private boolean isGetAuthTokenRunning() {
 		return getAuthTokenAsyncRequest != null && getAuthTokenAsyncRequest.isRunning();
@@ -66,7 +76,9 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 		KeyboardHelpers.hideKeyboardListener(activityRootView, this);
 
 		mButton = findViewById(R.id.login_button);
+		mUsernameLayout = findViewById(R.id.login_id_layout);
 		mUsernameEditText = findViewById(R.id.login_id);
+		mPasswordLayout = findViewById(R.id.login_pwd_layout);
 		mPasswordEditText = findViewById(R.id.login_pwd);
 
 		mUsernameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -102,6 +114,7 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 		newAccount = username == null;
 
 		Account[] accounts = accountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
+
 		if (accounts.length > 0) {
 			if (launchedByAccountManager) {
 				new MaterialDialog.Builder(AuthActivity.this)
@@ -117,7 +130,11 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 					})
 					.show();
 			} else {
-				username = accounts[0].name;
+				 // TODO: check with steph and gilles if that what we want to do here
+				 final Intent intent = new Intent(this, HomeActivity.class);
+				 startActivity(intent);
+				 finish();
+				// username = accounts[0].name;
 			}
 		}
 
@@ -127,19 +144,19 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 
 	private boolean validUsername() {
 		if (mUsernameEditText.getText().toString().trim().length() == 0) {
-			mUsernameEditText.setError(getResources().getString(R.string.empty_username));
+			mUsernameLayout.setError(getResources().getString(R.string.empty_username));
 			return false;
 		}
-		mUsernameEditText.setError(null);
+    mUsernameLayout.setError(null);
 		return true;
 	}
 
 	private boolean validPassword() {
 		if (mPasswordEditText.getText().toString().length() == 0) {
-			mPasswordEditText.setError(getResources().getString(R.string.empty_password));
+			mPasswordLayout.setError(getResources().getString(R.string.empty_password));
 			return false;
 		}
-		mPasswordEditText.setError(null);
+    mPasswordLayout.setError(null);
 		return true;
 	}
 
@@ -148,10 +165,10 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 		password = mPasswordEditText.getText().toString();
 
 		if (!isGetAuthTokenRunning()) {
-			getAuthTokenAsyncRequest = new GetAuthTokenAsyncRequest(getApplicationContext(), username, password,
+			getAuthTokenAsyncRequest = new GetAuthTokenAsyncRequest(username, password,
 				new GetAuthTokenAsyncRequest.Listener() {
 				@Override
-				public void onFinish(JSONObject json) {
+				public void onSuccess(JSONObject json) {
 					try {
 						onAuthenticationResult(json.getString("token"));
 					} catch (JSONException e) {
@@ -165,6 +182,9 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 						okDialog("Network Error", "Try again later");
 					} else if (code == 401) {
 						okDialog("Bad credentials", "Enter correct credentials");
+					}
+					else if (code == 200) {
+						okDialog("Server error", "No response from the server");
 					}
 					Log.i("getAuthToken", "error");
 					refreshLoginButton();

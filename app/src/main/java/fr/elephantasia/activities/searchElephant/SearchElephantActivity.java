@@ -1,79 +1,100 @@
 package fr.elephantasia.activities.searchElephant;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.EditText;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 
-import org.parceler.Parcels;
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.elephantasia.R;
-import fr.elephantasia.database.model.Elephant;
-import fr.elephantasia.databinding.SearchElephantActivityBinding;
-import fr.elephantasia.utils.KeyboardHelpers;
+import fr.elephantasia.activities.searchElephant.fragments.SearchElephantFragment;
 
 public class SearchElephantActivity extends AppCompatActivity {
 
-  // Extras
-  public static final String EXTRA_SEARCH_ELEPHANT = "extra_search_elephant";
-  public static final String EXTRA_ELEPHANT_ID = "EXTRA_ELEPHANT_ID";
+  /**
+   * Classifier
+   */
 
-  // Request code
-  public static final int REQUEST_ELEPHANT_SELECTED = 1;
+  static private final int REQUEST_SELECT_ELEPHANT = 1;
 
-  // Views Binding
+  static private final String EXTRA_ACTION = "SEA.EXTRA_ACTION";
+  static private final String EXTRA_ELEPHANT_ID = "SEA.EXTRA_ELEPHANT_ID";
+
+  static public void SetExtraAction(@NonNull Intent intent, String action) {
+    intent.putExtra(EXTRA_ACTION, action);
+  }
+
+  static public void SetExtraElephantId(@NonNull Intent intent, Integer id) {
+    intent.putExtra(EXTRA_ELEPHANT_ID, id);
+  }
+
+  @Nullable
+  static public String GetExtraAction(@NonNull Intent intent) {
+    return intent.getStringExtra(EXTRA_ACTION);
+  }
+
+  @NonNull
+  static public Integer GetExtraElephantId(@NonNull Intent intent) {
+    return intent.getIntExtra(EXTRA_ELEPHANT_ID, -1);
+  }
+
+  /**
+   * Instance
+   */
+
   @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.mte_input_layout) TextInputLayout mteInputLayout;
-  @BindView(R.id.mte_input) EditText mteInput;
+  @BindView(R.id.search_button) FloatingActionButton searchButton;
 
-  // Attr
-  private Elephant elephant = new Elephant();
-
-  // Listener
-  @OnClick(R.id.mte_checkbox)
-  void displayMteInput() {
-    if (elephant.mteOwner) {
-      mteInputLayout.setVisibility(View.VISIBLE);
-    } else {
-      mteInputLayout.setVisibility(View.GONE);
-      mteInput.setText(null);
-      elephant.mteNumber = null;
-    }
-  }
-
-  public SearchElephantActivity() {
-    elephant.male = true;
-    elephant.female = true;
-  }
-
-  // Listeners Binding
-  @OnClick(R.id.search_button)
-  public void searchElephant() {
-    Intent intent = new Intent(this, SearchElephantResultActivity.class);
-    intent.setAction(getIntent().getAction());
-    intent.putExtra(EXTRA_SEARCH_ELEPHANT, Parcels.wrap(elephant));
-    startActivityForResult(intent, REQUEST_ELEPHANT_SELECTED);
-  }
+  private SearchElephantFragment fragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    SearchElephantActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.search_elephant_activity);
-    binding.setE(elephant);
+    setContentView(R.layout.search_elephant_activity);
     ButterKnife.bind(this);
-    setSupportActionBar(toolbar);
 
-    if (getSupportActionBar() != null) {
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    setToolbar();
+    setFragment();
+    setSearchButton();
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.search_activity_menu, menu);
+
+    MenuItem resetFilter = menu.findItem(R.id.reset_filter);
+    resetFilter.setIcon(
+      new IconicsDrawable(this)
+        .icon(CommunityMaterial.Icon.cmd_filter_remove_outline)
+        .color(Color.WHITE)
+        .sizeDp(22)
+    );
+
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == R.id.reset_filter) {
+      fragment.reset();
+      return true;
     }
-    KeyboardHelpers.hideKeyboardListener(binding.getRoot(), this);
+    return false;
   }
 
   @Override
@@ -91,12 +112,49 @@ public class SearchElephantActivity extends AppCompatActivity {
       Intent resultIntent = new Intent();
 
       switch (requestCode) {
-        case (REQUEST_ELEPHANT_SELECTED):
-          resultIntent.putExtra(EXTRA_ELEPHANT_ID, data.getIntExtra(EXTRA_ELEPHANT_ID, -1));
+        case (REQUEST_SELECT_ELEPHANT):
+          SetExtraElephantId(resultIntent, GetExtraElephantId(data));
           setResult(RESULT_OK, resultIntent);
           finish();
           break;
       }
     }
   }
+
+  private void setToolbar() {
+    setSupportActionBar(toolbar);
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+  }
+
+  private void setFragment() {
+    fragment = new SearchElephantFragment();
+    getSupportFragmentManager().beginTransaction()
+      .replace(R.id.search_fragment, fragment)
+      .commit();
+  }
+
+  private void setSearchButton() {
+    searchButton.setImageDrawable(
+      new IconicsDrawable(this)
+        .icon(MaterialDesignIconic.Icon.gmi_search)
+        .color(Color.WHITE)
+        .sizeDp(22)
+    );
+  }
+
+  @OnClick(R.id.search_button)
+  void searchElephant() {
+    if (fragment.isFieldsValid()) {
+      String action = SearchElephantActivity.GetExtraAction(getIntent());
+      Intent intent = new Intent(this, SearchElephantResultActivity.class);
+      SearchElephantResultActivity.SetExtraAction(intent, action);
+      SearchElephantResultActivity.SetExtraElephant(intent, fragment.getElephant());
+      startActivityForResult(intent, REQUEST_SELECT_ELEPHANT);
+    } else {
+      Toast.makeText(this, "You must fill at least one field", Toast.LENGTH_SHORT).show();
+    }
+  }
+
 }

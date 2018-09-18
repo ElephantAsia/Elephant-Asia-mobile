@@ -75,10 +75,9 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
-          android:checked="@={e.male}"
           android:duplicateParentState="false"
           android:gravity="center"
-          android:text="@string/male"
+          android:text="Male *"
           />
 
         <RadioButton
@@ -86,9 +85,8 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
-          android:checked="@={e.female}"
           android:gravity="center"
-          android:text="@string/female"
+          android:text="Female *"
           />
 
       </RadioGroup>

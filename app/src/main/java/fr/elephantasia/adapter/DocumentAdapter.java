@@ -14,9 +14,9 @@ import java.util.List;
 
 import fr.elephantasia.R;
 import fr.elephantasia.asyncTasks.LoadBitmapAsyncTask;
-import fr.elephantasia.customView.RoundedImageView;
 import fr.elephantasia.database.model.Document;
-import fr.elephantasia.refactor.interfaces.LoadBitmapInterface;
+import fr.elephantasia.interfaces.LoadBitmapInterface;
+import fr.elephantasia.view.RoundedImageView;
 
 public class DocumentAdapter extends ArrayAdapter<Document> {
 

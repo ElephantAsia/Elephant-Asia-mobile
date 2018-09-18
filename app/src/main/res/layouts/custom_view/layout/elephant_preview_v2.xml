@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/card"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:layout_margin="8dp"
+  android:foreground="?android:attr/selectableItemBackground"
+  app:cardCornerRadius="8dp"
+  app:cardElevation="8dp"
+  app:cardUseCompatPadding="true">
+
+  <android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.FloatingActionButton
+      android:id="@+id/select"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:layout_marginTop="172dp"
+      android:clickable="true"
+      android:focusable="true"
+      app:fabSize="mini"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@color/common_google_signin_btn_text_light_disabled"/>
+
+  <android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.FloatingActionButton
+      android:id="@+id/select_faked"
+      android:visibility="invisible"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:layout_marginTop="172dp"
+      android:clickable="true"
+      android:focusable="true"
+      app:fabSize="mini"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@color/common_google_signin_btn_text_light_disabled"/>
+
+    <ImageView
+      android:id="@+id/imageView"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:adjustViewBounds="true"
+      android:contentDescription="@string/elephant_preview"
+      android:cropToPadding="false"
+      android:scaleType="centerCrop"
+      android:src="@drawable/elephant_asie"
+      app:layout_constraintBottom_toTopOf="@+id/guideline"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"/>
+
+    <android.support.constraint.Guideline
+      android:id="@+id/guideline"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      app:layout_constraintGuide_begin="200dp"/>
+
+    <android.support.design.widget.FloatingActionButton
+      android:id="@+id/consultation"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:layout_marginTop="172dp"
+      android:clickable="true"
+      android:focusable="true"
+      app:fabSize="mini"
+      app:layout_constraintEnd_toStartOf="@id/select_faked"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@color/common_google_signin_btn_text_light_disabled"/>
+
+    <TextView
+      android:id="@+id/name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="32dp"
+      android:text="name"
+      android:textColor="@color/primary"
+      android:textSize="16sp"
+      android:textStyle="bold"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/guideline"/>
+
+    <TextView
+      android:id="@+id/localization"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:text="Languedoc, Herault, Montpellier"
+      android:textColor="@color/primary"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/name"/>
+
+    <TextView
+      android:id="@+id/db_status"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="16dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:text="Unchanged"
+      android:textColor="@color/primary"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/db_status_title"/>
+
+    <TextView
+      android:id="@+id/registration_id"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="16dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      android:text="412124917249"
+      android:textColor="@color/primary"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/registration_id_title"/>
+
+    <TextView
+      android:id="@+id/mte_id"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="16dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      android:text="NS124151"
+      android:textColor="@color/primary"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintStart_toStartOf="@+id/guideline8"
+      app:layout_constraintTop_toBottomOf="@+id/mte_id_title"/>
+
+    <TextView
+      android:id="@+id/age"
+      android:layout_width="wrap_content"
+      android:layout_height="0dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:text="40"
+      android:textColor="@color/primary"
+      app:layout_constraintStart_toStartOf="@+id/guideline8"
+      app:layout_constraintTop_toBottomOf="@+id/age_title"/>
+
+    <TextView
+      android:id="@+id/age_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="32dp"
+      android:text="Age"
+      android:textAllCaps="true"
+      android:textColor="@color/accent"
+      app:layout_constraintStart_toStartOf="@+id/guideline8"
+      app:layout_constraintTop_toBottomOf="@+id/localization"/>
+
+    <TextView
+      android:id="@+id/db_status_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="16dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="32dp"
+      android:capitalize="characters"
+      android:text="database status"
+      android:textAllCaps="true"
+      android:textColor="@color/accent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/localization"/>
+
+    <TextView
+      android:id="@+id/registration_id_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="16dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="32dp"
+      android:text="Registration ID"
+      android:textAllCaps="true"
+      android:textColor="@color/accent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/db_status"/>
+
+    <TextView
+      android:id="@+id/mte_id_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="32dp"
+      android:text="MTE ID"
+      android:textAllCaps="true"
+      android:textColor="@color/accent"
+      app:layout_constraintStart_toStartOf="@+id/guideline8"
+      app:layout_constraintTop_toBottomOf="@+id/age"/>
+
+    <android.support.constraint.Guideline
+      android:id="@+id/guideline8"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="191dp"
+      android:layout_marginStart="192dp"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintGuide_begin="192dp"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"/>
+
+  </android.support.constraint.ConstraintLayout>
+
+  <FrameLayout
+    android:id="@+id/select_mask"
+    android:visibility="gone"
+    android:background="@color/grey_light_50"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+  </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

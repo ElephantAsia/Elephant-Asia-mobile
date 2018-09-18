@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <TextView
+    android:id="@+id/no_result"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:text="@string/no_item_found"
+    android:textColor="@color/grey_light_100"
+    android:textSize="20sp"
+    android:visibility="gone"/>
+
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/result_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"/>
+
+</android.support.constraint.ConstraintLayout>

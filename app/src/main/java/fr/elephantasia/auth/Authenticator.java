@@ -10,7 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import fr.elephantasia.network.GetAuthTokenRequest;
+import fr.elephantasia.auth.network.GetAuthTokenRequest;
 import fr.elephantasia.utils.TextHelpers;
 
 /**

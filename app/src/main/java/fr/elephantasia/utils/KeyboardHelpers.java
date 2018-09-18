@@ -19,16 +19,19 @@ public class KeyboardHelpers {
    */
   public static void hideSoftKeyboard(Activity activity) {
     InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-
     View currentFocus = activity.getCurrentFocus();
-    if (currentFocus != null) {
+
+    if (currentFocus != null && inputMethodManager != null) {
       inputMethodManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
     }
   }
 
   public static void showSoftKeyboard(Context context, View view) {
     InputMethodManager inputMethodManager = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-    inputMethodManager.toggleSoftInputFromWindow(view.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+
+    if (inputMethodManager != null) {
+      inputMethodManager.toggleSoftInputFromWindow(view.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+    }
   }
 
   /**

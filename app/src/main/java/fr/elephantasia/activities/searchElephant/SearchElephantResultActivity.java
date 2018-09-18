@@ -2,77 +2,89 @@ package fr.elephantasia.activities.searchElephant;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
-import fr.elephantasia.adapter.SearchElephantAdapter;
-import fr.elephantasia.customView.ElephantPreview;
+import fr.elephantasia.activities.searchElephant.adapters.ElephantsAdapter;
+import fr.elephantasia.activities.searchElephant.fragments.SearchElephantResultFragment;
+import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Elephant;
-import io.realm.Case;
-import io.realm.OrderedRealmCollection;
-import io.realm.Realm;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
-
-import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_ELEPHANT_ID;
-import static fr.elephantasia.activities.searchElephant.SearchElephantActivity.EXTRA_SEARCH_ELEPHANT;
-import static fr.elephantasia.database.model.Elephant.CHIPS1;
-import static fr.elephantasia.database.model.Elephant.FEMALE;
-import static fr.elephantasia.database.model.Elephant.MALE;
-import static fr.elephantasia.database.model.Elephant.MTE_NUMBER;
-import static fr.elephantasia.database.model.Elephant.MTE_OWNER;
-import static fr.elephantasia.database.model.Elephant.NAME;
-import static fr.elephantasia.database.model.Elephant.STATE;
+import fr.elephantasia.view.ElephantPreview;
 
 public class SearchElephantResultActivity extends AppCompatActivity {
 
-  public static String SEARCH_ALL = "SEARCH_ALL";
-  public static String SEARCH_PENDING = "SEARCH_PENDING";
-  public static String SEARCH_DRAFT = "SEARCH_DRAFT";
-  public static String SEARCH_SAVED = "SEARCH_SAVED";
+  /**
+   * Classifier
+   */
 
-  // View Binding
-  @BindView(R.id.result_view) RecyclerView resultList;
-  @BindView(R.id.no_result) TextView noResult;
+  static public final String EXTRA_ACTION = "extra.action";
+  static public final String EXTRA_ELEPHANT = "extra.elephant";
+
+  static public final String SEARCH_ALL = "SEARCH_ALL";
+  static public final String SEARCH_PENDING = "SEARCH_PENDING";
+  static public final String SEARCH_DRAFT = "SEARCH_DRAFT";
+  static public final String SEARCH_SAVED = "SEARCH_SAVED";
+
+  static public void SetExtraAction(@NonNull Intent intent, String action) {
+    intent.putExtra(EXTRA_ACTION, action);
+  }
+
+  static public void SetExtraElephant(@NonNull Intent intent, Elephant e) {
+    intent.putExtra(EXTRA_ELEPHANT, Parcels.wrap(e));
+  }
+
+  @Nullable
+  static public String GetExtraAction(@NonNull Intent intent) {
+    return intent.getStringExtra(EXTRA_ACTION);
+  }
+
+  @Nullable
+  static public Elephant GetExtraElephant(@NonNull Intent intent) {
+    return Parcels.unwrap(intent.getParcelableExtra(EXTRA_ELEPHANT));
+  }
+
+  /**
+   * Instance
+   */
+
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.title) TextView toolbarTitle;
 
-
-  // Attr
-  private SearchElephantAdapter adapter;
-  private Realm realm;
+  private SearchElephantResultFragment fragment;
+  private ElephantsAdapter adapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.search_elephant_result_activity);
     ButterKnife.bind(this);
-    realm = Realm.getDefaultInstance();
 
-    resultList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+    setToolbar();
+    setFragment();
+    setAdapter();
+  }
 
+  @Override
+  protected void onResume() {
+    super.onResume();
     displaySearchResult();
-
-    setSupportActionBar(toolbar);
-    if (getSupportActionBar() != null) {
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
   }
 
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    realm.close();
   }
 
   @Override
@@ -82,64 +94,23 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     return true;
   }
 
-  private void displaySearchResult() {
-    OrderedRealmCollection<Elephant> results = searchElephants();
-
-    toolbarTitle.setText(String.format(getString(R.string.search_result), results.size()));
-
-    if (!results.isEmpty()) {
-      initAdapter(results);
-      resultList.setAdapter(adapter);
-    } else {
-      resultList.setVisibility(View.GONE);
-      noResult.setVisibility(View.VISIBLE);
+  private void setToolbar() {
+    setSupportActionBar(toolbar);
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
   }
 
-  private RealmResults<Elephant> searchElephants() {
-    RealmQuery<Elephant> query = realm.where(Elephant.class);
-
-    Elephant e = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_SEARCH_ELEPHANT));
-    String action = getIntent().getAction();
-
-    if (e != null) {
-      query.contains(NAME, e.name, Case.INSENSITIVE);
-
-      if (e.chips1 != null) {
-        query.contains(CHIPS1, e.chips1, Case.INSENSITIVE);
-      }
-
-      if (!e.male) {
-        query.equalTo(MALE, false);
-      }
-
-      if (!e.female) {
-        query.equalTo(FEMALE, false);
-      }
-
-      if (e.mteOwner) {
-        if (e.mteNumber != null) {
-          query.equalTo(MTE_NUMBER, e.mteNumber);
-        } else {
-          query.equalTo(MTE_OWNER, true);
-        }
-      }
-    } else if (action != null) {
-      if (action.equals(SEARCH_DRAFT)) {
-        query.equalTo(STATE, Elephant.StateValue.draft.name());
-      } else if (action.equals(SEARCH_PENDING)) {
-        query.equalTo(STATE, Elephant.StateValue.pending.name());
-      } else if (action.equals(SEARCH_SAVED)) {
-        query.equalTo(STATE, Elephant.StateValue.saved.name());
-      }
-    }
-
-    return query.findAll();
+  private void setFragment() {
+    fragment = new SearchElephantResultFragment();
+    getSupportFragmentManager().beginTransaction()
+      .replace(R.id.search_elephant_result_fragment, fragment)
+      .commit();
   }
 
-  private void initAdapter(OrderedRealmCollection<Elephant> realmResults) {
-    String action = getIntent().getAction();
-    SearchElephantAdapter.OnActionClickListener listener;
+  private void setAdapter() {
+    String action = GetExtraAction(getIntent());
+    ElephantsAdapter.ActionClickListener listener;
 
     if (action != null && action.equals(ElephantPreview.SELECT)) {
       listener = createElephantListener();
@@ -148,17 +119,44 @@ public class SearchElephantResultActivity extends AppCompatActivity {
       action = getString(R.string.edit);
     }
 
-    adapter = new SearchElephantAdapter(realmResults, listener, action);
+    adapter = new ElephantsAdapter(listener, action);
+    fragment.setAdapter(adapter);
   }
 
-  SearchElephantAdapter.OnActionClickListener createElephantListener() {
-    return new SearchElephantAdapter.OnActionClickListener() {
+  private void displaySearchResult() {
+    DatabaseController db = ((BaseApplication)getApplication()).getDatabaseController();
+    List<Elephant> results;
+
+    Elephant e = GetExtraElephant(getIntent());
+    if (e != null) {
+      results = db.search(e);
+    } else {
+      DatabaseController.SearchMode sm = DatabaseController.SearchMode.All;
+      String action = GetExtraAction(getIntent());
+      if (action != null) {
+        if (action.equals(SEARCH_DRAFT))
+          sm = DatabaseController.SearchMode.Draft;
+        else if (action.equals(SEARCH_PENDING))
+          sm = DatabaseController.SearchMode.Pending;
+        else if (action.equals(SEARCH_SAVED))
+          sm = DatabaseController.SearchMode.Saved;
+      }
+      results = db.searchElephantsByState(sm);
+    }
+
+    toolbarTitle.setText(String.format(getString(R.string.search_result), results.size()));
+    adapter.setData(results);
+    fragment.contentUpdated(results.isEmpty());
+  }
+
+  private ElephantsAdapter.ActionClickListener createElephantListener() {
+    return new ElephantsAdapter.ActionClickListener() {
       @Override
       public void onActionClick(Elephant elephant) {
         Intent resultIntent = getIntent();
 
         if (elephant != null) {
-          resultIntent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+          SearchElephantActivity.SetExtraElephantId(resultIntent, elephant.id);
           setResult(RESULT_OK, resultIntent);
           finish();
         }
@@ -166,17 +164,17 @@ public class SearchElephantResultActivity extends AppCompatActivity {
     };
   }
 
-  SearchElephantAdapter.OnActionClickListener createEditListener() {
-    return new SearchElephantAdapter.OnActionClickListener() {
+  private ElephantsAdapter.ActionClickListener createEditListener() {
+    return new ElephantsAdapter.ActionClickListener() {
       @Override
       public void onActionClick(Elephant elephant) {
         Intent intent = new Intent(SearchElephantResultActivity.this, ManageElephantActivity.class);
-
         if (elephant != null) {
-          intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
+          ManageElephantActivity.SetExtraElephantId(intent, elephant.id);
           startActivity(intent);
         }
       }
     };
   }
+
 }

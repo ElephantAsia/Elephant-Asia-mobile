@@ -10,7 +10,7 @@ import android.widget.Spinner;
 
 public class SpinnerBindingUtil {
 
-  @BindingAdapter(value = {"bind:selectedValue", "bind:selectedValueAttrChanged"}, requireAll = false)
+  @BindingAdapter(value = {"selectedValue", "selectedValueAttrChanged"}, requireAll = false)
   public static void bindSpinnerData(Spinner pSpinner, String newSelectedValue, final InverseBindingListener newTextAttrChanged) {
     pSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       @Override
@@ -28,7 +28,7 @@ public class SpinnerBindingUtil {
     }
   }
 
-  @InverseBindingAdapter(attribute = "bind:selectedValue", event = "bind:selectedValueAttrChanged")
+  @InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
   public static String captureSelectedValue(Spinner pSpinner) {
     return (String) pSpinner.getSelectedItem();
   }

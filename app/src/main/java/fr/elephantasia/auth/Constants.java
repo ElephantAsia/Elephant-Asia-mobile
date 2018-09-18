@@ -6,7 +6,7 @@ package fr.elephantasia.auth;
 
 public class Constants {
 
-	public static final String ACCOUNT_TYPE = "fr.elephantasia.elephantasia.elephantasia-mobile";
-	public static final String AUTHTOKEN_TYPE = "fr.elephantasia.elephantasia.elephantasia-mobile";
+  public static final String ACCOUNT_TYPE = "fr.elephantasia.elephantasia.elephantasia-mobile";
+  public static final String AUTHTOKEN_TYPE = "fr.elephantasia.elephantasia.elephantasia-mobile";
 
 }

@@ -6,6 +6,10 @@ package fr.elephantasia.network;
 
 public abstract class RequestSyncTask<ReturnType> extends Request {
 
+	protected RequestSyncTask() {
+		super(null);
+	}
+
 	public abstract ReturnType execute();
 
 }

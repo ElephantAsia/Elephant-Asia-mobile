@@ -1,26 +1,33 @@
 package fr.elephantasia.network;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Map;
 
-/**
- * Created by Stephane on 05/01/2018.
- */
 public abstract class RequestAsyncTask<ResultType> extends AsyncTask<Void, Integer, ResultType> {
 
-	private Context context;
-	private Request request = new Request();
+	private Request request; // BECAUSE NO MULTIPLE INHERITANCE - JAVA SUCKS !
 	private boolean running;
 
-	RequestAsyncTask(@NonNull Context context) {
-		this.context = context;
+	static protected final int PROGRESS_UPLOAD = 1;
+	static protected final int PROGRESS_RESPONSE = 2;
+
+	protected RequestAsyncTask() {
+		request = new Request(new Request.Listener() {
+			@Override
+			public void uploadProgressUpdate(int currentProgress) {
+				publishProgress(currentProgress, PROGRESS_UPLOAD);
+			}
+			@Override
+			public void responseProgressUpdate(int currentProgress) {
+				publishProgress(currentProgress, PROGRESS_RESPONSE);
+			}
+		});
 	}
 
 	public void execute() {
@@ -31,20 +38,34 @@ public abstract class RequestAsyncTask<ResultType> extends AsyncTask<Void, Integ
 		return (running);
 	}
 
-	@NonNull
-	protected Context getContext() {
-		return (context);
-	}
-
 	@Override
 	@CallSuper
 	protected void onPreExecute() {
 		running = true;
 	}
 
-	void POSTUrlEncoded(String url, Map<String, String> params) {
+	protected void POSTUrlEncoded(String url, Map<String, String> params) {
 		request.POSTUrlEncoded(url, params);
 	}
+
+	protected void GET(String url) {
+		request.GET(url, getHeader(), getParams());
+	}
+
+	protected void POSTJSON(String url) { request.POSTJSON(url, getHeader(), getBody()); }
+
+	@Nullable
+	protected Map<String, String> getParams() {
+    return null;
+  }
+
+  @Nullable
+  protected Map<String, String> getHeader() {
+    return null;
+  }
+
+  @Nullable
+	protected byte[] getBody() { return null; }
 
 	@Override
 	@Nullable
@@ -66,12 +87,14 @@ public abstract class RequestAsyncTask<ResultType> extends AsyncTask<Void, Integ
 		return request.getResponseCode();
 	}
 
-	protected JSONObject getJson() {
-		return request.getJson();
+	protected JSONObject getJsonObject() {
+		return request.getJsonObjectResponse();
 	}
 
+	protected JSONArray getJsonArray() { return  request.getJsonArrayResponse(); }
+
 	protected JSONObject getJsonError() {
-		return request.getJsonError();
+		return request.getJsonErrorResponse();
 	}
 
 	@Override
