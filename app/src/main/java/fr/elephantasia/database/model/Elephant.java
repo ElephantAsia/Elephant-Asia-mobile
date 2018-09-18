@@ -2,15 +2,14 @@ package fr.elephantasia.database.model;
 
 import android.text.TextUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -261,21 +260,23 @@ public class Elephant extends RealmObject
 
   public JSONObject toJsonObject(@Nullable Map<String, Contact> added) throws JSONException {
     JSONObject jsonObject = new JSONObject();
-    List<String> cuids = new ArrayList<>();
+    JSONArray contactsArray = new JSONArray();
 
     jsonObject.put("name", name);
     jsonObject.put("nickname", nickName);
     jsonObject.put("sex", sex);
     jsonObject.put("cuid", cuid);
     for (Contact contact : contacts) {
+      JSONObject contactObj = new JSONObject();
       // contact.setSyncState(Pending) => upload response
       // contact.setSyncState(null) => download
       if (added != null) {
         added.put(contact.getCuid(), contact);
       }
-      cuids.add(contact.getCuid());
+      contactObj.put("cuid", contact.getCuid());
+      contactsArray.put(contactObj);
     }
-    jsonObject.put("contacts", cuids);
+    jsonObject.put("contacts", contactsArray);
     return jsonObject;
   }
 
