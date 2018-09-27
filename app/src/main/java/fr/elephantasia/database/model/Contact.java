@@ -4,6 +4,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
 
+import javax.annotation.Nullable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -80,12 +82,20 @@ public class Contact extends RealmObject
     this.cuid = cuid;
   }
 
-  public void setSyncState(SyncState syncState) {
-    this.syncState = syncState.name();
+  public void setSyncState(@Nullable SyncState syncState) {
+    if (syncState == null) {
+      this.syncState = null;
+    } else {
+      this.syncState = syncState.name();
+    }
   }
 
-  public void setDbState(DbState dbState) {
-    this.dbState = dbState.name();
+  public void setDbState(@Nullable DbState dbState) {
+    if (dbState == null) {
+      this.dbState = null;
+    } else {
+      this.dbState = dbState.name();
+    }
   }
 
   public JSONObject toJsonObject() throws JSONException {

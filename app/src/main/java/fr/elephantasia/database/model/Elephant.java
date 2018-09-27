@@ -1,6 +1,7 @@
 package fr.elephantasia.database.model;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -268,7 +269,7 @@ public class Elephant extends RealmObject
     jsonObject.put("cuid", cuid);
     for (Contact contact : contacts) {
       JSONObject contactObj = new JSONObject();
-      // contact.setSyncState(Pending) => upload response
+      // contact.setSyncState(Pending) => upload response (done?)
       // contact.setSyncState(null) => download
       if (added != null) {
         added.put(contact.getCuid(), contact);
@@ -278,6 +279,27 @@ public class Elephant extends RealmObject
     }
     jsonObject.put("contacts", contactsArray);
     return jsonObject;
+  }
+
+  public void wasUploaded(final String cuid) {
+    if (!isPresentInServerDb()) {
+      try {
+        this.cuid = cuid;
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+    syncState = Elephant.SyncState.Pending.name();
+    dbState = null;
+    for (Contact contact : contacts) {
+      Log.w("wasuploaded_contact", contact.getFullName());
+      contact.setSyncState(Contact.SyncState.Pending);
+      contact.setDbState(null);
+    }
+  }
+
+  public void addContact(Contact contact) {
+    contacts.add(contact);
   }
 
 }

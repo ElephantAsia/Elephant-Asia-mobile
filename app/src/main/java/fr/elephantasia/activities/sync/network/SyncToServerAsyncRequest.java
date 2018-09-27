@@ -52,9 +52,9 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
   @Override
   protected Boolean doInBackground(@Nullable Void... params) {
     serialize();
-//    if (!upload())
-//      return false;
-//    updateLocalDb();
+    if (!upload())
+      return false;
+    updateLocalDb();
     return true;
   }
 
@@ -117,22 +117,26 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
 
     listener.onUpdatingLocalDb();
     dbController.beginTransaction();
+    Log.w("reponse", response.toString());
     for (int i = 0 ; i < elephants.size() ; ++i) {
       publishProgress(i);
       try {
         Thread.sleep(250); // demo
-      } catch (Exception e) {}
-      Elephant elephant = elephants.get(i);
-      elephant.syncState = Elephant.SyncState.Pending.name();
-      elephant.dbState = null;
-      if (!elephant.isPresentInServerDb()) {
-        try {
-          elephant.cuid = response.getJSONObject(i).getString("cuid");
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
+        Elephant elephant = elephants.get(i);
+        elephant.wasUploaded(response.getJSONObject(i).getString("cuid"));
+        dbController.insertOrUpdate(elephant);
+      } catch (Exception e) {
+        e.printStackTrace();
       }
-      dbController.insertOrUpdate(elephant);
+//      elephant.syncState = Elephant.SyncState.Pending.name();
+//      elephant.dbState = null;
+//      if (!elephant.isPresentInServerDb()) {
+//        try {
+//          elephant.cuid = response.getJSONObject(i).getString("cuid");
+//        } catch (Exception e) {
+//          e.printStackTrace();
+//        }
+//      }
     }
     // for each contact in contacts
     //  contact.setSyncState(Contact.SyncState.Pending);
