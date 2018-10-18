@@ -49,6 +49,7 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
       return false;
     if (!save())
       return false;
+    // testDownloadContact();
     return true;
   }
 
@@ -86,6 +87,20 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
     return false;
   }
 
+  private void testDownloadContact() {
+    // for each c in contacts (contacts array in json)
+    //   hashmap.put(c.cuid, c)
+    // for each e in elephants (elephants array in json)
+    //   if e not existing
+    //   endif
+    //   else
+    //   endelse
+    //   for each c in e.getContact()
+    //     c.setSyncState(null)
+    //     c.setDbState(null)
+    //     e.addContact(hashmap.get(c.cuid));
+  }
+
   private boolean save() {
     this.state = State.Saving;
 
@@ -93,6 +108,18 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
     DatabaseController dbController = new DatabaseController();
     try {
       JSONObject result = getJsonObject();
+
+//      int maxLogSize = 200;
+//      for (int i = 0 ; i < result.toString().length() / maxLogSize ; i++) {
+//        int start = i * maxLogSize;
+//        int end = (i+1) * maxLogSize;
+//        end = (end > result.toString().length()) ? result.toString().length() : end;
+//        Log.w("downloaded"+i, result.toString().substring(start, end));
+//      }
+
+      // JSONArray contacts = result.getJSONArray("contacts");
+      // Log.w("contacts_dl", ""+ contacts.length());
+
       JSONArray elephants = result.getJSONArray("elephants");
       if (elephants.length() == 0) {
         return true;
@@ -106,8 +133,9 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
         Elephant e = dbController.getElephantByCuid(newE.cuid);
         if (e == null) {
           // new elephant in our local db
-          newE.syncState = Elephant.SyncState.Downloaded.name();
-          dbController.insertOrUpdate(newE);
+          e = newE;
+          e.syncState = Elephant.SyncState.Downloaded.name();
+          dbController.insertOrUpdate(e);
         } else {
           // if (e.dbState == null && e.syncState == null) {
           // existing elephant in our local db
@@ -121,12 +149,13 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
           dbController.insertOrUpdate(e);
         }
       }
+      dbController.commitTransaction();
     } catch (Exception e) {
       e.printStackTrace();
       dbController.cancelTransaction();
       return false;
     }
-    dbController.commitTransaction();
+
     publishProgress(100);
     try { Thread.sleep(250); } catch (Exception e) {}
     return  true;
