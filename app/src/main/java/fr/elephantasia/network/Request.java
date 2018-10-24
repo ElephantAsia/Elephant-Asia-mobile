@@ -178,6 +178,11 @@ class Request {
             if (listener != null && contentLength != null) {
               listener.responseProgressUpdate((inputStr.length() * 100) / contentLength);
             }
+
+            try {
+              Thread.sleep(100); // demo
+            } catch (Exception e) {
+              }
           }
           if (httpResponseCode == 200) {
             try {

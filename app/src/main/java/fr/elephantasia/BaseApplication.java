@@ -5,9 +5,10 @@ import android.support.multidex.MultiDexApplication;
 
 import fr.elephantasia.database.DatabaseController;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
- * \brief Application's Entry point
+ * Application's entry point
  */
 public class BaseApplication extends MultiDexApplication {
 
@@ -17,6 +18,10 @@ public class BaseApplication extends MultiDexApplication {
   public void onCreate() {
     super.onCreate();
     Realm.init(this);
+    RealmConfiguration config = new RealmConfiguration.Builder()
+      .deleteRealmIfMigrationNeeded()
+      .build();
+    Realm.setDefaultConfiguration(config);
 
     databaseController = new DatabaseController();
   }
