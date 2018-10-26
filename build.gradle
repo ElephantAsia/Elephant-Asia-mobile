@@ -2,8 +2,8 @@
 
 buildscript {
     repositories {
-        jcenter()
         google()
+        jcenter() // should be listed as last repo see: https://stackoverflow.com/questions/50563407/could-not-find-play-services-basement-aar
     }
 
     dependencies {
@@ -17,10 +17,10 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
         maven { url "https://maven.google.com" }
         maven { url "https://jitpack.io" }
         google()
+        jcenter() // should be listed as last repo see: https://stackoverflow.com/questions/50563407/could-not-find-play-services-basement-aar
     }
 }
 
