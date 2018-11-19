@@ -140,6 +140,11 @@ public class AuthActivity extends AccountAuthenticatorActivity {
 
 		mUsernameEditText.setText(username);
 		mUsernameEditText.setEnabled(newAccount);
+
+		// TODO: to delete when login on the server side is fixed
+		final Intent intent = new Intent(this, HomeActivity.class);
+		startActivity(intent);
+		finish();
 	}
 
 	private boolean validUsername() {

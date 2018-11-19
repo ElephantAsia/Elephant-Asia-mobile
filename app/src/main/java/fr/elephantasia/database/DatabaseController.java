@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.database.model.ElephantNote;
 import io.realm.RealmResults;
 
 /**
@@ -58,16 +59,20 @@ public class DatabaseController {
     realmDB.insertOrUpdate(document);
   }
 
+  public void insertOrUpdate(Contact contact) {
+    realmDB.insertOrUpdate(contact);
+  }
+
+  public void insertOrUpdate(ElephantNote n) {
+    realmDB.insertOrUpdate(n);
+  }
+
   public void insertOrUpdate(Elephant elephant, List<Document> documents) {
     RealmDB.insertOrUpdateElephant(elephant, documents);
   }
 
   public void updateLastVisitedDateElephant(Integer id) {
     realmDB.updateLastVisitedDateElephant(id);
-  }
-
-  public void insertOrUpdate(Contact contact) {
-    realmDB.insertOrUpdate(contact);
   }
 
   public void delete(Elephant elephant) {

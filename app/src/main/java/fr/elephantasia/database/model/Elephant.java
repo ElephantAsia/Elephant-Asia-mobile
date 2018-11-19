@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import fr.elephantasia.database.parceler.ContactParcelConverter;
+import fr.elephantasia.database.parceler.ElephantNoteParcelConverter;
 import fr.elephantasia.database.parceler.ElephantParcelConverter;
 import fr.elephantasia.utils.JsonHelpers;
 import fr.elephantasia.utils.TextHelpers;
@@ -104,10 +105,10 @@ public class Elephant extends RealmObject
 
   @ParcelPropertyConverter(ElephantParcelConverter.class)
   public RealmList<Elephant> children = new RealmList<>();
-
-  // Contact
   @ParcelPropertyConverter(ContactParcelConverter.class)
   public RealmList<Contact> contacts = new RealmList<>();
+  @ParcelPropertyConverter(ElephantNoteParcelConverter.class)
+  public RealmList<ElephantNote> notes = new RealmList<>();
 
   // Sync
   public boolean draft = false;
@@ -298,8 +299,8 @@ public class Elephant extends RealmObject
     }
   }
 
-  public void addContact(Contact contact) {
+  /* public void addContact(Contact contact) {
     contacts.add(contact);
-  }
+  } */
 
 }

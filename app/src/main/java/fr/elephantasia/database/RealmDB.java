@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.database.model.ElephantNote;
 import fr.elephantasia.utils.DateHelpers;
 import fr.elephantasia.utils.StaticTools;
 import io.realm.Case;
@@ -92,6 +93,15 @@ class RealmDB {
       c.id = GetNextId(realm, Contact.class, Contact.ID);
     }
     realm.insertOrUpdate(c);
+    end();
+  }
+
+  void insertOrUpdate(ElephantNote n) {
+    begin();
+    if (n.getId() == -1) {
+      n.setId(GetNextId(realm, ElephantNote.class, ElephantNote.ID));
+    }
+    realm.insertOrUpdate(n);
     end();
   }
 
@@ -270,6 +280,7 @@ class RealmDB {
     List<Elephant> elephants = realm.copyFromRealm(
       realm.where(Elephant.class)
       .isNotNull(Elephant.DB_STATE)
+      .notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
       .isNull(Elephant.SYNC_STATE)
       .equalTo(Elephant.DRAFT, false)
       .findAll()
@@ -299,6 +310,7 @@ class RealmDB {
     Realm realm = Realm.getDefaultInstance();
     Long count = realm.where(Elephant.class)
       .isNotNull(Elephant.DB_STATE)
+      .notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
       .isNull(Elephant.SYNC_STATE)
       .equalTo(Elephant.DRAFT, false)
       .count();

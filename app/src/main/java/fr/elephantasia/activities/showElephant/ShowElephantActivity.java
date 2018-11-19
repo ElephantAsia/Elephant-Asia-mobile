@@ -36,6 +36,8 @@ import fr.elephantasia.activities.addDocument.AddDocumentActivity;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.manageElephant.adapters.ViewPagerAdapter;
 import fr.elephantasia.activities.showDocument.ShowDocumentActivity;
+import fr.elephantasia.activities.showElephant.dialogs.AddObservationDialog;
+import fr.elephantasia.activities.showElephant.fragments.ObservationsFragment;
 import fr.elephantasia.activities.showElephant.fragments.ShowChildrenFragment;
 import fr.elephantasia.activities.showElephant.fragments.ShowDocumentFragment;
 import fr.elephantasia.activities.showElephant.fragments.ShowOverviewFragment;
@@ -44,6 +46,7 @@ import fr.elephantasia.adapter.DocumentAdapter;
 import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.database.model.ElephantNote;
 import fr.elephantasia.databinding.ShowElephantActivityBinding;
 
 import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.RESULT_DRAFT;
@@ -112,6 +115,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   private boolean fabIsOpen = false;
 
   private ShowDocumentFragment showDocumentFragment;
+  private ObservationsFragment observationsFragment;
 
   // Attr
   private Elephant elephant;
@@ -312,9 +316,11 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 
   private void setupViewPager(ViewPager viewPager) {
   	showDocumentFragment = new ShowDocumentFragment();
+  	observationsFragment = new ObservationsFragment();
 
     adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(new ShowOverviewFragment(), getString(R.string.overview));
+    adapter.addFragment(observationsFragment, "Observations");
     adapter.addFragment(new ShowParentageFragment(), getString(R.string.parentage));
     adapter.addFragment(new ShowChildrenFragment(), getString(R.string.children));
     adapter.addFragment(showDocumentFragment, getString(R.string.documents));
@@ -366,7 +372,6 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 	@OnClick(R.id.minifab_edit)
 	public void onEditClick() {
 		Intent intent = new Intent(this, ManageElephantActivity.class);
-		// intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id); // !
 		ManageElephantActivity.SetExtraElephantId(intent, elephant.id);
 		startActivityForResult(intent, REQUEST_ELEPHANT_EDITED);
 	}
@@ -379,7 +384,9 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 			.onPositive(new MaterialDialog.SingleButtonCallback() {
 				@Override
 				public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+				  databaseController.beginTransaction();
           databaseController.delete(elephant);
+          databaseController.commitTransaction();
 					finish();
 				}
 			})
@@ -394,5 +401,27 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 		startActivityForResult(intent, REQUEST_ADD_DOCUMENT);
 		onFabMenuTriggered();
 	}
+
+	@OnClick(R.id.minifab_addnote)
+  public void onAddNoteClick() {
+    new AddObservationDialog(this, new AddObservationDialog.Listener() {
+      @Override
+      public void onValidate(String p, String c, String d) {
+        onFabMenuBackgroundMaskClick();
+        viewPager.setCurrentItem(1);
+
+        ElephantNote note = new ElephantNote();
+        note.setPriority(ElephantNote.Priority.valueOf(p));
+        note.setCategory(ElephantNote.Category.valueOf(c));
+        note.setDescription(d);
+
+        databaseController.beginTransaction();
+        databaseController.insertOrUpdate(note);
+        elephant.notes.add(note);
+        databaseController.insertOrUpdate(elephant);
+        databaseController.commitTransaction();
+      }
+    }).show();
+  }
 
 }

@@ -94,6 +94,7 @@ public class ManageElephantActivity extends AppCompatActivity {
   private ProfilFragment profilFragment = new ProfilFragment();
   private RegistrationFragment registrationFragment = new RegistrationFragment();
   private ContactFragment contactFragment = new ContactFragment();
+  private DescriptionFragment descriptionFragment = new DescriptionFragment();
   private ParentageFragment parentageFragment = new ParentageFragment();
   private ChildrenFragment childrenFragment = new ChildrenFragment();
 
@@ -285,7 +286,7 @@ public class ManageElephantActivity extends AppCompatActivity {
     adapter.addFragment(profilFragment, getString(R.string.profil));
     adapter.addFragment(registrationFragment, getString(R.string.registration));
     adapter.addFragment(contactFragment, getString(R.string.contact));
-    adapter.addFragment(new DescriptionFragment(), getString(R.string.description));
+    adapter.addFragment(descriptionFragment, getString(R.string.description));
     adapter.addFragment(parentageFragment, getString(R.string.parentage));
     adapter.addFragment(childrenFragment, getString(R.string.children));
     viewPager.setAdapter(adapter);

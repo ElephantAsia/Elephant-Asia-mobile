@@ -190,4 +190,18 @@
   <string name="last_dl_sum"> Last download summary </string>
   <string name="last_up_sum"> Last upload summary </string>
 
+  <string-array name="obs_priorities">
+    <item>Low</item>
+    <item>Medium</item>
+    <item>High</item>
+  </string-array>
+
+  <string-array name="obs_categories">
+    <item>Medical</item>
+    <item>Physical</item>
+    <item>Administrative</item>
+    <item>Parentage</item>
+    <item>Other</item>
+  </string-array>
+
 </resources>
