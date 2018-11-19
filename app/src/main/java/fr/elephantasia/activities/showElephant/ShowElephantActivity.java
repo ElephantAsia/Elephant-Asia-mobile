@@ -20,6 +20,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -420,6 +421,14 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
         elephant.notes.add(note);
         databaseController.insertOrUpdate(elephant);
         databaseController.commitTransaction();
+
+				observationsFragment.refresh();
+      }
+
+      @Override
+      public void onError(String why) {
+        onFabMenuTriggered();
+        Toast.makeText(ShowElephantActivity.this, why, Toast.LENGTH_SHORT).show();
       }
     }).show();
   }

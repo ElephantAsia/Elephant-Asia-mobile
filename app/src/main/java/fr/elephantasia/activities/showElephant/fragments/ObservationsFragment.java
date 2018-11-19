@@ -16,7 +16,8 @@ import fr.elephantasia.database.model.Elephant;
 
 public class ObservationsFragment extends Fragment {
 
-  @BindView (R.id.list) ListView list;
+  @BindView(R.id.list) ListView list;
+  @BindView(R.id.no_item) View view;
 
   private ObservationsAdapter adapter;
   private Elephant elephant;
@@ -34,7 +35,18 @@ public class ObservationsFragment extends Fragment {
 
     ButterKnife.bind(this, view);
     list.setAdapter(adapter);
+    refresh();
     return (view);
+  }
+
+  public void refresh() {
+    if (elephant.notes.size() == 0) {
+      view.setVisibility(View.VISIBLE);
+      list.setVisibility(View.GONE);
+    } else {
+      view.setVisibility(View.GONE);
+      list.setVisibility(View.VISIBLE);
+    }
   }
 
 }

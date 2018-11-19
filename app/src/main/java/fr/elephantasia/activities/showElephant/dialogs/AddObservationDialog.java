@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.elephantasia.R;
 
@@ -16,6 +17,10 @@ public class AddObservationDialog {
 
   private Activity activity;
   private Listener listener;
+
+  @BindView(R.id.priority_spinner) Spinner priority;
+  @BindView(R.id.category_spinner) Spinner category;
+  @BindView(R.id.description) TextView desc;
 
   public AddObservationDialog(Activity activity, Listener listener) {
     this.activity = activity;
@@ -38,23 +43,23 @@ public class AddObservationDialog {
           View view = dialog.getCustomView();
 
           if (view != null) {
-            Spinner priority = view.findViewById(R.id.priority_spinner);
-            Spinner category = view.findViewById(R.id.category_spinner);
-            TextView desc = view.findViewById(R.id.description);
-            listener.onValidate(
-              String.valueOf(priority.getSelectedItem()),
-              String.valueOf(category.getSelectedItem()),
-              desc.getText().toString()
-            );
+            if (desc.getText().toString().trim().length() > 0) {
+              listener.onValidate(
+                String.valueOf(priority.getSelectedItem()),
+                String.valueOf(category.getSelectedItem()),
+                desc.getText().toString()
+              );
+            } else {
+              listener.onError("A note must have a description");
+            }
           }
         }
-      })
-      .build()
-      .show();
+      }).build().show();
   }
 
   public interface Listener {
     void onValidate(String p, String c, String d);
+    void onError(String why);
   }
 
 }

@@ -29,7 +29,8 @@
       android:id="@+id/category_spinner"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:entries="@array/obs_categories"/>
+      android:entries="@array/obs_categories"
+      android:prompt="@null"/>
 
   </LinearLayout>
 
@@ -57,7 +58,8 @@
       android:id="@+id/priority_spinner"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:entries="@array/obs_priorities"/>
+      android:entries="@array/obs_priorities"
+      android:prompt="@null"/>
 
   </LinearLayout>
 
