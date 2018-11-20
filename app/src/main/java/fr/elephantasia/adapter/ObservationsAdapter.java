@@ -12,9 +12,9 @@ import java.util.List;
 
 import fr.elephantasia.R;
 import fr.elephantasia.database.model.ElephantNote;
+import fr.elephantasia.utils.DateHelpers;
 
 public class ObservationsAdapter extends ArrayAdapter<ElephantNote> {
-
 
   public ObservationsAdapter(@NonNull Context context, @NonNull List<ElephantNote> objects) {
     super(context, 0, objects);
@@ -30,30 +30,37 @@ public class ObservationsAdapter extends ArrayAdapter<ElephantNote> {
     }
 
     if (note != null) {
-      refreshPriority(convertView, note);
       refreshCategory(convertView, note);
+      refreshPriority(convertView, note);
+      refreshDate(convertView, note);
       refreshDescription(convertView, note);
     }
     return convertView;
-  }
-
-  private void refreshPriority(View v, @NonNull ElephantNote note) {
-    TextView textView = v.findViewById(R.id.priority);
-
-    if (note.getPriority().equals(ElephantNote.Priority.Low.name())) {
-      textView.setTextColor(getContext().getResources().getColor(R.color.md_green));
-    } else if (note.getPriority().equals(ElephantNote.Priority.Medium.name())) {
-      textView.setTextColor(getContext().getResources().getColor(R.color.md_orange));
-    } else if (note.getPriority().equals(ElephantNote.Priority.High.name())) {
-      textView.setTextColor(getContext().getResources().getColor(R.color.md_red));
-    }
-    textView.setText(note.getPriority());
   }
 
   private void refreshCategory(View v, @NonNull ElephantNote note) {
     TextView textView = v.findViewById(R.id.category);
 
     textView.setText(note.getCategory());
+  }
+
+  private void refreshPriority(View v, @NonNull ElephantNote note) {
+    TextView textView = v.findViewById(R.id.priority);
+
+    if (note.getPriority().equals(ElephantNote.Prioriy.Low.getValue())) {
+      textView.setTextColor(getContext().getResources().getColor(R.color.md_green));
+    } else if (note.getPriority().equals(ElephantNote.Prioriy.Medium.getValue())) {
+      textView.setTextColor(getContext().getResources().getColor(R.color.md_orange));
+    } else if (note.getPriority().equals(ElephantNote.Prioriy.High.getValue())) {
+      textView.setTextColor(getContext().getResources().getColor(R.color.md_red));
+    }
+    textView.setText(ElephantNote.Prioriy.valueOf(note.getPriority()).toString());
+  }
+
+  private void refreshDate(View v, @NonNull ElephantNote note) {
+    TextView textView = v.findViewById(R.id.date);
+
+    textView.setText(DateHelpers.FriendlyUserStringDate(note.getCreatedAt()));
   }
 
   private void refreshDescription(View v, @NonNull ElephantNote note) {

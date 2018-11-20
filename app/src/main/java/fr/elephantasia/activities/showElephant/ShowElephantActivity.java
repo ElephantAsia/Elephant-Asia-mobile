@@ -3,6 +3,7 @@ package fr.elephantasia.activities.showElephant;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -25,8 +28,11 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.StackingBehavior;
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +44,7 @@ import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.manageElephant.adapters.ViewPagerAdapter;
 import fr.elephantasia.activities.showDocument.ShowDocumentActivity;
 import fr.elephantasia.activities.showElephant.dialogs.AddObservationDialog;
+import fr.elephantasia.activities.showElephant.dialogs.SortObservationsDialog;
 import fr.elephantasia.activities.showElephant.fragments.ObservationsFragment;
 import fr.elephantasia.activities.showElephant.fragments.ShowChildrenFragment;
 import fr.elephantasia.activities.showElephant.fragments.ShowDocumentFragment;
@@ -45,6 +52,7 @@ import fr.elephantasia.activities.showElephant.fragments.ShowOverviewFragment;
 import fr.elephantasia.activities.showElephant.fragments.ShowParentageFragment;
 import fr.elephantasia.adapter.DocumentAdapter;
 import fr.elephantasia.database.DatabaseController;
+import fr.elephantasia.database.DatabaseController.SortOrder;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.database.model.ElephantNote;
@@ -54,19 +62,10 @@ import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.R
 import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.RESULT_VALIDATE;
 
 /**
- ** STEPH NOTE : That would be nice if we make a class pour the fab menu.
+ ** STEPH NOTE : That would be nice if we make a class for the fab menu.
  * I will do that if we use fab menu again in an other part of the app.
  **/
 public class ShowElephantActivity extends AppCompatActivity implements DocumentAdapter.Listener {
-
-  private void loadExtraElephant() {
-    Integer id = GetExtraElephantId(getIntent());
-    if (id != -1) {
-      elephant = databaseController.getElephantById(id);
-    } else {
-			Log.w("ShowElephantActivity", "Incorrect ID");
-		}
-  }
 
   /**
    * Classifier
@@ -116,11 +115,22 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   private boolean fabIsOpen = false;
 
   private ShowDocumentFragment showDocumentFragment;
+
+  private static final Integer OBSERVATION_FRAGMENT_OFFSET = 1;
   private ObservationsFragment observationsFragment;
 
   // Attr
   private Elephant elephant;
 	private ViewPagerAdapter adapter;
+
+  private void loadExtraElephant() {
+    Integer id = GetExtraElephantId(getIntent());
+    if (id != -1) {
+      elephant = databaseController.getElephantById(id);
+    } else {
+      Log.w("ShowElephantActivity", "Incorrect ID");
+    }
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +155,11 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+      @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+      @Override public void onPageSelected(int position) { invalidateOptionsMenu(); }
+      @Override public void onPageScrollStateChanged(int state) {}
+    });
     setupViewPager(viewPager);
     tabLayout.setupWithViewPager(viewPager);
 
@@ -246,44 +261,58 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 		onSupportNavigateUp();
 	}
 
-  /* @Override
+  @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.show_elephant_options_menu, menu);
-    menu.findItem(R.id.edit_elephant).setIcon(editIcon);
-    menu.findItem(R.id.delete_elephant).setIcon(deleteIcon);
-    return true;
-  } */
 
-  /* @Override
+    Drawable filterIcon = new IconicsDrawable(this)
+      .icon(CommunityMaterial.Icon.cmd_filter_remove_outline)
+      .color(Color.WHITE)
+      .sizeDp(22);
+
+    Drawable sortIcon = new IconicsDrawable(this)
+      .icon(CommunityMaterial.Icon.cmd_sort)
+      .color(Color.WHITE)
+      .sizeDp(22);
+
+    menu.findItem(R.id.obs_filter).setIcon(filterIcon);
+    menu.findItem(R.id.obs_sort).setIcon(sortIcon);
+    return true;
+  }
+
+  @Override
+  public boolean onPrepareOptionsMenu(Menu menu) {
+    if (viewPager.getCurrentItem() == OBSERVATION_FRAGMENT_OFFSET) {
+      menu.findItem(R.id.obs_filter).setVisible(true);
+      menu.findItem(R.id.obs_sort).setVisible(true);
+    } else {
+      menu.findItem(R.id.obs_filter).setVisible(false);
+      menu.findItem(R.id.obs_sort).setVisible(false);
+    }
+    return true;
+  }
+
+  @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.edit_elephant) {
-      Intent intent = new Intent(this, ManageElephantActivity.class);
-      intent.putExtra(EXTRA_ELEPHANT_ID, elephant.id);
-      startActivityForResult(intent, REQUEST_ELEPHANT_EDITED);
+    if (item.getItemId() == R.id.obs_filter) {
+      // TODO: display filter dialog
       return true;
-    } else if (item.getItemId() == R.id.delete_elephant) {
-      new MaterialDialog.Builder(this)
-          .title(R.string.delete_this_elephant_from_local_db)
-          .positiveText(R.string.yes)
-          .onPositive(new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-              realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                  elephant.deleteFromRealm();
-                }
-              });
-              finish();
-            }
-          })
-          .negativeText(R.string.no)
-          .stackingBehavior(StackingBehavior.ALWAYS)
-          .show();
+    } else if (item.getItemId() == R.id.obs_sort) {
+      new SortObservationsDialog(
+        this,
+        observationsFragment.getDateOrder(),
+        observationsFragment.getPriorityOrder(),
+        new SortObservationsDialog.Listener() {
+        @Override
+        public void onValidate(SortOrder dateOrder, SortOrder priorityOrder) {
+          observationsFragment.sort(dateOrder,priorityOrder);
+        }
+      }
+      ).show();
       return true;
     }
     return false;
-  } */
+  }
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -314,6 +343,15 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   public Elephant getElephant() {
     return elephant;
   }
+
+  public List<ElephantNote> getElephantNotes() {
+    // TODO: filters (with a limit)
+  	return databaseController.getElephantNoteByElephantId(
+  	  elephant.id,
+      observationsFragment.getDateOrder(),
+      observationsFragment.getPriorityOrder()
+    );
+	}
 
   private void setupViewPager(ViewPager viewPager) {
   	showDocumentFragment = new ShowDocumentFragment();
@@ -409,17 +447,16 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
       @Override
       public void onValidate(String p, String c, String d) {
         onFabMenuBackgroundMaskClick();
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(OBSERVATION_FRAGMENT_OFFSET);
 
         ElephantNote note = new ElephantNote();
-        note.setPriority(ElephantNote.Priority.valueOf(p));
+        note.setPriority(ElephantNote.Prioriy.valueOf(p));
         note.setCategory(ElephantNote.Category.valueOf(c));
         note.setDescription(d);
+        note.setElephantId(elephant.id);
 
         databaseController.beginTransaction();
         databaseController.insertOrUpdate(note);
-        elephant.notes.add(note);
-        databaseController.insertOrUpdate(elephant);
         databaseController.commitTransaction();
 
 				observationsFragment.refresh();
@@ -428,7 +465,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
       @Override
       public void onError(String why) {
         onFabMenuTriggered();
-        Toast.makeText(ShowElephantActivity.this, why, Toast.LENGTH_SHORT).show();
+        Toast.makeText(ShowElephantActivity.this, why, Toast.LENGTH_LONG).show();
       }
     }).show();
   }

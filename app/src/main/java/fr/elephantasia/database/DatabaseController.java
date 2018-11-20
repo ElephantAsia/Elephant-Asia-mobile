@@ -2,7 +2,9 @@ package fr.elephantasia.database;
 
 import android.support.annotation.NonNull;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -67,6 +69,7 @@ public class DatabaseController {
     realmDB.insertOrUpdate(n);
   }
 
+  @Deprecated
   public void insertOrUpdate(Elephant elephant, List<Document> documents) {
     RealmDB.insertOrUpdateElephant(elephant, documents);
   }
@@ -109,6 +112,11 @@ public class DatabaseController {
   @Nullable
   public Contact getContactByCuid(String cuid) { return realmDB.getContactByCuid(cuid); }
 
+  @NonNull
+  public List<ElephantNote> getElephantNoteByElephantId(Integer elephantId, SortOrder dateOrder, SortOrder priorityOrder) {
+    return realmDB.getElephantNoteByElephantId(elephantId, dateOrder, priorityOrder);
+  }
+
   @Nullable
   public List<Document> getDocumentsByElephantId(Integer elephantId) {
     return realmDB.getDocumentsByElephantId(elephantId);
@@ -136,6 +144,39 @@ public class DatabaseController {
 
   public Long getElephantsDraftCount() {
     return realmDB.getElephantsDraftCount();
+  }
+
+
+  public static class SortOrder {
+
+    public static final SortOrder Ascending = new SortOrder(0);
+    public static final SortOrder Descending = new SortOrder(1);
+    public static final SortOrder None = new SortOrder(2);
+
+    private static final Map<String, SortOrder> str2sort = new HashMap<String, SortOrder>() {{
+      put("Ascending", Ascending);
+      put("Descending", Descending);
+      put("None", None);
+    }};
+
+    private Integer value;
+
+    private SortOrder(Integer value) {
+      this.value = value;
+    }
+
+    public boolean equals(SortOrder other) {
+      return this.value.equals(other.value);
+    }
+
+    static public SortOrder valueOf(String value) {
+      return str2sort.get(value);
+    }
+
+    public Integer getValue() {
+      return value;
+    }
+
   }
 
 }

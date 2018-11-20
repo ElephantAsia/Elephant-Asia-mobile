@@ -18,9 +18,9 @@ public class AddObservationDialog {
   private Activity activity;
   private Listener listener;
 
-  @BindView(R.id.priority_spinner) Spinner priority;
-  @BindView(R.id.category_spinner) Spinner category;
-  @BindView(R.id.description) TextView desc;
+  @BindView(R.id.priority_spinner) Spinner prioritySpinner;
+  @BindView(R.id.category_spinner) Spinner categorySpinner;
+  @BindView(R.id.description) TextView descTextview;
 
   public AddObservationDialog(Activity activity, Listener listener) {
     this.activity = activity;
@@ -29,7 +29,6 @@ public class AddObservationDialog {
 
   public void show() {
     View customView = activity.getLayoutInflater().inflate(R.layout.elephant_observation_add, null);
-
     ButterKnife.bind(this, customView);
 
     new MaterialDialog.Builder(activity)
@@ -43,18 +42,20 @@ public class AddObservationDialog {
           View view = dialog.getCustomView();
 
           if (view != null) {
-            if (desc.getText().toString().trim().length() > 0) {
+            if (descTextview.getText().toString().trim().length() > 0) {
               listener.onValidate(
-                String.valueOf(priority.getSelectedItem()),
-                String.valueOf(category.getSelectedItem()),
-                desc.getText().toString()
+                String.valueOf(prioritySpinner.getSelectedItem()),
+                String.valueOf(categorySpinner.getSelectedItem()),
+                descTextview.getText().toString()
               );
             } else {
               listener.onError("A note must have a description");
             }
           }
         }
-      }).build().show();
+      })
+      .build()
+      .show();
   }
 
   public interface Listener {

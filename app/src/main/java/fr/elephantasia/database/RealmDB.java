@@ -2,11 +2,13 @@ package fr.elephantasia.database;
 
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
+import fr.elephantasia.database.DatabaseController.SortOrder;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
@@ -100,6 +102,7 @@ class RealmDB {
     begin();
     if (n.getId() == -1) {
       n.setId(GetNextId(realm, ElephantNote.class, ElephantNote.ID));
+      n.setCreatedAt(DateHelpers.GetCurrentStringDate());
     }
     realm.insertOrUpdate(n);
     end();
@@ -118,12 +121,6 @@ class RealmDB {
     }
     realm.close();
   }
-
-//  void insertOrUpdate(Contact c) {
-//    beginTransaction();
-//    realm.insertOrUpdate(c);
-//    commitTransaction();
-//  }
 
   void delete(Elephant e) {
     begin();
@@ -246,6 +243,45 @@ class RealmDB {
     return null;
   }
 
+  @NonNull
+  List<ElephantNote> getElephantNoteByElephantId(Integer elephantId, SortOrder dateOrder, SortOrder priorityOrder) {
+    Realm realm = Realm.getDefaultInstance();
+    RealmQuery<ElephantNote> query = realm.where(ElephantNote.class)
+      .equalTo(ElephantNote.ELEPHANT_ID, elephantId);
+
+    if (dateOrder != SortOrder.None || priorityOrder != SortOrder.None) {
+      if (dateOrder != SortOrder.None && priorityOrder != SortOrder.None) {
+        query.sort(
+          ElephantNote.PRIORITY,
+          (priorityOrder == SortOrder.Ascending) ? Sort.ASCENDING : Sort.DESCENDING,
+          ElephantNote.CREATED_AT,
+          (dateOrder == SortOrder.Ascending) ? Sort.ASCENDING : Sort.DESCENDING
+        );
+      } else {
+        if (dateOrder != SortOrder.None) {
+          query.sort(
+            ElephantNote.CREATED_AT,
+            (dateOrder == SortOrder.Ascending) ? Sort.ASCENDING : Sort.DESCENDING
+          );
+        } else {
+          query.sort(
+            ElephantNote.PRIORITY,
+            (priorityOrder == SortOrder.Ascending) ? Sort.ASCENDING : Sort.DESCENDING
+          );
+        }
+      }
+    }
+
+    List<ElephantNote> notes = query.findAll();
+    if (notes != null) {
+      notes = realm.copyFromRealm(notes);
+      realm.close();
+      return notes;
+    }
+    realm.close();
+    return new ArrayList<>();
+  }
+
   @Nullable
   List<Document> getDocumentsByElephantId(Integer elephantId) {
     Realm realm = Realm.getDefaultInstance();
@@ -364,7 +400,7 @@ class RealmDB {
   }
 
   private static Integer GetNextId(Realm realm, Class<? extends RealmObject> cls, String columnIdName) {
-    return StaticTools.increment(realm.where(cls).max(columnIdName));
+    return StaticTools.increment(realm.where(cls).max(columnIdName)); // TODO: remove StaticTools
   }
 
 }

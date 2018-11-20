@@ -16,7 +16,6 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import fr.elephantasia.database.parceler.ContactParcelConverter;
-import fr.elephantasia.database.parceler.ElephantNoteParcelConverter;
 import fr.elephantasia.database.parceler.ElephantParcelConverter;
 import fr.elephantasia.utils.JsonHelpers;
 import fr.elephantasia.utils.TextHelpers;
@@ -55,8 +54,6 @@ public class Elephant extends RealmObject
   public enum SyncState {
     Downloaded,
     Pending,
-    // Accepted,
-    // Rejected,
   }
 
   public enum DbState {
@@ -107,8 +104,6 @@ public class Elephant extends RealmObject
   public RealmList<Elephant> children = new RealmList<>();
   @ParcelPropertyConverter(ContactParcelConverter.class)
   public RealmList<Contact> contacts = new RealmList<>();
-  @ParcelPropertyConverter(ElephantNoteParcelConverter.class)
-  public RealmList<ElephantNote> notes = new RealmList<>();
 
   // Sync
   public boolean draft = false;
