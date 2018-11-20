@@ -17,6 +17,8 @@ import fr.elephantasia.activities.showElephant.ShowElephantActivity;
 import fr.elephantasia.adapter.ObservationsAdapter;
 import fr.elephantasia.database.DatabaseController.SortOrder;
 import fr.elephantasia.database.model.ElephantNote;
+import fr.elephantasia.database.model.ElephantNote.Category;
+import fr.elephantasia.database.model.ElephantNote.Priority;
 
 public class ObservationsFragment extends Fragment {
 
@@ -24,8 +26,12 @@ public class ObservationsFragment extends Fragment {
   @BindView(R.id.no_item) View view;
 
   private ObservationsAdapter adapter;
+
   private SortOrder dateOrder = SortOrder.Descending;
   private SortOrder priorityOrder = SortOrder.None;
+
+  private Category categoryFilter = Category.None;
+  private Priority priorityFilter = Priority.None;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,12 @@ public class ObservationsFragment extends Fragment {
     refresh();
   }
 
+  public void filter(Category categoryFilter, Priority priorityFilter) {
+    this.categoryFilter = categoryFilter;
+    this.priorityFilter = priorityFilter;
+    refresh();
+  }
+
   public void refresh() {
     List<ElephantNote> notes = ((ShowElephantActivity) getActivity()).getElephantNotes();
 
@@ -72,5 +84,9 @@ public class ObservationsFragment extends Fragment {
   public SortOrder getPriorityOrder() {
     return priorityOrder;
   }
+
+  public Category getCategoryFilter() { return categoryFilter; }
+
+  public Priority getPrioriyFilter() { return priorityFilter; }
 
 }

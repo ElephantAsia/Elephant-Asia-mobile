@@ -244,7 +244,9 @@ class RealmDB {
   }
 
   @NonNull
-  List<ElephantNote> getElephantNoteByElephantId(Integer elephantId, SortOrder dateOrder, SortOrder priorityOrder) {
+  List<ElephantNote> getElephantNoteByElephantId(Integer elephantId,
+                                                 SortOrder dateOrder, SortOrder priorityOrder,
+                                                 ElephantNote.Category categoryFilter, ElephantNote.Priority priorityFilter) {
     Realm realm = Realm.getDefaultInstance();
     RealmQuery<ElephantNote> query = realm.where(ElephantNote.class)
       .equalTo(ElephantNote.ELEPHANT_ID, elephantId);
@@ -270,6 +272,13 @@ class RealmDB {
           );
         }
       }
+    }
+
+    if (!categoryFilter.equals(ElephantNote.Category.None)) {
+      query.equalTo(ElephantNote.CATEGORY, categoryFilter.toString());
+    }
+    if (!priorityFilter.equals(ElephantNote.Priority.None)) {
+      query.equalTo(ElephantNote.PRIORITY, priorityFilter.getValue());
     }
 
     List<ElephantNote> notes = query.findAll();

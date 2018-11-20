@@ -113,8 +113,10 @@ public class DatabaseController {
   public Contact getContactByCuid(String cuid) { return realmDB.getContactByCuid(cuid); }
 
   @NonNull
-  public List<ElephantNote> getElephantNoteByElephantId(Integer elephantId, SortOrder dateOrder, SortOrder priorityOrder) {
-    return realmDB.getElephantNoteByElephantId(elephantId, dateOrder, priorityOrder);
+  public List<ElephantNote> getElephantNoteByElephantId(Integer elephantId,
+                                                        SortOrder dateOrder, SortOrder priorityOrder,
+                                                        ElephantNote.Category categoryFilter, ElephantNote.Priority priorityFilter) {
+    return realmDB.getElephantNoteByElephantId(elephantId, dateOrder, priorityOrder, categoryFilter, priorityFilter);
   }
 
   @Nullable

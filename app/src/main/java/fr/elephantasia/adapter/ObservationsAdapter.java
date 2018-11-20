@@ -47,14 +47,14 @@ public class ObservationsAdapter extends ArrayAdapter<ElephantNote> {
   private void refreshPriority(View v, @NonNull ElephantNote note) {
     TextView textView = v.findViewById(R.id.priority);
 
-    if (note.getPriority().equals(ElephantNote.Prioriy.Low.getValue())) {
+    if (note.getPriority().equals(ElephantNote.Priority.Low.getValue())) {
       textView.setTextColor(getContext().getResources().getColor(R.color.md_green));
-    } else if (note.getPriority().equals(ElephantNote.Prioriy.Medium.getValue())) {
+    } else if (note.getPriority().equals(ElephantNote.Priority.Medium.getValue())) {
       textView.setTextColor(getContext().getResources().getColor(R.color.md_orange));
-    } else if (note.getPriority().equals(ElephantNote.Prioriy.High.getValue())) {
+    } else if (note.getPriority().equals(ElephantNote.Priority.High.getValue())) {
       textView.setTextColor(getContext().getResources().getColor(R.color.md_red));
     }
-    textView.setText(ElephantNote.Prioriy.valueOf(note.getPriority()).toString());
+    textView.setText(ElephantNote.Priority.valueOf(note.getPriority()).toString());
   }
 
   private void refreshDate(View v, @NonNull ElephantNote note) {

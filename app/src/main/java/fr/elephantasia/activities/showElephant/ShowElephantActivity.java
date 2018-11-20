@@ -44,6 +44,7 @@ import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.manageElephant.adapters.ViewPagerAdapter;
 import fr.elephantasia.activities.showDocument.ShowDocumentActivity;
 import fr.elephantasia.activities.showElephant.dialogs.AddObservationDialog;
+import fr.elephantasia.activities.showElephant.dialogs.FilterObservationsDialog;
 import fr.elephantasia.activities.showElephant.dialogs.SortObservationsDialog;
 import fr.elephantasia.activities.showElephant.fragments.ObservationsFragment;
 import fr.elephantasia.activities.showElephant.fragments.ShowChildrenFragment;
@@ -295,7 +296,17 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.obs_filter) {
-      // TODO: display filter dialog
+      new FilterObservationsDialog(
+        this,
+        observationsFragment.getCategoryFilter(),
+        observationsFragment.getPrioriyFilter(),
+        new FilterObservationsDialog.Listener() {
+        @Override
+        public void onValidate(ElephantNote.Category categoryFilter, ElephantNote.Priority priorityFilter) {
+          observationsFragment.filter(categoryFilter, priorityFilter);
+        }
+      }
+      ).show();
       return true;
     } else if (item.getItemId() == R.id.obs_sort) {
       new SortObservationsDialog(
@@ -345,11 +356,12 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   }
 
   public List<ElephantNote> getElephantNotes() {
-    // TODO: filters (with a limit)
   	return databaseController.getElephantNoteByElephantId(
   	  elephant.id,
       observationsFragment.getDateOrder(),
-      observationsFragment.getPriorityOrder()
+      observationsFragment.getPriorityOrder(),
+      observationsFragment.getCategoryFilter(),
+      observationsFragment.getPrioriyFilter()
     );
 	}
 
@@ -450,7 +462,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
         viewPager.setCurrentItem(OBSERVATION_FRAGMENT_OFFSET);
 
         ElephantNote note = new ElephantNote();
-        note.setPriority(ElephantNote.Prioriy.valueOf(p));
+        note.setPriority(ElephantNote.Priority.valueOf(p));
         note.setCategory(ElephantNote.Category.valueOf(c));
         note.setDescription(d);
         note.setElephantId(elephant.id);
@@ -465,7 +477,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
       @Override
       public void onError(String why) {
         onFabMenuTriggered();
-        Toast.makeText(ShowElephantActivity.this, why, Toast.LENGTH_LONG).show();
+        Toast.makeText(ShowElephantActivity.this, "Error: " + why, Toast.LENGTH_LONG).show();
       }
     }).show();
   }
