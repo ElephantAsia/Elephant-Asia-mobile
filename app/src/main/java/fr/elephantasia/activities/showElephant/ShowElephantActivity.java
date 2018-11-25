@@ -466,9 +466,13 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
         note.setCategory(ElephantNote.Category.valueOf(c));
         note.setDescription(d);
         note.setElephantId(elephant.id);
+        note.setDbState(ElephantNote.DbState.Created);
+        elephant.journalState = Elephant.JournalState.NoteAdded.name();
+        elephant.syncState = null;
 
         databaseController.beginTransaction();
         databaseController.insertOrUpdate(note);
+        databaseController.insertOrUpdate(elephant);
         databaseController.commitTransaction();
 
 				observationsFragment.refresh();

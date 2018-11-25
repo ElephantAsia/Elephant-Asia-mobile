@@ -119,6 +119,11 @@ public class DatabaseController {
     return realmDB.getElephantNoteByElephantId(elephantId, dateOrder, priorityOrder, categoryFilter, priorityFilter);
   }
 
+  @NonNull
+  public List<ElephantNote> getElephantNotesReadyToPushByElephantId(Integer elephantId) {
+    return realmDB.getElephantNotesReadyToPushByElephantId(elephantId);
+  }
+
   @Nullable
   public List<Document> getDocumentsByElephantId(Integer elephantId) {
     return realmDB.getDocumentsByElephantId(elephantId);

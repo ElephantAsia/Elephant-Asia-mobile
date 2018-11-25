@@ -1,6 +1,7 @@
 package fr.elephantasia.activities.sync.network;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.database.model.ElephantNote;
 import fr.elephantasia.network.RequestAsyncTask;
 
 public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
@@ -18,7 +20,7 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
 
   private String lastSync;
   private Listener listener;
-  private State state; // not sure if it's useful - wait & see
+  // private State state; // not sure if it's useful - wait & see
 
   public SyncFromServerAsyncRequest(String lastSync, Listener listener) {
     this.lastSync = lastSync;
@@ -74,7 +76,7 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
 
   private boolean download() {
     String url = String.format(URL, lastSync);
-    this.state = State.Downloading;
+    // this.state = State.Downloading;
 
     listener.onDownloading();
     GET(url);
@@ -102,11 +104,12 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
   }
 
   private boolean save() {
-    this.state = State.Saving;
+    // this.state = State.Saving;
 
     listener.onSaving();
     DatabaseController dbController = new DatabaseController();
     try {
+      String authToken = listener.getAuthToken();
       JSONObject result = getJsonObject();
 
 //      int maxLogSize = 200;
@@ -124,6 +127,7 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
       if (elephants.length() == 0) {
         return true;
       }
+      // Log.i("Download", elephants.length() + " elephants downloaded");
       dbController.beginTransaction();
       for (int i = 0 ; i < elephants.length() ; ++i) {
         publishProgress(i * 100 / elephants.length());
@@ -135,8 +139,10 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
           // new elephant in our local db
           e = newE;
           e.syncState = Elephant.SyncState.Downloaded.name();
+          // Log.i("inserting1", e.getNameText() + " cuid:" + e.cuid);
           dbController.insertOrUpdate(e);
         } else {
+          // Log.i("inserting2", e.getNameText() + " cuid:" + e.cuid);
           // if (e.dbState == null && e.syncState == null) {
           // existing elephant in our local db
 
@@ -145,10 +151,34 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
           databaseController.insertOrUpdate(newE); */
           e.syncState = Elephant.SyncState.Downloaded.name(); // accepted ?
           e.dbState = null;
+          // e.journalState = null;
           e.copy(newE);
           dbController.insertOrUpdate(e);
         }
       }
+
+      JSONArray notesArray = result.getJSONArray("journals");
+      Log.w("journal", "response: " + notesArray.toString());
+      for (int j = 0 ; j < notesArray.length() ; ++j) {
+        JSONObject obj = notesArray.getJSONObject(j);
+        try {
+          Elephant e = dbController.getElephantByCuid(obj.getString("elephant_cuid"));
+          if (e != null) {
+            ElephantNote note = new ElephantNote();
+            note.setElephantId(e.id);
+            note.setDescription(obj.getString("content"));
+            note.setCategory(ElephantNote.Category.valueOf(obj.getString("label")));
+            note.setPriority(ElephantNote.Priority.valueOf(obj.getString("priority")));
+            note.setCreatedAt(obj.getString("createdAt"));
+            note.setDbState(null);
+            Log.w("add note", "adding note: " + note.getDescription() + " " + note.getCreatedAt());
+            dbController.insertOrUpdate(note);
+          }
+        } catch (Exception er) {
+          er.printStackTrace();
+        }
+      }
+
       dbController.commitTransaction();
     } catch (Exception e) {
       e.printStackTrace();
@@ -161,10 +191,10 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
     return  true;
   }
 
-  private enum State {
+  /*private enum State {
     Downloading,
     Saving
-  }
+  }*/
 
   public interface Listener {
     String getAuthToken() throws Exception;

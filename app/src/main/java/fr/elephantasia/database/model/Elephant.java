@@ -51,6 +51,8 @@ public class Elephant extends RealmObject
   // Metadata
   @Ignore public static final String LAST_VISITED = "lastVisited";
 
+  @Ignore public static final String JOURNAL_STATE = "journalState";
+
   public enum SyncState {
     Downloaded,
     Pending,
@@ -59,7 +61,11 @@ public class Elephant extends RealmObject
   public enum DbState {
     Created,
     Edited,
-    Deleted,
+    Deleted
+  }
+
+  public enum JournalState {
+    NoteAdded
   }
 
   @PrimaryKey
@@ -109,6 +115,7 @@ public class Elephant extends RealmObject
   public boolean draft = false;
   public String syncState;
   public String dbState;
+  public String journalState;
 
   // Metadata
   @Index

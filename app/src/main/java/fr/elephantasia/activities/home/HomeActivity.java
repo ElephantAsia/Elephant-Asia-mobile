@@ -194,7 +194,7 @@ public class HomeActivity extends AppCompatActivity {
           }
         });
       }
-    }, 10);
+    }, 100);
   }
 
   private void setFragment() {

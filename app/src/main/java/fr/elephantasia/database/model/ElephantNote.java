@@ -3,6 +3,8 @@ package fr.elephantasia.database.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -17,7 +19,13 @@ public class ElephantNote extends RealmObject {
   @Ignore public static final String CATEGORY = "category";
   @Ignore public static final String DESCRIPTION = "description";
 
+  @Ignore public static final String DB_STATE = "dbState";
+
   @Ignore public static final String CREATED_AT = "createdAt";
+
+  public enum DbState {
+    Created
+  }
 
   @PrimaryKey private Integer id = -1;
   private String cuid;
@@ -27,11 +35,11 @@ public class ElephantNote extends RealmObject {
   private String category = "undefined";
   private String description = "undefined";
 
-  // private Date createdAt;
+  private String dbState = null;
+
   private String createdAt;
 
-  public ElephantNote() {
-  }
+  public ElephantNote() { }
 
   public void setId(Integer id) {
     this.id = id;
@@ -56,6 +64,8 @@ public class ElephantNote extends RealmObject {
   public void setDescription(String description) {
     this.description = description;
   }
+
+  public void setDbState(@Nullable DbState dbState) { this.dbState = (dbState != null) ? dbState.name() : null; }
 
   public void setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
@@ -85,6 +95,8 @@ public class ElephantNote extends RealmObject {
     return description;
   }
 
+  public String getDbState() { return dbState; }
+
   public String getCreatedAt() {
     return createdAt;
   }
@@ -92,19 +104,19 @@ public class ElephantNote extends RealmObject {
 
   public static class Category {
 
-    public static final Category Medical = new Category(0, "Medical");
-    public static final Category Physical = new Category(1, "Physical");
-    public static final Category Administrative = new Category(2, "Administrative");
-    public static final Category Parentage = new Category(3, "Parentage");
-    public static final Category Other = new Category(4, "Other");
+    public static final Category Medical = new Category(0, "medical");
+    public static final Category Physical = new Category(1, "physical");
+    public static final Category Administrative = new Category(2, "administrative");
+    public static final Category Parentage = new Category(3, "parentage");
+    public static final Category Other = new Category(4, "other");
     public static final Category None = new Category(5, "None");
 
     private static final Map<String, Category> str2c = new HashMap<String, Category>() {{
-      put("Medical", Medical);
-      put("Physical", Physical);
-      put("Administrative", Administrative);
-      put("Parentage", Parentage);
-      put("Other", Other);
+      put("medical", Medical);
+      put("physical", Physical);
+      put("administrative", Administrative);
+      put("parentage", Parentage);
+      put("other", Other);
       put("None", None);
     }};
 
@@ -150,15 +162,15 @@ public class ElephantNote extends RealmObject {
 
   public static class Priority {
 
-    public static final Priority Low = new Priority(0, "Low");
-    public static final Priority Medium = new Priority(1, "Medium");
-    public static final Priority High = new Priority(2, "High");
+    public static final Priority Low = new Priority(0, "low");
+    public static final Priority Medium = new Priority(1, "medium");
+    public static final Priority High = new Priority(2, "high");
     public static final Priority None = new Priority(3, "None");
 
     private static final Map<String, Priority> str2p = new HashMap<String, Priority>() {{
-      put("Low", Low);
-      put("Medium", Medium);
-      put("High", High);
+      put("low", Low);
+      put("medium", Medium);
+      put("high", High);
       put("None", None);
     }};
 

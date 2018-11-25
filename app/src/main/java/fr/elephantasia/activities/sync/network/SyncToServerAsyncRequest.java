@@ -13,6 +13,7 @@ import java.util.Map;
 import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Elephant;
+import fr.elephantasia.database.model.ElephantNote;
 import fr.elephantasia.network.RequestAsyncTask;
 
 public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
@@ -36,6 +37,7 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
     try {
       String authToken = listener.getAuthToken();
       header.put("Api-Key", authToken);
+      header.put("Content-Type", "application/javascript");
       Log.w(getClass().getName(), "auth_token=" + authToken);
     } catch (Exception e) {
       e.printStackTrace();
@@ -55,6 +57,7 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
     if (!upload())
       return false;
     updateLocalDb();
+    uploadElephantNotes();
     return true;
   }
 
@@ -63,13 +66,16 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
 
     for (int i = 0 ; i < elephants.size() ; ++i) {
       publishProgress(i);
+      Elephant elephant = elephants.get(i);
+
+      // a note was added but the elephant was not modified
+      if (elephant.journalState != null && elephant.dbState == null)
+        continue;
+
       try {
         Thread.sleep(250); // demo
-      } catch (Exception e) {}
-      try {
-        Elephant e = elephants.get(i);
-        String action = ((e.dbState.equals(Elephant.DbState.Created.name())) ? "CREATE" : "EDIT");
-        JSONObject obj = e.toJsonObject(contacts);
+        String action = ((elephant.dbState.equals(Elephant.DbState.Created.name())) ? "CREATE" : "EDIT");
+        JSONObject obj = elephant.toJsonObject(contacts);
         obj.put("action", action);
         obj.put("type", "elephant");
         serialized.put(obj);
@@ -77,7 +83,7 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
         e.printStackTrace();
       }
     }
-    for (Map.Entry<String, Contact> entry : contacts.entrySet()) {
+    /* for (Map.Entry<String, Contact> entry : contacts.entrySet()) {
       Contact c = entry.getValue();
       String action = ((c.isCreated()) ? "CREATE" : (c.isEdited()) ? "EDIT" : null);
       if (c.getSyncState() == null && action != null) {
@@ -90,7 +96,7 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
           e.printStackTrace();
         }
       }
-    }
+    } */
     Log.w("serialized", serialized.toString());
     publishProgress(elephants.size());
     try {
@@ -120,9 +126,13 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
     Log.w("reponse", response.toString());
     for (int i = 0 ; i < elephants.size() ; ++i) {
       publishProgress(i);
+      Elephant elephant = elephants.get(i);
+
+      if (elephant.journalState != null && elephant.dbState == null)
+        continue;
+
       try {
         Thread.sleep(250); // demo
-        Elephant elephant = elephants.get(i);
         elephant.wasUploaded(response.getJSONObject(i).getString("cuid"));
         dbController.insertOrUpdate(elephant);
       } catch (Exception e) {
@@ -147,6 +157,48 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
     try {
       Thread.sleep(500); // demo
     } catch (Exception e) {}
+  }
+
+  // push the journal added on the selected elephants
+  private void uploadElephantNotes() {
+    try {
+      String authToken = listener.getAuthToken();
+
+      for (int i = 0; i < elephants.size(); i++) {
+        Elephant e = elephants.get(i);
+
+        if (e.journalState == null)
+          continue;
+
+        DatabaseController db = new DatabaseController();
+        List<ElephantNote> notes = db.getElephantNotesReadyToPushByElephantId(e.id);
+        db.beginTransaction();
+        for (int j = 0; j < notes.size(); j++) {
+          ElephantNote note = notes.get(j);
+
+          Log.w("upload note", "#" + i + " pushing " + note.getDescription());
+          AddNoteRequest req = new AddNoteRequest(authToken, e.cuid, note);
+          String rep = req.execute();
+          Log.w("upload note", "reponse: " + rep);
+
+          note.setDbState(null);
+          db.insertOrUpdate(note);
+        }
+        e.journalState = null;
+        db.insertOrUpdate(e);
+        db.commitTransaction();
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    // for elephant in elephants
+    //  List<ElephantNote> notesToPush = db.getElephantNotesReadyToPushByElephantId(elephant.getId());
+    //  db.beginTransaction();
+    //  for note in notesToPush
+    //    new addNoteRequest(elephant.getCuid(), note).execute();
+    //    note.setDbState(null);
+    //    db.insertOrUpdate(note);
+    //  db.commitTransaction();
   }
 
   @Override

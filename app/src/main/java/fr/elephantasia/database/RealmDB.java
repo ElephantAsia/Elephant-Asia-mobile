@@ -141,6 +141,9 @@ class RealmDB {
     } else if (searchMode == DatabaseController.SearchMode.Saved) {
       query.notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
         .isNotNull(Elephant.DB_STATE)
+        .or()
+        .isNotNull(Elephant.JOURNAL_STATE)
+        .and()
         .isNull(Elephant.SYNC_STATE)
         .equalTo(Elephant.DRAFT, false);
     }
@@ -291,6 +294,23 @@ class RealmDB {
     return new ArrayList<>();
   }
 
+  @NonNull
+  List<ElephantNote> getElephantNotesReadyToPushByElephantId(Integer elephantId) {
+    Realm realm = Realm.getDefaultInstance();
+    List<ElephantNote> notes = realm.where(ElephantNote.class)
+      .equalTo(ElephantNote.ELEPHANT_ID, elephantId)
+      .isNotNull(ElephantNote.DB_STATE)
+      .findAll();
+
+    if (notes != null) {
+      notes = realm.copyFromRealm(notes);
+      realm.close();
+      return notes;
+    }
+    realm.close();
+    return new ArrayList<>();
+  }
+
   @Nullable
   List<Document> getDocumentsByElephantId(Integer elephantId) {
     Realm realm = Realm.getDefaultInstance();
@@ -325,6 +345,9 @@ class RealmDB {
     List<Elephant> elephants = realm.copyFromRealm(
       realm.where(Elephant.class)
       .isNotNull(Elephant.DB_STATE)
+      .or()
+      .isNotNull(Elephant.JOURNAL_STATE)
+      .and()
       .notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
       .isNull(Elephant.SYNC_STATE)
       .equalTo(Elephant.DRAFT, false)
@@ -355,6 +378,9 @@ class RealmDB {
     Realm realm = Realm.getDefaultInstance();
     Long count = realm.where(Elephant.class)
       .isNotNull(Elephant.DB_STATE)
+      .or()
+      .isNotNull(Elephant.JOURNAL_STATE)
+      .and()
       .notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
       .isNull(Elephant.SYNC_STATE)
       .equalTo(Elephant.DRAFT, false)

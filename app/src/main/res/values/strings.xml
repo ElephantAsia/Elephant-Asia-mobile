@@ -191,32 +191,32 @@
   <string name="last_up_sum"> Last upload summary </string>
 
   <string-array name="obs_priorities">
-    <item>Low</item>
-    <item>Medium</item>
-    <item>High</item>
+    <item>low</item>
+    <item>medium</item>
+    <item>high</item>
   </string-array>
 
   <string-array name="obs_priorities_filter">
-    <item>Low</item>
-    <item>Medium</item>
-    <item>High</item>
+    <item>low</item>
+    <item>medium</item>
+    <item>high</item>
     <item>None</item>
   </string-array>
 
   <string-array name="obs_categories">
-    <item>Medical</item>
-    <item>Physical</item>
-    <item>Administrative</item>
-    <item>Parentage</item>
-    <item>Other</item>
+    <item>medical</item>
+    <item>physical</item>
+    <item>administrative</item>
+    <item>parentage</item>
+    <item>other</item>
   </string-array>
 
   <string-array name="obs_categories_filter">
-    <item>Medical</item>
-    <item>Physical</item>
-    <item>Administrative</item>
-    <item>Parentage</item>
-    <item>Other</item>
+    <item>medical</item>
+    <item>physical</item>
+    <item>administrative</item>
+    <item>parentage</item>
+    <item>other</item>
     <item>None</item>
   </string-array>
 

@@ -115,7 +115,13 @@ public class ElephantPreviewV2 extends CardView {
   }
 
   private void refreshDbStatus() {
-    dbStatus.setText(elephant.dbState);
+    if (elephant.dbState != null) {
+      dbStatus.setText(elephant.dbState);
+    } else if (elephant.journalState != null) {
+      dbStatus.setText(elephant.journalState);
+    } else {
+      dbStatus.setText("Undefined");
+    }
   }
 
   private void refreshAge() {

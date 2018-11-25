@@ -114,7 +114,6 @@ class Request {
       httpsURLConnection.setConnectTimeout(POST_CONNECTION_TIMEOUT);
       httpsURLConnection.setReadTimeout(POST_READ_TIMEOUT);
       httpsURLConnection.setRequestMethod("POST");
-      httpsURLConnection.setRequestProperty("Content-Type", "application/javascript");
       httpsURLConnection.setDoInput(true);
       httpsURLConnection.setDoOutput(true);
       httpsURLConnection.setUseCaches(false);
