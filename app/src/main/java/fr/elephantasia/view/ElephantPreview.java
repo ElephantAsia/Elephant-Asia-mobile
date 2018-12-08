@@ -2,9 +2,11 @@ package fr.elephantasia.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Debug;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;

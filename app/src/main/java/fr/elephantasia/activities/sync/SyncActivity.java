@@ -172,11 +172,21 @@ public class SyncActivity extends AppCompatActivity {
       }
       @Override
       public void onDownloading() {
-        dialog.setContent("1/2 Downloading elephants ...\nDO NOT CLOSE the application");
+        runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            dialog.setContent("1/2 Downloading elephants ...\nDO NOT CLOSE the application");
+          }
+        });
       }
       @Override
       public void onSaving() {
-        dialog.setContent("2/2 Saving to local database ...\nDO NOT CLOSE the application");
+        runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            dialog.setContent("2/2 Saving to local database ...\nDO NOT CLOSE the application");
+          }
+        });
       }
       @Override
       public void onProgress(int p) {

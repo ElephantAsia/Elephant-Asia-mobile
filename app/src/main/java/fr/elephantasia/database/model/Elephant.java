@@ -226,7 +226,7 @@ public class Elephant extends RealmObject
   public String getHeightText() {
 
     if (!TextUtils.isEmpty(height)) {
-      return height + " " + heightUnit;
+      return height + " cm"; // + heightUnit;
     }
 
     return "-";

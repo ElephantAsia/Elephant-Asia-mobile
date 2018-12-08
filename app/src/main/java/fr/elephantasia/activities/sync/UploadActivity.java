@@ -192,15 +192,30 @@ public class UploadActivity extends AppCompatActivity {
       }
       @Override
       public void onSerializing() {
-        dialog.setContent("1/3 Serializing data ...\nDO NOT CLOSE the application");
+        runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            dialog.setContent("1/3 Serializing data ...\nDO NOT CLOSE the application");
+          }
+        });
       }
       @Override
       public void onUploading() {
-        dialog.setContent("2/3 Uploading data ...\nDO NOT CLOSE the application");
+        runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            dialog.setContent("2/3 Uploading data ...\nDO NOT CLOSE the application");
+          }
+        });
       }
       @Override
       public void onUpdatingLocalDb() {
-        dialog.setContent("3/3 Updating local database ...\nDO NOT CLOSE the application");
+        runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            dialog.setContent("3/3 Updating local database ...\nDO NOT CLOSE the application");
+          }
+        });
       }
       @Override
       public void onProgress(int p) {
