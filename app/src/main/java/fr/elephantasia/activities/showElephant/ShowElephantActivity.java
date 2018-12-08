@@ -374,7 +374,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
     adapter.addFragment(observationsFragment, "Observations");
     adapter.addFragment(new ShowParentageFragment(), getString(R.string.parentage));
     adapter.addFragment(new ShowChildrenFragment(), getString(R.string.children));
-    adapter.addFragment(showDocumentFragment, getString(R.string.documents));
+    // adapter.addFragment(showDocumentFragment, getString(R.string.documents));
     viewPager.setAdapter(adapter);
   }
 

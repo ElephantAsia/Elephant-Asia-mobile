@@ -1,8 +1,8 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+  xmlns:android="http://schemas.android.com/apk/res/android"
         android:theme="@style/AppThemeWhiteBackground">
 
   <data>
-
     <variable
       name="e"
       type="fr.elephantasia.database.model.Elephant"/>
@@ -106,12 +106,12 @@
           android:focusable="false"
           android:hint="@string/elephant_birthdate"
           android:inputType="datetime"
-          android:text="@={e.birthDate}"
           />
 
       </android.support.design.widget.TextInputLayout>
 
       <android.support.design.widget.TextInputLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="72dp"

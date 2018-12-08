@@ -3,6 +3,7 @@ package fr.elephantasia.utils;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import javax.annotation.Nullable;
@@ -39,6 +40,48 @@ public class DateHelpers {
       e.printStackTrace();
     }
     return null;
+  }
+
+  @Nullable
+  static public String FriendlyUserStringDateWithoutHours(String stringDate) {
+    try {
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'");
+      Date date = format.parse(stringDate);
+
+      SimpleDateFormat displayedFormat = new SimpleDateFormat("yyyy/MM/dd");
+      return displayedFormat.format(date);
+    } catch ( Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Nullable
+  static public String FriendlyUserStringDateWithoutHours(Date date) {
+    try {
+      SimpleDateFormat displayedFormat = new SimpleDateFormat("yyyy/MM/dd");
+      return displayedFormat.format(date);
+    } catch ( Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Nullable
+  static public Date BuildDateFromStringWithoutHours(@Nullable String stringDate) {
+    if (stringDate == null)
+      return null;
+    try {
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'");
+      return format.parse(stringDate);
+    } catch ( Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  static public Date BuildDate(int y, int m, int d) {
+    return new GregorianCalendar(y, m, d).getTime();
   }
 
   @Nullable

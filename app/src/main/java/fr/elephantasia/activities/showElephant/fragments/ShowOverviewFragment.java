@@ -12,6 +12,7 @@ import fr.elephantasia.activities.showElephant.ShowElephantActivity;
 import fr.elephantasia.databinding.ShowOverviewFragmentBinding;
 
 public class ShowOverviewFragment extends Fragment {
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     ShowOverviewFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.show_overview_fragment, container, false);
@@ -19,4 +20,5 @@ public class ShowOverviewFragment extends Fragment {
     binding.setE(((ShowElephantActivity) getActivity()).getElephant());
     return (view);
   }
+
 }

@@ -217,6 +217,7 @@ class Request {
       for (Map.Entry<String, String> entry : header.entrySet()) {
         String key = entry.getKey();
         String value = entry.getValue();
+        Log.i("header", key + ": " + value);
         httpsURLConnection.setRequestProperty(key, value);
       }
     }

@@ -3,7 +3,6 @@ package fr.elephantasia.database.model;
 import android.text.TextUtils;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
@@ -17,6 +16,7 @@ import javax.annotation.Nullable;
 
 import fr.elephantasia.database.parceler.ContactParcelConverter;
 import fr.elephantasia.database.parceler.ElephantParcelConverter;
+import fr.elephantasia.utils.DateHelpers;
 import fr.elephantasia.utils.JsonHelpers;
 import fr.elephantasia.utils.TextHelpers;
 import io.realm.RealmList;
@@ -76,7 +76,7 @@ public class Elephant extends RealmObject
   public String nickName;
   public String sex; // TODO: enum instead of String
   public Location currentLoc = new Location();
-  public String birthDate;
+  public Date birthDate;
   public Location birthLoc = new Location();
 
   // Registration
@@ -91,15 +91,15 @@ public class Elephant extends RealmObject
   public Location registrationLoc = new Location();
 
   // Description
-  public String tusk;
-  public String nailsFrontLeft;
-  public String nailsFrontRight;
-  public String nailsRearLeft;
-  public String nailsRearRight;
-  public String weight;
+  public String tusk = "none";
+  public String nailsFrontLeft = "0"; //int
+  public String nailsFrontRight = "0"; //int
+  public String nailsRearLeft = "0"; //int
+  public String nailsRearRight = "0"; //int
+  public String weight; //int
   public String girth;
   public String weightUnit;
-  public String height;
+  public String height; //int
   public String heightUnit;
 
   // Parentage
@@ -133,7 +133,8 @@ public class Elephant extends RealmObject
     sex = JsonHelpers.getString(e, "sex");
     currentLoc = null;
     birthLoc = null;
-    birthDate = JsonHelpers.getString(e, "birth_date");
+    // birthDate = JsonHelpers.getString(e, "birth_date");
+    birthDate = DateHelpers.BuildDateFromStringWithoutHours(JsonHelpers.getString(e, "birth_date"));
 
     // Registration
     earTag = JsonHelpers.getString(e, "ear_tag") != null;
@@ -173,7 +174,7 @@ public class Elephant extends RealmObject
     return TextUtils.isEmpty(name)
         && TextUtils.isEmpty(nickName)
         && currentLoc.isEmpty()
-        && TextUtils.isEmpty(birthDate)
+        && birthDate == null
         && birthLoc.isEmpty()
         && TextUtils.isEmpty(chips1)
         && TextUtils.isEmpty(regID)
@@ -215,6 +216,13 @@ public class Elephant extends RealmObject
     return "";
   }
 
+  public String getBirthDateText() {
+    if (birthDate != null ){
+      return DateHelpers.FriendlyUserStringDateWithoutHours(birthDate);
+    }
+    return "";
+  }
+
   public String getHeightText() {
 
     if (!TextUtils.isEmpty(height)) {
@@ -236,8 +244,10 @@ public class Elephant extends RealmObject
   public String getAgeText() {
     String res = "-";
 
-    if (!TextUtils.isEmpty(birthDate)) {
-      Integer year = Integer.parseInt(birthDate.substring(0, 4));
+    if (birthDate != null) {
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(birthDate);
+      Integer year = cal.get(Calendar.YEAR);
       Integer age = Calendar.getInstance().get(Calendar.YEAR) - year;
       res = age.toString();
     }
@@ -264,13 +274,29 @@ public class Elephant extends RealmObject
 
   public JSONObject toJsonObject(@Nullable Map<String, Contact> added) throws JSONException {
     JSONObject jsonObject = new JSONObject();
-    JSONArray contactsArray = new JSONArray();
+    // JSONArray contactsArray = new JSONArray();
 
     jsonObject.put("name", name);
     jsonObject.put("nickname", nickName);
     jsonObject.put("sex", sex);
     jsonObject.put("cuid", cuid);
-    for (Contact contact : contacts) {
+
+    jsonObject.put("birth_date", birthDate);
+    /*jsonObject.put("weight", weight);
+    jsonObject.put("height", height);
+    jsonObject.put("nail_front_left", nailsFrontLeft);
+    jsonObject.put("nail_front_right", nailsFrontRight);
+    jsonObject.put("nail_rear_left", nailsRearLeft);
+    jsonObject.put("nail_rear_right", nailsRearRight);
+    jsonObject.put("ear_tag", earTag);
+    jsonObject.put("eye_d", eyeD);
+    jsonObject.put("microchip_1", chips1);
+    jsonObject.put("microchip_2", chips2);
+    jsonObject.put("microchip_3", chips3);
+    // temperament
+    jsonObject.put("tusk", tusk); */
+
+    /*for (Contact contact : contacts) {
       JSONObject contactObj = new JSONObject();
       // contact.setSyncState(Pending) => upload response (done?)
       // contact.setSyncState(null) => download
@@ -280,7 +306,7 @@ public class Elephant extends RealmObject
       contactObj.put("cuid", contact.getCuid());
       contactsArray.put(contactObj);
     }
-    jsonObject.put("contacts", contactsArray);
+    jsonObject.put("contacts", contactsArray);*/
     return jsonObject;
   }
 

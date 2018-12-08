@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -18,12 +20,14 @@ import fr.elephantasia.activities.manageElephant.dialogs.DatePickerDialog;
 import fr.elephantasia.activities.manageElephant.dialogs.LocationInputDialog;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.ManageElephantProfilFragmentBinding;
+import fr.elephantasia.utils.DateHelpers;
 import fr.elephantasia.utils.KeyboardHelpers;
 
 public class ProfilFragment extends Fragment {
 
   // View binding
   @BindView(R.id.birthLocation) EditText birthLocation;
+  @BindView(R.id.birthDate) EditText birthDate;
   @BindView(R.id.name) EditText name;   // Mandatory fields
   @BindView(R.id.male) RadioButton male; // Mandatory fields
   @BindView(R.id.female) RadioButton female; // Mandatory fields
@@ -52,7 +56,10 @@ public class ProfilFragment extends Fragment {
     dialog.setListener(new DatePickerDialog.Listener() {
       @Override
       public void onDateSet(int year, int month, int dayOfMonth) {
-        editText.setText(getString(R.string.date, year, month, dayOfMonth));
+        Date date = DateHelpers.BuildDate(year, month, dayOfMonth);
+        elephant.birthDate = date;
+        String friendlyDate = DateHelpers.FriendlyUserStringDateWithoutHours(date);
+        editText.setText(friendlyDate);
       }
     });
     dialog.show(getActivity().getSupportFragmentManager(), "Date");
@@ -93,6 +100,7 @@ public class ProfilFragment extends Fragment {
 
   private void refresh() {
     refreshSex();
+    refreshBirthdate();
   }
 
   private void refreshSex() {
@@ -101,5 +109,9 @@ public class ProfilFragment extends Fragment {
     } else if (elephant.sex != null && elephant.sex.equals("F")) {
       female.toggle();
     }
+  }
+
+  private void refreshBirthdate() {
+    birthDate.setText(elephant.getBirthDateText());
   }
 }

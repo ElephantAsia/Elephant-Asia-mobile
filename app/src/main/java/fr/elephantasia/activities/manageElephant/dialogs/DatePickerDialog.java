@@ -8,6 +8,8 @@ import android.widget.DatePicker;
 
 import java.util.Calendar;
 
+import fr.elephantasia.R;
+
 /**
  * Created by Stephane on 16/03/2017.
  */
@@ -23,8 +25,7 @@ public class DatePickerDialog extends DialogFragment implements android.app.Date
     int year = c.get(Calendar.YEAR);
     int month = c.get(Calendar.MONTH);
     int day = c.get(Calendar.DAY_OF_MONTH);
-    android.app.DatePickerDialog d = new android.app.DatePickerDialog(getActivity(), this, year, month, day);
-    return d;
+    return new android.app.DatePickerDialog(getActivity(), R.style.DialogTheme, this, year, month, day);
   }
 
   public void setListener(Listener listener) {

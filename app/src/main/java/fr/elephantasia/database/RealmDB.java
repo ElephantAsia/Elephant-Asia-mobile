@@ -139,13 +139,13 @@ class RealmDB {
     } else if (searchMode == DatabaseController.SearchMode.Pending) {
       query.equalTo(Elephant.SYNC_STATE, Elephant.SyncState.Pending.name());
     } else if (searchMode == DatabaseController.SearchMode.Saved) {
-      query.notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
+      query.equalTo(Elephant.DRAFT, false)
+        .notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
         .isNotNull(Elephant.DB_STATE)
         .or()
         .isNotNull(Elephant.JOURNAL_STATE)
         .and()
-        .isNull(Elephant.SYNC_STATE)
-        .equalTo(Elephant.DRAFT, false);
+        .isNull(Elephant.SYNC_STATE);
     }
     List<Elephant> results = realm.copyFromRealm(query.findAll());
     realm.close();
@@ -344,13 +344,13 @@ class RealmDB {
     Realm realm = Realm.getDefaultInstance();
     List<Elephant> elephants = realm.copyFromRealm(
       realm.where(Elephant.class)
+      .equalTo(Elephant.DRAFT, false)
       .isNotNull(Elephant.DB_STATE)
       .or()
       .isNotNull(Elephant.JOURNAL_STATE)
       .and()
       .notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
       .isNull(Elephant.SYNC_STATE)
-      .equalTo(Elephant.DRAFT, false)
       .findAll()
     );
     realm.close();
@@ -377,13 +377,13 @@ class RealmDB {
   Long getElephantsReadyToSyncCount() {
     Realm realm = Realm.getDefaultInstance();
     Long count = realm.where(Elephant.class)
+      .equalTo(Elephant.DRAFT, false)
       .isNotNull(Elephant.DB_STATE)
       .or()
       .isNotNull(Elephant.JOURNAL_STATE)
       .and()
       .notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
       .isNull(Elephant.SYNC_STATE)
-      .equalTo(Elephant.DRAFT, false)
       .count();
     realm.close();
     return count;
@@ -411,13 +411,13 @@ class RealmDB {
         elephant.lastVisited = new Date();
         bgRealm.insertOrUpdate(elephant);
 
-        for (Document document : documents) {
+        /* for (Document document : documents) {
           if (document.id == -1) {
             document.id = GetNextId(bgRealm, Document.class, Document.ID);
           }
           document.elephant_id = elephant.id;
           bgRealm.insertOrUpdate(document);
-        }
+        } */
       }
     });
   }

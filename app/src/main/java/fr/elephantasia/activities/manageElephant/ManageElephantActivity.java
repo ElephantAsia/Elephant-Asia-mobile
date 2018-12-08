@@ -193,6 +193,7 @@ public class ManageElephantActivity extends AppCompatActivity {
         elephant.dbState = Elephant.DbState.Created.name();
       }
       elephant.syncState = null;
+      elephant.draft = false;
       saveToDb();
       setResult(RESULT_VALIDATE);
       finish();
