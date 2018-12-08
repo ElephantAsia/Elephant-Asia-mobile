@@ -52,8 +52,9 @@ public class ProfilFragment extends Fragment {
 
   @OnClick(R.id.birthDate)
   public void showDatePicker(final EditText editText) {
-    DatePickerDialog dialog = new DatePickerDialog();
-    dialog.setListener(new DatePickerDialog.Listener() {
+    new DatePickerDialog()
+      .setBaseDate(elephant.birthDate)
+      .setListener(new DatePickerDialog.Listener() {
       @Override
       public void onDateSet(int year, int month, int dayOfMonth) {
         Date date = DateHelpers.BuildDate(year, month, dayOfMonth);
@@ -61,8 +62,8 @@ public class ProfilFragment extends Fragment {
         String friendlyDate = DateHelpers.FriendlyUserStringDateWithoutHours(date);
         editText.setText(friendlyDate);
       }
-    });
-    dialog.show(getActivity().getSupportFragmentManager(), "Date");
+      })
+      .show(getActivity().getSupportFragmentManager(), "Date");
   }
 
   @OnClick(R.id.birthLocation)

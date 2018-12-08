@@ -137,8 +137,8 @@ public class Elephant extends RealmObject
     birthDate = DateHelpers.BuildDateFromStringWithoutHours(JsonHelpers.getString(e, "birth_date"));
 
     // Registration
-    earTag = JsonHelpers.getString(e, "ear_tag") != null;
-    eyeD = JsonHelpers.getString(e, "eye_d") != null;
+    earTag = JsonHelpers.getBoolean(e, "ear_tag");
+    eyeD = JsonHelpers.getBoolean(e, "eye_d");
     mteOwner = false;
     mteNumber = null;
     chips1 = JsonHelpers.getString(e, "microchip_1");
@@ -282,7 +282,7 @@ public class Elephant extends RealmObject
     jsonObject.put("cuid", cuid);
 
     jsonObject.put("birth_date", birthDate);
-    /*jsonObject.put("weight", weight);
+    jsonObject.put("weight", weight);
     jsonObject.put("height", height);
     jsonObject.put("nail_front_left", nailsFrontLeft);
     jsonObject.put("nail_front_right", nailsFrontRight);
@@ -294,7 +294,7 @@ public class Elephant extends RealmObject
     jsonObject.put("microchip_2", chips2);
     jsonObject.put("microchip_3", chips3);
     // temperament
-    jsonObject.put("tusk", tusk); */
+    jsonObject.put("tusk", tusk);
 
     /*for (Contact contact : contacts) {
       JSONObject contactObj = new JSONObject();

@@ -141,10 +141,11 @@ class RealmDB {
     } else if (searchMode == DatabaseController.SearchMode.Saved) {
       query.equalTo(Elephant.DRAFT, false)
         .notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
-        .isNotNull(Elephant.DB_STATE)
-        .or()
-        .isNotNull(Elephant.JOURNAL_STATE)
-        .and()
+        .beginGroup()
+          .isNotNull(Elephant.DB_STATE)
+          .or()
+          .isNotNull(Elephant.JOURNAL_STATE)
+        .endGroup()
         .isNull(Elephant.SYNC_STATE);
     }
     List<Elephant> results = realm.copyFromRealm(query.findAll());
@@ -345,10 +346,11 @@ class RealmDB {
     List<Elephant> elephants = realm.copyFromRealm(
       realm.where(Elephant.class)
       .equalTo(Elephant.DRAFT, false)
-      .isNotNull(Elephant.DB_STATE)
-      .or()
-      .isNotNull(Elephant.JOURNAL_STATE)
-      .and()
+      .beginGroup()
+        .isNotNull(Elephant.DB_STATE)
+        .or()
+        .isNotNull(Elephant.JOURNAL_STATE)
+      .endGroup()
       .notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
       .isNull(Elephant.SYNC_STATE)
       .findAll()
@@ -377,13 +379,14 @@ class RealmDB {
   Long getElephantsReadyToSyncCount() {
     Realm realm = Realm.getDefaultInstance();
     Long count = realm.where(Elephant.class)
-      .equalTo(Elephant.DRAFT, false)
-      .isNotNull(Elephant.DB_STATE)
-      .or()
-      .isNotNull(Elephant.JOURNAL_STATE)
-      .and()
+      .beginGroup()
+        .isNotNull(Elephant.DB_STATE)
+        .or()
+        .isNotNull(Elephant.JOURNAL_STATE)
+      .endGroup()
       .notEqualTo(Elephant.DB_STATE, Elephant.DbState.Deleted.name())
       .isNull(Elephant.SYNC_STATE)
+      .equalTo(Elephant.DRAFT, false)
       .count();
     realm.close();
     return count;
