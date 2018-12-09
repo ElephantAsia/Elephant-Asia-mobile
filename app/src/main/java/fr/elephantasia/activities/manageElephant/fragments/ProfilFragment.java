@@ -6,8 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 
 import java.util.Date;
 
@@ -31,6 +33,7 @@ public class ProfilFragment extends Fragment {
   @BindView(R.id.name) EditText name;   // Mandatory fields
   @BindView(R.id.male) RadioButton male; // Mandatory fields
   @BindView(R.id.female) RadioButton female; // Mandatory fields
+  @BindView(R.id.temperament) Spinner temperament;
 
   // Attr
   private Elephant elephant;
@@ -102,6 +105,7 @@ public class ProfilFragment extends Fragment {
   private void refresh() {
     refreshSex();
     refreshBirthdate();
+    refreshTemperament();
   }
 
   private void refreshSex() {
@@ -114,5 +118,30 @@ public class ProfilFragment extends Fragment {
 
   private void refreshBirthdate() {
     birthDate.setText(elephant.getBirthDateText());
+  }
+
+  private void refreshTemperament() {
+    String tempText = elephant.getTemperamentText();
+
+    if (tempText.equals("calm")) {
+      temperament.setSelection(1);
+    } else if (tempText.equals("aggressive")) {
+      temperament.setSelection(2);
+    } else {
+      temperament.setSelection(0);
+    }
+
+    temperament.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      @Override
+      public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String temp = parent.getItemAtPosition(position).toString();
+        if (temp.equals("unknown")) {
+          elephant.temperament = null;
+        } else {
+          elephant.temperament = temp;
+        }
+      }
+      @Override public void onNothingSelected(AdapterView<?> parent) { }
+    });
   }
 }

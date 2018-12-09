@@ -235,4 +235,16 @@
     <item>50</item>
   </string-array>
 
+  <string-array name="temperament">
+    <!--<item>Very dangerous</item>
+    <item>Dangerous</item>
+    <item>Sometimes</item>
+    <item>Usually safe</item>
+    <item>Always safe</item>
+    <item>Unknown</item> -->
+    <item>unknown</item>
+    <item>calm</item>
+    <item>aggressive</item>
+  </string-array>
+
 </resources>

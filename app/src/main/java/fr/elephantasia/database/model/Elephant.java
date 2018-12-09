@@ -76,6 +76,7 @@ public class Elephant extends RealmObject
   public String nickName;
   public String sex; // TODO: enum instead of String
   public Location currentLoc = new Location();
+  public String temperament;
   public Date birthDate;
   public Location birthLoc = new Location();
 
@@ -131,6 +132,7 @@ public class Elephant extends RealmObject
     name = JsonHelpers.getString(e, "name");
     nickName = JsonHelpers.getString(e, "nickname");
     sex = JsonHelpers.getString(e, "sex");
+    temperament = JsonHelpers.getString(e, "temperament");
     currentLoc = null;
     birthLoc = null;
     // birthDate = JsonHelpers.getString(e, "birth_date");
@@ -223,6 +225,13 @@ public class Elephant extends RealmObject
     return "";
   }
 
+  public String getTemperamentText() {
+    if (temperament != null) {
+      return temperament;
+    }
+    return "-";
+  }
+
   public String getHeightText() {
 
     if (!TextUtils.isEmpty(height)) {
@@ -265,7 +274,7 @@ public class Elephant extends RealmObject
     return cuid != null;
   }
 
-  public void copy(Elephant e) {
+  public void copy(Elephant e) { // !
     name = e.name;
     nickName = e.nickName;
     sex = e.sex;
@@ -280,8 +289,9 @@ public class Elephant extends RealmObject
     jsonObject.put("nickname", nickName);
     jsonObject.put("sex", sex);
     jsonObject.put("cuid", cuid);
-
+    jsonObject.put("temperament", temperament);
     jsonObject.put("birth_date", birthDate);
+
     jsonObject.put("weight", weight);
     jsonObject.put("height", height);
     jsonObject.put("nail_front_left", nailsFrontLeft);
@@ -293,7 +303,6 @@ public class Elephant extends RealmObject
     jsonObject.put("microchip_1", chips1);
     jsonObject.put("microchip_2", chips2);
     jsonObject.put("microchip_3", chips3);
-    // temperament
     jsonObject.put("tusk", tusk);
 
     /*for (Contact contact : contacts) {
