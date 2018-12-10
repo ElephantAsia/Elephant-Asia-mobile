@@ -275,16 +275,30 @@ public class Elephant extends RealmObject
     return cuid != null;
   }
 
-  public void copy(Elephant e) { // !
+  public void copy(Elephant e) {
     name = e.name;
     nickName = e.nickName;
     sex = e.sex;
     cuid = e.cuid;
+    temperament = e.temperament;
+    birthDate = e.birthDate;
+    estimatedBirthYear = e.estimatedBirthYear;
+    weight = e.weight;
+    height = e.height;
+    nailsFrontLeft = e.nailsFrontLeft;
+    nailsFrontRight = e.nailsFrontRight;
+    nailsRearLeft = e.nailsRearLeft;
+    nailsRearRight = e.nailsRearRight;
+    earTag = e.earTag;
+    eyeD = e.eyeD;
+    chips1 = e.chips1;
+    chips2 = e.chips2;
+    chips3 = e.chips3;
+    tusk = e.tusk;
   }
 
   public JSONObject toJsonObject(@Nullable Map<String, Contact> added) throws JSONException {
     JSONObject jsonObject = new JSONObject();
-    // JSONArray contactsArray = new JSONArray();
 
     jsonObject.put("name", name);
     jsonObject.put("nickname", nickName);
@@ -293,7 +307,6 @@ public class Elephant extends RealmObject
     jsonObject.put("temperament", temperament);
     jsonObject.put("birth_date", birthDate);
     jsonObject.put("estimated_birth_year", estimatedBirthYear);
-
     jsonObject.put("weight", weight);
     jsonObject.put("height", height);
     jsonObject.put("nail_front_left", nailsFrontLeft);
@@ -307,7 +320,8 @@ public class Elephant extends RealmObject
     jsonObject.put("microchip_3", chips3);
     jsonObject.put("tusk", tusk);
 
-    /*for (Contact contact : contacts) {
+    /* JSONArray contactsArray = new JSONArray();
+    for (Contact contact : contacts) {
       JSONObject contactObj = new JSONObject();
       // contact.setSyncState(Pending) => upload response (done?)
       // contact.setSyncState(null) => download
