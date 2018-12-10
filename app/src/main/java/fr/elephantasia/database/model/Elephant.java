@@ -78,6 +78,7 @@ public class Elephant extends RealmObject
   public Location currentLoc = new Location();
   public String temperament;
   public Date birthDate;
+  public Integer estimatedBirthYear = null;
   public Location birthLoc = new Location();
 
   // Registration
@@ -133,6 +134,7 @@ public class Elephant extends RealmObject
     nickName = JsonHelpers.getString(e, "nickname");
     sex = JsonHelpers.getString(e, "sex");
     temperament = JsonHelpers.getString(e, "temperament");
+    estimatedBirthYear = e.optInt("estimated_birth_year");
     currentLoc = null;
     birthLoc = null;
     birthDate = DateHelpers.BuildDateFromStringWithoutHours(JsonHelpers.getString(e, "birth_date"));
@@ -290,6 +292,7 @@ public class Elephant extends RealmObject
     jsonObject.put("cuid", cuid);
     jsonObject.put("temperament", temperament);
     jsonObject.put("birth_date", birthDate);
+    jsonObject.put("estimated_birth_year", estimatedBirthYear);
 
     jsonObject.put("weight", weight);
     jsonObject.put("height", height);
@@ -326,7 +329,8 @@ public class Elephant extends RealmObject
         e.printStackTrace();
       }
     }
-    syncState = Elephant.SyncState.Pending.name();
+    // syncState = Elephant.SyncState.Pending.name();
+    syncState = null;
     dbState = null;
     for (Contact contact : contacts) {
       Log.w("wasuploaded_contact", contact.getFullName());
