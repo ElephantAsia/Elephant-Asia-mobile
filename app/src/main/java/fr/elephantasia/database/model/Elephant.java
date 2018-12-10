@@ -93,15 +93,15 @@ public class Elephant extends RealmObject
   public Location registrationLoc = new Location();
 
   // Description
-  public String tusk = "none";
+  public String tusk = "None";
   public String nailsFrontLeft = "0"; //int
   public String nailsFrontRight = "0"; //int
   public String nailsRearLeft = "0"; //int
   public String nailsRearRight = "0"; //int
-  public String weight; //int
+  public String weight = "0"; //int
   public String girth;
   public String weightUnit;
-  public String height; //int
+  public String height = "0"; //int
   public String heightUnit;
 
   // Parentage
@@ -190,6 +190,10 @@ public class Elephant extends RealmObject
         && children.isEmpty();
   }
 
+  public boolean hasChildren() {
+    return children != null && !children.isEmpty();
+  }
+
   /**
    * BW =  (21.11 x G ) – 4,425
    * http://www.asianelephantresearch.com/about-elephant-health-care-p2.php
@@ -264,9 +268,32 @@ public class Elephant extends RealmObject
     return res;
   }
 
+  public String getBirthdateText() {
+    String res = "-";
+
+    if (birthDate != null) {
+      res = DateHelpers.FriendlyUserStringDateWithoutHours(birthDate);
+    }
+    return res;
+  }
+
   public String getRegIDText() {
     if (!TextUtils.isEmpty(regID)) {
       return regID;
+    }
+    return "-";
+  }
+
+  public String getChips1Text() {
+    if (!TextUtils.isEmpty(chips1)) {
+      return chips1;
+    }
+    return "-";
+  }
+
+  public String getNicknameText() {
+    if (!TextUtils.isEmpty(nickName)) {
+      return nickName;
     }
     return "-";
   }

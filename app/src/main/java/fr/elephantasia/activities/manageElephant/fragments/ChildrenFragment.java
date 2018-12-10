@@ -75,6 +75,7 @@ public class ChildrenFragment extends Fragment {
     childrenList.setAdapter(adapter);
   }
 
+
   public void addChild(@NonNull Elephant elephant) {
     adapter.add(elephant);
   }

@@ -1,5 +1,7 @@
 package fr.elephantasia.database.model;
 
+import android.util.Log;
+
 import org.apache.http.util.TextUtils;
 import org.parceler.Parcel;
 
@@ -25,7 +27,7 @@ public class Location extends RealmObject {
   }
 
   // Should be rename toString()
-  public String format() {
+  public String getText() {
     String p = formatProvince();
 
     String res = TextUtils.isEmpty(p) ? "" : p + " - ";
@@ -34,7 +36,12 @@ public class Location extends RealmObject {
 
     res = res.length() > 3 ? res.substring(0, res.length() - 3) : res;
 
-    return res;
+    Log.w("location", "'" + res + "'");
+
+    if (!TextUtils.isEmpty(res) || res.trim().length() == 0) {
+      return res;
+    }
+    return "-";
   }
 
   private String formatProvince() {

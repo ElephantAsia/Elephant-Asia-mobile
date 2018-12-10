@@ -110,7 +110,7 @@ public class ElephantPreviewV2 extends CardView {
 
   private void refreshLocalization() {
     if (localization != null && elephant.currentLoc != null) {
-      localization.setText(format(elephant.currentLoc.format()));
+      localization.setText(format(elephant.currentLoc.getText()));
     }
   }
 

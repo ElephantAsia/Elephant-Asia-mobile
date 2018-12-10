@@ -29,7 +29,7 @@
       android:layout_height="wrap_content"
       android:text="@string/not_set"
       android:textStyle="italic"
-      android:visibility="@{e.children == null ? View.VISIBLE : View.GONE}"/>
+      android:visibility="@{e.hasChildren() ? View.GONE : View.VISIBLE}"/>
 
     <ListView
       android:id="@+id/list"

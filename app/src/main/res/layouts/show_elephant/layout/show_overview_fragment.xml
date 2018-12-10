@@ -82,7 +82,7 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{e.nickName}"
+            android:text="@{e.getNicknameText()}"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             />
@@ -107,6 +107,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{e.getGenderText()}"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          android:orientation="vertical">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Birthdate"
+            android:textColor="@color/grey_light_100"
+            android:textSize="14sp"/>
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{e.getBirthdateText()}"
             android:textColor="@android:color/black"
             android:textSize="18sp"/>
 
@@ -153,7 +176,7 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{e.currentLoc.format()}"
+            android:text="@{e.currentLoc.getText()}"
             android:textColor="@android:color/black"
             android:textSize="18sp"/>
 
@@ -176,7 +199,7 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{e.birthLoc.format()}"
+            android:text="@{e.birthLoc.getText()}"
             android:textColor="@android:color/black"
             android:textSize="18sp"/>
 
@@ -219,7 +242,7 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{e.chips1}"
+            android:text="@{e.getChips1Text()}"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             />
@@ -242,7 +265,7 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{e.regID}"
+            android:text="@{e.getRegIDText()}"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             />
@@ -250,6 +273,7 @@
         </LinearLayout>
 
         <LinearLayout
+          android:visibility="gone"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="14dp"
@@ -266,7 +290,7 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{e.registrationLoc.format()}"
+            android:text="@{e.registrationLoc.getText()}"
             android:textColor="@android:color/black"
             android:textSize="18sp"/>
 

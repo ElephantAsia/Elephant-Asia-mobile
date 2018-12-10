@@ -72,7 +72,7 @@ public class LocationInputDialog {
         .dismissListener(new DialogInterface.OnDismissListener() {
           @Override
           public void onDismiss(DialogInterface dialog) {
-            editTextTarget.setText(loc.format());
+            editTextTarget.setText(loc.getText());
           }
         })
         .customView(view, true)
