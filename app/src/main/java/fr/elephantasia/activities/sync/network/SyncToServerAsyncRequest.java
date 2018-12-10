@@ -15,6 +15,7 @@ import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.database.model.ElephantNote;
 import fr.elephantasia.network.RequestAsyncTask;
+import fr.elephantasia.utils.JsonHelpers;
 
 public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
 
@@ -133,7 +134,13 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
 
       try {
         Thread.sleep(250); // demo
-        elephant.wasUploaded(response.getJSONObject(i).getString("cuid"));
+        String cuid = JsonHelpers.getString(response.getJSONObject(i), "cuid");
+        if (cuid != null) {
+          elephant.wasUploaded(cuid);
+        } else {
+          elephant.edit();
+        }
+        // elephant.wasUploaded(response.getJSONObject(i).getString("cuid"));
         dbController.insertOrUpdate(elephant);
       } catch (Exception e) {
         e.printStackTrace();

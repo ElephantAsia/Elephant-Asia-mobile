@@ -135,7 +135,6 @@ public class Elephant extends RealmObject
     temperament = JsonHelpers.getString(e, "temperament");
     currentLoc = null;
     birthLoc = null;
-    // birthDate = JsonHelpers.getString(e, "birth_date");
     birthDate = DateHelpers.BuildDateFromStringWithoutHours(JsonHelpers.getString(e, "birth_date"));
 
     // Registration
@@ -327,6 +326,16 @@ public class Elephant extends RealmObject
         e.printStackTrace();
       }
     }
+    syncState = Elephant.SyncState.Pending.name();
+    dbState = null;
+    for (Contact contact : contacts) {
+      Log.w("wasuploaded_contact", contact.getFullName());
+      contact.setSyncState(Contact.SyncState.Pending);
+      contact.setDbState(null);
+    }
+  }
+
+  public void edit() {
     syncState = Elephant.SyncState.Pending.name();
     dbState = null;
     for (Contact contact : contacts) {
