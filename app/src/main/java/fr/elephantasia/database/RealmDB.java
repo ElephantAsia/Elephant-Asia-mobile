@@ -102,7 +102,6 @@ class RealmDB {
     begin();
     if (n.getId() == -1) {
       n.setId(GetNextId(realm, ElephantNote.class, ElephantNote.ID));
-      n.setCreatedAt(DateHelpers.GetCurrentStringDate());
     }
     realm.insertOrUpdate(n);
     end();
@@ -260,13 +259,13 @@ class RealmDB {
         query.sort(
           ElephantNote.PRIORITY,
           (priorityOrder == SortOrder.Ascending) ? Sort.ASCENDING : Sort.DESCENDING,
-          ElephantNote.CREATED_AT,
+          ElephantNote.MY_CREATED_AT,
           (dateOrder == SortOrder.Ascending) ? Sort.ASCENDING : Sort.DESCENDING
         );
       } else {
         if (dateOrder != SortOrder.None) {
           query.sort(
-            ElephantNote.CREATED_AT,
+            ElephantNote.MY_CREATED_AT,
             (dateOrder == SortOrder.Ascending) ? Sort.ASCENDING : Sort.DESCENDING
           );
         } else {
@@ -358,6 +357,25 @@ class RealmDB {
     realm.close();
     return elephants;
   }
+
+  List<Contact> getContactsReadyToSync() {
+      Realm realm = Realm.getDefaultInstance();
+      List<Contact> contacts = realm.copyFromRealm(
+              realm.where(Contact.class)
+              .isNotNull(Contact.DB_STATE)
+              .findAll()
+      );
+      realm.close();
+      return contacts;
+  }
+
+  /* List<Contact> getContactsReadyToSyncFromElephantsByCuid(String elephantCuid) {
+    List<Contact> contacts = new ArrayList<>();
+    Elephant elephant = getElephantByCuid(elephantCuid);
+    Realm realm = Realm.getDefaultInstance();
+
+    return contacts;
+  } */
 
   Long getElephantsCount() {
     Realm realm = Realm.getDefaultInstance();

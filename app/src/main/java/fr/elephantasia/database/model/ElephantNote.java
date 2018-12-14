@@ -21,7 +21,7 @@ public class ElephantNote extends RealmObject {
 
   @Ignore public static final String DB_STATE = "dbState";
 
-  @Ignore public static final String CREATED_AT = "createdAt";
+  @Ignore public static final String MY_CREATED_AT = "myCreatedAt";
 
   public enum DbState {
     Created
@@ -37,7 +37,7 @@ public class ElephantNote extends RealmObject {
 
   private String dbState = null;
 
-  private String createdAt;
+  private String myCreatedAt;
 
   public ElephantNote() { }
 
@@ -68,7 +68,7 @@ public class ElephantNote extends RealmObject {
   public void setDbState(@Nullable DbState dbState) { this.dbState = (dbState != null) ? dbState.name() : null; }
 
   public void setCreatedAt(String createdAt) {
-    this.createdAt = createdAt;
+    this.myCreatedAt = createdAt;
   }
 
   public Integer getId() {
@@ -98,7 +98,7 @@ public class ElephantNote extends RealmObject {
   public String getDbState() { return dbState; }
 
   public String getCreatedAt() {
-    return createdAt;
+    return myCreatedAt;
   }
 
 

@@ -137,6 +137,10 @@ public class DatabaseController {
     return realmDB.getElephantsReadyToUpload();
   }
 
+  public List<Contact> getContactsReadyToSync() {
+    return realmDB.getContactsReadyToSync();
+  }
+
   public Long getElephantsCount() {
     return realmDB.getElephantsCount();
   }

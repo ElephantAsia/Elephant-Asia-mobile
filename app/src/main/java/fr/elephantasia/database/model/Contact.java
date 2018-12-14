@@ -6,6 +6,7 @@ import org.parceler.Parcel;
 
 import javax.annotation.Nullable;
 
+import fr.elephantasia.utils.JsonHelpers;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -61,6 +62,23 @@ public class Contact extends RealmObject
   public String syncState;
   public String dbState;
 
+  public Contact() {
+  }
+
+  public Contact(JSONObject jsonObject) {
+    try {
+      firstName = JsonHelpers.getString(jsonObject, "first_name");
+      lastName = JsonHelpers.getString(jsonObject, "last_name");
+      phone = JsonHelpers.getString(jsonObject, "mobile_phone");
+      email = JsonHelpers.getString(jsonObject, "email");
+      cuid = JsonHelpers.getString(jsonObject, "cuid");
+
+
+    } catch (Exception er) {
+      er.printStackTrace();
+    }
+  }
+
   public String getFullName() {
     return firstName + " " + lastName;
   }
@@ -104,10 +122,10 @@ public class Contact extends RealmObject
     jsonObject.put("cuid", cuid);
     jsonObject.put("first_name", firstName);
     jsonObject.put("last_name", lastName);
-    jsonObject.put("mobile_phone", "911");
+    jsonObject.put("mobile_phone", phone);
+    jsonObject.put("email", email);
     jsonObject.put("home_phone", "911");
-    jsonObject.put("street_name", "that street");
-    jsonObject.put("email", firstName + "@hotmail.br");
+    jsonObject.put("street_name", "tartanpion");
     return jsonObject;
   }
 

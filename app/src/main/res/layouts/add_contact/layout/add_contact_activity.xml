@@ -104,6 +104,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <RelativeLayout
+            android:visibility="invisible"
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"
           android:orientation="horizontal">
@@ -128,6 +129,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:visibility="invisible"
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
@@ -154,6 +156,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:visibility="invisible"
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"
           android:orientation="horizontal"

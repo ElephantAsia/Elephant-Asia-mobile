@@ -2,6 +2,7 @@ package fr.elephantasia.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,13 +60,11 @@ public class ObservationsAdapter extends ArrayAdapter<ElephantNote> {
 
   private void refreshDate(View v, @NonNull ElephantNote note) {
     TextView textView = v.findViewById(R.id.date);
-
     textView.setText(DateHelpers.FriendlyUserStringDate(note.getCreatedAt()));
   }
 
   private void refreshDescription(View v, @NonNull ElephantNote note) {
     TextView textView = v.findViewById(R.id.description);
-
     textView.setText(note.getDescription());
   }
 

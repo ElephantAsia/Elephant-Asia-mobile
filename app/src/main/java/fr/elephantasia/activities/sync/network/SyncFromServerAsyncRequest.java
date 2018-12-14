@@ -10,9 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import fr.elephantasia.database.DatabaseController;
+import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.database.model.ElephantNote;
 import fr.elephantasia.network.RequestAsyncTask;
+import fr.elephantasia.utils.DateHelpers;
 
 public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
 
@@ -177,6 +179,13 @@ public class SyncFromServerAsyncRequest extends RequestAsyncTask<Boolean> {
         } catch (Exception er) {
           er.printStackTrace();
         }
+      }
+
+      JSONArray contactsArray = result.getJSONArray("contacts");
+      Log.w("contact", "response: " + contactsArray.toString());
+      for (int j = 0 ; j < contactsArray.length(); ++j) {
+        JSONObject obj = contactsArray.getJSONObject(j);
+        dbController.insertOrUpdate(new Contact(obj));
       }
 
       dbController.commitTransaction();

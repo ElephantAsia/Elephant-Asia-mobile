@@ -58,6 +58,7 @@ import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.database.model.ElephantNote;
 import fr.elephantasia.databinding.ShowElephantActivityBinding;
+import fr.elephantasia.utils.DateHelpers;
 
 import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.RESULT_DRAFT;
 import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.RESULT_VALIDATE;
@@ -467,6 +468,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
         note.setDescription(d);
         note.setElephantId(elephant.id);
         note.setDbState(ElephantNote.DbState.Created);
+        note.setCreatedAt(DateHelpers.GetCurrentStringDate());
         elephant.journalState = Elephant.JournalState.NoteAdded.name();
         elephant.syncState = null;
 
@@ -475,7 +477,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
         databaseController.insertOrUpdate(elephant);
         databaseController.commitTransaction();
 
-				observationsFragment.refresh();
+        observationsFragment.refresh();
       }
 
       @Override

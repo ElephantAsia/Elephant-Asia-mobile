@@ -24,6 +24,7 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
   private List<Elephant> elephants;
   private Map<String, Contact> contacts = new HashMap<>();
   private Listener listener;
+  // private JSONObject serialized;
   private JSONArray serialized;
 
   public SyncToServerAsyncRequest(List<Elephant> elephants, Listener listener) {
@@ -39,7 +40,6 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
       String authToken = listener.getAuthToken();
       header.put("Api-Key", authToken);
       header.put("Content-Type", "application/javascript");
-      Log.w(getClass().getName(), "auth_token=" + authToken);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -65,6 +65,7 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
   private void serialize() {
     this.listener.onSerializing();
 
+    // JSONArray elephantsJsonArray = new JSONArray();
     for (int i = 0 ; i < elephants.size() ; ++i) {
       publishProgress(i);
       Elephant elephant = elephants.get(i);
@@ -79,11 +80,27 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
         JSONObject obj = elephant.toJsonObject(contacts);
         obj.put("action", action);
         obj.put("type", "elephant");
+        // elephantsJsonArray.put(obj);
         serialized.put(obj);
       } catch (Exception e) {
         e.printStackTrace();
       }
     }
+
+    DatabaseController db = new DatabaseController();
+    List<Contact> contacts = db.getContactsReadyToSync();
+    for (Contact contact : contacts) {
+        try {
+            Log.w("contacts", contact.getFullName());
+            JSONObject obj = contact.toJsonObject();
+            obj.put("type", "contact");
+            obj.put("action", "CREATE");
+            serialized.put(obj);
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }
+
     /* for (Map.Entry<String, Contact> entry : contacts.entrySet()) {
       Contact c = entry.getValue();
       String action = ((c.isCreated()) ? "CREATE" : (c.isEdited()) ? "EDIT" : null);
@@ -159,6 +176,14 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
     //  contact.setSyncState(Contact.SyncState.Pending);
     //  contact.setDbState(null);
     //  insertOrUpdate(contact)
+
+    List<Contact> contacts = dbController.getContactsReadyToSync();
+    for (Contact contact : contacts) {
+      // contact.syncState = null;
+      contact.dbState = null;
+      dbController.insertOrUpdate(contact);
+    }
+
     publishProgress(elephants.size());
     dbController.commitTransaction();
     try {
@@ -198,14 +223,6 @@ public class SyncToServerAsyncRequest extends RequestAsyncTask<Boolean> {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    // for elephant in elephants
-    //  List<ElephantNote> notesToPush = db.getElephantNotesReadyToPushByElephantId(elephant.getId());
-    //  db.beginTransaction();
-    //  for note in notesToPush
-    //    new addNoteRequest(elephant.getCuid(), note).execute();
-    //    note.setDbState(null);
-    //    db.insertOrUpdate(note);
-    //  db.commitTransaction();
   }
 
   @Override

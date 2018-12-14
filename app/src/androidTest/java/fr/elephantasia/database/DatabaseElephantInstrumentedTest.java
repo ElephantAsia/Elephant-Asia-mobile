@@ -137,27 +137,7 @@ public class DatabaseElephantInstrumentedTest {
   }
 
   @Test
-  public void Test2_lastVisited()  {
-    Elephant jackie = dbController.getElephantByCuid("jackie_cuid");
-    Elephant michel = dbController.getElephantByCuid("michel_cuid");
-
-    assertNotNull(jackie);
-    assertNotNull(michel);
-    assertEquals(1, (int)jackie.id);
-    assertEquals(2, (int)michel.id);
-
-    dbController.updateLastVisitedDateElephant(jackie.id);
-    dbController.updateLastVisitedDateElephant(michel.id);
-
-    List<Elephant> lastVisited = dbController.getLastVisitedElephant();
-    assertNotNull(lastVisited);
-    assertEquals(2, lastVisited.size());
-    assertEquals("michel", lastVisited.get(0).name);
-    assertEquals("jackie", lastVisited.get(1).name);
-  }
-
-  @Test
-  public void Test3_elephantsReadyToUpload() {
+  public void Test2_elephantsReadyToUpload() {
     long count = dbController.getElephantsReadyToSyncCount();
     assertEquals(2, count);
 
@@ -169,7 +149,7 @@ public class DatabaseElephantInstrumentedTest {
   }
 
   @Test
-  public void Test4_update() {
+  public void Test3_update() {
     Elephant jackie = dbController.getElephantByCuid("jackie_cuid");
     assertNotNull(jackie);
 
@@ -184,7 +164,7 @@ public class DatabaseElephantInstrumentedTest {
   }
 
   @Test
-  public void Test5_search() {
+  public void Test4_search() {
     Elephant e = new Elephant();
     e.name = "jackouille";
     e.sex = "M";
@@ -201,34 +181,3 @@ public class DatabaseElephantInstrumentedTest {
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//  @Test
-//  public void Test6_parentage() {
-//  }
-//
-//  @Test
-//  public void Test7_children() {
-//  }
-//
-//  @Test
-//  public void Test8_delete() {
-//  }
