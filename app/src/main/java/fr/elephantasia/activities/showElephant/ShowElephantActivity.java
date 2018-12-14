@@ -40,12 +40,14 @@ import butterknife.OnClick;
 import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
 import fr.elephantasia.activities.addDocument.AddDocumentActivity;
+import fr.elephantasia.activities.contact.SearchContactActivity;
 import fr.elephantasia.activities.manageElephant.ManageElephantActivity;
 import fr.elephantasia.activities.manageElephant.adapters.ViewPagerAdapter;
 import fr.elephantasia.activities.showDocument.ShowDocumentActivity;
 import fr.elephantasia.activities.showElephant.dialogs.AddObservationDialog;
 import fr.elephantasia.activities.showElephant.dialogs.FilterObservationsDialog;
 import fr.elephantasia.activities.showElephant.dialogs.SortObservationsDialog;
+import fr.elephantasia.activities.showElephant.fragments.ContactsFragment;
 import fr.elephantasia.activities.showElephant.fragments.ObservationsFragment;
 import fr.elephantasia.activities.showElephant.fragments.ShowChildrenFragment;
 import fr.elephantasia.activities.showElephant.fragments.ShowDocumentFragment;
@@ -54,12 +56,14 @@ import fr.elephantasia.activities.showElephant.fragments.ShowParentageFragment;
 import fr.elephantasia.adapter.DocumentAdapter;
 import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.DatabaseController.SortOrder;
+import fr.elephantasia.database.model.Contact;
 import fr.elephantasia.database.model.Document;
 import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.database.model.ElephantNote;
 import fr.elephantasia.databinding.ShowElephantActivityBinding;
 import fr.elephantasia.utils.DateHelpers;
 
+import static fr.elephantasia.activities.contact.SearchContactActivity.EXTRA_SEARCH_CONTACT;
 import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.RESULT_DRAFT;
 import static fr.elephantasia.activities.manageElephant.ManageElephantActivity.RESULT_VALIDATE;
 
@@ -75,6 +79,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
 
   static private final String EXTRA_ELEPHANT_ID = "EXTRA_EDIT_ELEPHANT_ID";
 
+  // Request codes
   static private final int REQUEST_ELEPHANT_EDITED = 0;
   static private final int REQUEST_ADD_DOCUMENT = 1;
 
@@ -117,6 +122,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
   private boolean fabIsOpen = false;
 
   private ShowDocumentFragment showDocumentFragment;
+  private ContactsFragment contactsFragment = new ContactsFragment();
 
   private static final Integer OBSERVATION_FRAGMENT_OFFSET = 1;
   private ObservationsFragment observationsFragment;
@@ -373,6 +379,7 @@ public class ShowElephantActivity extends AppCompatActivity implements DocumentA
     adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(new ShowOverviewFragment(), getString(R.string.overview));
     adapter.addFragment(observationsFragment, "Observations");
+    adapter.addFragment(contactsFragment, "Contacts");
     adapter.addFragment(new ShowParentageFragment(), getString(R.string.parentage));
     adapter.addFragment(new ShowChildrenFragment(), getString(R.string.children));
     // adapter.addFragment(showDocumentFragment, getString(R.string.documents));

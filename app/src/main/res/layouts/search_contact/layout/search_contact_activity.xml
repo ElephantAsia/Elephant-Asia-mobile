@@ -67,7 +67,8 @@
       </LinearLayout>
 
       <RelativeLayout
-        android:layout_width="fill_parent"
+          android:visibility="invisible"
+          android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
@@ -95,6 +96,7 @@
 
 
       <RelativeLayout
+          android:visibility="invisible"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -121,7 +123,8 @@
       </RelativeLayout>
 
       <RelativeLayout
-        android:layout_width="fill_parent"
+          android:visibility="invisible"
+          android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
