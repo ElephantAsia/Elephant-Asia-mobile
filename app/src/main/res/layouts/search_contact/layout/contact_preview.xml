@@ -47,16 +47,23 @@
           android:text="@{c.getFullName()}"/>
 
         <TextView
+            android:visibility="gone"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="@{c.address.cityName}"/>
+          android:text="@{c.address}"/>
 
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="@{c.email}"/>
+          android:text="@{c.getEmailText()}"/>
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{c.getPhoneText()}"/>
+
+        <TextView
+            android:visibility="gone"
           android:id="@+id/status"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

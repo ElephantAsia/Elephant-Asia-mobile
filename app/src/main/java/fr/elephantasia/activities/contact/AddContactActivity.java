@@ -2,9 +2,17 @@ package fr.elephantasia.activities.contact;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
 import java.util.UUID;
 
@@ -15,6 +23,7 @@ import fr.elephantasia.BaseApplication;
 import fr.elephantasia.R;
 import fr.elephantasia.database.DatabaseController;
 import fr.elephantasia.database.model.Contact;
+import fr.elephantasia.database.model.Elephant;
 import fr.elephantasia.databinding.AddContactActivityBinding;
 import fr.elephantasia.utils.KeyboardHelpers;
 
@@ -31,8 +40,11 @@ public class AddContactActivity extends AppCompatActivity {
   // Attr
   private Contact contact = new Contact();
 
-  // Listener binding
-  @OnClick(R.id.validate_button)
+  private Drawable validateIcon;
+
+
+    // Listener binding
+  // @OnClick(R.id.validate_button)
   public void addNewContact() {
     contact.setCuid(UUID.randomUUID().toString());
     contact.setDbState(Contact.DbState.Created);
@@ -62,6 +74,8 @@ public class AddContactActivity extends AppCompatActivity {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     KeyboardHelpers.hideKeyboardListener(binding.getRoot(), this);
+
+    initIcon();
   }
 
   @Override
@@ -73,8 +87,28 @@ public class AddContactActivity extends AppCompatActivity {
   }
 
   @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    // realm.close();
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.contact_add_menu, menu);
+    menu.findItem(R.id.menu_validate).setIcon(validateIcon);
+    return true;
   }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_validate) {
+            if (contact.isEmpty()) {
+                Toast.makeText(this, "You must fill at least one field", Toast.LENGTH_SHORT).show();
+            } else {
+                addNewContact();
+            }
+            return true;
+        }
+        return false;
+    }
+
+  private void initIcon() {
+    validateIcon = new IconicsDrawable(this).icon(MaterialDesignIconic.Icon.gmi_check)
+            .color(Color.WHITE).sizeDp(24);
+  }
+
 }

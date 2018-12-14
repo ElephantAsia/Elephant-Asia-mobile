@@ -1,5 +1,7 @@
 package fr.elephantasia.database.model;
 
+import android.text.TextUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
@@ -53,7 +55,8 @@ public class Contact extends RealmObject
   public String lastName;
   public String email;
   public String phone;
-  public Location address = new Location();
+  public String address;
+  // public Location address = new Location();
   public boolean owner = false;
   public boolean cornac = false;
   public boolean vet = false;
@@ -80,7 +83,29 @@ public class Contact extends RealmObject
   }
 
   public String getFullName() {
-    return firstName + " " + lastName;
+    String res = "-";
+
+    if (firstName != null) {
+        res = firstName;
+    }
+    if (lastName != null) {
+        res = res + " " + lastName;
+    }
+    return res;
+  }
+
+  public String getEmailText() {
+      if (TextUtils.isEmpty(email)) {
+          return "";
+      }
+      return "Email: " + email;
+  }
+
+  public String getPhoneText() {
+      if (TextUtils.isEmpty(phone)) {
+          return "";
+      }
+      return "Phone: " + phone;
   }
 
   public String getStatus() {
@@ -116,6 +141,14 @@ public class Contact extends RealmObject
     }
   }
 
+  public boolean isEmpty() {
+    return TextUtils.isEmpty(firstName)
+            && TextUtils.isEmpty(lastName)
+            && TextUtils.isEmpty(phone)
+            && TextUtils.isEmpty(email)
+            && TextUtils.isEmpty(address);
+  }
+
   public JSONObject toJsonObject() throws JSONException {
     JSONObject jsonObject = new JSONObject();
 
@@ -124,8 +157,8 @@ public class Contact extends RealmObject
     jsonObject.put("last_name", lastName);
     jsonObject.put("mobile_phone", phone);
     jsonObject.put("email", email);
-    jsonObject.put("home_phone", "911");
-    jsonObject.put("street_name", "tartanpion");
+    jsonObject.put("home_phone", phone);
+    jsonObject.put("street_name", "90 rue");
     return jsonObject;
   }
 
